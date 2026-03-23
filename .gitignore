@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.env
+*.egg-info/
+.claude/
+scripts/xcancel_pages.json
+scripts/xcancel_raw.json
+scripts/save_pages.py
