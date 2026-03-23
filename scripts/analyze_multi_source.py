@@ -178,7 +178,6 @@ def temporal_comparison(dfs: dict[str, pd.DataFrame], output_dir: str = "."):
         "reddit_comments": "#FFA500",
         "forum_sdn": "#2196F3",
         "forum_wci": "#4CAF50",
-        "twitter": "#1DA1F2",
     }
 
     policy_events = [
@@ -367,11 +366,10 @@ def main():
     print(f"Run at: {datetime.utcnow():%Y-%m-%d %H:%M UTC}")
     print("=" * 70)
 
-    # Load all sources
+    # Load all sources (Twitter excluded — use X API for reliable collection)
     reddit_posts = load_reddit_posts()
     reddit_comments = load_reddit_comments()
     forums = load_forum_data()
-    twitter = load_twitter_data()
 
     # Build unified dict
     sources = {}
@@ -383,8 +381,6 @@ def main():
         # Split by platform
         for src in forums["data_source"].unique():
             sources[src] = forums[forums["data_source"] == src]
-    if not twitter.empty:
-        sources["twitter"] = twitter
 
     if not sources:
         print("[ERROR] No data sources found. Run collection scripts first.")
