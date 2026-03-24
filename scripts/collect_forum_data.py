@@ -136,20 +136,17 @@ def sdn_search_playwright(search_terms: list[str], max_pages: int = 5) -> list[d
                 page.goto(f"{SDN_BASE}/search/", wait_until="networkidle", timeout=20000)
                 page.wait_for_timeout(1000)
 
-                # Fill keyword input and submit the POST form
-                kw_input = page.query_selector('input[name="keywords"]')
-                if not kw_input:
-                    tqdm.write(f"  [SDN] Cannot find keywords input")
-                    continue
-                kw_input.fill(term)
-
-                # Click the Search button (submits the form via POST)
-                search_btn = page.query_selector('form[action*="search"] button[type="submit"], form[action*="search"] input[type="submit"], .button--primary')
-                if search_btn:
-                    search_btn.click()
-                else:
-                    # Fallback: submit form via JS
-                    page.evaluate('document.querySelector("form[action*=\\"search\\"]").submit()')
+                # SDN's keyword input is hidden behind a collapsed UI.
+                # Use JS to set the value and submit the form directly.
+                page.evaluate(f"""(() => {{
+                    const input = document.querySelector('input[name="keywords"]');
+                    if (input) {{
+                        input.value = {repr(term)};
+                        input.dispatchEvent(new Event('input', {{bubbles: true}}));
+                    }}
+                    const form = document.querySelector('form[action*="search"]');
+                    if (form) form.submit();
+                }})()""")
 
                 # Wait for results page to load
                 page.wait_for_load_state("networkidle", timeout=15000)
