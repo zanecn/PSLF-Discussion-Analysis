@@ -28,14 +28,32 @@ from scipy import stats
 
 # Import shared PSLF filter regex for consistency across all scripts
 try:
-    from pslf_search_terms import PSLF_FILTER_REGEX
+    from pslf_search_terms import PSLF_STRICT_REGEX
 except ImportError:
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__))))
-    from pslf_search_terms import PSLF_FILTER_REGEX
+    from pslf_search_terms import PSLF_STRICT_REGEX
+
+# Minimum word count for reliable sentiment scoring (TextBlob is unreliable on <20 words)
+MIN_WORDS_FOR_SENTIMENT = 20
 
 # m7 fix: only suppress specific noisy warnings, not all
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=pd.errors.SettingWithCopyWarning)
+
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+def _nullify_short_polarity(df: pd.DataFrame) -> pd.DataFrame:
+    """Set polarity to NaN for posts shorter than MIN_WORDS_FOR_SENTIMENT.
+
+    TextBlob gives extreme scores (±1.0) on very short texts like
+    "Student Loans- Best Banks" which distort profession-level means.
+    """
+    if "polarity" in df.columns and "text" in df.columns:
+        wc = df["text"].fillna("").str.split().str.len()
+        df.loc[wc < MIN_WORDS_FOR_SENTIMENT, "polarity"] = float("nan")
+    return df
 
 
 # ---------------------------------------------------------------------------
@@ -60,7 +78,7 @@ def load_reddit_posts() -> pd.DataFrame:
     df["date"] = pd.to_datetime(df["created_utc"], unit="s")
     # combined_text already includes title; don't double-count (B16 fix)
     df["text"] = df["combined_text"].fillna("")
-    return df
+    return _nullify_short_polarity(df)
 
 
 def load_reddit_comments() -> pd.DataFrame:
@@ -74,7 +92,7 @@ def load_reddit_comments() -> pd.DataFrame:
     df["date"] = pd.to_datetime(df["created_utc"], unit="s", errors="coerce")
     df["text"] = df["body"].fillna("")
     df["score"] = df["score"].fillna(0)
-    return df
+    return _nullify_short_polarity(df)
 
 
 def load_reddit_professions() -> pd.DataFrame:
@@ -87,8 +105,8 @@ def load_reddit_professions() -> pd.DataFrame:
 
     # Filter to PSLF-relevant posts (same filter as SDN forum data)
     pre_filter = len(df)
-    text_match = df["combined_text"].fillna("").str.lower().str.contains(PSLF_FILTER_REGEX, na=False)
-    title_match = df["title"].fillna("").str.lower().str.contains(PSLF_FILTER_REGEX, na=False)
+    text_match = df["combined_text"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
+    title_match = df["title"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
     df = df[text_match | title_match].copy()
     print(f"  [FILTER] {len(df):,}/{pre_filter:,} PSLF-relevant profession posts retained")
 
@@ -96,7 +114,7 @@ def load_reddit_professions() -> pd.DataFrame:
     df["date"] = pd.to_datetime(df["created_utc"], unit="s", errors="coerce")
     df["text"] = df["combined_text"].fillna("")
     df["score"] = df["score"].fillna(0)
-    return df
+    return _nullify_short_polarity(df)
 
 
 def load_forum_data() -> pd.DataFrame:
@@ -114,8 +132,8 @@ def load_forum_data() -> pd.DataFrame:
     df = pd.read_csv(f)
 
     # Filter to PSLF-relevant posts using shared regex
-    body_match = df["body"].fillna("").str.lower().str.contains(PSLF_FILTER_REGEX, na=False)
-    title_match = df["thread_title"].fillna("").str.lower().str.contains(PSLF_FILTER_REGEX, na=False)
+    body_match = df["body"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
+    title_match = df["thread_title"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
     df = df[body_match | title_match].copy()
     print(f"  [FILTER] {len(df):,} PSLF-relevant posts retained from forum data")
 
@@ -123,7 +141,7 @@ def load_forum_data() -> pd.DataFrame:
     df["date"] = pd.to_datetime(df["date_posted"], errors="coerce")
     df["text"] = df["body"].fillna("")
     df["score"] = 0
-    return df
+    return _nullify_short_polarity(df)
 
 
 # ---------------------------------------------------------------------------

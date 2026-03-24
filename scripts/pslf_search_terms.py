@@ -66,13 +66,24 @@ SEARCH_TERMS_SIMPLE = [
     "NURSE Corps loan",
 ]
 
-# Regex for post-hoc filtering of scraped content to PSLF-relevant posts
-# Use word boundaries (\b) instead of trailing spaces so terms match at
-# end-of-string and before punctuation (audit fix: trailing-space bug).
+# BROAD filter: used for initial scraping (cast a wide net)
 PSLF_FILTER_REGEX = (
     r"pslf|public service loan forgiveness|loan forgiveness|student loan"
     r"|income.driven|(?<!\w)idr(?!\w)|repayment plan|qualifying payment|save plan"
     r"|repaye|(?<!\w)paye(?!\w)|(?<!\w)ibr(?!\w)|forgiveness|qualifying employer|buyback"
     r"|mohela|fedloan|dept of education|loan repayment"
     r"|nhsc|nurse corps"
+)
+
+# STRICT filter: used for analysis — requires explicit PSLF/forgiveness-program terms
+# Excludes generic "student loan" / "loan repayment" which capture off-topic posts
+# (Audit finding: nursing had only 6.1% explicit PSLF mentions with broad filter)
+PSLF_STRICT_REGEX = (
+    r"\bpslf\b|public service loan forgiveness"
+    r"|loan forgiveness|student loan forgiveness"
+    r"|income.driven repayment|(?<!\w)idr(?!\w)|save plan|repaye|(?<!\w)ibr(?!\w)"
+    r"|qualifying payment|qualifying employer|buyback"
+    r"|mohela|fedloan"
+    r"|nhsc|nurse corps"
+    r"|teacher loan forgiveness"
 )
