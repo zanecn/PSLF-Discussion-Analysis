@@ -58,7 +58,8 @@ def load_reddit_posts() -> pd.DataFrame:
     df = pd.concat(frames, ignore_index=True)
     df["created_utc"] = pd.to_numeric(df["created_utc"], errors="coerce")
     df["date"] = pd.to_datetime(df["created_utc"], unit="s")
-    df["text"] = df["combined_text"].fillna("") + " " + df["title"].fillna("")
+    # combined_text already includes title; don't double-count (B16 fix)
+    df["text"] = df["combined_text"].fillna("")
     return df
 
 
@@ -324,6 +325,7 @@ def temporal_comparison(dfs: dict[str, pd.DataFrame], output_dir: str = "."):
     plt.tight_layout(rect=[0, 0, 1, 0.96])
     outpath = os.path.join(output_dir, "multi_source_sentiment_comparison.png")
     plt.savefig(outpath, dpi=150, bbox_inches="tight")
+    plt.close(fig)  # B1 fix: prevent figure memory leak
     print(f"\n  Saved: {outpath}")
 
 
@@ -428,10 +430,10 @@ def main():
     if not reddit_comments.empty:
         sources["reddit_comments"] = reddit_comments
     if not reddit_professions.empty:
-        # Group by profession for cross-profession comparison
+        # Group by profession for cross-profession comparison (B11 fix: .copy())
         for prof in reddit_professions["profession"].unique():
             key = f"reddit_{prof}"
-            sources[key] = reddit_professions[reddit_professions["profession"] == prof]
+            sources[key] = reddit_professions[reddit_professions["profession"] == prof].copy()
     if not forums.empty:
         for src in forums["data_source"].unique():
             sources[src] = forums[forums["data_source"] == src]

@@ -103,7 +103,7 @@ def search_allnurses(search_terms: list[str], max_pages: int = 3) -> list[dict]:
     """Search allnurses.com using Playwright to bypass Cloudflare."""
     if not HAS_PLAYWRIGHT:
         print("  [ERROR] Playwright required")
-        return []
+        return [], []
 
     threads = []
     seen_urls = set()
@@ -122,11 +122,10 @@ def search_allnurses(search_terms: list[str], max_pages: int = 3) -> list[dict]:
         page.wait_for_timeout(3000)
 
         # Use DuckDuckGo HTML (Google blocks headless with CAPTCHA)
-        import requests as req_lib
         from urllib.parse import unquote as url_unquote
 
-        ddg_session = req_lib.Session()
-        ddg_headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+        ddg_session = requests.Session()
+        ddg_headers = {"User-Agent": HEADERS["User-Agent"]}
 
         for term in tqdm(search_terms, desc="Searching allnurses"):
             try:
@@ -139,8 +138,7 @@ def search_allnurses(search_terms: list[str], max_pages: int = 3) -> list[dict]:
                 if resp.status_code != 200:
                     continue
 
-                from bs4 import BeautifulSoup as BS
-                soup = BS(resp.text, "lxml")
+                soup = BeautifulSoup(resp.text, "lxml")
                 for link in soup.select("a.result__a, a[href*='allnurses']"):
                     href = link.get("href", "")
                     url_match = re.search(r'uddg=([^&]+)', href)

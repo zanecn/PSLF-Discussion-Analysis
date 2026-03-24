@@ -49,10 +49,10 @@ if not frames:
     print("[ERROR] No Reddit CSV files found. Place comprehensive_*_pslf_discussions.csv in data dir.")
     sys.exit(1)
 reddit = pd.concat(frames, ignore_index=True)
-reddit["date"] = pd.to_datetime(
-    pd.to_numeric(reddit["created_utc"], errors="coerce"), unit="s", utc=True
-).dt.tz_localize(None)
-reddit["text"] = reddit["combined_text"].fillna("") + " " + reddit["title"].fillna("")
+# B7 fix: consistent date parsing (epoch seconds, no tz info — same as analyze_multi_source.py)
+reddit["date"] = pd.to_datetime(pd.to_numeric(reddit["created_utc"], errors="coerce"), unit="s")
+# combined_text already includes title; don't double-count (B16 fix)
+reddit["text"] = reddit["combined_text"].fillna("")
 
 # Recompute polarity uniformly with TextBlob for both sources
 from textblob import TextBlob
@@ -67,11 +67,15 @@ print("Recomputing Reddit polarity with TextBlob (consistent with SDN)...")
 reddit["polarity"] = reddit["text"].apply(textblob_polarity)
 
 # ---- Load SDN (PSLF-filtered) ----
+if not os.path.exists("forum_pslf_discussions.csv"):
+    print("[ERROR] forum_pslf_discussions.csv not found. Run collect_forum_data.py first.")
+    sys.exit(1)
 sdn = pd.read_csv("forum_pslf_discussions.csv")
 body_m = sdn["body"].fillna("").str.lower().str.contains(PSLF_FILTER_REGEX, na=False)
 title_m = sdn["thread_title"].fillna("").str.lower().str.contains(PSLF_FILTER_REGEX, na=False)
 sdn = sdn[body_m | title_m].copy()
-sdn["date"] = pd.to_datetime(sdn["date_posted"], errors="coerce", utc=True).dt.tz_localize(None)
+# B6 fix: parse dates without UTC conversion (consistent with analyze_multi_source.py)
+sdn["date"] = pd.to_datetime(sdn["date_posted"], errors="coerce")
 sdn["text"] = sdn["body"].fillna("")
 
 # Recompute SDN polarity with same TextBlob method for consistency
