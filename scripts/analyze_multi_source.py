@@ -78,17 +78,24 @@ def load_reddit_comments() -> pd.DataFrame:
 
 
 def load_reddit_professions() -> pd.DataFrame:
-    """Load Reddit profession-specific PSLF posts."""
+    """Load Reddit profession-specific PSLF posts, filtered for PSLF relevance."""
     f = "reddit_professions_pslf.csv"
     if not os.path.exists(f):
         print(f"  [SKIP] {f} not found. Run collect_reddit_professions.py first.")
         return pd.DataFrame()
     df = pd.read_csv(f)
+
+    # Filter to PSLF-relevant posts (same filter as SDN forum data)
+    pre_filter = len(df)
+    text_match = df["combined_text"].fillna("").str.lower().str.contains(PSLF_FILTER_REGEX, na=False)
+    title_match = df["title"].fillna("").str.lower().str.contains(PSLF_FILTER_REGEX, na=False)
+    df = df[text_match | title_match].copy()
+    print(f"  [FILTER] {len(df):,}/{pre_filter:,} PSLF-relevant profession posts retained")
+
     df["data_source"] = "reddit_" + df["profession"].fillna("unknown")
     df["date"] = pd.to_datetime(df["created_utc"], unit="s", errors="coerce")
     df["text"] = df["combined_text"].fillna("")
     df["score"] = df["score"].fillna(0)
-    print(f"  [LOADED] {len(df):,} profession-specific Reddit posts across {df['profession'].nunique()} professions")
     return df
 
 

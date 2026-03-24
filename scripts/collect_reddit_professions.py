@@ -43,7 +43,10 @@ HEADERS_HTTP = {
     "User-Agent": "PSLF-Analysis/2.0 (academic research, github.com/zanecn/PSLF-Discussion-Analysis)",
 }
 
-RATE_LIMIT = 2.0  # seconds between requests (old.reddit.com rate limit ~30/min for unauthenticated)
+RATE_LIMIT = 2.5  # seconds between requests (old.reddit.com rate limit ~30/min for unauthenticated)
+
+# Sort modes — use 2 to balance coverage vs rate limiting
+SORT_MODES = ["relevance", "new"]
 
 FIELDS = [
     "id",
@@ -69,28 +72,34 @@ FIELDS = [
     "scraped_at",
 ]
 
-# Subreddits mapped to profession labels
+# Subreddits where PSLF is a PRIMARY topic — people making loan/career decisions
+# based on forgiveness policy, not general profession discussion.
 SUBREDDIT_PROFESSIONS = {
-    # Nursing
+    # PSLF-specific communities (core)
+    "PSLF": "general_pslf",
+    "StudentLoans": "general_student_loans",
+    # Medical — high debt ($200K+), PSLF shapes specialty/employer choice
+    "Residency": "medical",
+    "medicalschool": "medical",
+    # Nursing — PSLF/NHSC eligible, nonprofit hospital employment
     "nursing": "nursing",
     "StudentNurse": "nursing",
     "nursepractitioner": "nursing",
-    # Social work
+    # Teaching — Teacher Loan Forgiveness + PSLF, Title I schools
+    "Teachers": "teaching",
+    # Law — $130K+ debt, public interest law vs biglaw driven by PSLF
+    "LawSchool": "law",
+    # Social work — nearly universal PSLF eligibility (nonprofit/govt)
     "socialwork": "social_work",
-    # Government / Federal
+    # Federal employees — automatic PSLF qualifying employer
     "fednews": "federal_employee",
     "govfire": "federal_employee",
-    # Law
-    "LawSchool": "law",
-    # Pharmacy
+    # Pharmacy — $170K avg debt, hospital/VA employment for PSLF
     "pharmacy": "pharmacy",
-    # Allied health
+    # Allied health — OT/PT/SLP with grad school debt + nonprofit employers
     "physicianassistant": "physician_assistant",
     "OccupationalTherapy": "occupational_therapy",
     "slp": "speech_language_pathology",
-    # General PSLF (captures all professions)
-    "PSLF": "general_pslf",
-    "StudentLoans": "general_student_loans",
 }
 
 try:
@@ -115,76 +124,102 @@ def analyze_sentiment(text: str) -> tuple:
         return float("nan"), float("nan")
 
 
+def _fetch_search_page(
+    session: requests.Session,
+    subreddit: str,
+    params: dict,
+) -> tuple[list[dict], str | None]:
+    """Fetch one page of Reddit search results. Returns (posts, after_cursor)."""
+    url = f"https://old.reddit.com/r/{subreddit}/search.json"
+    resp = None
+
+    for attempt in range(3):
+        try:
+            resp = session.get(url, params=params, headers=HEADERS_HTTP, timeout=15)
+            if resp.status_code == 200:
+                break
+            if resp.status_code == 429:
+                wait = int(resp.headers.get("Retry-After", 15))
+                time.sleep(wait)
+                continue
+            if resp.status_code in (403, 451):
+                return [], None
+            time.sleep(RATE_LIMIT * (attempt + 1))
+        except requests.exceptions.RequestException:
+            if attempt == 2:
+                return [], None
+            time.sleep(RATE_LIMIT * (attempt + 1))
+
+    if resp is None or resp.status_code != 200:
+        return [], None
+
+    try:
+        data = resp.json()
+    except json.JSONDecodeError:
+        return [], None
+
+    children = data.get("data", {}).get("children", [])
+    posts = [c["data"] for c in children if c.get("kind") == "t3"]
+    after = data.get("data", {}).get("after")
+    return posts, after
+
+
 def search_subreddit_json(
     session: requests.Session,
     subreddit: str,
     query: str,
-    max_results: int = 100,
+    max_results: int = 500,
 ) -> list[dict]:
     """Search a subreddit using old.reddit.com JSON endpoint.
 
-    Paginates with 'after' cursor. Returns raw post dicts.
+    Uses multiple sort modes (relevance, new, top, comments) and
+    paginates each to maximize unique results beyond Reddit's per-query cap.
     """
-    posts = []
-    after = None
-    per_page = 25  # Reddit max per page for JSON
+    all_posts = {}  # id -> post dict (dedup by ID)
 
-    while len(posts) < max_results:
-        params = {
-            "q": query,
-            "restrict_sr": "on",
-            "sort": "relevance",
-            "t": "all",
-            "limit": per_page,
-        }
-        if after:
-            params["after"] = after
-
-        url = f"https://old.reddit.com/r/{subreddit}/search.json"
-
-        for attempt in range(3):
-            try:
-                resp = session.get(url, params=params, headers=HEADERS_HTTP, timeout=15)
-                if resp.status_code == 200:
-                    break
-                if resp.status_code == 429:
-                    wait = int(resp.headers.get("Retry-After", 10))
-                    tqdm.write(f"    Rate limited, waiting {wait}s...")
-                    time.sleep(wait)
-                    continue
-                if resp.status_code in (403, 451):
-                    return posts  # subreddit restricted/quarantined
-                time.sleep(RATE_LIMIT * (attempt + 1))
-            except requests.exceptions.RequestException as e:
-                if attempt == 2:
-                    tqdm.write(f"    [ERROR] r/{subreddit} search: {e}")
-                    return posts
-                time.sleep(RATE_LIMIT * (attempt + 1))
-
-        if resp.status_code != 200:
+    for sort in SORT_MODES:
+        if len(all_posts) >= max_results:
             break
 
-        try:
-            data = resp.json()
-        except json.JSONDecodeError:
-            break
+        after = None
+        pages_fetched = 0
+        max_pages = 20  # 20 pages × 25 = 500 results per sort mode
 
-        children = data.get("data", {}).get("children", [])
-        if not children:
-            break
+        while pages_fetched < max_pages and len(all_posts) < max_results:
+            params = {
+                "q": query,
+                "restrict_sr": "on",
+                "sort": sort,
+                "t": "all",
+                "limit": 25,
+            }
+            if after:
+                params["after"] = after
 
-        for child in children:
-            if child.get("kind") == "t3":  # link/post
-                posts.append(child["data"])
+            posts, after = _fetch_search_page(session, subreddit, params)
 
-        # Pagination
-        after = data.get("data", {}).get("after")
-        if not after:
-            break
+            if not posts:
+                break
 
-        time.sleep(RATE_LIMIT)
+            new_count = 0
+            for p in posts:
+                pid = p.get("id", "")
+                if pid and pid not in all_posts:
+                    all_posts[pid] = p
+                    new_count += 1
 
-    return posts[:max_results]
+            pages_fetched += 1
+
+            # If this page returned zero new posts, this sort mode is exhausted
+            if new_count == 0:
+                break
+
+            if not after:
+                break
+
+            time.sleep(RATE_LIMIT)
+
+    return list(all_posts.values())[:max_results]
 
 
 # ---------------------------------------------------------------------------
