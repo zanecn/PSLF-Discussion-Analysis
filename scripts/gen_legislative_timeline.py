@@ -96,6 +96,7 @@ EVENTS = [
     ("2024-07-01", "SAVE Plan\nBlocked", "8th Circuit injunction"),
     ("2025-03-07", "Trump PSLF\nExec Order", "Restricts PSLF processing"),
     ("2025-05-22", "OBBBA\nPassed", "Caps/changes IDR"),
+    ("2026-03-24", "Present\nDay", "Current analysis date"),
 ]
 
 COLORS = {"reddit": "#FF6B35", "reddit_prof": "#E91E63", "sdn": "#2196F3"}
@@ -140,7 +141,7 @@ def fig1_timeline(all_data):
     ax1.set_title("Monthly Sentiment with Policy Events", fontsize=15, fontweight="bold")
     ax1.legend(fontsize=11, loc="lower left")
     ax1.grid(alpha=0.3)
-    ax1.set_xlim(pd.Timestamp("2012-01-01"), pd.Timestamp("2026-04-01"))
+    ax1.set_xlim(pd.Timestamp("2012-01-01"), pd.Timestamp("2026-05-01"))
 
     # Panel 2: Volume
     ax2 = axes[1]
@@ -155,7 +156,7 @@ def fig1_timeline(all_data):
     ax2.set_title("Discussion Volume (PSLF-filtered)", fontsize=15, fontweight="bold")
     ax2.legend(fontsize=11)
     ax2.grid(alpha=0.3)
-    ax2.set_xlim(pd.Timestamp("2012-01-01"), pd.Timestamp("2026-04-01"))
+    ax2.set_xlim(pd.Timestamp("2012-01-01"), pd.Timestamp("2026-05-01"))
 
     # Panel 3: % Negative (quarterly)
     ax3 = axes[2]
@@ -172,7 +173,7 @@ def fig1_timeline(all_data):
     ax3.set_title("Negativity Rate Over Time", fontsize=15, fontweight="bold")
     ax3.legend(fontsize=11)
     ax3.grid(alpha=0.3)
-    ax3.set_xlim(pd.Timestamp("2012-01-01"), pd.Timestamp("2026-04-01"))
+    ax3.set_xlim(pd.Timestamp("2012-01-01"), pd.Timestamp("2026-05-01"))
 
     plt.tight_layout(rect=[0, 0, 1, 0.95])
     plt.savefig("pslf_sentiment_legislative_timeline.png", dpi=300, bbox_inches="tight")
@@ -276,8 +277,98 @@ def fig2_pre_post(all_data):
         print(f"    Welch t={r['t']:.3f}, p={r['p']:.6f} {sig}, Glass d={r['d']:+.3f} ({d_label})")
 
 
+def fig3_profession_timeline(all_data):
+    """Per-profession sentiment timecourse aligned with policy events."""
+    # Map to clean profession labels
+    prof_map = {
+        "medical": "Medical", "teacher": "Teaching",
+        "general_pslf": "r/PSLF", "general_student_loans": "r/StudentLoans",
+        "nursing": "Nursing", "law": "Law", "social_work": "Social Work",
+        "federal_employee": "Federal", "pharmacy": "Pharmacy",
+        "physician_assistant": "PA", "occupational_therapy": "OT",
+        "speech_language_pathology": "SLP", "sdn_medical": "SDN Forum",
+        "sdn": "SDN Forum",
+    }
+    colors_prof = {
+        "Medical": "#E53935", "Teaching": "#8E24AA", "r/PSLF": "#1E88E5",
+        "r/StudentLoans": "#00ACC1", "Nursing": "#43A047", "Law": "#FB8C00",
+        "Social Work": "#5E35B1", "Federal": "#3949AB", "Pharmacy": "#00897B",
+        "PA": "#757575", "OT": "#F4511E", "SLP": "#C0CA33", "SDN Forum": "#1565C0",
+    }
+
+    all_data = all_data.copy()
+    all_data["prof_label"] = all_data["profession"].map(prof_map).fillna("Other")
+
+    # Only include professions with enough data for meaningful timecourse
+    min_total = 80
+    prof_counts = all_data["prof_label"].value_counts()
+    valid_profs = prof_counts[prof_counts >= min_total].index.tolist()
+
+    fig, axes = plt.subplots(2, 1, figsize=(26, 16), gridspec_kw={"height_ratios": [3, 2]})
+    fig.suptitle(
+        "PSLF Sentiment by Profession Over Time\n"
+        f"(Quarterly, min 10 posts/quarter, strict filter, n={len(all_data):,})",
+        fontsize=20, fontweight="bold", y=0.99,
+    )
+
+    # Panel 1: Quarterly polarity by profession
+    ax1 = axes[0]
+    for prof in valid_profs:
+        sub = all_data[all_data["prof_label"] == prof].set_index("date").resample("QE")["polarity"]
+        quarterly = sub.agg(["mean", "count"])
+        quarterly = quarterly[quarterly["count"] >= 10]
+        if quarterly.empty or len(quarterly) < 3:
+            continue
+        color = colors_prof.get(prof, "gray")
+        ax1.plot(quarterly.index, quarterly["mean"], label=prof, color=color,
+                 linewidth=2, alpha=0.8, marker="o", markersize=3)
+
+    for date_str, label, _ in EVENTS:
+        dt = pd.Timestamp(date_str)
+        if dt >= pd.Timestamp("2018-01-01"):
+            ax1.axvline(x=dt, color="gray", linestyle="--", alpha=0.5, linewidth=1)
+            ax1.text(dt, ax1.get_ylim()[1] if ax1.get_ylim()[1] > 0 else 0.25,
+                     label.replace("\n", " "), fontsize=7, ha="center", va="bottom",
+                     rotation=45, color="gray")
+
+    ax1.axhline(y=0, color="black", linewidth=0.5)
+    ax1.set_ylabel("Mean Polarity (quarterly)", fontsize=13)
+    ax1.set_title("Sentiment Trajectory by Profession", fontsize=16, fontweight="bold")
+    ax1.legend(fontsize=9, ncol=3, loc="lower left")
+    ax1.grid(alpha=0.3)
+    ax1.set_xlim(pd.Timestamp("2018-01-01"), pd.Timestamp("2026-05-01"))
+
+    # Panel 2: Stacked volume by profession
+    ax2 = axes[1]
+    pivot = all_data[all_data["prof_label"].isin(valid_profs)].copy()
+    pivot = pivot.set_index("date").groupby("prof_label").resample("QE").size().unstack(level=0, fill_value=0)
+    # Sort columns by total volume
+    col_order = pivot.sum().sort_values(ascending=False).index.tolist()
+    pivot = pivot[col_order]
+    stack_colors = [colors_prof.get(p, "gray") for p in col_order]
+    ax2.stackplot(pivot.index, *[pivot[c].values for c in col_order],
+                  labels=col_order, colors=stack_colors, alpha=0.7)
+
+    for date_str, _, _ in EVENTS:
+        dt = pd.Timestamp(date_str)
+        if dt >= pd.Timestamp("2018-01-01"):
+            ax2.axvline(x=dt, color="gray", linestyle="--", alpha=0.4)
+
+    ax2.set_ylabel("Posts per Quarter", fontsize=13)
+    ax2.set_title("Discussion Volume by Profession", fontsize=16, fontweight="bold")
+    ax2.legend(fontsize=8, ncol=4, loc="upper left")
+    ax2.grid(alpha=0.3)
+    ax2.set_xlim(pd.Timestamp("2018-01-01"), pd.Timestamp("2026-05-01"))
+
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    plt.savefig("pslf_profession_timecourse.png", dpi=300, bbox_inches="tight")
+    plt.close()
+    print("Saved: pslf_profession_timecourse.png")
+
+
 if __name__ == "__main__":
     all_data = load_all_data()
     print(f"Total posts: {len(all_data):,}")
     fig1_timeline(all_data)
     fig2_pre_post(all_data)
+    fig3_profession_timeline(all_data)
