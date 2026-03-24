@@ -73,35 +73,13 @@ FIELDS = [
     "scraped_at",
 ]
 
-SEARCH_TERMS = [
-    # Core PSLF
-    "PSLF",
-    "Public Service Loan Forgiveness",
-    "loan forgiveness residency",
-    "student loan forgiveness",
-    "qualifying employer",
-    "buyback PSLF",
-    # Repayment plans
-    "SAVE plan",
-    "SAVE injunction",
-    "income driven repayment",
-    "REPAYE",
-    "IBR loan",
-    # Policy (2024-2026)
-    "OBBBA student loans",
-    "one big beautiful bill loans",
-    "loan forgiveness executive order",
-    # Medical-specific
-    "loan forgiveness specialty",
-    "PSLF residency",
-    "residency loan repayment",
-    "student debt specialty choice",
-    "nonprofit hospital loan",
-    "NHSC loan repayment",
-    # Servicers
-    "MOHELA PSLF",
-    "FedLoan PSLF",
-]
+try:
+    from pslf_search_terms import SEARCH_TERMS
+except ImportError:
+    # Fallback if module not on path
+    import sys
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from pslf_search_terms import SEARCH_TERMS
 
 SDN_BASE = "https://forums.studentdoctor.net"
 

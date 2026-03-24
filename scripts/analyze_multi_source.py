@@ -69,6 +69,21 @@ def load_reddit_comments() -> pd.DataFrame:
     return df
 
 
+def load_reddit_professions() -> pd.DataFrame:
+    """Load Reddit profession-specific PSLF posts."""
+    f = "reddit_professions_pslf.csv"
+    if not os.path.exists(f):
+        print(f"  [SKIP] {f} not found. Run collect_reddit_professions.py first.")
+        return pd.DataFrame()
+    df = pd.read_csv(f)
+    df["data_source"] = "reddit_" + df["profession"].fillna("unknown")
+    df["date"] = pd.to_datetime(df["created_utc"], unit="s", errors="coerce")
+    df["text"] = df["combined_text"].fillna("")
+    df["score"] = df["score"].fillna(0)
+    print(f"  [LOADED] {len(df):,} profession-specific Reddit posts across {df['profession'].nunique()} professions")
+    return df
+
+
 def load_forum_data() -> pd.DataFrame:
     """Load SDN forum data, filtered to PSLF-relevant posts only.
 
@@ -178,6 +193,14 @@ def temporal_comparison(dfs: dict[str, pd.DataFrame], output_dir: str = "."):
         "reddit_posts": "#FF6B35",
         "reddit_comments": "#FFA500",
         "forum_sdn": "#2196F3",
+        "reddit_nursing": "#E91E63",
+        "reddit_social_work": "#9C27B0",
+        "reddit_federal_employee": "#3F51B5",
+        "reddit_law": "#009688",
+        "reddit_pharmacy": "#795548",
+        "reddit_physician_assistant": "#607D8B",
+        "reddit_occupational_therapy": "#FF9800",
+        "reddit_speech_language_pathology": "#8BC34A",
     }
 
     policy_events = [
@@ -368,9 +391,10 @@ def main():
     print(f"Run at: {datetime.now(timezone.utc):%Y-%m-%d %H:%M UTC}")
     print("=" * 70)
 
-    # Load all sources (Twitter excluded — use X API for reliable collection)
+    # Load all sources
     reddit_posts = load_reddit_posts()
     reddit_comments = load_reddit_comments()
+    reddit_professions = load_reddit_professions()
     forums = load_forum_data()
 
     # Build unified dict
@@ -379,8 +403,12 @@ def main():
         sources["reddit_posts"] = reddit_posts
     if not reddit_comments.empty:
         sources["reddit_comments"] = reddit_comments
+    if not reddit_professions.empty:
+        # Group by profession for cross-profession comparison
+        for prof in reddit_professions["profession"].unique():
+            key = f"reddit_{prof}"
+            sources[key] = reddit_professions[reddit_professions["profession"] == prof]
     if not forums.empty:
-        # Split by platform
         for src in forums["data_source"].unique():
             sources[src] = forums[forums["data_source"] == src]
 
