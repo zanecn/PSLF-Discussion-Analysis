@@ -69,16 +69,35 @@ def load_reddit_comments() -> pd.DataFrame:
 
 
 def load_forum_data() -> pd.DataFrame:
-    """Load SDN + WCI forum data."""
+    """Load SDN forum data, filtered to PSLF-relevant posts only.
+
+    The scraper collects entire threads that matched PSLF search queries,
+    but many replies within those threads are off-topic (general career
+    discussion, salary, rotations, etc.). Filter to posts where the body
+    text or thread title mentions PSLF/loan-forgiveness keywords.
+    """
     f = "forum_pslf_discussions.csv"
     if not os.path.exists(f):
         print(f"  [SKIP] {f} not found. Run collect_forum_data.py first.")
         return pd.DataFrame()
     df = pd.read_csv(f)
+
+    # Filter to PSLF-relevant posts
+    pslf_keywords = (
+        r"pslf|public service loan forgiveness|loan forgiveness|student loan"
+        r"|income driven|idr |repayment plan|qualifying payment|save plan"
+        r"|repaye|paye |ibr |forgiveness|qualifying employer|buyback"
+        r"|mohela|fedloan|dept of education|loan repayment"
+    )
+    body_match = df["body"].fillna("").str.lower().str.contains(pslf_keywords, na=False)
+    title_match = df["thread_title"].fillna("").str.lower().str.contains(pslf_keywords, na=False)
+    df = df[body_match | title_match].copy()
+    print(f"  [FILTER] {len(df):,} PSLF-relevant posts retained from forum data")
+
     df["data_source"] = "forum_" + df["source"].fillna("unknown")
     df["date"] = pd.to_datetime(df["date_posted"], errors="coerce")
     df["text"] = df["body"].fillna("")
-    df["score"] = 0  # forums don't have upvotes in the same way
+    df["score"] = 0
     return df
 
 
