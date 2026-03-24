@@ -106,159 +106,147 @@ def collect_bogleheads(
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        context = browser.new_context(
-            user_agent=(
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/125.0.0.0 Safari/537.36"
-            ),
-            viewport={"width": 1280, "height": 800},
-        )
-        page = context.new_page()
+        try:
+            context = browser.new_context(
+                user_agent=(
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/125.0.0.0 Safari/537.36"
+                ),
+                viewport={"width": 1280, "height": 800},
+            )
+            page = context.new_page()
 
-        # Skip direct Cloudflare challenge — go via Google instead
-        print("  Starting Google site-search (bypasses Cloudflare)...")
+            # Phase 1: Discover threads via DuckDuckGo HTML site-search
+            print(f"\n  Phase 1: Searching via DuckDuckGo ({len(search_terms)} queries)...")
 
-        # Phase 1: Discover threads via DuckDuckGo HTML site-search
-        # (Google blocks headless Playwright with CAPTCHA; Bogleheads Cloudflare blocks direct search)
-        print(f"\n  Phase 1: Searching via DuckDuckGo ({len(search_terms)} queries)...")
+            import requests as req_lib
+            from urllib.parse import unquote as url_unquote
 
-        import requests as req_lib
-        from urllib.parse import unquote as url_unquote
+            ddg_session = req_lib.Session()
+            ddg_headers = {"User-Agent": "PSLF-Analysis/2.0 (academic research)"}
 
-        ddg_session = req_lib.Session()
-        ddg_headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
-
-        for term in tqdm(search_terms, desc="Searching Bogleheads"):
-            try:
-                resp = ddg_session.get(
-                    "https://html.duckduckgo.com/html/",
-                    params={"q": f'site:bogleheads.org/forum "{term}"'},
-                    headers=ddg_headers,
-                    timeout=15,
-                )
-                if resp.status_code != 200:
-                    continue
-
-                soup = BeautifulSoup(resp.text, "lxml")
-                for link in soup.select("a.result__a, a[href*='bogleheads']"):
-                    href = link.get("href", "")
-                    # DDG wraps URLs in redirect: ...uddg=ENCODED_URL...
-                    url_match = re.search(r'uddg=([^&]+)', href)
-                    if url_match:
-                        real_url = url_unquote(url_match.group(1))
-                    else:
-                        real_url = href
-
-                    if "viewtopic.php" not in real_url:
-                        continue
-                    tid_match = re.search(r't=(\d+)', real_url)
-                    if not tid_match:
-                        continue
-
-                    tid = tid_match.group(1)
-                    clean_url = f"{BASE_URL}/viewtopic.php?t={tid}"
-                    if clean_url not in seen_thread_urls:
-                        seen_thread_urls.add(clean_url)
-                        title = link.get_text(strip=True)
-                        threads.append({
-                            "url": clean_url,
-                            "title": title,
-                            "thread_id": tid,
-                        })
-
-            except Exception as e:
-                tqdm.write(f"  [DDG search error] '{term}': {e}")
-
-            time.sleep(RATE_LIMIT)
-
-        threads = threads[:max_threads]
-        print(f"  Found {len(threads)} unique threads")
-
-        if not threads:
-            browser.close()
-            return []
-
-        # Phase 2: Scrape thread contents via Playwright
-        print(f"\n  Phase 2: Scraping threads...")
-        for thread_info in tqdm(threads, desc="Scraping Bogleheads"):
-            post_counter = 0
-
-            for page_num in range(max_thread_pages):
-                url = thread_info["url"]
-                if page_num > 0:
-                    url += f"&start={page_num * 20}"  # phpBB default 20 posts/page
-
+            for term in tqdm(search_terms, desc="Searching Bogleheads"):
                 try:
-                    page.goto(url, wait_until="domcontentloaded", timeout=45000)
-                    page.wait_for_timeout(3000)
+                    resp = ddg_session.get(
+                        "https://html.duckduckgo.com/html/",
+                        params={"q": f'site:bogleheads.org/forum "{term}"'},
+                        headers=ddg_headers,
+                        timeout=15,
+                    )
+                    if resp.status_code != 200:
+                        continue
 
-                    html = page.content()
-                    soup = BeautifulSoup(html, "lxml")
+                    soup = BeautifulSoup(resp.text, "lxml")
+                    for link in soup.select("a.result__a, a[href*='bogleheads']"):
+                        href = link.get("href", "")
+                        url_match = re.search(r'uddg=([^&]+)', href)
+                        real_url = url_unquote(url_match.group(1)) if url_match else href
 
-                    # phpBB post containers
-                    posts_els = soup.select(".post, .postbody, div[id^='post_content']")
-                    if not posts_els:
-                        posts_els = soup.select("[class*='post']")
-                        posts_els = [el for el in posts_els if el.select_one(".content, .postbody")]
+                        if "viewtopic.php" not in real_url:
+                            continue
+                        tid_match = re.search(r't=(\d+)', real_url)
+                        if not tid_match:
+                            continue
 
-                    if not posts_els and page_num > 0:
-                        break
-
-                    for post_el in posts_els:
-                        # Author
-                        author_el = post_el.select_one(
-                            ".author a, .username, .postprofile a, dt a"
-                        )
-                        author = author_el.get_text(strip=True) if author_el else "Unknown"
-
-                        # Body — strip quotes
-                        body_el = post_el.select_one(".content, .postbody")
-                        if body_el:
-                            for bq in body_el.find_all("blockquote"):
-                                bq.decompose()
-                            body = body_el.get_text(separator=" ", strip=True)
-                        else:
-                            body = ""
-
-                        # Date
-                        date_el = post_el.select_one("time, .author, p.author")
-                        date_str = ""
-                        if date_el:
-                            date_str = date_el.get("datetime", "") or date_el.get_text(strip=True)
-
-                        if body.strip():
-                            pol, subj = analyze_sentiment(body)
-                            all_posts.append({
-                                "source": "bogleheads",
-                                "thread_id": thread_info["thread_id"],
-                                "thread_title": thread_info["title"],
-                                "thread_url": thread_info["url"],
-                                "post_id": make_post_id("bogleheads", thread_info["thread_id"], post_counter),
-                                "post_number": post_counter,
-                                "author": author,
-                                "body": body[:10000],
-                                "date_posted": date_str,
-                                "is_thread_start": post_counter == 0,
-                                "word_count": len(body.split()),
-                                "polarity": pol,
-                                "subjectivity": subj,
-                                "scraped_at": datetime.now(timezone.utc).isoformat(),
+                        tid = tid_match.group(1)
+                        clean_url = f"{BASE_URL}/viewtopic.php?t={tid}"
+                        if clean_url not in seen_thread_urls:
+                            seen_thread_urls.add(clean_url)
+                            title = link.get_text(strip=True)
+                            threads.append({
+                                "url": clean_url,
+                                "title": title,
+                                "thread_id": tid,
                             })
-                            post_counter += 1
-
-                    # Check for next page
-                    next_link = soup.select_one(".arrow.next a, a[rel='next']")
-                    if not next_link:
-                        break
 
                 except Exception as e:
-                    tqdm.write(f"  [Thread error] {url}: {e}")
-                    break
+                    tqdm.write(f"  [DDG search error] '{term}': {e}")
 
-                page.wait_for_timeout(int(RATE_LIMIT * 1000))
+                time.sleep(RATE_LIMIT)
 
-        browser.close()
+            ddg_session.close()
+
+            threads = threads[:max_threads]
+            print(f"  Found {len(threads)} unique threads")
+
+            if not threads:
+                return []
+
+            # Phase 2: Scrape thread contents via Playwright
+            print(f"\n  Phase 2: Scraping threads...")
+            for thread_info in tqdm(threads, desc="Scraping Bogleheads"):
+                post_counter = 0
+
+                for page_num in range(max_thread_pages):
+                    url = thread_info["url"]
+                    if page_num > 0:
+                        url += f"&start={page_num * 20}"
+
+                    try:
+                        page.goto(url, wait_until="domcontentloaded", timeout=45000)
+                        page.wait_for_timeout(3000)
+
+                        html = page.content()
+                        soup = BeautifulSoup(html, "lxml")
+
+                        posts_els = soup.select(".post, .postbody, div[id^='post_content']")
+                        if not posts_els:
+                            posts_els = soup.select("[class*='post']")
+                            posts_els = [el for el in posts_els if el.select_one(".content, .postbody")]
+
+                        if not posts_els and page_num > 0:
+                            break
+
+                        for post_el in posts_els:
+                            author_el = post_el.select_one(".author a, .username, .postprofile a, dt a")
+                            author = author_el.get_text(strip=True) if author_el else "Unknown"
+
+                            body_el = post_el.select_one(".content, .postbody")
+                            if body_el:
+                                for bq in body_el.find_all("blockquote"):
+                                    bq.decompose()
+                                body = body_el.get_text(separator=" ", strip=True)
+                            else:
+                                body = ""
+
+                            date_el = post_el.select_one("time, .author, p.author")
+                            date_str = ""
+                            if date_el:
+                                date_str = date_el.get("datetime", "") or date_el.get_text(strip=True)
+
+                            if body.strip():
+                                pol, subj = analyze_sentiment(body)
+                                all_posts.append({
+                                    "source": "bogleheads",
+                                    "thread_id": thread_info["thread_id"],
+                                    "thread_title": thread_info["title"],
+                                    "thread_url": thread_info["url"],
+                                    "post_id": make_post_id("bogleheads", thread_info["thread_id"], post_counter),
+                                    "post_number": post_counter,
+                                    "author": author,
+                                    "body": body[:10000],
+                                    "date_posted": date_str,
+                                    "is_thread_start": post_counter == 0,
+                                    "word_count": len(body.split()),
+                                    "polarity": pol,
+                                    "subjectivity": subj,
+                                    "scraped_at": datetime.now(timezone.utc).isoformat(),
+                                })
+                                post_counter += 1
+
+                        next_link = soup.select_one(".arrow.next a, a[rel='next']")
+                        if not next_link:
+                            break
+
+                    except Exception as e:
+                        tqdm.write(f"  [Thread error] {url}: {e}")
+                        break
+
+                    page.wait_for_timeout(int(RATE_LIMIT * 1000))
+
+        finally:
+            browser.close()
 
     return all_posts
 

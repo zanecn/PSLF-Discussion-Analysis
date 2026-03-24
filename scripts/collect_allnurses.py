@@ -124,7 +124,7 @@ def search_allnurses(search_terms: list[str], max_pages: int = 3) -> list[dict]:
         # Use DuckDuckGo HTML (Google blocks headless with CAPTCHA)
         from urllib.parse import unquote as url_unquote
 
-        ddg_session = requests.Session()
+        ddg_session = requests.Session()  # closed below after search
         ddg_headers = {"User-Agent": HEADERS["User-Agent"]}
 
         for term in tqdm(search_terms, desc="Searching allnurses"):
@@ -193,6 +193,9 @@ def search_allnurses(search_terms: list[str], max_pages: int = 3) -> list[dict]:
                 except Exception as e:
                     tqdm.write(f"  [On-site search error] '{term}': {e}")
                 page.wait_for_timeout(int(RATE_LIMIT * 1000))
+
+        # Close DDG session
+        ddg_session.close()
 
         # Harvest cookies for requests session
         cookies = context.cookies()

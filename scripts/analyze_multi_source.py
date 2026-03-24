@@ -436,7 +436,7 @@ def main():
             sources[key] = reddit_professions[reddit_professions["profession"] == prof].copy()
     if not forums.empty:
         for src in forums["data_source"].unique():
-            sources[src] = forums[forums["data_source"] == src]
+            sources[src] = forums[forums["data_source"] == src].copy()
 
     if not sources:
         print("[ERROR] No data sources found. Run collection scripts first.")

@@ -286,7 +286,8 @@ def main():
         subs = set(p["subreddit"] for p in all_posts if p["profession"] == prof)
         print(f"    {prof}: {count:,} posts from {', '.join(sorted(subs))}")
     if all_posts:
-        pols = [p["polarity"] for p in all_posts if p["polarity"] == p["polarity"]]  # filter NaN
+        import math
+        pols = [p["polarity"] for p in all_posts if not math.isnan(p["polarity"])]
         if pols:
             print(f"  Mean polarity: {sum(pols)/len(pols):.4f}")
     print(f"  Output: {args.output}")
