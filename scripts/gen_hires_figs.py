@@ -6,6 +6,7 @@ Usage:
 """
 import argparse
 import os
+import sys
 import warnings
 
 import matplotlib
@@ -17,6 +18,13 @@ from wordcloud import WordCloud
 from collections import Counter
 
 warnings.filterwarnings("ignore", category=FutureWarning)
+
+# Import shared PSLF filter regex
+try:
+    from pslf_search_terms import PSLF_FILTER_REGEX
+except ImportError:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from pslf_search_terms import PSLF_FILTER_REGEX
 
 # M13 fix: use argparse or script-relative paths instead of hardcoded chdir
 parser = argparse.ArgumentParser()
@@ -37,6 +45,9 @@ for f, prof in [("comprehensive_medical_pslf_discussions.csv", "medical"),
         df = pd.read_csv(f)
         df["profession"] = prof
         frames.append(df)
+if not frames:
+    print("[ERROR] No Reddit CSV files found. Place comprehensive_*_pslf_discussions.csv in data dir.")
+    sys.exit(1)
 reddit = pd.concat(frames, ignore_index=True)
 reddit["date"] = pd.to_datetime(
     pd.to_numeric(reddit["created_utc"], errors="coerce"), unit="s", utc=True
@@ -57,12 +68,8 @@ reddit["polarity"] = reddit["text"].apply(textblob_polarity)
 
 # ---- Load SDN (PSLF-filtered) ----
 sdn = pd.read_csv("forum_pslf_discussions.csv")
-kw = (r"pslf|public service loan forgiveness|loan forgiveness|student loan"
-      r"|income driven|idr |repayment plan|qualifying payment|save plan"
-      r"|repaye|paye |ibr |forgiveness|qualifying employer|buyback"
-      r"|mohela|fedloan|loan repayment")
-body_m = sdn["body"].fillna("").str.lower().str.contains(kw, na=False)
-title_m = sdn["thread_title"].fillna("").str.lower().str.contains(kw, na=False)
+body_m = sdn["body"].fillna("").str.lower().str.contains(PSLF_FILTER_REGEX, na=False)
+title_m = sdn["thread_title"].fillna("").str.lower().str.contains(PSLF_FILTER_REGEX, na=False)
 sdn = sdn[body_m | title_m].copy()
 sdn["date"] = pd.to_datetime(sdn["date_posted"], errors="coerce", utc=True).dt.tz_localize(None)
 sdn["text"] = sdn["body"].fillna("")

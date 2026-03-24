@@ -26,6 +26,13 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
+# Import shared PSLF filter regex for consistency across all scripts
+try:
+    from pslf_search_terms import PSLF_FILTER_REGEX
+except ImportError:
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__))))
+    from pslf_search_terms import PSLF_FILTER_REGEX
+
 # m7 fix: only suppress specific noisy warnings, not all
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=pd.errors.SettingWithCopyWarning)
@@ -98,15 +105,9 @@ def load_forum_data() -> pd.DataFrame:
         return pd.DataFrame()
     df = pd.read_csv(f)
 
-    # Filter to PSLF-relevant posts
-    pslf_keywords = (
-        r"pslf|public service loan forgiveness|loan forgiveness|student loan"
-        r"|income driven|idr |repayment plan|qualifying payment|save plan"
-        r"|repaye|paye |ibr |forgiveness|qualifying employer|buyback"
-        r"|mohela|fedloan|dept of education|loan repayment"
-    )
-    body_match = df["body"].fillna("").str.lower().str.contains(pslf_keywords, na=False)
-    title_match = df["thread_title"].fillna("").str.lower().str.contains(pslf_keywords, na=False)
+    # Filter to PSLF-relevant posts using shared regex
+    body_match = df["body"].fillna("").str.lower().str.contains(PSLF_FILTER_REGEX, na=False)
+    title_match = df["thread_title"].fillna("").str.lower().str.contains(PSLF_FILTER_REGEX, na=False)
     df = df[body_match | title_match].copy()
     print(f"  [FILTER] {len(df):,} PSLF-relevant posts retained from forum data")
 
@@ -156,29 +157,52 @@ def cross_source_sentiment_comparison(dfs: dict[str, pd.DataFrame]):
         print("  Need at least 2 sources with polarity data for comparison")
         return
 
-    # Pairwise t-tests with Bonferroni correction (M11 fix)
+    # Pairwise comparisons with Bonferroni correction
+    # Uses both Welch's t-test and Mann-Whitney U (non-parametric, no normality assumption)
+    # Effect size: Glass's delta (uses control group SD, consistent with unequal-variance assumption)
     source_names = list(valid_sources.keys())
     n_comparisons = len(source_names) * (len(source_names) - 1) // 2
     if n_comparisons == 0:
         return
     alpha_corrected = 0.05 / n_comparisons  # Bonferroni
-    print(f"  Bonferroni-corrected alpha: {alpha_corrected:.4f} ({n_comparisons} comparisons)\n")
+    print(f"  Bonferroni-corrected alpha: {alpha_corrected:.4f} ({n_comparisons} comparisons)")
+    print(f"  Effect size: Glass's delta (denominator = larger group SD)")
+    print(f"  Tests: Welch's t (parametric) + Mann-Whitney U (non-parametric)\n")
+
+    MIN_GROUP_SIZE = 20  # minimum for reliable statistical comparison
 
     for i in range(len(source_names)):
         for j in range(i + 1, len(source_names)):
             s1, s2 = source_names[i], source_names[j]
             g1, g2 = valid_sources[s1], valid_sources[s2]
-            t_stat, p_val = stats.ttest_ind(g1, g2, equal_var=False)
-
-            # M9 fix: correct Cohen's d with weighted pooled SD
             n1, n2 = len(g1), len(g2)
-            s1_std, s2_std = g1.std(), g2.std()
-            pooled_sd = np.sqrt(((n1 - 1) * s1_std**2 + (n2 - 1) * s2_std**2) / (n1 + n2 - 2))
-            d = (g1.mean() - g2.mean()) / pooled_sd if pooled_sd > 0 else 0.0
 
-            sig = "***" if p_val < 0.001 else "**" if p_val < 0.01 else "*" if p_val < 0.05 else "ns"
-            bonf_sig = " (sig after Bonferroni)" if p_val < alpha_corrected else ""
-            print(f"  {s1} vs {s2}: t={t_stat:.3f}, p={p_val:.6f} {sig}{bonf_sig}, Cohen's d={d:.3f}")
+            if n1 < MIN_GROUP_SIZE or n2 < MIN_GROUP_SIZE:
+                print(f"  {s1} vs {s2}: SKIPPED (n1={n1}, n2={n2}, min={MIN_GROUP_SIZE})")
+                continue
+
+            # Welch's t-test (does not assume equal variance)
+            t_stat, p_welch = stats.ttest_ind(g1, g2, equal_var=False)
+
+            # Mann-Whitney U (non-parametric, no normality assumption)
+            u_stat, p_mw = stats.mannwhitneyu(g1, g2, alternative="two-sided")
+
+            # Glass's delta: use the larger group's SD as denominator
+            # (consistent with Welch's unequal-variance assumption)
+            ref_std = g1.std() if n1 >= n2 else g2.std()
+            glass_d = (g1.mean() - g2.mean()) / ref_std if ref_std > 0 else 0.0
+
+            # Effect size interpretation
+            abs_d = abs(glass_d)
+            d_label = "large" if abs_d >= 0.8 else "medium" if abs_d >= 0.5 else "small" if abs_d >= 0.2 else "negligible"
+
+            sig = "***" if p_welch < 0.001 else "**" if p_welch < 0.01 else "*" if p_welch < 0.05 else "ns"
+            bonf_sig = " (Bonf.)" if p_welch < alpha_corrected else ""
+            mw_sig = "***" if p_mw < 0.001 else "**" if p_mw < 0.01 else "*" if p_mw < 0.05 else "ns"
+
+            print(f"  {s1} vs {s2}:")
+            print(f"    Welch t={t_stat:.3f}, p={p_welch:.6f} {sig}{bonf_sig} | MW U={u_stat:.0f}, p={p_mw:.6f} {mw_sig}")
+            print(f"    Glass's d={glass_d:.3f} ({d_label}), n1={n1}, n2={n2}")
 
 
 def temporal_comparison(dfs: dict[str, pd.DataFrame], output_dir: str = "."):

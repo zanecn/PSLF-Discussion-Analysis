@@ -368,8 +368,10 @@ def main():
     print(f"  Threads scraped: {n_threads}")
     print(f"  Total posts: {len(all_posts):,}")
     if all_posts:
-        pols = [p["polarity"] for p in all_posts]
-        print(f"  Mean polarity: {sum(pols)/len(pols):.4f}")
+        import math
+        pols = [p["polarity"] for p in all_posts if not math.isnan(p["polarity"])]
+        if pols:
+            print(f"  Mean polarity: {sum(pols)/len(pols):.4f} ({len(pols)} valid)")
         wcs = [p["word_count"] for p in all_posts]
         print(f"  Mean word count: {sum(wcs)/len(wcs):.0f}")
     print(f"  Output: {args.output}")

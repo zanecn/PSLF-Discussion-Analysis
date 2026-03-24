@@ -1,11 +1,16 @@
 """
 pslf_search_terms.py
 ====================
-Shared PSLF search terms used consistently across ALL data collection scripts.
+Shared PSLF search terms, filter regex, and constants used consistently
+across ALL data collection and analysis scripts.
 
-Import this module in any collector to ensure term consistency:
-    from pslf_search_terms import SEARCH_TERMS, PSLF_FILTER_REGEX
+Import this module in any collector to ensure consistency:
+    from pslf_search_terms import SEARCH_TERMS, PSLF_FILTER_REGEX, USER_AGENT, BODY_MAX_LEN
 """
+
+# Shared constants
+USER_AGENT = "PSLF-Analysis/2.0 (academic research, github.com/zanecn/PSLF-Discussion-Analysis)"
+BODY_MAX_LEN = 10000  # max characters to store per post body
 
 # Full search terms — used for forum/site search queries
 SEARCH_TERMS = [
@@ -62,10 +67,12 @@ SEARCH_TERMS_SIMPLE = [
 ]
 
 # Regex for post-hoc filtering of scraped content to PSLF-relevant posts
+# Use word boundaries (\b) instead of trailing spaces so terms match at
+# end-of-string and before punctuation (audit fix: trailing-space bug).
 PSLF_FILTER_REGEX = (
     r"pslf|public service loan forgiveness|loan forgiveness|student loan"
-    r"|income driven|idr |repayment plan|qualifying payment|save plan"
-    r"|repaye|paye |ibr |forgiveness|qualifying employer|buyback"
+    r"|income.driven|(?<!\w)idr(?!\w)|repayment plan|qualifying payment|save plan"
+    r"|repaye|(?<!\w)paye(?!\w)|(?<!\w)ibr(?!\w)|forgiveness|qualifying employer|buyback"
     r"|mohela|fedloan|dept of education|loan repayment"
     r"|nhsc|nurse corps"
 )

@@ -205,8 +205,6 @@ def main():
     print("Reddit Multi-Profession PSLF Collector (JSON API)")
     print(f"{'='*60}")
 
-    session = requests.Session()
-
     subs_to_scrape = args.subreddits or list(SUBREDDIT_PROFESSIONS.keys())
     print(f"  Subreddits: {len(subs_to_scrape)}")
     print(f"  Search queries: {len(SEARCH_QUERIES)}")
@@ -215,60 +213,61 @@ def main():
     all_posts = []
     seen_ids = set()
 
-    for sub in tqdm(subs_to_scrape, desc="Subreddits"):
-        profession = SUBREDDIT_PROFESSIONS.get(sub, sub)
-        sub_posts = []
+    with requests.Session() as session:
+        for sub in tqdm(subs_to_scrape, desc="Subreddits"):
+            profession = SUBREDDIT_PROFESSIONS.get(sub, sub)
+            sub_posts = []
 
-        for query in SEARCH_QUERIES:
-            raw_posts = search_subreddit_json(
-                session, sub, query,
-                max_results=args.max_per_sub - len(sub_posts),
-            )
+            for query in SEARCH_QUERIES:
+                raw_posts = search_subreddit_json(
+                    session, sub, query,
+                    max_results=args.max_per_sub - len(sub_posts),
+                )
 
-            for p in raw_posts:
-                pid = p.get("id", "")
-                if pid in seen_ids:
-                    continue
-                seen_ids.add(pid)
+                for p in raw_posts:
+                    pid = p.get("id", "")
+                    if pid in seen_ids:
+                        continue
+                    seen_ids.add(pid)
 
-                title = p.get("title", "")
-                selftext = p.get("selftext", "")
-                combined = f"{title} {selftext}".strip()
-                pol, subj = analyze_sentiment(combined)
-                created = p.get("created_utc", 0)
+                    title = p.get("title", "")
+                    selftext = p.get("selftext", "")
+                    combined = f"{title} {selftext}".strip()
+                    pol, subj = analyze_sentiment(combined)
+                    created = p.get("created_utc", 0)
 
-                row = {
-                    "id": pid,
-                    "subreddit": p.get("subreddit", sub),
-                    "profession": profession,
-                    "title": title,
-                    "selftext": selftext[:10000],
-                    "combined_text": combined[:10000],
-                    "author": p.get("author", "[deleted]"),
-                    "score": p.get("score", 0),
-                    "num_comments": p.get("num_comments", 0),
-                    "created_utc": created,
-                    "created_datetime": datetime.fromtimestamp(
-                        created, tz=timezone.utc
-                    ).strftime("%Y-%m-%d %H:%M:%S") if created else "",
-                    "permalink": p.get("permalink", ""),
-                    "url": p.get("url", ""),
-                    "upvote_ratio": p.get("upvote_ratio", 0),
-                    "is_self": p.get("is_self", True),
-                    "link_flair_text": p.get("link_flair_text", "") or "",
-                    "word_count": len(combined.split()),
-                    "polarity": pol,
-                    "subjectivity": subj,
-                    "query_matched": query,
-                    "scraped_at": datetime.now(timezone.utc).isoformat(),
-                }
-                sub_posts.append(row)
+                    row = {
+                        "id": pid,
+                        "subreddit": p.get("subreddit", sub),
+                        "profession": profession,
+                        "title": title,
+                        "selftext": selftext[:10000],
+                        "combined_text": combined[:10000],
+                        "author": p.get("author", "[deleted]"),
+                        "score": p.get("score", 0),
+                        "num_comments": p.get("num_comments", 0),
+                        "created_utc": created,
+                        "created_datetime": datetime.fromtimestamp(
+                            created, tz=timezone.utc
+                        ).strftime("%Y-%m-%d %H:%M:%S") if created else "",
+                        "permalink": p.get("permalink", ""),
+                        "url": p.get("url", ""),
+                        "upvote_ratio": p.get("upvote_ratio", 0),
+                        "is_self": p.get("is_self", True),
+                        "link_flair_text": p.get("link_flair_text", "") or "",
+                        "word_count": len(combined.split()),
+                        "polarity": pol,
+                        "subjectivity": subj,
+                        "query_matched": query,
+                        "scraped_at": datetime.now(timezone.utc).isoformat(),
+                    }
+                    sub_posts.append(row)
 
-            if len(sub_posts) >= args.max_per_sub:
-                break
+                if len(sub_posts) >= args.max_per_sub:
+                    break
 
-        all_posts.extend(sub_posts)
-        tqdm.write(f"  r/{sub}: {len(sub_posts)} posts ({profession})")
+            all_posts.extend(sub_posts)
+            tqdm.write(f"  r/{sub}: {len(sub_posts)} posts ({profession})")
 
     # Write output
     with open(args.output, "w", newline="", encoding="utf-8") as f:
