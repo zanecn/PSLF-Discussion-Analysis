@@ -74,18 +74,33 @@ FIELDS = [
 ]
 
 SEARCH_TERMS = [
+    # Core PSLF
     "PSLF",
     "Public Service Loan Forgiveness",
     "loan forgiveness residency",
     "student loan forgiveness",
-    "SAVE plan",
-    "income driven repayment",
-    "loan forgiveness specialty",
-    "buyback PSLF",
     "qualifying employer",
+    "buyback PSLF",
+    # Repayment plans
+    "SAVE plan",
+    "SAVE injunction",
+    "income driven repayment",
+    "REPAYE",
+    "IBR loan",
+    # Policy (2024-2026)
+    "OBBBA student loans",
+    "one big beautiful bill loans",
+    "loan forgiveness executive order",
+    # Medical-specific
+    "loan forgiveness specialty",
     "PSLF residency",
+    "residency loan repayment",
     "student debt specialty choice",
     "nonprofit hospital loan",
+    "NHSC loan repayment",
+    # Servicers
+    "MOHELA PSLF",
+    "FedLoan PSLF",
 ]
 
 SDN_BASE = "https://forums.studentdoctor.net"
@@ -94,17 +109,24 @@ SDN_BASE = "https://forums.studentdoctor.net"
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
-def analyze_sentiment(text: str) -> tuple[float, float]:
+def analyze_sentiment(text: str) -> tuple[float | None, float | None]:
+    """Return (polarity, subjectivity) via TextBlob.
+
+    Returns (NaN, NaN) on error so downstream analysis can distinguish
+    failures from genuinely neutral text (M1 fix).
+    """
+    if not text or not text.strip():
+        return float("nan"), float("nan")
     try:
         blob = TextBlob(text[:5000])
         return round(blob.sentiment.polarity, 6), round(blob.sentiment.subjectivity, 6)
     except Exception:
-        return 0.0, 0.0
+        return float("nan"), float("nan")
 
 
 def make_post_id(source: str, thread_id: str, post_number: int) -> str:
     raw = f"{source}:{thread_id}:{post_number}"
-    return hashlib.md5(raw.encode()).hexdigest()[:12]
+    return hashlib.sha256(raw.encode()).hexdigest()[:16]  # m2 fix: SHA-256, 16 chars
 
 
 # ---------------------------------------------------------------------------
@@ -208,77 +230,113 @@ def sdn_search_playwright(search_terms: list[str], max_pages: int = 5) -> list[d
 # ---------------------------------------------------------------------------
 # SDN Thread Scraper (requests + BS4 — works without JS)
 # ---------------------------------------------------------------------------
-def scrape_sdn_thread(session: requests.Session, thread_info: dict, max_pages: int = 10) -> list[dict]:
-    """Scrape all posts from a single SDN XenForo thread."""
+def scrape_sdn_thread(
+    session: requests.Session,
+    thread_info: dict,
+    max_pages: int = 10,
+    max_retries: int = 2,
+) -> list[dict]:
+    """Scrape all posts from a single SDN XenForo thread.
+
+    Fixes applied:
+      C1 — Running post counter instead of page-relative formula
+      C2 — Strip <blockquote> elements before extracting body text
+      M3 — Retry with backoff on transient failures
+    """
     posts = []
     base_url = thread_info["url"]
+    post_counter = 0  # C1 fix: running counter across pages
 
     for page in range(1, max_pages + 1):
         url = f"{base_url}/page-{page}" if page > 1 else base_url
-        try:
-            resp = session.get(url, headers=HEADERS, timeout=15)
-            if resp.status_code != 200:
+
+        # M3 fix: retry with backoff
+        resp = None
+        for attempt in range(max_retries + 1):
+            try:
+                resp = session.get(url, headers=HEADERS, timeout=15)
+                if resp.status_code == 200:
+                    break
+                if resp.status_code in (429, 503) and attempt < max_retries:
+                    time.sleep(RATE_LIMIT * (attempt + 2))
+                    continue
                 break
-            soup = BeautifulSoup(resp.text, "lxml")
+            except requests.exceptions.RequestException as e:
+                if attempt < max_retries:
+                    time.sleep(RATE_LIMIT * (attempt + 2))
+                    continue
+                print(f"  [SDN thread error] {url}: {e}")
+                return posts  # return what we have so far
 
-            # XenForo message containers
-            messages = soup.select("article.message--post, article.message")
-            if not messages:
-                messages = soup.select(".message--post, .message")
-            if not messages and page > 1:
-                break
-
-            for i, msg in enumerate(messages):
-                # Author
-                author_el = msg.select_one(
-                    ".message-userDetails a, .username, "
-                    "[data-author], .message-name a"
-                )
-                author = author_el.get_text(strip=True) if author_el else "Unknown"
-                if not author and msg.get("data-author"):
-                    author = msg.get("data-author")
-
-                # Body
-                body_el = msg.select_one(
-                    ".message-body .bbWrapper, .messageContent .bbWrapper, "
-                    ".message-content .bbWrapper, .bbWrapper"
-                )
-                body = body_el.get_text(separator=" ", strip=True) if body_el else ""
-
-                # Date
-                time_el = msg.select_one("time, .message-date time, .DateTime")
-                date_str = ""
-                if time_el:
-                    date_str = (
-                        time_el.get("datetime", "")
-                        or time_el.get("title", "")
-                        or time_el.get_text(strip=True)
-                    )
-
-                post_num = (page - 1) * max(len(messages), 1) + i
-                pol, subj = analyze_sentiment(body)
-
-                posts.append({
-                    "source": "sdn",
-                    "thread_id": thread_info["thread_id"],
-                    "thread_title": thread_info["title"],
-                    "thread_url": thread_info["url"],
-                    "post_id": make_post_id("sdn", thread_info["thread_id"], post_num),
-                    "post_number": post_num,
-                    "author": author,
-                    "body": body[:10000],
-                    "date_posted": date_str,
-                    "is_thread_start": post_num == 0,
-                    "word_count": len(body.split()),
-                    "polarity": pol,
-                    "subjectivity": subj,
-                    "scraped_at": datetime.now(timezone.utc).isoformat(),
-                })
-
-            time.sleep(RATE_LIMIT)
-        except Exception as e:
-            print(f"  [SDN thread error] {url}: {e}")
+        if resp is None or resp.status_code != 200:
             break
+
+        soup = BeautifulSoup(resp.text, "lxml")
+
+        # XenForo message containers
+        messages = soup.select("article.message--post, article.message")
+        if not messages:
+            messages = soup.select(".message--post, .message")
+        if not messages and page > 1:
+            break
+
+        for msg in messages:
+            # Author
+            author_el = msg.select_one(
+                ".message-userDetails a, .username, "
+                "[data-author], .message-name a"
+            )
+            author = author_el.get_text(strip=True) if author_el else "Unknown"
+            if not author and msg.get("data-author"):
+                author = msg.get("data-author")
+
+            # Body — C2 fix: strip blockquotes before extracting text
+            body_el = msg.select_one(
+                ".message-body .bbWrapper, .messageContent .bbWrapper, "
+                ".message-content .bbWrapper, .bbWrapper"
+            )
+            if body_el:
+                # Remove quoted content to avoid sentiment contamination
+                for bq in body_el.find_all("blockquote"):
+                    bq.decompose()
+                # Also remove "Click to expand..." remnants
+                for expand in body_el.find_all(class_="js-expandLink"):
+                    expand.decompose()
+                body = body_el.get_text(separator=" ", strip=True)
+            else:
+                body = ""
+
+            # Date
+            time_el = msg.select_one("time, .message-date time, .DateTime")
+            date_str = ""
+            if time_el:
+                date_str = (
+                    time_el.get("datetime", "")
+                    or time_el.get("title", "")
+                    or time_el.get_text(strip=True)
+                )
+
+            pol, subj = analyze_sentiment(body)
+
+            posts.append({
+                "source": "sdn",
+                "thread_id": thread_info["thread_id"],
+                "thread_title": thread_info["title"],
+                "thread_url": thread_info["url"],
+                "post_id": make_post_id("sdn", thread_info["thread_id"], post_counter),
+                "post_number": post_counter,
+                "author": author,
+                "body": body[:10000],
+                "date_posted": date_str,
+                "is_thread_start": post_counter == 0,
+                "word_count": len(body.split()),
+                "polarity": pol,
+                "subjectivity": subj,
+                "scraped_at": datetime.now(timezone.utc).isoformat(),
+            })
+            post_counter += 1
+
+        time.sleep(RATE_LIMIT)
 
     return posts
 
@@ -308,15 +366,15 @@ def main():
         print("  [ERROR] No threads found. Check network/Playwright installation.")
         return
 
-    # Phase 2: Scrape thread contents with requests
+    # Phase 2: Scrape thread contents with requests (M4 fix: use context manager)
     print(f"\nPhase 2: Scraping thread contents (up to {args.thread_pages} pages per thread)...")
-    session = requests.Session()
-    session.headers.update(HEADERS)
 
     all_posts = []
-    for thread in tqdm(threads, desc="Scraping SDN threads"):
-        posts = scrape_sdn_thread(session, thread, max_pages=args.thread_pages)
-        all_posts.extend(posts)
+    with requests.Session() as session:
+        session.headers.update(HEADERS)
+        for thread in tqdm(threads, desc="Scraping SDN threads"):
+            posts = scrape_sdn_thread(session, thread, max_pages=args.thread_pages)
+            all_posts.extend(posts)
 
     # Write output
     with open(args.output, "w", newline="", encoding="utf-8") as f:

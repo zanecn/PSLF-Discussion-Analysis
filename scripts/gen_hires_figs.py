@@ -1,5 +1,13 @@
-"""Generate high-resolution (300 DPI) figures for PSLF analysis."""
-import os, warnings, re
+"""Generate high-resolution (300 DPI) figures for PSLF analysis.
+
+Usage:
+    python scripts/gen_hires_figs.py
+    # Run from the PSLF-Discussion-Analysis directory (where CSVs live)
+"""
+import argparse
+import os
+import warnings
+
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -7,10 +15,19 @@ import numpy as np
 import pandas as pd
 from wordcloud import WordCloud
 from collections import Counter
-from scipy import stats
-warnings.filterwarnings("ignore")
 
-os.chdir("C:/Users/zanen/PSLF_2026/PSLF-Discussion-Analysis")
+warnings.filterwarnings("ignore", category=FutureWarning)
+
+# M13 fix: use argparse or script-relative paths instead of hardcoded chdir
+parser = argparse.ArgumentParser()
+parser.add_argument("--data-dir", default=None, help="Directory containing CSV files")
+args, _ = parser.parse_known_args()
+if args.data_dir:
+    os.chdir(args.data_dir)
+elif os.path.exists("comprehensive_medical_pslf_discussions.csv"):
+    pass  # already in the right directory
+elif os.path.exists(os.path.join(os.path.dirname(__file__), "..", "PSLF-Discussion-Analysis")):
+    os.chdir(os.path.join(os.path.dirname(__file__), "..", "PSLF-Discussion-Analysis"))
 
 # ---- Load Reddit ----
 frames = []
@@ -161,7 +178,7 @@ periods = [
     ("Pre-Waiver (2016-2021)", pd.Timestamp("2016-01-01"), pd.Timestamp("2021-10-05")),
     ("PSLF Waiver (2021-2022)", pd.Timestamp("2021-10-06"), pd.Timestamp("2022-10-31")),
     ("Post-Waiver (2022-2024)", pd.Timestamp("2022-11-01"), pd.Timestamp("2024-06-30")),
-    ("SAVE Crisis (2024-2025)", pd.Timestamp("2024-07-01"), pd.Timestamp("2025-12-31")),
+    ("SAVE Crisis (2024-2026)", pd.Timestamp("2024-07-01"), pd.Timestamp("2026-12-31")),
 ]
 
 stop = set(

@@ -17,17 +17,18 @@ import os
 import sys
 import warnings
 from collections import Counter
-from datetime import datetime
+from datetime import datetime, timezone
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
 import numpy as np
 import pandas as pd
 from scipy import stats
 
-warnings.filterwarnings("ignore")
+# m7 fix: only suppress specific noisy warnings, not all
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", category=pd.errors.SettingWithCopyWarning)
 
 
 # ---------------------------------------------------------------------------
@@ -101,35 +102,6 @@ def load_forum_data() -> pd.DataFrame:
     return df
 
 
-def load_twitter_data() -> pd.DataFrame:
-    """Load X/Twitter data."""
-    f = "twitter_pslf_discussions.csv"
-    if not os.path.exists(f):
-        print(f"  [SKIP] {f} not found. Run collect_twitter_data.py first.")
-        return pd.DataFrame()
-    df = pd.read_csv(f)
-    df["data_source"] = "twitter"
-    # Handle various date formats: "Mar 22", "Feb 6", "29 Dec 2025", ISO, etc.
-    def parse_twitter_date(d):
-        if pd.isna(d) or not str(d).strip():
-            return pd.NaT
-        d = str(d).strip()
-        import re
-        # "Mar 22" or "Feb 6" (no year) -> assume 2026
-        if re.match(r'^[A-Z][a-z]{2}\s+\d{1,2}$', d):
-            d = d + ", 2026"
-        # "29 Dec 2025" format
-        elif re.match(r'^\d{1,2}\s+[A-Z][a-z]{2}\s+\d{4}$', d):
-            pass  # pandas handles this
-        # Nitter format: "Mar 23, 2026 · 9:00 PM UTC"
-        d = re.sub(r'\s*·.*', '', d)
-        return pd.to_datetime(d, errors="coerce")
-    df["date"] = df["created_at"].apply(parse_twitter_date)
-    df["text"] = df["text"].fillna("")
-    df["score"] = df["like_count"].fillna(0)
-    return df
-
-
 # ---------------------------------------------------------------------------
 # Analysis
 # ---------------------------------------------------------------------------
@@ -169,19 +141,29 @@ def cross_source_sentiment_comparison(dfs: dict[str, pd.DataFrame]):
         print("  Need at least 2 sources with polarity data for comparison")
         return
 
-    # Pairwise t-tests
+    # Pairwise t-tests with Bonferroni correction (M11 fix)
     source_names = list(valid_sources.keys())
+    n_comparisons = len(source_names) * (len(source_names) - 1) // 2
+    if n_comparisons == 0:
+        return
+    alpha_corrected = 0.05 / n_comparisons  # Bonferroni
+    print(f"  Bonferroni-corrected alpha: {alpha_corrected:.4f} ({n_comparisons} comparisons)\n")
+
     for i in range(len(source_names)):
         for j in range(i + 1, len(source_names)):
             s1, s2 = source_names[i], source_names[j]
-            t_stat, p_val = stats.ttest_ind(
-                valid_sources[s1], valid_sources[s2], equal_var=False
-            )
-            d = (valid_sources[s1].mean() - valid_sources[s2].mean()) / np.sqrt(
-                (valid_sources[s1].std() ** 2 + valid_sources[s2].std() ** 2) / 2
-            )
+            g1, g2 = valid_sources[s1], valid_sources[s2]
+            t_stat, p_val = stats.ttest_ind(g1, g2, equal_var=False)
+
+            # M9 fix: correct Cohen's d with weighted pooled SD
+            n1, n2 = len(g1), len(g2)
+            s1_std, s2_std = g1.std(), g2.std()
+            pooled_sd = np.sqrt(((n1 - 1) * s1_std**2 + (n2 - 1) * s2_std**2) / (n1 + n2 - 2))
+            d = (g1.mean() - g2.mean()) / pooled_sd if pooled_sd > 0 else 0.0
+
             sig = "***" if p_val < 0.001 else "**" if p_val < 0.01 else "*" if p_val < 0.05 else "ns"
-            print(f"  {s1} vs {s2}: t={t_stat:.3f}, p={p_val:.4f} {sig}, Cohen's d={d:.3f}")
+            bonf_sig = " (sig after Bonferroni)" if p_val < alpha_corrected else ""
+            print(f"  {s1} vs {s2}: t={t_stat:.3f}, p={p_val:.6f} {sig}{bonf_sig}, Cohen's d={d:.3f}")
 
 
 def temporal_comparison(dfs: dict[str, pd.DataFrame], output_dir: str = "."):
@@ -196,7 +178,6 @@ def temporal_comparison(dfs: dict[str, pd.DataFrame], output_dir: str = "."):
         "reddit_posts": "#FF6B35",
         "reddit_comments": "#FFA500",
         "forum_sdn": "#2196F3",
-        "forum_wci": "#4CAF50",
     }
 
     policy_events = [
@@ -338,6 +319,9 @@ def forum_vs_reddit_analysis(reddit: pd.DataFrame, forums: pd.DataFrame):
     if forums.empty:
         print("\n  [SKIP] No forum data available")
         return
+    if reddit.empty or "text" not in reddit.columns:
+        print("\n  [SKIP] No Reddit data available for comparison")
+        return
 
     print("\n" + "=" * 70)
     print("FORUM vs REDDIT DISCOURSE COMPARISON")
@@ -358,7 +342,6 @@ def forum_vs_reddit_analysis(reddit: pd.DataFrame, forums: pd.DataFrame):
 
     # Topic keywords unique to each platform
     def top_keywords(texts, n=15):
-        from collections import Counter
         words = " ".join(texts.fillna("").str.lower()).split()
         stop = {"the", "a", "an", "is", "are", "was", "were", "be", "been",
                 "being", "have", "has", "had", "do", "does", "did", "will",
@@ -382,7 +365,7 @@ def forum_vs_reddit_analysis(reddit: pd.DataFrame, forums: pd.DataFrame):
 def main():
     print("=" * 70)
     print("PSLF MULTI-SOURCE SENTIMENT ANALYSIS")
-    print(f"Run at: {datetime.utcnow():%Y-%m-%d %H:%M UTC}")
+    print(f"Run at: {datetime.now(timezone.utc):%Y-%m-%d %H:%M UTC}")
     print("=" * 70)
 
     # Load all sources (Twitter excluded — use X API for reliable collection)

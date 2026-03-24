@@ -17,10 +17,8 @@ Usage:
 import argparse
 import csv
 import os
-import sys
 import time
 from datetime import datetime, timezone
-from pathlib import Path
 
 import praw
 from textblob import TextBlob
@@ -84,19 +82,27 @@ def load_post_ids(files: list[str]) -> list[dict]:
     return posts
 
 
-def analyze_sentiment(text: str) -> tuple[float, float]:
-    """Return (polarity, subjectivity) via TextBlob."""
+def analyze_sentiment(text: str) -> tuple[float | None, float | None]:
+    """Return (polarity, subjectivity) via TextBlob.
+
+    Returns (NaN, NaN) on error or empty text (M1 fix).
+    """
+    if not text or not text.strip():
+        return float("nan"), float("nan")
     try:
-        blob = TextBlob(text)
+        blob = TextBlob(text[:5000])  # M8 fix: cap length for performance
         return round(blob.sentiment.polarity, 6), round(blob.sentiment.subjectivity, 6)
     except Exception:
-        return 0.0, 0.0
+        return float("nan"), float("nan")
 
 
 def flatten_comments(comment_forest, post_meta: dict, max_depth: int) -> list[dict]:
-    """Recursively flatten a comment forest into rows."""
+    """Recursively flatten a comment forest into rows.
+
+    M6 fix: reverse initial stack so pop() processes in correct order.
+    """
     rows = []
-    stack = [(c, 0) for c in comment_forest]
+    stack = [(c, 0) for c in reversed(list(comment_forest))]
     while stack:
         comment, depth = stack.pop()
         if isinstance(comment, praw.models.MoreComments):
@@ -126,8 +132,8 @@ def flatten_comments(comment_forest, post_meta: dict, max_depth: int) -> list[di
             "word_count": len(body.split()),
         })
 
-        # Add replies to stack
-        for reply in comment.replies:
+        # Add replies to stack (reversed for correct ordering with LIFO pop)
+        for reply in reversed(list(comment.replies)):
             stack.append((reply, depth + 1))
 
     return rows
@@ -166,42 +172,35 @@ def main():
                 collected_post_ids.add(row["post_id"])
         print(f"Resuming: {len(collected_post_ids)} posts already collected")
 
-    # Open output file
+    # Open output file (M5 fix: use context manager to prevent file handle leak)
     mode = "a" if args.resume and collected_post_ids else "w"
-    outfile = open(args.output, mode, newline="", encoding="utf-8")
-    writer = csv.DictWriter(outfile, fieldnames=COMMENT_FIELDS)
-    if mode == "w":
-        writer.writeheader()
-
     total_comments = 0
     errors = 0
 
-    for post_meta in tqdm(posts, desc="Collecting comments"):
-        pid = post_meta["id"]
-        if pid in collected_post_ids:
-            continue
+    with open(args.output, mode, newline="", encoding="utf-8") as outfile:
+        writer = csv.DictWriter(outfile, fieldnames=COMMENT_FIELDS)
+        if mode == "w":
+            writer.writeheader()
 
-        try:
-            submission = reddit.submission(id=pid)
-            submission.comments.replace_more(limit=MAX_COMMENTS_PER_POST)
-            rows = flatten_comments(
-                submission.comments.list() if hasattr(submission.comments, 'list') else submission.comments,
-                post_meta,
-                MAX_COMMENT_DEPTH,
-            )
-            # Actually flatten properly from the forest
-            rows = flatten_comments(submission.comments, post_meta, MAX_COMMENT_DEPTH)
-            for row in rows:
-                writer.writerow(row)
-            total_comments += len(rows)
+        for post_meta in tqdm(posts, desc="Collecting comments"):
+            pid = post_meta["id"]
+            if pid in collected_post_ids:
+                continue
 
-        except Exception as e:
-            errors += 1
-            tqdm.write(f"  [ERROR] Post {pid}: {e}")
+            try:
+                submission = reddit.submission(id=pid)
+                submission.comments.replace_more(limit=MAX_COMMENTS_PER_POST)
+                # C4 fix: single flatten call using comment forest (not .list())
+                rows = flatten_comments(submission.comments, post_meta, MAX_COMMENT_DEPTH)
+                for row in rows:
+                    writer.writerow(row)
+                total_comments += len(rows)
 
-        time.sleep(RATE_LIMIT_SLEEP)
+            except Exception as e:
+                errors += 1
+                tqdm.write(f"  [ERROR] Post {pid}: {e}")
 
-    outfile.close()
+            time.sleep(RATE_LIMIT_SLEEP)
 
     print(f"\n{'='*60}")
     print(f"Collection complete!")
