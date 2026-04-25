@@ -38,6 +38,26 @@ import requests
 from scipy import stats
 
 warnings.filterwarnings("ignore")
+
+# Consistent aesthetic theme
+plt.rcParams.update({
+    "figure.facecolor": "white",
+    "axes.facecolor": "white",
+    "axes.edgecolor": "#333333",
+    "axes.labelcolor": "#222222",
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": True,
+    "grid.color": "#DDDDDD",
+    "grid.linestyle": "-",
+    "grid.linewidth": 0.5,
+    "grid.alpha": 0.7,
+    "xtick.color": "#444444",
+    "ytick.color": "#444444",
+    "legend.frameon": False,
+    "font.family": "DejaVu Sans",
+    "axes.titlepad": 10,
+})
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pslf_search_terms import PSLF_STRICT_REGEX
 
@@ -286,61 +306,123 @@ def main():
 
     # 7. Generate figure
     print("\nGenerating correlation figure...")
-    fig, axes = plt.subplots(3, 1, figsize=(20, 14), gridspec_kw={"height_ratios": [2, 2, 2]})
+    fig = plt.figure(figsize=(22, 16))
+    gs = fig.add_gridspec(3, 1, height_ratios=[2, 2, 1.6], hspace=0.45)
+    ax1 = fig.add_subplot(gs[0])
+    ax2 = fig.add_subplot(gs[1], sharex=ax1)
+    ax3 = fig.add_subplot(gs[2])
+
     fig.suptitle(
-        f"PSLF Online Sentiment vs CFPB Complaints (Public Administrative Data)\n"
-        f"(n={len(sent):,} posts | n={len(complaints_pslf):,} complaints)",
-        fontsize=18, fontweight="bold", y=0.99,
+        "PSLF Online Sentiment vs CFPB Administrative Complaints",
+        fontsize=22, fontweight="bold", y=0.995,
     )
+    fig.text(0.5, 0.972,
+             f"n={len(sent):,} sentiment posts; n={len(complaints_pslf):,} CFPB complaints "
+             f"(PSLF-filtered, 2016-2026)",
+             ha="center", fontsize=12, style="italic", color="#555555")
 
-    # Panel 1: Dual-axis sentiment + complaints
-    ax1 = axes[0]
+    # ---- Panel 1: Dual-axis sentiment + complaints (smoothed) ----
     ax1b = ax1.twinx()
-    ax1.plot(monthly_sentiment.index, monthly_sentiment["mean"], color="#FF6B35",
-             linewidth=2, label="Mean Sentiment Polarity (left)")
-    ax1.set_ylabel("Mean Polarity", color="#FF6B35", fontsize=12)
-    ax1.tick_params(axis="y", labelcolor="#FF6B35")
-    ax1.axhline(y=0, color="gray", linewidth=0.5)
-    ax1b.plot(monthly_complaints.index, monthly_complaints.values, color="#1976D2",
-              linewidth=2, alpha=0.8, label="CFPB Complaints (right)")
-    ax1b.set_ylabel("CFPB PSLF Complaints (monthly)", color="#1976D2", fontsize=12)
+    ax1b.spines["top"].set_visible(False)
+
+    # Apply 3-month rolling smooth for clarity
+    smooth_pol = monthly_sentiment["mean"].rolling(window=3, center=True, min_periods=1).mean()
+    smooth_cmp = monthly_complaints.rolling(window=3, center=True, min_periods=1).mean()
+
+    # Polarity background scatter + smoothed line
+    ax1.scatter(monthly_sentiment.index, monthly_sentiment["mean"],
+                color="#FF6B35", alpha=0.25, s=15, zorder=2)
+    ax1.plot(smooth_pol.index, smooth_pol.values, color="#D84315",
+             linewidth=2.8, label="Sentiment Polarity (3-mo smooth)", zorder=3)
+    ax1.set_ylabel("Mean Polarity", color="#D84315", fontsize=12, fontweight="bold")
+    ax1.tick_params(axis="y", labelcolor="#D84315")
+    ax1.axhline(y=0, color="#888888", linewidth=0.6)
+
+    # Complaints filled area
+    ax1b.fill_between(smooth_cmp.index, 0, smooth_cmp.values,
+                      color="#1976D2", alpha=0.20, zorder=1)
+    ax1b.plot(smooth_cmp.index, smooth_cmp.values, color="#1976D2",
+              linewidth=2.5, label="CFPB Complaints (3-mo smooth)", zorder=2)
+    ax1b.set_ylabel("CFPB PSLF Complaints / month", color="#1976D2", fontsize=12, fontweight="bold")
     ax1b.tick_params(axis="y", labelcolor="#1976D2")
-    ax1.set_title("Online Sentiment vs Administrative Complaint Volume", fontsize=14, fontweight="bold")
-    ax1.grid(alpha=0.3)
+    ax1b.grid(False)
 
-    # Panel 2: % negative vs complaints
-    ax2 = axes[1]
+    ax1.set_title("Online Sentiment Polarity vs Complaint Volume", fontsize=14,
+                  fontweight="bold", loc="left")
+
+    # Combined legend
+    lines1, labels1 = ax1.get_legend_handles_labels()
+    lines2, labels2 = ax1b.get_legend_handles_labels()
+    ax1.legend(lines1 + lines2, labels1 + labels2, loc="upper left",
+               frameon=True, facecolor="white", edgecolor="#CCCCCC")
+
+    # ---- Panel 2: % negative vs complaints ----
     ax2b = ax2.twinx()
-    ax2.plot(monthly_neg.index, monthly_neg.values, color="#D32F2F",
-             linewidth=2, label="% Negative Posts (left)")
-    ax2.set_ylabel("% Negative Posts", color="#D32F2F", fontsize=12)
-    ax2.tick_params(axis="y", labelcolor="#D32F2F")
-    ax2b.plot(monthly_complaints.index, monthly_complaints.values, color="#1976D2",
-              linewidth=2, alpha=0.8, label="CFPB Complaints (right)")
-    ax2b.set_ylabel("CFPB PSLF Complaints (monthly)", color="#1976D2", fontsize=12)
-    ax2b.tick_params(axis="y", labelcolor="#1976D2")
-    ax2.set_title("Negativity Rate vs Complaint Volume", fontsize=14, fontweight="bold")
-    ax2.grid(alpha=0.3)
+    ax2b.spines["top"].set_visible(False)
 
-    # Panel 3: Cross-correlation function
-    ax3 = axes[2]
+    smooth_neg = monthly_neg.rolling(window=3, center=True, min_periods=1).mean()
+    ax2.scatter(monthly_neg.index, monthly_neg.values,
+                color="#D32F2F", alpha=0.25, s=15, zorder=2)
+    ax2.plot(smooth_neg.index, smooth_neg.values, color="#B71C1C",
+             linewidth=2.8, label="% Negative (3-mo smooth)", zorder=3)
+    ax2.set_ylabel("% Negative Posts", color="#B71C1C", fontsize=12, fontweight="bold")
+    ax2.tick_params(axis="y", labelcolor="#B71C1C")
+
+    ax2b.fill_between(smooth_cmp.index, 0, smooth_cmp.values,
+                      color="#1976D2", alpha=0.20, zorder=1)
+    ax2b.plot(smooth_cmp.index, smooth_cmp.values, color="#1976D2",
+              linewidth=2.5, label="CFPB Complaints (3-mo smooth)", zorder=2)
+    ax2b.set_ylabel("CFPB PSLF Complaints / month", color="#1976D2", fontsize=12, fontweight="bold")
+    ax2b.tick_params(axis="y", labelcolor="#1976D2")
+    ax2b.grid(False)
+    ax2.set_title("Negativity Rate vs Complaint Volume", fontsize=14,
+                  fontweight="bold", loc="left")
+
+    lines1, labels1 = ax2.get_legend_handles_labels()
+    lines2, labels2 = ax2b.get_legend_handles_labels()
+    ax2.legend(lines1 + lines2, labels1 + labels2, loc="upper left",
+               frameon=True, facecolor="white", edgecolor="#CCCCCC")
+
+    # ---- Panel 3: Cross-correlation function ----
     if "lags" in dir() and lags:
         lag_keys = sorted(lags.keys())
         rs = [lags[k][0] for k in lag_keys]
         ps = [lags[k][1] for k in lag_keys]
-        colors = ["#D32F2F" if p < 0.05 else "#9E9E9E" for p in ps]
-        ax3.bar(lag_keys, rs, color=colors, alpha=0.7, edgecolor="black")
-        ax3.axhline(y=0, color="black", linewidth=0.5)
-        ax3.set_xlabel("Lag in months (positive = sentiment leads complaints)", fontsize=12)
-        ax3.set_ylabel("Pearson r", fontsize=12)
-        ax3.set_title("Cross-correlation Function (Sentiment vs CFPB Complaints)", fontsize=14, fontweight="bold")
-        ax3.grid(alpha=0.3)
-        ax3.set_xticks(lag_keys)
-        # Highlight significant
-        for k, r, p in zip(lag_keys, rs, ps):
+        # Color by significance, fade non-significant
+        bar_colors = []
+        bar_alphas = []
+        for p in ps:
             if p < 0.05:
-                ax3.annotate(f"p={p:.3f}", (k, r), fontsize=8, ha="center",
-                             va="bottom" if r > 0 else "top")
+                bar_colors.append("#C62828")
+                bar_alphas.append(0.85)
+            else:
+                bar_colors.append("#9E9E9E")
+                bar_alphas.append(0.55)
+
+        bars = ax3.bar(lag_keys, rs, color=bar_colors, edgecolor="white", linewidth=1.2)
+        for bar, alpha in zip(bars, bar_alphas):
+            bar.set_alpha(alpha)
+
+        # 95% significance threshold reference (for n=115, r ≈ 0.18)
+        n_obs = 115
+        crit_r = 1.96 / np.sqrt(n_obs)
+        ax3.axhline(y=crit_r, color="#888888", linestyle=":", linewidth=0.8, alpha=0.7)
+        ax3.axhline(y=-crit_r, color="#888888", linestyle=":", linewidth=0.8, alpha=0.7)
+        ax3.text(max(lag_keys), crit_r, f" |r|≥{crit_r:.2f} for p<0.05", fontsize=8,
+                 va="bottom", ha="right", color="#888888", style="italic")
+
+        ax3.axhline(y=0, color="#222222", linewidth=0.7)
+        ax3.set_xlabel("Lag (months) — positive = sentiment leads complaints",
+                       fontsize=12, fontweight="bold")
+        ax3.set_ylabel("Pearson r", fontsize=12, fontweight="bold")
+        ax3.set_title("Cross-correlation Function (Box-Jenkins 1970)",
+                      fontsize=14, fontweight="bold", loc="left")
+        ax3.set_xticks(lag_keys)
+
+    fig.text(0.99, 0.005,
+             "Source: CFPB Consumer Complaints DB + Reddit/SDN sentiment  |  "
+             "Box-Jenkins (1970)",
+             ha="right", fontsize=9, style="italic", color="#888888")
 
     plt.tight_layout(rect=[0, 0, 1, 0.96])
     plt.savefig("admin_sentiment_correlation.png", dpi=300, bbox_inches="tight")

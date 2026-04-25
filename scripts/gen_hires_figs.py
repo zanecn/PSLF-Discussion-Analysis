@@ -19,6 +19,27 @@ from collections import Counter
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 
+# Consistent aesthetic theme across figures
+plt.rcParams.update({
+    "figure.facecolor": "white",
+    "axes.facecolor": "white",
+    "axes.edgecolor": "#333333",
+    "axes.labelcolor": "#222222",
+    "axes.titlecolor": "#111111",
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": True,
+    "grid.color": "#DDDDDD",
+    "grid.linestyle": "-",
+    "grid.linewidth": 0.5,
+    "grid.alpha": 0.7,
+    "xtick.color": "#444444",
+    "ytick.color": "#444444",
+    "legend.frameon": False,
+    "font.family": "DejaVu Sans",
+    "axes.titlepad": 10,
+})
+
 # Import shared PSLF filter regex
 try:
     from pslf_search_terms import PSLF_FILTER_REGEX
@@ -92,19 +113,67 @@ def _build_stopwords() -> set:
 STOP_WORDS = _build_stopwords()
 
 
+def _get_lemmatizer():
+    """Return a WordNet lemmatizer (Miller 1995). Cached on first call.
+
+    WordNet lemmatization is the field-standard method for combining
+    inflected forms in NLP/word-cloud research:
+      - Bird, Klein & Loper (2009) NLTK book, Ch.3 §3.6
+      - Manning, Raghavan & Schutze (2008) IIR §2.2.4
+      - Miller (1995) "WordNet: A Lexical Database for English"
+    Produces actual English words (unlike stemming which produces roots).
+    """
+    if not hasattr(_get_lemmatizer, "_cache"):
+        try:
+            from nltk.stem import WordNetLemmatizer
+            try:
+                from nltk.corpus import wordnet  # noqa: F401
+            except LookupError:
+                import nltk
+                nltk.download("wordnet", quiet=True)
+                nltk.download("omw-1.4", quiet=True)
+            _get_lemmatizer._cache = WordNetLemmatizer()
+        except Exception:
+            _get_lemmatizer._cache = None
+    return _get_lemmatizer._cache
+
+
+def _normalize_token(token: str, lemmatizer) -> str:
+    """Lemmatize as both noun and verb; pick the shorter (more reduced) form.
+
+    Standard practice when POS-tagging is unavailable: try multiple POS
+    and prefer the more reduced form (Manning IIR §2.2.4 footnote).
+    Examples: loans -> loan, paying -> pay, schools -> school.
+    """
+    if lemmatizer is None:
+        return token
+    n_form = lemmatizer.lemmatize(token, pos="n")
+    v_form = lemmatizer.lemmatize(token, pos="v")
+    return v_form if len(v_form) < len(n_form) else n_form
+
+
 def make_wordcloud(texts: pd.Series, title: str, ax: plt.Axes) -> None:
     """Generate a word cloud from text series and plot on axis.
 
-    Filters by:
-      - alphabetic tokens only
-      - length >= 3 chars
-      - not in STOP_WORDS (NLTK + sklearn + domain-specific)
+    Field-standard preprocessing pipeline:
+      1. Lowercase normalization
+      2. Tokenize on word boundaries (Bird et al. 2009)
+      3. Filter alpha tokens, length >= 3
+      4. Remove stopwords (NLTK + sklearn + Manning IIR domain stops)
+      5. WordNet lemmatization (combines plurals/conjugations)
+      6. Re-filter post-lemmatization stopwords
     """
     import re as _re
+    lemmatizer = _get_lemmatizer()
     text_blob = " ".join(texts.fillna("").str.lower())
-    # Tokenize on word boundaries (Bird et al. 2009 NLTK convention)
     tokens = _re.findall(r"\b[a-z]{3,}\b", text_blob)
-    freq = Counter(t for t in tokens if t not in STOP_WORDS)
+    # Stage 1 stopword filter (pre-lemmatization)
+    filtered = [t for t in tokens if t not in STOP_WORDS]
+    # Lemmatize
+    lemmatized = [_normalize_token(t, lemmatizer) for t in filtered]
+    # Stage 2 stopword filter (post-lemmatization, e.g. "loans" -> "loan")
+    final = [t for t in lemmatized if len(t) >= 3 and t not in STOP_WORDS]
+    freq = Counter(final)
     if len(freq) < 5:
         ax.text(0.5, 0.5, "Insufficient data", ha="center", va="center", fontsize=16)
         ax.set_title(title, fontsize=13)
@@ -169,23 +238,32 @@ def load_data(data_dir: str) -> tuple[pd.DataFrame, pd.DataFrame]:
 # Figure 1: Multi-Source Sentiment Comparison
 # ---------------------------------------------------------------------------
 def generate_fig1(reddit: pd.DataFrame, sdn: pd.DataFrame, output_dir: str) -> None:
-    sources = {"reddit_posts": reddit, "forum_sdn": sdn}
-    colors = {"reddit_posts": "#FF6B35", "forum_sdn": "#2196F3"}
-    events = [("2021-10-06", "Waiver"), ("2022-10-31", "Deadline"),
+    sources = {"Reddit": reddit, "SDN Forum": sdn}
+    colors = {"Reddit": "#FF6B35", "SDN Forum": "#2196F3"}
+    events = [("2021-10-06", "Waiver"), ("2023-06-30", "Biden v.\nNebraska"),
               ("2024-07-01", "SAVE\nBlocked"), ("2025-03-07", "Trump\nEO")]
 
     fig, axes = plt.subplots(2, 2, figsize=(24, 16))
     fig.suptitle(
-        f"PSLF Sentiment: Multi-Source Temporal Comparison\n"
-        f"Reddit (n={len(reddit):,}) vs SDN Forum (n={len(sdn):,}, PSLF-filtered)",
-        fontsize=18, fontweight="bold", y=0.98,
+        "PSLF Sentiment: Multi-Source Temporal Comparison",
+        fontsize=22, fontweight="bold", y=0.98,
     )
+    fig.text(0.5, 0.953,
+             f"Reddit n={len(reddit):,} vs SDN Forum n={len(sdn):,} (PSLF-filtered)",
+             ha="center", fontsize=12, style="italic", color="#555555")
 
-    def add_events(ax):
+    def add_events(ax, label_top=False):
         for ds, label in events:
-            ax.axvline(x=pd.Timestamp(ds), color="gray", linestyle="--", alpha=0.5, linewidth=1)
+            dt = pd.Timestamp(ds)
+            ax.axvline(x=dt, color="#BBBBBB", linestyle="--", alpha=0.55, linewidth=0.8)
+            if label_top:
+                ymax = ax.get_ylim()[1]
+                ax.text(dt, ymax * 0.96, label, fontsize=8, ha="center", va="top",
+                        color="#666666",
+                        bbox=dict(boxstyle="round,pad=0.2", facecolor="#FFF7E6",
+                                  edgecolor="#FFB347", linewidth=0.5, alpha=0.9))
 
-    # Panel 1: Monthly polarity
+    # Panel 1: Monthly polarity (smoothed)
     ax1 = axes[0, 0]
     for name, df in sources.items():
         tmp = df.dropna(subset=["date"]).copy()
@@ -196,16 +274,20 @@ def generate_fig1(reddit: pd.DataFrame, sdn: pd.DataFrame, output_dir: str) -> N
         monthly = tmp.set_index("date").resample("ME")["polarity"].agg(["mean", "count"])
         monthly = monthly[monthly["count"] >= 3]
         if not monthly.empty:
-            ax1.plot(monthly.index, monthly["mean"], label=name.replace("_", " ").title(),
-                     color=colors.get(name, "gray"), alpha=0.8, linewidth=2)
-    add_events(ax1)
-    ax1.set_title("Monthly Mean Polarity by Source", fontsize=14, fontweight="bold")
-    ax1.set_ylabel("Polarity", fontsize=12)
-    ax1.legend(fontsize=11)
-    ax1.axhline(y=0, color="black", linewidth=0.5)
-    ax1.grid(alpha=0.3)
+            ax1.scatter(monthly.index, monthly["mean"], color=colors[name],
+                        alpha=0.25, s=12, zorder=2)
+            smooth = monthly["mean"].rolling(window=3, center=True, min_periods=1).mean()
+            ax1.plot(smooth.index, smooth.values, label=f"{name} (3-mo smooth)",
+                     color=colors[name], linewidth=2.4, alpha=0.95, zorder=3)
+    ax1.axhline(y=0, color="#222222", linewidth=0.6)
+    add_events(ax1, label_top=True)
+    ax1.set_title("Monthly Mean Polarity by Source", fontsize=14,
+                  fontweight="bold", loc="left")
+    ax1.set_ylabel("Polarity", fontsize=12, fontweight="bold")
+    ax1.legend(fontsize=11, loc="lower left", frameon=True, facecolor="white",
+               edgecolor="#CCCCCC")
 
-    # Panel 2: Volume
+    # Panel 2: Volume (log scale to handle 100x range)
     ax2 = axes[0, 1]
     for name, df in sources.items():
         tmp = df.dropna(subset=["date"]).copy()
@@ -215,15 +297,19 @@ def generate_fig1(reddit: pd.DataFrame, sdn: pd.DataFrame, output_dir: str) -> N
             continue
         monthly = tmp.set_index("date").resample("ME").size()
         if not monthly.empty:
-            ax2.plot(monthly.index, monthly.values, label=name.replace("_", " ").title(),
-                     color=colors.get(name, "gray"), alpha=0.8, linewidth=2)
+            ax2.fill_between(monthly.index, 0.5, monthly.values, color=colors[name],
+                             alpha=0.3, label=name)
+            ax2.plot(monthly.index, monthly.values, color=colors[name], linewidth=1.5)
+    ax2.set_yscale("log")
+    ax2.set_ylim(0.5, None)
     add_events(ax2)
-    ax2.set_title("Monthly Post Volume", fontsize=14, fontweight="bold")
-    ax2.set_ylabel("Count", fontsize=12)
-    ax2.legend(fontsize=11)
-    ax2.grid(alpha=0.3)
+    ax2.set_title("Monthly Post Volume (log scale)", fontsize=14,
+                  fontweight="bold", loc="left")
+    ax2.set_ylabel("Count (log)", fontsize=12, fontweight="bold")
+    ax2.legend(fontsize=11, loc="upper left", frameon=True, facecolor="white",
+               edgecolor="#CCCCCC")
 
-    # Panel 3: % Negative
+    # Panel 3: % Negative (smoothed)
     ax3 = axes[1, 0]
     for name, df in sources.items():
         tmp = df.dropna(subset=["date"]).copy()
@@ -235,15 +321,19 @@ def generate_fig1(reddit: pd.DataFrame, sdn: pd.DataFrame, output_dir: str) -> N
             lambda x: (x < 0).mean() * 100 if len(x) >= 3 else np.nan
         ).dropna()
         if not monthly.empty:
-            ax3.plot(monthly.index, monthly.values, label=name.replace("_", " ").title(),
-                     color=colors.get(name, "gray"), alpha=0.8, linewidth=2)
+            ax3.scatter(monthly.index, monthly.values, color=colors[name],
+                        alpha=0.25, s=12, zorder=2)
+            smooth = monthly.rolling(window=3, center=True, min_periods=1).mean()
+            ax3.plot(smooth.index, smooth.values, label=f"{name} (3-mo smooth)",
+                     color=colors[name], linewidth=2.4, alpha=0.95, zorder=3)
     add_events(ax3)
-    ax3.set_title("% Negative Posts by Source (Monthly)", fontsize=14, fontweight="bold")
-    ax3.set_ylabel("% Negative", fontsize=12)
-    ax3.legend(fontsize=11)
-    ax3.grid(alpha=0.3)
+    ax3.set_title("% Negative Posts by Source", fontsize=14,
+                  fontweight="bold", loc="left")
+    ax3.set_ylabel("% Negative", fontsize=12, fontweight="bold")
+    ax3.legend(fontsize=11, loc="upper left", frameon=True, facecolor="white",
+               edgecolor="#CCCCCC")
 
-    # Panel 4: Violin
+    # Panel 4: Violin distributions with mean/median annotations
     ax4 = axes[1, 1]
     plot_data, plot_labels, plot_colors = [], [], []
     for name, df in sources.items():
@@ -251,21 +341,36 @@ def generate_fig1(reddit: pd.DataFrame, sdn: pd.DataFrame, output_dir: str) -> N
             pol = df["polarity"].dropna()
             if len(pol) > 10:
                 plot_data.append(pol.values)
-                plot_labels.append(name.replace("_", "\n").title())
-                plot_colors.append(colors.get(name, "gray"))
+                plot_labels.append(f"{name}\nn={len(pol):,}")
+                plot_colors.append(colors[name])
     if plot_data:
-        parts = ax4.violinplot(plot_data, showmeans=True, showmedians=True)
+        parts = ax4.violinplot(plot_data, showmeans=True, showmedians=True, widths=0.75)
         for i, pc in enumerate(parts["bodies"]):
             pc.set_facecolor(plot_colors[i])
-            pc.set_alpha(0.6)
+            pc.set_edgecolor("#333333")
+            pc.set_linewidth(1)
+            pc.set_alpha(0.65)
+        for key in ("cbars", "cmins", "cmaxes", "cmeans", "cmedians"):
+            if key in parts:
+                parts[key].set_color("#333333")
+                parts[key].set_linewidth(1.2)
         ax4.set_xticks(range(1, len(plot_labels) + 1))
-        ax4.set_xticklabels(plot_labels, fontsize=12)
-        ax4.set_title("Polarity Distribution by Source", fontsize=14, fontweight="bold")
-        ax4.set_ylabel("Polarity", fontsize=12)
-        ax4.axhline(y=0, color="black", linewidth=0.5)
-        ax4.grid(alpha=0.3)
+        ax4.set_xticklabels(plot_labels, fontsize=12, fontweight="bold")
+        for i, data in enumerate(plot_data):
+            mean_val = float(np.nanmean(data))
+            ax4.annotate(f"μ={mean_val:+.3f}", xy=(i + 1, mean_val),
+                         xytext=(8, 0), textcoords="offset points",
+                         fontsize=10, fontweight="bold", color="#222222",
+                         va="center")
+        ax4.set_title("Polarity Distribution by Source", fontsize=14,
+                      fontweight="bold", loc="left")
+        ax4.set_ylabel("Polarity", fontsize=12, fontweight="bold")
+        ax4.axhline(y=0, color="#222222", linewidth=0.6)
 
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    plt.tight_layout(rect=[0, 0, 1, 0.94])
+    fig.text(0.99, 0.005,
+             "Sources: Reddit (18 subreddits) + Student Doctor Network",
+             ha="right", fontsize=9, style="italic", color="#888888")
     outpath = os.path.join(output_dir, "multi_source_sentiment_comparison.png")
     plt.savefig(outpath, dpi=300, bbox_inches="tight")
     plt.close(fig)
@@ -283,28 +388,71 @@ def generate_fig2(reddit: pd.DataFrame, sdn: pd.DataFrame, output_dir: str) -> N
         ("SAVE Crisis (2024-2026)", pd.Timestamp("2024-07-01"), pd.Timestamp("2026-12-31")),
     ]
 
-    fig, axes = plt.subplots(2, 4, figsize=(28, 14))
+    fig, axes = plt.subplots(2, 4, figsize=(28, 15))
     fig.suptitle(
-        "PSLF Discussion Word Clouds by Policy Era (Filtered to PSLF-Relevant Posts)\n"
-        "Reddit (top) vs SDN Forum (bottom)",
-        fontsize=18, fontweight="bold", y=0.99,
+        "PSLF Discussion Word Clouds by Policy Era",
+        fontsize=22, fontweight="bold", y=0.985,
     )
+    fig.text(0.5, 0.952,
+             "Strict PSLF filter; lemmatized (WordNet) + NLTK/sklearn stopwords + domain stops; "
+             "Reddit (top row) vs SDN Forum (bottom row)",
+             ha="center", fontsize=12, style="italic", color="#555555")
+
+    # Era column headers (above each column, single bold line)
+    for i, (label, _, _) in enumerate(periods):
+        axes[0, i].text(0.5, 1.18, label,
+                        transform=axes[0, i].transAxes,
+                        ha="center", va="bottom",
+                        fontsize=14, fontweight="bold", color="#222222")
 
     for i, (label, s, e) in enumerate(periods):
         sub = reddit[(reddit["date"] >= s) & (reddit["date"] <= e)]
         pol = safe_mean_polarity(sub["polarity"]) if "polarity" in sub.columns else 0.0
-        make_wordcloud(sub["text"], f"Reddit: {label}\n(n={len(sub):,}, pol={pol:.3f})", axes[0, i])
+        pol_color = "#2E7D32" if pol > 0.05 else "#C62828" if pol < -0.05 else "#666666"
+        axes[0, i].imshow(_wc_for(sub["text"]), interpolation="bilinear")
+        axes[0, i].axis("off")
+        axes[0, i].set_title(f"Reddit  •  n={len(sub):,}  •  μ={pol:+.3f}",
+                             fontsize=11, color=pol_color, fontweight="bold", pad=6)
 
     for i, (label, s, e) in enumerate(periods):
         sub = sdn[(sdn["date"] >= s) & (sdn["date"] <= e)]
         pol = safe_mean_polarity(sub["polarity"]) if "polarity" in sub.columns else 0.0
-        make_wordcloud(sub["text"], f"SDN: {label}\n(n={len(sub):,}, pol={pol:.3f})", axes[1, i])
+        pol_color = "#2E7D32" if pol > 0.05 else "#C62828" if pol < -0.05 else "#666666"
+        axes[1, i].imshow(_wc_for(sub["text"]), interpolation="bilinear")
+        axes[1, i].axis("off")
+        axes[1, i].set_title(f"SDN  •  n={len(sub):,}  •  μ={pol:+.3f}",
+                             fontsize=11, color=pol_color, fontweight="bold", pad=6)
 
-    plt.tight_layout(rect=[0, 0, 1, 0.94])
+    fig.text(0.99, 0.005,
+             "Color: green = positive, red = negative mean polarity (μ)",
+             ha="right", fontsize=9, style="italic", color="#888888")
+
+    plt.tight_layout(rect=[0, 0.02, 1, 0.94])
     outpath = os.path.join(output_dir, "pslf_wordcloud_timecourse.png")
     plt.savefig(outpath, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"Saved Fig 2 at 300 DPI: {outpath}")
+
+
+def _wc_for(texts):
+    """Build a WordCloud image from a text series, applying stopwords + lemmatization."""
+    import re as _re
+    lemmatizer = _get_lemmatizer()
+    text_blob = " ".join(texts.fillna("").str.lower())
+    tokens = _re.findall(r"\b[a-z]{3,}\b", text_blob)
+    filtered = [t for t in tokens if t not in STOP_WORDS]
+    lemmatized = [_normalize_token(t, lemmatizer) for t in filtered]
+    final = [t for t in lemmatized if len(t) >= 3 and t not in STOP_WORDS]
+    freq = Counter(final)
+    if len(freq) < 5:
+        # Return a small white image
+        return np.ones((600, 800, 3))
+    wc = WordCloud(
+        width=800, height=600, background_color="white", colormap="RdYlGn",
+        max_words=100, prefer_horizontal=0.7, scale=2,
+    )
+    wc.generate_from_frequencies(freq)
+    return wc.to_array()
 
 
 # ---------------------------------------------------------------------------

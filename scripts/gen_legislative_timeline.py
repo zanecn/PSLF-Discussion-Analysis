@@ -25,6 +25,31 @@ from pslf_search_terms import PSLF_STRICT_REGEX
 
 MIN_WORDS = 20
 
+# ---- Aesthetic theme (consistent across figures) ----
+plt.rcParams.update({
+    "figure.facecolor": "white",
+    "axes.facecolor": "white",
+    "axes.edgecolor": "#333333",
+    "axes.labelcolor": "#222222",
+    "axes.titlecolor": "#111111",
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": True,
+    "grid.color": "#DDDDDD",
+    "grid.linestyle": "-",
+    "grid.linewidth": 0.5,
+    "grid.alpha": 0.7,
+    "xtick.color": "#444444",
+    "ytick.color": "#444444",
+    "xtick.labelsize": 10,
+    "ytick.labelsize": 10,
+    "legend.frameon": False,
+    "legend.fontsize": 11,
+    "font.family": "DejaVu Sans",
+    "axes.titlepad": 10,
+    "axes.labelpad": 8,
+})
+
 
 def load_all_data():
     """Load and combine all data sources with strict PSLF filter."""
@@ -118,74 +143,124 @@ LABELS = {
 
 
 def fig1_timeline(all_data):
-    """3-panel sentiment timeline with policy events."""
-    fig, axes = plt.subplots(3, 1, figsize=(24, 20), gridspec_kw={"height_ratios": [3, 2, 2]})
-    fig.suptitle(
-        "PSLF Sentiment Evolution Across Legislative Changes\n"
-        f"(Strict PSLF filter, min {MIN_WORDS} words, n={len(all_data):,} posts)",
-        fontsize=20, fontweight="bold", y=0.98,
-    )
+    """3-panel sentiment timeline with policy events.
 
-    # Panel 1: Monthly polarity with CI bands
-    ax1 = axes[0]
+    Layout: tall narrow event-label band above main chart, with leader
+    lines connecting labels to event vlines (avoids overlap).
+    """
+    fig = plt.figure(figsize=(24, 22))
+    gs = fig.add_gridspec(4, 1, height_ratios=[1.2, 3, 2, 2], hspace=0.35)
+    ax_evt = fig.add_subplot(gs[0])
+    ax1 = fig.add_subplot(gs[1], sharex=ax_evt)
+    ax2 = fig.add_subplot(gs[2], sharex=ax_evt)
+    ax3 = fig.add_subplot(gs[3], sharex=ax_evt)
+
+    fig.suptitle(
+        "PSLF Sentiment Evolution Across Legislative Changes",
+        fontsize=22, fontweight="bold", y=0.995,
+    )
+    fig.text(0.5, 0.972,
+             f"Strict PSLF filter, min {MIN_WORDS} words; n={len(all_data):,} posts across Reddit + SDN",
+             ha="center", fontsize=12, style="italic", color="#555555")
+
+    # ---- Event label band (top) ----
+    # Stagger labels into 4 rows so they never overlap
+    n_rows = 4
+    for i, (date_str, label, _) in enumerate(EVENTS):
+        dt = pd.Timestamp(date_str)
+        row = i % n_rows
+        y_label = 0.85 - row * 0.22
+        ax_evt.axvline(x=dt, ymin=0, ymax=y_label + 0.12, color="#888888",
+                       linestyle="--", alpha=0.55, linewidth=0.9, zorder=1)
+        # Leader dot
+        ax_evt.plot([dt], [y_label + 0.05], marker="o", markersize=4,
+                    color="#FF6B35", zorder=3)
+        ax_evt.annotate(
+            label.replace("\n", " "),
+            xy=(dt, y_label),
+            ha="center", va="top", fontsize=8.5, fontweight="bold",
+            bbox=dict(boxstyle="round,pad=0.35", facecolor="#FFF7E6",
+                      edgecolor="#FFB347", linewidth=0.7, alpha=0.95),
+            zorder=4,
+        )
+    ax_evt.set_ylim(-0.05, 1.05)
+    ax_evt.set_yticks([])
+    ax_evt.set_xticks([])
+    ax_evt.set_title("Policy Events Timeline", fontsize=14, fontweight="bold")
+    for spine in ax_evt.spines.values():
+        spine.set_visible(False)
+    ax_evt.grid(False)
+
+    # ---- Panel 1: Monthly polarity with CI bands ----
     for src in ["reddit", "reddit_prof", "sdn"]:
         sub = all_data[all_data["source"] == src].set_index("date").resample("ME")["polarity"]
         monthly = sub.agg(["mean", "count", "std"])
         monthly = monthly[monthly["count"] >= 5]
         if monthly.empty:
             continue
-        ax1.plot(monthly.index, monthly["mean"], label=LABELS[src], color=COLORS[src], linewidth=2, alpha=0.8)
+        ax1.plot(monthly.index, monthly["mean"], label=LABELS[src],
+                 color=COLORS[src], linewidth=2.2, alpha=0.9)
         se = monthly["std"] / np.sqrt(monthly["count"])
-        ax1.fill_between(monthly.index, monthly["mean"] - 1.96 * se, monthly["mean"] + 1.96 * se,
-                         color=COLORS[src], alpha=0.1)
+        ax1.fill_between(monthly.index, monthly["mean"] - 1.96 * se,
+                         monthly["mean"] + 1.96 * se,
+                         color=COLORS[src], alpha=0.12)
 
-    for i, (date_str, label, _) in enumerate(EVENTS):
-        dt = pd.Timestamp(date_str)
-        ax1.axvline(x=dt, color="gray", linestyle="--", alpha=0.6, linewidth=1)
-        y_pos = 0.30 + (i % 3) * 0.08
-        ax1.annotate(label, xy=(dt, y_pos), fontsize=7, ha="center", va="bottom",
-                     bbox=dict(boxstyle="round,pad=0.2", facecolor="lightyellow", alpha=0.8))
+    # Subtle event vlines on data panel
+    for date_str, _, _ in EVENTS:
+        ax1.axvline(x=pd.Timestamp(date_str), color="#BBBBBB",
+                    linestyle="--", alpha=0.5, linewidth=0.8)
 
-    ax1.axhline(y=0, color="black", linewidth=0.5)
-    ax1.set_ylabel("Mean Polarity (95% CI)", fontsize=13)
-    ax1.set_title("Monthly Sentiment with Policy Events", fontsize=15, fontweight="bold")
-    ax1.legend(fontsize=11, loc="lower left")
-    ax1.grid(alpha=0.3)
+    ax1.axhline(y=0, color="#222222", linewidth=0.6)
+    ax1.set_ylabel("Mean Polarity (95% CI)", fontsize=13, fontweight="bold")
+    ax1.set_title("Monthly Sentiment", fontsize=14, fontweight="bold", loc="left")
+    ax1.legend(fontsize=11, loc="lower left", frameon=True, facecolor="white",
+               edgecolor="#CCCCCC")
     ax1.set_xlim(pd.Timestamp("2012-01-01"), pd.Timestamp("2026-05-01"))
 
-    # Panel 2: Volume
-    ax2 = axes[1]
+    # ---- Panel 2: Volume (log scale to handle 100x dynamic range) ----
     for src in ["reddit", "reddit_prof", "sdn"]:
         sub = all_data[all_data["source"] == src].set_index("date").resample("ME").size()
         if not sub.empty:
-            ax2.fill_between(sub.index, 0, sub.values, label=LABELS[src], color=COLORS[src], alpha=0.4)
-            ax2.plot(sub.index, sub.values, color=COLORS[src], linewidth=1)
+            ax2.fill_between(sub.index, 0.5, sub.values, label=LABELS[src],
+                             color=COLORS[src], alpha=0.35)
+            ax2.plot(sub.index, sub.values, color=COLORS[src], linewidth=1.2)
     for date_str, _, _ in EVENTS:
-        ax2.axvline(x=pd.Timestamp(date_str), color="gray", linestyle="--", alpha=0.4)
-    ax2.set_ylabel("Monthly Post Count", fontsize=13)
-    ax2.set_title("Discussion Volume (PSLF-filtered)", fontsize=15, fontweight="bold")
-    ax2.legend(fontsize=11)
-    ax2.grid(alpha=0.3)
+        ax2.axvline(x=pd.Timestamp(date_str), color="#BBBBBB",
+                    linestyle="--", alpha=0.5, linewidth=0.8)
+    ax2.set_yscale("log")
+    ax2.set_ylim(0.5, None)
+    ax2.set_ylabel("Monthly Post Count (log)", fontsize=13, fontweight="bold")
+    ax2.set_title("Discussion Volume (PSLF-filtered)", fontsize=14,
+                  fontweight="bold", loc="left")
+    ax2.legend(fontsize=11, loc="upper left", frameon=True, facecolor="white",
+               edgecolor="#CCCCCC")
     ax2.set_xlim(pd.Timestamp("2012-01-01"), pd.Timestamp("2026-05-01"))
 
-    # Panel 3: % Negative (quarterly)
-    ax3 = axes[2]
+    # ---- Panel 3: % Negative (quarterly) ----
     for src in ["reddit", "reddit_prof", "sdn"]:
         sub = all_data[all_data["source"] == src].set_index("date").resample("QE")["polarity"].agg(
             lambda x: (x < 0).mean() * 100 if len(x) >= 5 else np.nan
         ).dropna()
         if not sub.empty:
             ax3.plot(sub.index, sub.values, label=LABELS[src], color=COLORS[src],
-                     linewidth=2, marker="o", markersize=4)
+                     linewidth=2.2, marker="o", markersize=5,
+                     markerfacecolor="white", markeredgewidth=1.5)
     for date_str, _, _ in EVENTS:
-        ax3.axvline(x=pd.Timestamp(date_str), color="gray", linestyle="--", alpha=0.4)
-    ax3.set_ylabel("% Negative Posts (quarterly)", fontsize=13)
-    ax3.set_title("Negativity Rate Over Time", fontsize=15, fontweight="bold")
-    ax3.legend(fontsize=11)
-    ax3.grid(alpha=0.3)
+        ax3.axvline(x=pd.Timestamp(date_str), color="#BBBBBB",
+                    linestyle="--", alpha=0.5, linewidth=0.8)
+    ax3.set_ylabel("% Negative Posts (quarterly)", fontsize=13, fontweight="bold")
+    ax3.set_title("Negativity Rate Over Time", fontsize=14,
+                  fontweight="bold", loc="left")
+    ax3.legend(fontsize=11, loc="upper left", frameon=True, facecolor="white",
+               edgecolor="#CCCCCC")
     ax3.set_xlim(pd.Timestamp("2012-01-01"), pd.Timestamp("2026-05-01"))
 
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    # Source attribution
+    fig.text(0.99, 0.005,
+             "Sources: Reddit (18 subreddits) + Student Doctor Network forum  |  "
+             "Sentiment: TextBlob polarity",
+             ha="right", fontsize=9, style="italic", color="#888888")
+
     plt.savefig("pslf_sentiment_legislative_timeline.png", dpi=300, bbox_inches="tight")
     plt.close()
     print("Saved: pslf_sentiment_legislative_timeline.png")
@@ -204,17 +279,22 @@ def fig2_pre_post(all_data):
         ("Final Trump PSLF Rule", "2025-10-30", 60),
     ]
 
-    fig, axes = plt.subplots(4, 2, figsize=(20, 28))
+    # Layout: violins on left (4 rows x 2 cols), forest plot summary on right
+    fig = plt.figure(figsize=(24, 22))
+    gs = fig.add_gridspec(4, 3, width_ratios=[1, 1, 1.4], hspace=0.55, wspace=0.3)
+
     fig.suptitle(
-        "PSLF Sentiment: Pre/Post Policy Event Analysis\n"
-        f"(Strict filter, min {MIN_WORDS} words)",
-        fontsize=18, fontweight="bold", y=0.99,
+        "PSLF Sentiment: Pre/Post Policy Event Analysis",
+        fontsize=22, fontweight="bold", y=0.995,
     )
+    fig.text(0.5, 0.973,
+             f"Strict filter, min {MIN_WORDS} words; Welch's t-test, Glass's delta",
+             ha="center", fontsize=12, style="italic", color="#555555")
 
     results = []
 
     for idx, (event_name, event_date, window) in enumerate(key_events):
-        ax = axes[idx // 2, idx % 2]
+        ax = fig.add_subplot(gs[idx // 2, idx % 2])
         event_dt = pd.Timestamp(event_date)
 
         pre = all_data[
@@ -233,30 +313,40 @@ def fig2_pre_post(all_data):
             ref_std = pre.std() if len(pre) >= len(post) else post.std()
             d = (post.mean() - pre.mean()) / ref_std if ref_std > 0 else 0.0
             sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
+            direction_color = "#2E7D32" if (post.mean() - pre.mean()) > 0 else "#C62828"
 
-            parts = ax.violinplot([pre.values, post.values], showmeans=True, showmedians=True)
+            parts = ax.violinplot([pre.values, post.values], showmeans=True,
+                                  showmedians=True, widths=0.75)
             parts["bodies"][0].set_facecolor("#FF6B35")
-            parts["bodies"][0].set_alpha(0.6)
+            parts["bodies"][0].set_alpha(0.65)
+            parts["bodies"][0].set_edgecolor("#B33E0E")
             parts["bodies"][1].set_facecolor("#2196F3")
-            parts["bodies"][1].set_alpha(0.6)
+            parts["bodies"][1].set_alpha(0.65)
+            parts["bodies"][1].set_edgecolor("#0D47A1")
+            for key in ("cbars", "cmins", "cmaxes", "cmeans", "cmedians"):
+                if key in parts:
+                    parts[key].set_color("#333333")
+                    parts[key].set_linewidth(1.2)
 
             ax.set_xticks([1, 2])
             ax.set_xticklabels(
-                [f"Before\n({window}d, n={len(pre)})", f"After\n({window}d, n={len(post)})"],
+                [f"Before\nn={len(pre)}", f"After\nn={len(post)}"],
                 fontsize=11,
             )
             ax.set_title(
-                f"{event_name} ({event_date})\nt={t:.2f}, p={p:.4f} {sig}, d={d:+.3f}",
-                fontsize=13, fontweight="bold",
+                f"{event_name}\n{event_date}  |  t={t:.2f}, p={p:.4f} {sig}, d={d:+.2f}",
+                fontsize=12, fontweight="bold", color=direction_color,
             )
-            ax.set_ylabel("Polarity", fontsize=12)
-            ax.axhline(y=0, color="black", linewidth=0.5)
-            ax.grid(alpha=0.3)
+            ax.set_ylabel("Polarity", fontsize=11)
+            ax.axhline(y=0, color="#555555", linewidth=0.6, linestyle="-")
 
-            ax.text(1, pre.mean() + 0.02, f"{pre.mean():.3f}", ha="center", fontsize=11,
-                    fontweight="bold", color="#FF6B35")
-            ax.text(2, post.mean() + 0.02, f"{post.mean():.3f}", ha="center", fontsize=11,
-                    fontweight="bold", color="#2196F3")
+            # Mean labels
+            ax.annotate(f"{pre.mean():+.3f}", xy=(1, pre.mean()),
+                        xytext=(0.65, pre.mean()), fontsize=10, fontweight="bold",
+                        color="#B33E0E", ha="right", va="center")
+            ax.annotate(f"{post.mean():+.3f}", xy=(2, post.mean()),
+                        xytext=(2.35, post.mean()), fontsize=10, fontweight="bold",
+                        color="#0D47A1", ha="left", va="center")
 
             pre_neg = (pre < 0).mean() * 100
             post_neg = (post < 0).mean() * 100
@@ -269,10 +359,56 @@ def fig2_pre_post(all_data):
             })
         else:
             ax.text(0.5, 0.5, f"Insufficient data\npre={len(pre)}, post={len(post)}",
-                    ha="center", va="center", fontsize=14, transform=ax.transAxes)
-            ax.set_title(f"{event_name} ({event_date})", fontsize=13, fontweight="bold")
+                    ha="center", va="center", fontsize=12, transform=ax.transAxes)
+            ax.set_title(f"{event_name} ({event_date})", fontsize=12, fontweight="bold")
 
-    plt.tight_layout(rect=[0, 0, 1, 0.94])
+    # ---- Right column: Forest plot summary of effect sizes ----
+    ax_forest = fig.add_subplot(gs[:, 2])
+    if results:
+        # Sort by effect size for clearer visualization
+        sorted_results = sorted(results, key=lambda r: r["d"])
+        y_pos = np.arange(len(sorted_results))
+        d_values = [r["d"] for r in sorted_results]
+        # Approximate 95% CI for Glass's delta using SE = sqrt((n1+n2)/(n1*n2) + d^2/(2*n2))
+        ci_lower, ci_upper = [], []
+        labels = []
+        colors_pt = []
+        for r in sorted_results:
+            n1, n2, d = r["n_pre"], r["n_post"], r["d"]
+            se_d = np.sqrt((n1 + n2) / (n1 * n2) + d ** 2 / (2 * n2))
+            ci_lower.append(d - 1.96 * se_d)
+            ci_upper.append(d + 1.96 * se_d)
+            sig = "***" if r["p"] < 0.001 else "**" if r["p"] < 0.01 else "*" if r["p"] < 0.05 else "ns"
+            labels.append(f"{r['event']}\n({r['date']}) {sig}")
+            colors_pt.append("#2E7D32" if d > 0 else "#C62828")
+
+        # Plot CI bars
+        for i, (lo, hi, c) in enumerate(zip(ci_lower, ci_upper, colors_pt)):
+            ax_forest.plot([lo, hi], [i, i], color=c, linewidth=2.2, alpha=0.7)
+        # Plot point estimates
+        ax_forest.scatter(d_values, y_pos, s=130, c=colors_pt, zorder=5,
+                          edgecolors="white", linewidths=1.5)
+
+        ax_forest.axvline(x=0, color="#555555", linewidth=1, linestyle="-")
+        # Cohen's d effect size reference lines
+        for ref, lbl in [(-0.8, "Large -"), (-0.5, "Med -"), (-0.2, "Small -"),
+                         (0.2, "Small +"), (0.5, "Med +"), (0.8, "Large +")]:
+            ax_forest.axvline(x=ref, color="#CCCCCC", linewidth=0.5, linestyle=":")
+            ax_forest.text(ref, len(sorted_results) - 0.3, lbl, fontsize=8,
+                           ha="center", color="#777777")
+
+        ax_forest.set_yticks(y_pos)
+        ax_forest.set_yticklabels(labels, fontsize=10)
+        ax_forest.set_xlabel("Glass's delta (Effect Size, 95% CI)", fontsize=12, fontweight="bold")
+        ax_forest.set_title("Effect Size Summary", fontsize=14, fontweight="bold", loc="left")
+        ax_forest.set_xlim(min(min(ci_lower), -0.6), max(max(ci_upper), 0.6))
+        ax_forest.set_ylim(-0.7, len(sorted_results) - 0.3)
+        ax_forest.grid(axis="x", alpha=0.5)
+
+    fig.text(0.99, 0.005,
+             "*p<0.05, **p<0.01, ***p<0.001  |  Effect-size thresholds: Cohen (1988)",
+             ha="right", fontsize=9, style="italic", color="#888888")
+
     plt.savefig("pslf_pre_post_events.png", dpi=300, bbox_inches="tight")
     plt.close()
     print("Saved: pslf_pre_post_events.png")
@@ -318,16 +454,29 @@ def fig3_profession_timeline(all_data):
     prof_counts = all_data["prof_label"].value_counts()
     valid_profs = prof_counts[prof_counts >= min_total].index.tolist()
 
-    fig, axes = plt.subplots(2, 1, figsize=(26, 16), gridspec_kw={"height_ratios": [3, 2]})
-    fig.suptitle(
-        "PSLF Sentiment by Profession Over Time\n"
-        f"(Quarterly, min 10 posts/quarter, strict filter, n={len(all_data):,})",
-        fontsize=20, fontweight="bold", y=0.99,
-    )
-
-    # Panel 1: Quarterly polarity by profession
-    ax1 = axes[0]
+    # Pre-compute average polarity to determine line ordering (most positive on top)
+    prof_avg = {}
     for prof in valid_profs:
+        sub = all_data[all_data["prof_label"] == prof]
+        prof_avg[prof] = sub["polarity"].mean()
+    valid_profs_sorted = sorted(valid_profs, key=lambda p: -prof_avg[p])
+
+    fig = plt.figure(figsize=(26, 16))
+    gs = fig.add_gridspec(2, 1, height_ratios=[3, 2], hspace=0.35)
+    ax1 = fig.add_subplot(gs[0])
+    ax2 = fig.add_subplot(gs[1], sharex=ax1)
+
+    fig.suptitle(
+        "PSLF Sentiment by Profession Over Time",
+        fontsize=22, fontweight="bold", y=0.995,
+    )
+    fig.text(0.5, 0.972,
+             f"Quarterly aggregation, min 10 posts/quarter, strict PSLF filter; n={len(all_data):,}",
+             ha="center", fontsize=12, style="italic", color="#555555")
+
+    # ---- Panel 1: Quarterly polarity with end-of-line labels ----
+    last_points = []
+    for prof in valid_profs_sorted:
         sub = all_data[all_data["prof_label"] == prof].set_index("date").resample("QE")["polarity"]
         quarterly = sub.agg(["mean", "count"])
         quarterly = quarterly[quarterly["count"] >= 10]
@@ -335,46 +484,59 @@ def fig3_profession_timeline(all_data):
             continue
         color = colors_prof.get(prof, "gray")
         ax1.plot(quarterly.index, quarterly["mean"], label=prof, color=color,
-                 linewidth=2, alpha=0.8, marker="o", markersize=3)
+                 linewidth=2.2, alpha=0.85, marker="o", markersize=3.5,
+                 markerfacecolor="white", markeredgewidth=1.2)
+        # End-of-line label
+        last_points.append((quarterly.index[-1], quarterly["mean"].iloc[-1], prof, color))
 
-    for date_str, label, _ in EVENTS:
+    # Subtle event vlines, no labels (labels are on the timeline figure)
+    for date_str, _, _ in EVENTS:
         dt = pd.Timestamp(date_str)
         if dt >= pd.Timestamp("2018-01-01"):
-            ax1.axvline(x=dt, color="gray", linestyle="--", alpha=0.5, linewidth=1)
-            ax1.text(dt, ax1.get_ylim()[1] if ax1.get_ylim()[1] > 0 else 0.25,
-                     label.replace("\n", " "), fontsize=7, ha="center", va="bottom",
-                     rotation=45, color="gray")
+            ax1.axvline(x=dt, color="#CCCCCC", linestyle="--", alpha=0.5, linewidth=0.7)
 
-    ax1.axhline(y=0, color="black", linewidth=0.5)
-    ax1.set_ylabel("Mean Polarity (quarterly)", fontsize=13)
-    ax1.set_title("Sentiment Trajectory by Profession", fontsize=16, fontweight="bold")
-    ax1.legend(fontsize=9, ncol=3, loc="lower left")
-    ax1.grid(alpha=0.3)
-    ax1.set_xlim(pd.Timestamp("2018-01-01"), pd.Timestamp("2026-05-01"))
+    # Place end-of-line labels with simple anti-overlap
+    last_points.sort(key=lambda x: -x[1])
+    for x, y, prof, color in last_points:
+        ax1.annotate(prof, xy=(x, y),
+                     xytext=(8, 0), textcoords="offset points",
+                     fontsize=9, fontweight="bold", color=color,
+                     va="center")
 
-    # Panel 2: Stacked volume by profession
-    ax2 = axes[1]
+    ax1.axhline(y=0, color="#222222", linewidth=0.6)
+    ax1.set_ylabel("Mean Polarity (quarterly)", fontsize=13, fontweight="bold")
+    ax1.set_title("Sentiment Trajectory by Profession", fontsize=15,
+                  fontweight="bold", loc="left")
+    ax1.set_xlim(pd.Timestamp("2018-01-01"), pd.Timestamp("2026-09-01"))
+    # Hide redundant legend; end-labels do the work
+    ax1.legend().remove() if ax1.get_legend() else None
+
+    # ---- Panel 2: Stacked area volume ----
     pivot = all_data[all_data["prof_label"].isin(valid_profs)].copy()
     pivot = pivot.set_index("date").groupby("prof_label").resample("QE").size().unstack(level=0, fill_value=0)
-    # Sort columns by total volume
     col_order = pivot.sum().sort_values(ascending=False).index.tolist()
     pivot = pivot[col_order]
     stack_colors = [colors_prof.get(p, "gray") for p in col_order]
     ax2.stackplot(pivot.index, *[pivot[c].values for c in col_order],
-                  labels=col_order, colors=stack_colors, alpha=0.7)
+                  labels=col_order, colors=stack_colors, alpha=0.78,
+                  edgecolor="white", linewidth=0.4)
 
     for date_str, _, _ in EVENTS:
         dt = pd.Timestamp(date_str)
         if dt >= pd.Timestamp("2018-01-01"):
-            ax2.axvline(x=dt, color="gray", linestyle="--", alpha=0.4)
+            ax2.axvline(x=dt, color="#888888", linestyle="--", alpha=0.4, linewidth=0.7)
 
-    ax2.set_ylabel("Posts per Quarter", fontsize=13)
-    ax2.set_title("Discussion Volume by Profession", fontsize=16, fontweight="bold")
-    ax2.legend(fontsize=8, ncol=4, loc="upper left")
-    ax2.grid(alpha=0.3)
+    ax2.set_ylabel("Posts per Quarter", fontsize=13, fontweight="bold")
+    ax2.set_title("Discussion Volume by Profession", fontsize=15,
+                  fontweight="bold", loc="left")
+    ax2.legend(fontsize=9, ncol=4, loc="upper left", frameon=True,
+               facecolor="white", edgecolor="#CCCCCC")
     ax2.set_xlim(pd.Timestamp("2018-01-01"), pd.Timestamp("2026-05-01"))
 
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    fig.text(0.99, 0.005,
+             "Reddit (18 subreddits) + SDN Forum  |  TextBlob polarity",
+             ha="right", fontsize=9, style="italic", color="#888888")
+
     plt.savefig("pslf_profession_timecourse.png", dpi=300, bbox_inches="tight")
     plt.close()
     print("Saved: pslf_profession_timecourse.png")
