@@ -1,27 +1,27 @@
 PSLF SENTIMENT vs ADMINISTRATIVE DATA CORRELATION ANALYSIS
-Generated: 2026-04-25T16:36:52.487153+00:00
+Generated: 2026-04-25T21:17:51.760862+00:00
 
-Data: 9,437 sentiment posts, 11,005 CFPB complaints
-Date range: 2016-01-31 to 2026-03-31
+Data: 8,228 sentiment posts, 8,937 CFPB complaints
+Date range: 2016-02-29 to 2026-03-31
 
-CONTEMPORANEOUS CORRELATIONS (n=115 months):
-  Pearson r (volume vs polarity): +0.045, p=0.6367
-  Pearson r (volume vs %neg):     +0.054, p=0.5691
-  Spearman rho (volume vs polarity): +0.042, p=0.6521
-  Spearman rho (volume vs %neg):     +0.093, p=0.3215
+CONTEMPORANEOUS CORRELATIONS (n=110 months):
+  Pearson r (volume vs polarity): +0.056, p=0.5622
+  Pearson r (volume vs %neg):     +0.026, p=0.7888
+  Spearman rho (volume vs polarity): +0.045, p=0.6397
+  Spearman rho (volume vs %neg):     +0.075, p=0.4386
 
 CROSS-CORRELATION (sentiment vs complaints, first-differenced):
   Bonferroni alpha (n_lags=13): 0.0038
-  Lag  -6 months: r=+0.095, p=0.3372, n=104
-  Lag  -5 months: r=-0.132, p=0.1785, n=105
-  Lag  -4 months: r=-0.025, p=0.7995, n=106
-  Lag  -3 months: r=+0.047, p=0.6320, n=107
-  Lag  -2 months: r=+0.005, p=0.9605, n=108
-  Lag  -1 months: r=+0.031, p=0.7473, n=108
-  Lag  +0 months: r=-0.055, p=0.5721, n=108
-  Lag  +1 months: r=+0.127, p=0.1918, n=107
-  Lag  +2 months: r=-0.107, p=0.2741, n=106
-  Lag  +3 months: r=-0.106, p=0.2832, n=105
-  Lag  +4 months: r=+0.079, p=0.4250, n=104
-  Lag  +5 months: r=+0.178, p=0.0723, n=103
-  Lag  +6 months: r=-0.172, p=0.0839, n=102
+  Lag  -6 months: r=+0.085, p=0.4004, n=100
+  Lag  -5 months: r=-0.038, p=0.7076, n=100
+  Lag  -4 months: r=-0.113, p=0.2626, n=100
+  Lag  -3 months: r=+0.077, p=0.4474, n=100
+  Lag  -2 months: r=-0.025, p=0.8056, n=100
+  Lag  -1 months: r=+0.051, p=0.6121, n=101
+  Lag  +0 months: r=-0.006, p=0.9541, n=101
+  Lag  +1 months: r=+0.090, p=0.3718, n=100
+  Lag  +2 months: r=-0.056, p=0.5829, n=99
+  Lag  +3 months: r=-0.123, p=0.2261, n=98
+  Lag  +4 months: r=+0.079, p=0.4393, n=97
+  Lag  +5 months: r=+0.121, p=0.2397, n=96
+  Lag  +6 months: r=-0.157, p=0.1283, n=95

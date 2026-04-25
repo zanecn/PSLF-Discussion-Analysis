@@ -79,27 +79,101 @@ PSLF_FILTER_REGEX = (
 # Excludes generic "student loan" / "loan repayment" which capture off-topic posts.
 # (Audit finding: nursing had only 6.1% explicit PSLF mentions with broad filter.)
 #
-# 2026-04 audit fixes:
+# 2026-04 round 1 audit fixes:
 #   - Match TEPSLF (Temporary Expanded PSLF) — previously missed by \bpslf\b
 #   - Match past-tense "forgiven", "forgive" — previously only "forgiveness" matched
 #   - Tighten "save plan" with word boundaries — previously matched "save plan B"
 #   - Tighten "buyback" similarly — was matching "auto buyback" etc.
+#
+# 2026-04 round 2 audit fix:
+#   - Generic "loan forgiveness" was over-including: matched the 2022 Biden $10K-20K
+#     mass-forgiveness EO (different program), Biden v. Nebraska SCOTUS (struck down
+#     mass forgiveness, not PSLF), and generic forgiveness debates.
+#   - Now generic-forgiveness terms must co-occur with a PSLF-specific anchor
+#     (PSLF, public service, qualifying employer/payment, MOHELA, FedLoan, NHSC,
+#     teacher loan, nonprofit, residency) within ~80 chars in either direction.
 PSLF_STRICT_REGEX = (
+    # Tier 1 — explicit, unambiguous PSLF terms (no anchoring needed)
     r"\b(te)?pslf\b"                              # PSLF or TEPSLF
-    r"|public service loan forgiv"                # forgive / forgiveness / forgiven
-    r"|loan forgiv|student loan forgiv"
-    r"|teacher loan forgiv"
-    # Past tense "loans were forgiven" / "forgive my loans" — anchor near 'loan'
-    r"|loans? (were |are |been |was )?forgiv"
-    r"|forgiv(e|en|ing) (my |our |the |student |federal |all )?(\w+ )?loans?"
-    r"|income.driven repayment|(?<!\w)idr(?!\w)"
-    # SAVE plan: anchor with policy/loan keywords to avoid "save plan B"
-    r"|(?<!\w)save plan(?=[.,!?:;)]|$|\s+(forbearance|borrowers|injunction|eligible|repayment|enrollees|currently|now))"
-    r"|\brepaye\b|(?<!\w)ibr(?!\w)|\bpaye\b"
-    r"|qualifying payment|qualifying employer"
-    # Buyback: anchor with PSLF/loan/payment context to avoid auto/stock buyback
+    r"|public service loan forgiv"                # explicit program name
+    r"|teacher loan forgiv"                       # explicit alt program
+    r"|qualifying payment|qualifying employer"    # PSLF-specific terminology
     r"|\b(pslf )?buyback\b (program|period|payment|process|backlog|eligibl)"
     r"|(pslf|loan|payment).{0,15}\bbuyback\b"
-    r"|\bmohela\b|\bfedloan\b"
-    r"|\bnhsc\b|\bnurse corps\b"
+    r"|\bmohela\b|\bfedloan\b"                    # PSLF servicers
+    r"|\bnhsc\b|\bnurse corps\b"                  # explicit alt programs
+    # Tier 2 — IDR plans, but only when relevant to PSLF (these are also non-PSLF
+    # repayment plans, so we keep them as soft signals — high recall, lower precision)
+    r"|\brepaye\b|(?<!\w)ibr(?!\w)|\bpaye\b"
+    r"|income.driven repayment|(?<!\w)idr(?!\w)"
+    r"|(?<!\w)save plan(?=[.,!?:;)]|$|\s+(forbearance|borrowers|injunction|eligible|repayment|enrollees|currently|now))"
 )
+
+# PSLF-specific anchor terms (used to validate generic-forgiveness matches).
+# A post matching ONLY generic "loan forgiveness" terms must ALSO contain one of
+# these anchors within 80 chars to be classified as PSLF-relevant.
+_PSLF_ANCHORS = (
+    r"\bpslf\b|\btepslf\b|public service loan|qualifying employer|qualifying payment"
+    r"|\bmohela\b|\bfedloan\b|\bnhsc\b|nurse corps|teacher loan forgiv"
+    r"|nonprofit (employer|hospital|job|work)|government employer|federal employer"
+    r"|residen(t|cy)|\battending\b"  # medical career stages (proxy for PSLF context)
+)
+
+# Generic forgiveness terms that REQUIRE a PSLF anchor nearby.
+_GENERIC_FORGIVENESS = (
+    r"\bloan forgiv|student loan forgiv"
+    r"|loans? (were |are |been |was )?forgiv"
+    r"|forgiv(e|en|ing) (my |our |the |student |federal |all )?(\w+ )?loans?"
+)
+
+
+def filter_pslf_relevant(series) -> "pd.Series":
+    """Vectorized version of has_pslf_relevance for pandas Series.
+
+    Returns boolean mask. Use as drop-in replacement for:
+        df["text"].str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
+    """
+    import re as _re
+    pattern = _re.compile(PSLF_STRICT_REGEX)
+    generic = _re.compile(_GENERIC_FORGIVENESS)
+    anchors = _re.compile(_PSLF_ANCHORS)
+
+    def _check(text):
+        if not isinstance(text, str) or not text:
+            return False
+        t = text.lower()
+        if pattern.search(t):
+            return True
+        for m in generic.finditer(t):
+            start, end = max(0, m.start() - 80), min(len(t), m.end() + 80)
+            if anchors.search(t[start:end]):
+                return True
+        return False
+
+    return series.fillna("").apply(_check)
+
+
+def has_pslf_relevance(text: str) -> bool:
+    """True if text matches PSLF_STRICT_REGEX OR has generic-forgiveness terms
+    co-occurring with a PSLF anchor within 80 characters.
+
+    Two-stage filter (round 2 audit fix):
+      1. If text matches the strict regex (Tier 1 + Tier 2), return True.
+      2. If text only matches generic forgiveness, require an anchor within 80 chars.
+
+    This rejects mass-forgiveness-only posts (Biden EO, SCOTUS) while keeping
+    PSLF-specific forgiveness discussions.
+    """
+    import re as _re
+    if not text:
+        return False
+    t = text.lower()
+    if _re.search(PSLF_STRICT_REGEX, t):
+        return True
+    # Fall back: generic forgiveness ONLY if a PSLF anchor is nearby
+    for m in _re.finditer(_GENERIC_FORGIVENESS, t):
+        start, end = max(0, m.start() - 80), min(len(t), m.end() + 80)
+        window = t[start:end]
+        if _re.search(_PSLF_ANCHORS, window):
+            return True
+    return False

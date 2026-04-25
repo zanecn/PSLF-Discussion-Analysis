@@ -28,10 +28,10 @@ from scipy import stats
 
 # Import shared PSLF filter regex for consistency across all scripts
 try:
-    from pslf_search_terms import PSLF_STRICT_REGEX
+    from pslf_search_terms import PSLF_STRICT_REGEX, filter_pslf_relevant
 except ImportError:
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__))))
-    from pslf_search_terms import PSLF_STRICT_REGEX
+    from pslf_search_terms import PSLF_STRICT_REGEX, filter_pslf_relevant
 
 # Minimum word count for reliable sentiment scoring (TextBlob is unreliable on <20 words)
 MIN_WORDS_FOR_SENTIMENT = 20
@@ -105,8 +105,8 @@ def load_reddit_professions() -> pd.DataFrame:
 
     # Filter to PSLF-relevant posts (same filter as SDN forum data)
     pre_filter = len(df)
-    text_match = df["combined_text"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
-    title_match = df["title"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
+    text_match = filter_pslf_relevant(df["combined_text"])
+    title_match = filter_pslf_relevant(df["title"])
     df = df[text_match | title_match].copy()
     print(f"  [FILTER] {len(df):,}/{pre_filter:,} PSLF-relevant profession posts retained")
 
@@ -132,8 +132,8 @@ def load_forum_data() -> pd.DataFrame:
     df = pd.read_csv(f)
 
     # Filter to PSLF-relevant posts using shared regex
-    body_match = df["body"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
-    title_match = df["thread_title"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
+    body_match = filter_pslf_relevant(df["body"])
+    title_match = filter_pslf_relevant(df["thread_title"])
     df = df[body_match | title_match].copy()
     print(f"  [FILTER] {len(df):,} PSLF-relevant posts retained from forum data")
 
@@ -475,8 +475,26 @@ def main():
     source_summary(sources)
     cross_source_sentiment_comparison(sources)
     temporal_comparison(sources)
-    reddit_post_vs_comment_analysis(reddit_posts, reddit_comments)
+    # post_vs_comment: only run if comments are present (avoids dead-code warning)
+    if not reddit_comments.empty:
+        reddit_post_vs_comment_analysis(reddit_posts, reddit_comments)
     forum_vs_reddit_analysis(reddit_posts, forums)
+
+    # r/PSLF profession lumping caveat (round-2 audit)
+    print("\n" + "=" * 70)
+    print("CAVEATS")
+    print("=" * 70)
+    print("  - r/PSLF posts are tagged 'general_pslf' but contain a profession mix")
+    print("    that is not measured. Comparing 'r/PSLF most negative' against")
+    print("    profession-disaggregated buckets is apples-to-oranges.")
+    print("  - Reddit volume in 2024-2026 is amplified by the 1000-result API cap")
+    print("    (older posts unreachable). Temporal comparisons across years are")
+    print("    confounded with data-collection geometry.")
+    print("  - Pre/post tests are associational, not interrupted time series.")
+    print("  - SDN-vs-Reddit polarity comparison is confounded with population")
+    print("    (medical-only on SDN) and post length (longer on SDN).")
+    print("  - Generic 'loan forgiveness' regex matches now require a PSLF anchor")
+    print("    within 80 chars (round-2 fix); rejects mass-forgiveness-only posts.")
 
     print("\n" + "=" * 70)
     print("Analysis complete!")

@@ -176,52 +176,56 @@ def search_subreddit_json(
 ) -> list[dict]:
     """Search a subreddit using old.reddit.com JSON endpoint.
 
-    Uses multiple sort modes (relevance, new, top, comments) and
-    paginates each to maximize unique results beyond Reddit's per-query cap.
+    2026-04 round 2 audit fix: time-window slicing (t=year, t=month etc.)
+    bypasses Reddit's 1000-cap on a per-window basis. We now iterate over
+    multiple time windows AND sort modes to maximize historical coverage,
+    addressing the volume artifact where pre-2020 data was unreachable.
     """
     all_posts = {}  # id -> post dict (dedup by ID)
+    # Time windows: each independently allows up to 1000 results.
+    # Rotating year/all/month gives broader coverage than relevance/new alone.
+    time_windows = ["year", "all", "month", "week"]
 
-    for sort in SORT_MODES:
-        if len(all_posts) >= max_results:
-            break
-
-        after = None
-        pages_fetched = 0
-        max_pages = 20  # 20 pages × 25 = 500 results per sort mode
-
-        while pages_fetched < max_pages and len(all_posts) < max_results:
-            params = {
-                "q": query,
-                "restrict_sr": "on",
-                "sort": sort,
-                "t": "all",
-                "limit": 25,
-            }
-            if after:
-                params["after"] = after
-
-            posts, after = _fetch_search_page(session, subreddit, params)
-
-            if not posts:
+    for time_window in time_windows:
+        for sort in SORT_MODES:
+            if len(all_posts) >= max_results:
                 break
 
-            new_count = 0
-            for p in posts:
-                pid = p.get("id", "")
-                if pid and pid not in all_posts:
-                    all_posts[pid] = p
-                    new_count += 1
+            after = None
+            pages_fetched = 0
+            max_pages = 10  # 10 pages × 25 = 250 results per (sort, time) combo
 
-            pages_fetched += 1
+            while pages_fetched < max_pages and len(all_posts) < max_results:
+                params = {
+                    "q": query,
+                    "restrict_sr": "on",
+                    "sort": sort,
+                    "t": time_window,
+                    "limit": 25,
+                }
+                if after:
+                    params["after"] = after
 
-            # If this page returned zero new posts, this sort mode is exhausted
-            if new_count == 0:
-                break
+                posts, after = _fetch_search_page(session, subreddit, params)
 
-            if not after:
-                break
+                if not posts:
+                    break
 
-            time.sleep(RATE_LIMIT)
+                new_count = 0
+                for p in posts:
+                    pid = p.get("id", "")
+                    if pid and pid not in all_posts:
+                        all_posts[pid] = p
+                        new_count += 1
+
+                pages_fetched += 1
+
+                if new_count == 0:
+                    break
+                if not after:
+                    break
+
+                time.sleep(RATE_LIMIT)
 
     return list(all_posts.values())[:max_results]
 

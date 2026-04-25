@@ -42,10 +42,10 @@ plt.rcParams.update({
 
 # Import shared PSLF filter regex
 try:
-    from pslf_search_terms import PSLF_STRICT_REGEX
+    from pslf_search_terms import PSLF_STRICT_REGEX, filter_pslf_relevant
 except ImportError:
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    from pslf_search_terms import PSLF_STRICT_REGEX
+    from pslf_search_terms import PSLF_STRICT_REGEX, filter_pslf_relevant
 
 
 # ---------------------------------------------------------------------------
@@ -94,19 +94,19 @@ def _build_stopwords() -> set:
     # Reddit/forum artifacts (deleted/removed user content, hyperlink fragments)
     sw.update({"http", "https", "www", "com", "amp", "deleted", "removed",
                "click", "edit", "x200b", "nbsp", "imgur", "youtube"})
-    # PSLF-specific high-frequency non-discriminative terms.
-    # Rationale (Manning IIR §2.2.2): every post in our corpus is, by selection,
-    # about loans/PSLF/payments. These terms thus have ~0 discriminative power
-    # and should be excluded to surface era-specific content. Keep narrower
-    # terms like "save", "mohela", "fedloan", "buyback", "waiver", which DO
-    # vary across eras.
-    sw.update({"loan", "loans", "student", "pslf", "forgiveness", "payment",
-               "payments", "pay", "paying", "paid", "school", "schools",
-               "would", "could", "should", "really", "much", "going", "still",
+    # 2026-04 round 2 audit fix:
+    # We previously excluded "pslf", "forgiveness", "loan", "loans" as
+    # non-discriminative. But the audit pointed out this was circular: removing
+    # the topic words from a topic-specific word cloud means the cloud
+    # cannot show what the discussion is actually about. Restored these.
+    # Domain stops kept ONLY for words that vary very little across eras:
+    sw.update({"would", "could", "should", "really", "much", "going", "still",
                "got", "make", "want", "need", "think", "know", "like", "get",
                "one", "two", "year", "years", "month", "months", "day", "days",
                "way", "people", "time", "new", "back", "even", "also", "lot",
-               "say", "said", "see", "saw", "go", "going", "anyone", "someone"})
+               "say", "said", "see", "saw", "go", "going", "anyone", "someone",
+               # Pronoun/determiner edge cases NLTK misses
+               "thats", "doesnt", "didnt", "youre", "theyre", "wouldnt", "couldnt"})
     return sw
 
 
@@ -231,8 +231,8 @@ def load_data(data_dir: str) -> tuple[pd.DataFrame, pd.DataFrame]:
     if os.path.exists(prof_path):
         pf = pd.read_csv(prof_path)
         # Apply same strict filter the analysis scripts use
-        tm = pf["combined_text"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
-        tt = pf["title"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
+        tm = filter_pslf_relevant(pf["combined_text"])
+        tt = filter_pslf_relevant(pf["title"])
         pf = pf[tm | tt].copy()
         frames.append(pf)
 
@@ -242,8 +242,8 @@ def load_data(data_dir: str) -> tuple[pd.DataFrame, pd.DataFrame]:
     reddit = pd.concat(frames, ignore_index=True)
 
     # Apply strict filter to medical/teacher sets too (idempotent on already-filtered data)
-    rm = reddit["combined_text"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
-    rt = reddit["title"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False) \
+    rm = filter_pslf_relevant(reddit["combined_text"])
+    rt = filter_pslf_relevant(reddit["title"]) \
          if "title" in reddit.columns else pd.Series(False, index=reddit.index)
     reddit = reddit[rm | rt].copy()
 
@@ -261,8 +261,8 @@ def load_data(data_dir: str) -> tuple[pd.DataFrame, pd.DataFrame]:
         print("[ERROR] forum_pslf_discussions.csv not found in", data_dir)
         sys.exit(1)
     sdn = pd.read_csv(sdn_path)
-    body_m = sdn["body"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
-    title_m = sdn["thread_title"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
+    body_m = filter_pslf_relevant(sdn["body"])
+    title_m = filter_pslf_relevant(sdn["thread_title"])
     sdn = sdn[body_m | title_m].copy()
     sdn["date"] = pd.to_datetime(sdn["date_posted"], errors="coerce", utc=True).dt.tz_localize(None)
     sdn["text"] = sdn["body"].fillna("")

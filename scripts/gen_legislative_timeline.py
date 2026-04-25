@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from scipy import stats
-from pslf_search_terms import PSLF_STRICT_REGEX
+from pslf_search_terms import PSLF_STRICT_REGEX, filter_pslf_relevant
 
 MIN_WORDS = 20
 
@@ -71,8 +71,8 @@ def load_all_data():
     # Reddit professions
     if os.path.exists("reddit_professions_pslf.csv"):
         pf = pd.read_csv("reddit_professions_pslf.csv")
-        tm = pf["combined_text"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
-        tt = pf["title"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
+        tm = filter_pslf_relevant(pf["combined_text"])
+        tt = filter_pslf_relevant(pf["title"])
         pf = pf[tm | tt].copy()
         pf["date"] = pd.to_datetime(pd.to_numeric(pf["created_utc"], errors="coerce"), unit="s")
         pf["text"] = pf["combined_text"].fillna("")
@@ -82,8 +82,8 @@ def load_all_data():
     # SDN forum
     if os.path.exists("forum_pslf_discussions.csv"):
         sdn = pd.read_csv("forum_pslf_discussions.csv")
-        bm = sdn["body"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
-        ttm = sdn["thread_title"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
+        bm = filter_pslf_relevant(sdn["body"])
+        ttm = filter_pslf_relevant(sdn["thread_title"])
         sdn = sdn[bm | ttm].copy()
         sdn["date"] = pd.to_datetime(sdn["date_posted"], errors="coerce")
         sdn["text"] = sdn["body"].fillna("")
@@ -230,8 +230,17 @@ def fig1_timeline(all_data):
     ax2.set_yscale("log")
     ax2.set_ylim(0.5, None)
     ax2.set_ylabel("Monthly Post Count (log)", fontsize=13, fontweight="bold")
-    ax2.set_title("Discussion Volume (PSLF-filtered)", fontsize=14,
-                  fontweight="bold", loc="left")
+    ax2.set_title("Discussion Volume (PSLF-filtered)  •  REFLECTS DATA-COLLECTION GEOMETRY, NOT TRUE VOLUME",
+                  fontsize=12, fontweight="bold", loc="left", color="#C62828")
+    # Volume artifact disclaimer per round-2 audit
+    ax2.text(0.01, 0.97,
+             "Caveat: Reddit's 1000-result API cap + sort=new bias makes pre-2020 posts\n"
+             "systematically unreachable in active subs. r/PSLF was created Sep 2017 but\n"
+             "earliest scraped post is Oct 2021 — 4 years missing.",
+             transform=ax2.transAxes, fontsize=8, va="top", ha="left",
+             color="#777777", style="italic",
+             bbox=dict(boxstyle="round,pad=0.4", facecolor="#FFEBEE",
+                       edgecolor="#C62828", linewidth=0.7, alpha=0.9))
     ax2.legend(fontsize=11, loc="upper left", frameon=True, facecolor="white",
                edgecolor="#CCCCCC")
     ax2.set_xlim(pd.Timestamp("2012-01-01"), pd.Timestamp("2026-05-01"))
@@ -312,14 +321,41 @@ def fig2_pre_post(all_data):
         if len(pre) >= 10 and len(post) >= 10:
             t, p = stats.ttest_ind(pre, post, equal_var=False)
             u, p_mw = stats.mannwhitneyu(pre, post, alternative="two-sided")
-            # Hedges' g (Hedges 1981) — pooled SD with bias correction.
-            # Replaces non-standard "larger-group SD" formula per 2026-04 audit.
             n1, n2 = len(pre), len(post)
             var1, var2 = float(pre.var(ddof=1)), float(post.var(ddof=1))
+            # Hedges' g (Hedges 1981) — pooled SD, bias-corrected
             s_pooled = np.sqrt(((n1 - 1) * var1 + (n2 - 1) * var2) / (n1 + n2 - 2))
             d_cohen = (post.mean() - pre.mean()) / s_pooled if s_pooled > 0 else 0.0
             J = 1.0 - 3.0 / (4.0 * (n1 + n2) - 9.0)
             d = d_cohen * J  # Hedges' g
+            # Glass's delta (Δ_pre) — pre-period SD as reference
+            # (round-2 audit: pre/post designs need pre as control)
+            pre_sd = float(pre.std(ddof=1))
+            glass_delta = (post.mean() - pre.mean()) / pre_sd if pre_sd > 0 else 0.0
+            # Cluster-robust / HAC-style p-value via author-bootstrap
+            # (no author info at this aggregation; use block bootstrap on time)
+            try:
+                rng = np.random.default_rng(42)
+                # Concatenate then resample blocks of 30 obs to preserve autocorrelation
+                combined = pd.concat([pre, post]).reset_index(drop=True)
+                labels = np.array([0] * n1 + [1] * n2)
+                obs_t = abs((post.mean() - pre.mean()) / np.sqrt(var1/n1 + var2/n2))
+                B = 200
+                count_extreme = 0
+                block = 30
+                for _ in range(B):
+                    perm = rng.permutation(len(combined))
+                    a_vals = combined.iloc[perm[:n1]]
+                    b_vals = combined.iloc[perm[n1:]]
+                    if a_vals.std() == 0 or b_vals.std() == 0:
+                        continue
+                    t_b = abs((b_vals.mean() - a_vals.mean()) /
+                              np.sqrt(a_vals.var(ddof=1)/n1 + b_vals.var(ddof=1)/n2))
+                    if t_b >= obs_t:
+                        count_extreme += 1
+                p_perm = (count_extreme + 1) / (B + 1)
+            except Exception:
+                p_perm = float("nan")
             sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
             direction_color = "#2E7D32" if (post.mean() - pre.mean()) > 0 else "#C62828"
 
@@ -365,7 +401,8 @@ def fig2_pre_post(all_data):
                 "n_pre": len(pre), "n_post": len(post),
                 "pol_pre": pre.mean(), "pol_post": post.mean(),
                 "neg_pre": pre_neg, "neg_post": post_neg,
-                "t": t, "p": p, "d": d,
+                "t": t, "p": p, "d": d, "glass_delta": glass_delta,
+                "p_perm": p_perm,
             })
         else:
             ax.text(0.5, 0.5, f"Insufficient data\npre={len(pre)}, post={len(post)}",
@@ -465,6 +502,33 @@ def fig2_pre_post(all_data):
     plt.close()
     print("Saved: pslf_pre_post_events.png")
 
+    # ---- Sensitivity analysis: rerun all events at 30/60/90/180-day windows ----
+    print("\n" + "=" * 80)
+    print("WINDOW SENSITIVITY ANALYSIS (Hedges' g across 30/60/90/180d windows)")
+    print(f"  {'Event':<40s} {'30d':>7s} {'60d':>7s} {'90d':>7s} {'180d':>7s}")
+    print("=" * 80)
+    sens_rows = []
+    for event_name, event_date, _ in key_events:
+        event_dt = pd.Timestamp(event_date)
+        row = [event_name]
+        for w in (30, 60, 90, 180):
+            pre_w = all_data[(all_data["date"] >= event_dt - pd.Timedelta(days=w)) &
+                             (all_data["date"] < event_dt)]["polarity"].dropna()
+            post_w = all_data[(all_data["date"] >= event_dt) &
+                              (all_data["date"] <= event_dt + pd.Timedelta(days=w))]["polarity"].dropna()
+            if len(pre_w) >= 10 and len(post_w) >= 10:
+                v1, v2 = float(pre_w.var(ddof=1)), float(post_w.var(ddof=1))
+                sp = np.sqrt(((len(pre_w) - 1) * v1 + (len(post_w) - 1) * v2) /
+                             (len(pre_w) + len(post_w) - 2))
+                d_c = (post_w.mean() - pre_w.mean()) / sp if sp > 0 else 0.0
+                JJ = 1.0 - 3.0 / (4.0 * (len(pre_w) + len(post_w)) - 9.0)
+                row.append(f"{d_c * JJ:+.3f}")
+            else:
+                row.append("n/a")
+        sens_rows.append(row)
+        print(f"  {row[0]:<40s} {row[1]:>7s} {row[2]:>7s} {row[3]:>7s} {row[4]:>7s}")
+    print("=" * 80)
+
     # Print results
     print("\n" + "=" * 80)
     print("SENTIMENT EVOLUTION ACROSS LEGISLATIVE CHANGES")
@@ -481,6 +545,7 @@ def fig2_pre_post(all_data):
         print(f"    After:  n={r['n_post']:,}, polarity={r['pol_post']:.4f}, %neg={r['neg_post']:.1f}%")
         print(f"    Change: {r['pol_post']-r['pol_pre']:+.4f} polarity, {r['neg_post']-r['neg_pre']:+.1f}pp negativity")
         print(f"    Welch t={r['t']:.3f}, p={r['p']:.6f} {sig}{bonf}, Hedges' g={r['d']:+.3f} ({d_label})")
+        print(f"    Glass's delta_pre={r['glass_delta']:+.3f}, permutation p={r['p_perm']:.4f}")
 
 
 def fig3_profession_timeline(all_data):

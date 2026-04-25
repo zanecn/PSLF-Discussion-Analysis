@@ -7,7 +7,7 @@ warnings.filterwarnings("ignore")
 import pandas as pd
 import numpy as np
 from scipy import stats
-from pslf_search_terms import PSLF_STRICT_REGEX
+from pslf_search_terms import PSLF_STRICT_REGEX, filter_pslf_relevant
 
 MIN_WORDS = 20
 
@@ -21,8 +21,8 @@ for f, prof in [("comprehensive_medical_pslf_discussions.csv", "medical"),
         df["text"] = df["combined_text"].fillna(""); frames.append(df)
 
 pf = pd.read_csv("reddit_professions_pslf.csv")
-tm = pf["combined_text"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
-tt = pf["title"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
+tm = filter_pslf_relevant(pf["combined_text"])
+tt = filter_pslf_relevant(pf["title"])
 pf = pf[tm | tt].copy()
 pf["date"] = pd.to_datetime(pd.to_numeric(pf["created_utc"], errors="coerce"), unit="s")
 pf["text"] = pf["combined_text"].fillna(""); pf["platform"] = "Reddit"; frames.append(pf)
@@ -35,8 +35,8 @@ if "vader_compound" in reddit.columns:
     reddit.loc[wc < MIN_WORDS, "vader_compound"] = np.nan
 
 sdn = pd.read_csv("forum_pslf_discussions.csv")
-bm = sdn["body"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
-ttm = sdn["thread_title"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
+bm = filter_pslf_relevant(sdn["body"])
+ttm = filter_pslf_relevant(sdn["thread_title"])
 sdn = sdn[bm | ttm].copy()
 sdn["date"] = pd.to_datetime(sdn["date_posted"], errors="coerce", utc=True).dt.tz_localize(None)
 sdn["text"] = sdn["body"].fillna(""); sdn["platform"] = "SDN Forum"; sdn["profession"] = "sdn_medical"
