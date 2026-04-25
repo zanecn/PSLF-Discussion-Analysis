@@ -285,14 +285,15 @@ def generate_fig1(reddit: pd.DataFrame, sdn: pd.DataFrame, output_dir: str) -> N
     events = [("2021-10-06", "Waiver"), ("2023-06-30", "Biden v.\nNebraska"),
               ("2024-07-01", "SAVE\nBlocked"), ("2025-03-07", "Trump\nEO")]
 
-    fig, axes = plt.subplots(2, 2, figsize=(24, 16))
+    fig, axes = plt.subplots(2, 2, figsize=(26, 17))
     fig.suptitle(
         "PSLF Sentiment: Multi-Source Temporal Comparison",
-        fontsize=22, fontweight="bold", y=0.98,
+        fontsize=24, fontweight="bold", y=0.985,
     )
-    fig.text(0.5, 0.953,
-             f"Reddit n={len(reddit):,} vs SDN Forum n={len(sdn):,} (PSLF-filtered)",
-             ha="center", fontsize=12, style="italic", color="#555555")
+    fig.text(0.5, 0.957,
+             f"Reddit n={len(reddit):,} vs SDN Forum n={len(sdn):,}  |  Strict PSLF filter, "
+             f"min 20 words; TextBlob polarity (3-month rolling smooth)",
+             ha="center", fontsize=13, style="italic", color="#555555")
 
     def add_events(ax, label_top=False):
         for ds, label in events:
@@ -323,7 +324,7 @@ def generate_fig1(reddit: pd.DataFrame, sdn: pd.DataFrame, output_dir: str) -> N
                      color=colors[name], linewidth=2.4, alpha=0.95, zorder=3)
     ax1.axhline(y=0, color="#222222", linewidth=0.6)
     add_events(ax1, label_top=True)
-    ax1.set_title("Monthly Mean Polarity by Source", fontsize=14,
+    ax1.set_title("Monthly Mean Polarity by Source", fontsize=16,
                   fontweight="bold", loc="left")
     ax1.set_ylabel("Polarity", fontsize=12, fontweight="bold")
     ax1.legend(fontsize=11, loc="lower left", frameon=True, facecolor="white",
@@ -345,7 +346,7 @@ def generate_fig1(reddit: pd.DataFrame, sdn: pd.DataFrame, output_dir: str) -> N
     ax2.set_yscale("log")
     ax2.set_ylim(0.5, None)
     add_events(ax2)
-    ax2.set_title("Monthly Post Volume (log scale)", fontsize=14,
+    ax2.set_title("Monthly Post Volume (log scale)", fontsize=16,
                   fontweight="bold", loc="left")
     ax2.set_ylabel("Count (log)", fontsize=12, fontweight="bold")
     ax2.legend(fontsize=11, loc="upper left", frameon=True, facecolor="white",
@@ -369,7 +370,7 @@ def generate_fig1(reddit: pd.DataFrame, sdn: pd.DataFrame, output_dir: str) -> N
             ax3.plot(smooth.index, smooth.values, label=f"{name} (3-mo smooth)",
                      color=colors[name], linewidth=2.4, alpha=0.95, zorder=3)
     add_events(ax3)
-    ax3.set_title("% Negative Posts by Source", fontsize=14,
+    ax3.set_title("% Negative Posts by Source", fontsize=16,
                   fontweight="bold", loc="left")
     ax3.set_ylabel("% Negative", fontsize=12, fontweight="bold")
     ax3.legend(fontsize=11, loc="upper left", frameon=True, facecolor="white",
@@ -404,7 +405,7 @@ def generate_fig1(reddit: pd.DataFrame, sdn: pd.DataFrame, output_dir: str) -> N
                          xytext=(8, 0), textcoords="offset points",
                          fontsize=10, fontweight="bold", color="#222222",
                          va="center")
-        ax4.set_title("Polarity Distribution by Source", fontsize=14,
+        ax4.set_title("Polarity Distribution by Source", fontsize=16,
                       fontweight="bold", loc="left")
         ax4.set_ylabel("Polarity", fontsize=12, fontweight="bold")
         ax4.axhline(y=0, color="#222222", linewidth=0.6)

@@ -279,17 +279,19 @@ def fig2_pre_post(all_data):
         ("Final Trump PSLF Rule", "2025-10-30", 60),
     ]
 
-    # Layout: violins on left (4 rows x 2 cols), forest plot summary on right
-    fig = plt.figure(figsize=(24, 22))
-    gs = fig.add_gridspec(4, 3, width_ratios=[1, 1, 1.4], hspace=0.55, wspace=0.3)
+    # Layout: violins on left (4 rows x 2 cols), forest plot summary on right.
+    # Wider canvas + more left margin so forest plot row labels don't collide.
+    fig = plt.figure(figsize=(28, 24))
+    gs = fig.add_gridspec(4, 3, width_ratios=[1, 1, 2.0], hspace=0.65, wspace=0.45)
 
     fig.suptitle(
         "PSLF Sentiment: Pre/Post Policy Event Analysis",
-        fontsize=22, fontweight="bold", y=0.995,
+        fontsize=24, fontweight="bold", y=0.995,
     )
-    fig.text(0.5, 0.973,
-             f"Strict filter, min {MIN_WORDS} words; Welch's t-test, Hedges' g (Bonferroni-corrected)",
-             ha="center", fontsize=12, style="italic", color="#555555")
+    fig.text(0.5, 0.974,
+             f"Strict filter, min {MIN_WORDS} words; Welch's t-test, Hedges' g (Bonferroni-corrected, "
+             f"associational, NOT causal)",
+             ha="center", fontsize=13, style="italic", color="#555555")
 
     results = []
 
@@ -339,9 +341,11 @@ def fig2_pre_post(all_data):
                 [f"Before\nn={len(pre)}", f"After\nn={len(post)}"],
                 fontsize=11,
             )
+            # Wrap long event names; show stats on second line
+            display_name = event_name if len(event_name) <= 32 else event_name[:30] + "..."
             ax.set_title(
-                f"{event_name}\n{event_date}  |  t={t:.2f}, p={p:.4f} {sig}, g={d:+.2f}",
-                fontsize=12, fontweight="bold", color=direction_color,
+                f"{display_name}\n{event_date}  •  t={t:.2f}, p={p:.4f} {sig}  •  g={d:+.2f}",
+                fontsize=13, fontweight="bold", color=direction_color, pad=10,
             )
             ax.set_ylabel("Polarity", fontsize=11)
             ax.axhline(y=0, color="#555555", linewidth=0.6, linestyle="-")
@@ -402,28 +406,56 @@ def fig2_pre_post(all_data):
             labels.append(f"{r['event']}\n({r['date']}) {sig}{bonf_mark}")
             colors_pt.append("#2E7D32" if d > 0 else "#C62828")
 
-        # Plot CI bars
+        # Plot CI bars (faded shading for emphasis on point estimates)
         for i, (lo, hi, c) in enumerate(zip(ci_lower, ci_upper, colors_pt)):
-            ax_forest.plot([lo, hi], [i, i], color=c, linewidth=2.2, alpha=0.7)
-        # Plot point estimates
-        ax_forest.scatter(d_values, y_pos, s=130, c=colors_pt, zorder=5,
-                          edgecolors="white", linewidths=1.5)
+            ax_forest.plot([lo, hi], [i, i], color=c, linewidth=3.5, alpha=0.55,
+                           solid_capstyle="round")
+            # Whiskers at CI ends
+            for end in (lo, hi):
+                ax_forest.plot([end, end], [i - 0.15, i + 0.15],
+                               color=c, linewidth=1.5, alpha=0.7)
 
-        ax_forest.axvline(x=0, color="#555555", linewidth=1, linestyle="-")
-        # Cohen's d effect size reference lines
-        for ref, lbl in [(-0.8, "Large -"), (-0.5, "Med -"), (-0.2, "Small -"),
-                         (0.2, "Small +"), (0.5, "Med +"), (0.8, "Large +")]:
-            ax_forest.axvline(x=ref, color="#CCCCCC", linewidth=0.5, linestyle=":")
-            ax_forest.text(ref, len(sorted_results) - 0.3, lbl, fontsize=8,
-                           ha="center", color="#777777")
+        # Plot point estimates as larger filled circles
+        ax_forest.scatter(d_values, y_pos, s=180, c=colors_pt, zorder=5,
+                          edgecolors="white", linewidths=2)
+
+        ax_forest.axvline(x=0, color="#222222", linewidth=1.2, linestyle="-")
+
+        # Cohen (1988) effect size reference bands (subtle backgrounds)
+        ax_forest.axvspan(-1.0, -0.8, color="#FFCDD2", alpha=0.25, zorder=0)
+        ax_forest.axvspan(-0.8, -0.5, color="#FFE0B2", alpha=0.25, zorder=0)
+        ax_forest.axvspan(-0.5, -0.2, color="#FFF9C4", alpha=0.25, zorder=0)
+        ax_forest.axvspan(0.2, 0.5, color="#FFF9C4", alpha=0.25, zorder=0)
+        ax_forest.axvspan(0.5, 0.8, color="#DCEDC8", alpha=0.25, zorder=0)
+        ax_forest.axvspan(0.8, 1.0, color="#C8E6C9", alpha=0.25, zorder=0)
+
+        # Effect-size threshold labels (top of plot, less cluttered)
+        for ref, lbl in [(-0.8, "Large"), (-0.5, "Med"), (-0.2, "Small"),
+                         (0.2, "Small"), (0.5, "Med"), (0.8, "Large")]:
+            ax_forest.axvline(x=ref, color="#999999", linewidth=0.6,
+                              linestyle=":", alpha=0.5)
+            ax_forest.text(ref, len(sorted_results) - 0.15, lbl, fontsize=9,
+                           ha="center", color="#666666", fontweight="bold")
+
+        # Annotate each row's g value next to its point
+        for d, i, c in zip(d_values, y_pos, colors_pt):
+            ax_forest.annotate(f"g={d:+.2f}", xy=(d, i),
+                               xytext=(0, 12 if d < 0 else -12),
+                               textcoords="offset points",
+                               ha="center", va="bottom" if d < 0 else "top",
+                               fontsize=9, fontweight="bold", color=c)
 
         ax_forest.set_yticks(y_pos)
-        ax_forest.set_yticklabels(labels, fontsize=10)
-        ax_forest.set_xlabel("Hedges' g (Effect Size, 95% CI)", fontsize=12, fontweight="bold")
-        ax_forest.set_title("Effect Size Summary", fontsize=14, fontweight="bold", loc="left")
-        ax_forest.set_xlim(min(min(ci_lower), -0.6), max(max(ci_upper), 0.6))
-        ax_forest.set_ylim(-0.7, len(sorted_results) - 0.3)
-        ax_forest.grid(axis="x", alpha=0.5)
+        ax_forest.set_yticklabels(labels, fontsize=11)
+        ax_forest.set_xlabel("Hedges' g (Effect Size, 95% CI)",
+                             fontsize=13, fontweight="bold")
+        ax_forest.set_title("Effect Size Summary (sorted by magnitude)",
+                            fontsize=15, fontweight="bold", loc="left", pad=12)
+        ax_forest.set_xlim(min(min(ci_lower) - 0.05, -0.7), max(max(ci_upper) + 0.05, 0.7))
+        ax_forest.set_ylim(-0.7, len(sorted_results) - 0.05)
+        ax_forest.grid(axis="x", alpha=0.4, linestyle=":")
+        ax_forest.tick_params(axis="y", which="both", length=0)
+        ax_forest.set_axisbelow(True)
 
     fig.text(0.99, 0.005,
              "*p<0.05, **p<0.01, ***p<0.001  |  Effect-size thresholds: Cohen (1988)",
