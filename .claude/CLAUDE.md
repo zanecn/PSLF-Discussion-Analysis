@@ -44,8 +44,26 @@ Multi-source sentiment analysis of Public Service Loan Forgiveness (PSLF) discus
 - Pre/post tests are associational, not causal: there is no interrupted-time-series counterfactual.
 - Adjacent events (e.g., Biden v. Nebraska + Payments Restart, SAVE Block + SAVE Forbearance) have overlapping 90-day windows; their effects are not separately identified.
 - TextBlob-VADER correlation r=0.33 indicates the two scorers measure different constructs; headline numbers use TextBlob (limitation noted in all reports).
-- Reddit's 1000-result API cap is unmitigated → pre-2020 corpus is sparse.
+- Reddit's 1000-result API cap is **partially real / partially confounded with growth** — see Volume-Artifact section below.
 - Cloudflare-blocked sources (Bogleheads, allnurses) → financially-sophisticated planners and dominant nursing community are missing.
+- r/AskReddit baseline: pol=0.050, %neg=26.4% (n=330). PSLF medical (pol=0.070, %neg=22.3%) is actually slightly MORE positive than Reddit baseline — challenges 'PSLF most negative' framing.
+- Permutation p-values (B=200) ~0.005 vs parametric p<0.0001 confirms autocorrelation inflated t-statistics 1-2 orders of magnitude. True effects are still significant after correction but with much wider uncertainty.
+
+### Volume Artifact: Real Growth + API Cap (mixed; 2026-04 round-3 investigation)
+- **r/PSLF was created 2014-08-21** (CLAUDE.md previously said 2017 — corrected). 12-year sub history.
+- **Reddit's 1000-result hard cap is confirmed**: paginating /new backwards terminates at exactly 998 posts, spanning only ~30 days of recent activity in r/PSLF.
+- **CFPB ground truth shows real growth**: PSLF complaints went from 341 (2016) → 2,223 (2025) — about 6.5× increase.
+- **Reddit/CFPB ratio over time**:
+  | Year | CFPB | Reddit (scraped) | R/C ratio |
+  |------|------|------------------|-----------|
+  | 2017 | 1,391 | 80 | 0.058 |
+  | 2020 | 511 | 125 | 0.245 |
+  | 2024 | 2,116 | 414 | 0.196 |
+  | 2025 | 2,223 | 659 | 0.296 |
+  | 2026 (Q1) | 228 | 1,102 | **4.83** |
+- The 84× growth in R/C ratio from 2017 to 2026 is too large to be real growth alone. It's a **mix**: ~5-10× real PSLF growth (waiver, SAVE crisis, EO drove discussion), and ~10× API-cap recency bias.
+- **Recent-3-months pattern is starkest**: Mar 2026 R/C = 80, Apr 2026 R/C = ∞ (CFPB lags). Confirms the API-cap retrieves a recent-30d window in active subs.
+- **Implication**: Reddit volume increase is BOTH real AND inflated. Don't use the volume curve as evidence of "discussion intensity" without normalizing to CFPB or another non-capped source.
 
 ## Audit History
 - 4 internal audit rounds (initial → audit 4): 46 issues fixed.
