@@ -1,26 +1,27 @@
 PSLF SENTIMENT vs ADMINISTRATIVE DATA CORRELATION ANALYSIS
-Generated: 2026-04-25T02:56:26.155387+00:00
+Generated: 2026-04-25T16:36:52.487153+00:00
 
-Data: 9,340 sentiment posts, 11,087 CFPB complaints
+Data: 9,437 sentiment posts, 11,005 CFPB complaints
 Date range: 2016-01-31 to 2026-03-31
 
 CONTEMPORANEOUS CORRELATIONS (n=115 months):
-  Pearson r (volume vs polarity): +0.046, p=0.6219
-  Pearson r (volume vs %neg):     +0.050, p=0.5921
-  Spearman rho (volume vs polarity): +0.062, p=0.5101
-  Spearman rho (volume vs %neg):     +0.067, p=0.4797
+  Pearson r (volume vs polarity): +0.045, p=0.6367
+  Pearson r (volume vs %neg):     +0.054, p=0.5691
+  Spearman rho (volume vs polarity): +0.042, p=0.6521
+  Spearman rho (volume vs %neg):     +0.093, p=0.3215
 
-CROSS-CORRELATION (sentiment vs complaints):
-  Lag  -6 months: r=+0.086, p=0.3750
-  Lag  -5 months: r=+0.170, p=0.0757
-  Lag  -4 months: r=+0.129, p=0.1773
-  Lag  -3 months: r=+0.005, p=0.9569
-  Lag  -2 months: r=+0.008, p=0.9319
-  Lag  -1 months: r=+0.059, p=0.5361
-  Lag  +0 months: r=+0.046, p=0.6219
-  Lag  +1 months: r=+0.059, p=0.5361
-  Lag  +2 months: r=+0.008, p=0.9319
-  Lag  +3 months: r=+0.005, p=0.9569
-  Lag  +4 months: r=+0.129, p=0.1773
-  Lag  +5 months: r=+0.170, p=0.0757
-  Lag  +6 months: r=+0.086, p=0.3750
+CROSS-CORRELATION (sentiment vs complaints, first-differenced):
+  Bonferroni alpha (n_lags=13): 0.0038
+  Lag  -6 months: r=+0.095, p=0.3372, n=104
+  Lag  -5 months: r=-0.132, p=0.1785, n=105
+  Lag  -4 months: r=-0.025, p=0.7995, n=106
+  Lag  -3 months: r=+0.047, p=0.6320, n=107
+  Lag  -2 months: r=+0.005, p=0.9605, n=108
+  Lag  -1 months: r=+0.031, p=0.7473, n=108
+  Lag  +0 months: r=-0.055, p=0.5721, n=108
+  Lag  +1 months: r=+0.127, p=0.1918, n=107
+  Lag  +2 months: r=-0.107, p=0.2741, n=106
+  Lag  +3 months: r=-0.106, p=0.2832, n=105
+  Lag  +4 months: r=+0.079, p=0.4250, n=104
+  Lag  +5 months: r=+0.178, p=0.0723, n=103
+  Lag  +6 months: r=-0.172, p=0.0839, n=102

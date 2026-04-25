@@ -100,6 +100,10 @@ SUBREDDIT_PROFESSIONS = {
     "physicianassistant": "physician_assistant",
     "OccupationalTherapy": "occupational_therapy",
     "slp": "speech_language_pathology",
+    # General-finance subs that incidentally discuss PSLF (added post-hoc 2026-04;
+    # documented in audit consensus to align CSV with config)
+    "personalfinance": "general_finance",
+    "financialindependence": "general_finance",
 }
 
 try:

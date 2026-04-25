@@ -42,10 +42,10 @@ plt.rcParams.update({
 
 # Import shared PSLF filter regex
 try:
-    from pslf_search_terms import PSLF_FILTER_REGEX
+    from pslf_search_terms import PSLF_STRICT_REGEX
 except ImportError:
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    from pslf_search_terms import PSLF_FILTER_REGEX
+    from pslf_search_terms import PSLF_STRICT_REGEX
 
 
 # ---------------------------------------------------------------------------
@@ -192,9 +192,31 @@ def make_wordcloud(texts: pd.Series, title: str, ax: plt.Axes) -> None:
 # ---------------------------------------------------------------------------
 # Data loading
 # ---------------------------------------------------------------------------
+MIN_WORDS = 20  # consistent with analyze_multi_source.py and gen_legislative_timeline.py
+
+
+def _nullify_short_polarity(df: pd.DataFrame, text_col: str = "text") -> pd.DataFrame:
+    """Set polarity to NaN where word count < MIN_WORDS.
+
+    TextBlob produces extreme +/-1.0 values on very short text (1-3 words)
+    that distort downstream means. This filter mirrors the application in
+    analyze_multi_source.py / gen_legislative_timeline.py / final_summary.py
+    so that figures are computed on the SAME population as reported numbers.
+    """
+    wc = df[text_col].fillna("").str.split().str.len()
+    df.loc[wc < MIN_WORDS, "polarity"] = np.nan
+    return df
+
+
 def load_data(data_dir: str) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Load and prepare Reddit + SDN data from data_dir."""
-    # Reddit
+    """Load + filter Reddit (medical/teacher + professions) + SDN data.
+
+    Both sources pass through:
+      - PSLF_STRICT_REGEX filter (consistent with all analysis scripts)
+      - TextBlob polarity recomputation
+      - MIN_WORDS=20 nullification (TextBlob unreliable on short text)
+    """
+    # ---- Reddit (medical + teacher original) ----
     frames = []
     for f, prof in [("comprehensive_medical_pslf_discussions.csv", "medical"),
                     ("comprehensive_teacher_pslf_discussions.csv", "teacher")]:
@@ -203,34 +225,54 @@ def load_data(data_dir: str) -> tuple[pd.DataFrame, pd.DataFrame]:
             df = pd.read_csv(path)
             df["profession"] = prof
             frames.append(df)
+
+    # ---- Reddit (profession-specific scrape) ----
+    prof_path = os.path.join(data_dir, "reddit_professions_pslf.csv")
+    if os.path.exists(prof_path):
+        pf = pd.read_csv(prof_path)
+        # Apply same strict filter the analysis scripts use
+        tm = pf["combined_text"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
+        tt = pf["title"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
+        pf = pf[tm | tt].copy()
+        frames.append(pf)
+
     if not frames:
         print("[ERROR] No Reddit CSV files found in", data_dir)
         sys.exit(1)
     reddit = pd.concat(frames, ignore_index=True)
+
+    # Apply strict filter to medical/teacher sets too (idempotent on already-filtered data)
+    rm = reddit["combined_text"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
+    rt = reddit["title"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False) \
+         if "title" in reddit.columns else pd.Series(False, index=reddit.index)
+    reddit = reddit[rm | rt].copy()
+
     reddit["date"] = pd.to_datetime(pd.to_numeric(reddit["created_utc"], errors="coerce"), unit="s")
     # combined_text already includes title; don't double-count
     reddit["text"] = reddit["combined_text"].fillna("")
 
     print("Recomputing Reddit polarity with TextBlob (consistent with SDN)...")
     reddit["polarity"] = reddit["text"].apply(textblob_polarity)
+    reddit = _nullify_short_polarity(reddit, "text")
 
-    # SDN
+    # ---- SDN ----
     sdn_path = os.path.join(data_dir, "forum_pslf_discussions.csv")
     if not os.path.exists(sdn_path):
         print("[ERROR] forum_pslf_discussions.csv not found in", data_dir)
         sys.exit(1)
     sdn = pd.read_csv(sdn_path)
-    body_m = sdn["body"].fillna("").str.lower().str.contains(PSLF_FILTER_REGEX, na=False)
-    title_m = sdn["thread_title"].fillna("").str.lower().str.contains(PSLF_FILTER_REGEX, na=False)
+    body_m = sdn["body"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
+    title_m = sdn["thread_title"].fillna("").str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
     sdn = sdn[body_m | title_m].copy()
-    # Strip timezone info after parsing so all dates are tz-naive (consistent with Reddit)
     sdn["date"] = pd.to_datetime(sdn["date_posted"], errors="coerce", utc=True).dt.tz_localize(None)
     sdn["text"] = sdn["body"].fillna("")
 
     print("Recomputing SDN polarity with TextBlob...")
     sdn["polarity"] = sdn["text"].apply(textblob_polarity)
+    sdn = _nullify_short_polarity(sdn, "text")
 
-    print(f"Reddit: {len(reddit):,} | SDN (filtered): {len(sdn):,}")
+    print(f"Reddit: {len(reddit):,} (strict filter, MIN_WORDS={MIN_WORDS}) | "
+          f"SDN: {len(sdn):,} (strict filter, MIN_WORDS={MIN_WORDS})")
     return reddit, sdn
 
 

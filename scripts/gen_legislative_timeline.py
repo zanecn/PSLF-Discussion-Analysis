@@ -288,7 +288,7 @@ def fig2_pre_post(all_data):
         fontsize=22, fontweight="bold", y=0.995,
     )
     fig.text(0.5, 0.973,
-             f"Strict filter, min {MIN_WORDS} words; Welch's t-test, Glass's delta",
+             f"Strict filter, min {MIN_WORDS} words; Welch's t-test, Hedges' g (Bonferroni-corrected)",
              ha="center", fontsize=12, style="italic", color="#555555")
 
     results = []
@@ -310,8 +310,14 @@ def fig2_pre_post(all_data):
         if len(pre) >= 10 and len(post) >= 10:
             t, p = stats.ttest_ind(pre, post, equal_var=False)
             u, p_mw = stats.mannwhitneyu(pre, post, alternative="two-sided")
-            ref_std = pre.std() if len(pre) >= len(post) else post.std()
-            d = (post.mean() - pre.mean()) / ref_std if ref_std > 0 else 0.0
+            # Hedges' g (Hedges 1981) — pooled SD with bias correction.
+            # Replaces non-standard "larger-group SD" formula per 2026-04 audit.
+            n1, n2 = len(pre), len(post)
+            var1, var2 = float(pre.var(ddof=1)), float(post.var(ddof=1))
+            s_pooled = np.sqrt(((n1 - 1) * var1 + (n2 - 1) * var2) / (n1 + n2 - 2))
+            d_cohen = (post.mean() - pre.mean()) / s_pooled if s_pooled > 0 else 0.0
+            J = 1.0 - 3.0 / (4.0 * (n1 + n2) - 9.0)
+            d = d_cohen * J  # Hedges' g
             sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
             direction_color = "#2E7D32" if (post.mean() - pre.mean()) > 0 else "#C62828"
 
@@ -334,7 +340,7 @@ def fig2_pre_post(all_data):
                 fontsize=11,
             )
             ax.set_title(
-                f"{event_name}\n{event_date}  |  t={t:.2f}, p={p:.4f} {sig}, d={d:+.2f}",
+                f"{event_name}\n{event_date}  |  t={t:.2f}, p={p:.4f} {sig}, g={d:+.2f}",
                 fontsize=12, fontweight="bold", color=direction_color,
             )
             ax.set_ylabel("Polarity", fontsize=11)
@@ -369,17 +375,31 @@ def fig2_pre_post(all_data):
         sorted_results = sorted(results, key=lambda r: r["d"])
         y_pos = np.arange(len(sorted_results))
         d_values = [r["d"] for r in sorted_results]
-        # Approximate 95% CI for Glass's delta using SE = sqrt((n1+n2)/(n1*n2) + d^2/(2*n2))
+        # Bonferroni correction across the family of pre/post tests
+        n_tests = len(sorted_results)
+        alpha_bonf = 0.05 / n_tests if n_tests > 0 else 0.05
+        # 95% CI for Hedges' g (Hedges & Olkin 1985):
+        #   var(g) = (n1+n2)/(n1*n2) + g^2 / (2*(n1+n2-2))
         ci_lower, ci_upper = [], []
         labels = []
         colors_pt = []
         for r in sorted_results:
             n1, n2, d = r["n_pre"], r["n_post"], r["d"]
-            se_d = np.sqrt((n1 + n2) / (n1 * n2) + d ** 2 / (2 * n2))
+            var_g = (n1 + n2) / (n1 * n2) + d ** 2 / (2.0 * (n1 + n2 - 2))
+            se_d = np.sqrt(var_g)
             ci_lower.append(d - 1.96 * se_d)
             ci_upper.append(d + 1.96 * se_d)
-            sig = "***" if r["p"] < 0.001 else "**" if r["p"] < 0.01 else "*" if r["p"] < 0.05 else "ns"
-            labels.append(f"{r['event']}\n({r['date']}) {sig}")
+            # Significance markers — separately reported for uncorrected and Bonferroni
+            if r["p"] < 0.001:
+                sig = "***"
+            elif r["p"] < 0.01:
+                sig = "**"
+            elif r["p"] < 0.05:
+                sig = "*"
+            else:
+                sig = "ns"
+            bonf_mark = " (B)" if r["p"] < alpha_bonf else ""
+            labels.append(f"{r['event']}\n({r['date']}) {sig}{bonf_mark}")
             colors_pt.append("#2E7D32" if d > 0 else "#C62828")
 
         # Plot CI bars
@@ -399,7 +419,7 @@ def fig2_pre_post(all_data):
 
         ax_forest.set_yticks(y_pos)
         ax_forest.set_yticklabels(labels, fontsize=10)
-        ax_forest.set_xlabel("Glass's delta (Effect Size, 95% CI)", fontsize=12, fontweight="bold")
+        ax_forest.set_xlabel("Hedges' g (Effect Size, 95% CI)", fontsize=12, fontweight="bold")
         ax_forest.set_title("Effect Size Summary", fontsize=14, fontweight="bold", loc="left")
         ax_forest.set_xlim(min(min(ci_lower), -0.6), max(max(ci_upper), 0.6))
         ax_forest.set_ylim(-0.7, len(sorted_results) - 0.3)
@@ -416,15 +436,19 @@ def fig2_pre_post(all_data):
     # Print results
     print("\n" + "=" * 80)
     print("SENTIMENT EVOLUTION ACROSS LEGISLATIVE CHANGES")
+    print(f"  Pre/post Welch's t-tests, Hedges' g effect size.")
+    print(f"  Bonferroni-corrected alpha (n={len(results)} tests): {0.05/max(len(results),1):.4f}")
+    print(f"  Note: pre/post is associational, not causal (no ITS counterfactual).")
     print("=" * 80)
     for r in results:
         sig = "***" if r["p"] < 0.001 else "**" if r["p"] < 0.01 else "*" if r["p"] < 0.05 else "ns"
+        bonf = " (Bonf.)" if r["p"] < (0.05 / max(len(results), 1)) else ""
         d_label = "large" if abs(r["d"]) >= 0.8 else "medium" if abs(r["d"]) >= 0.5 else "small" if abs(r["d"]) >= 0.2 else "negligible"
         print(f"\n  {r['event']} ({r['date']}, {r['window']}d window):")
         print(f"    Before: n={r['n_pre']:,}, polarity={r['pol_pre']:.4f}, %neg={r['neg_pre']:.1f}%")
         print(f"    After:  n={r['n_post']:,}, polarity={r['pol_post']:.4f}, %neg={r['neg_post']:.1f}%")
         print(f"    Change: {r['pol_post']-r['pol_pre']:+.4f} polarity, {r['neg_post']-r['neg_pre']:+.1f}pp negativity")
-        print(f"    Welch t={r['t']:.3f}, p={r['p']:.6f} {sig}, Glass d={r['d']:+.3f} ({d_label})")
+        print(f"    Welch t={r['t']:.3f}, p={r['p']:.6f} {sig}{bonf}, Hedges' g={r['d']:+.3f} ({d_label})")
 
 
 def fig3_profession_timeline(all_data):

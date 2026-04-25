@@ -75,15 +75,31 @@ PSLF_FILTER_REGEX = (
     r"|nhsc|nurse corps"
 )
 
-# STRICT filter: used for analysis — requires explicit PSLF/forgiveness-program terms
-# Excludes generic "student loan" / "loan repayment" which capture off-topic posts
-# (Audit finding: nursing had only 6.1% explicit PSLF mentions with broad filter)
+# STRICT filter: used for analysis — requires explicit PSLF/forgiveness-program terms.
+# Excludes generic "student loan" / "loan repayment" which capture off-topic posts.
+# (Audit finding: nursing had only 6.1% explicit PSLF mentions with broad filter.)
+#
+# 2026-04 audit fixes:
+#   - Match TEPSLF (Temporary Expanded PSLF) — previously missed by \bpslf\b
+#   - Match past-tense "forgiven", "forgive" — previously only "forgiveness" matched
+#   - Tighten "save plan" with word boundaries — previously matched "save plan B"
+#   - Tighten "buyback" similarly — was matching "auto buyback" etc.
 PSLF_STRICT_REGEX = (
-    r"\bpslf\b|public service loan forgiveness"
-    r"|loan forgiveness|student loan forgiveness"
-    r"|income.driven repayment|(?<!\w)idr(?!\w)|save plan|repaye|(?<!\w)ibr(?!\w)"
-    r"|qualifying payment|qualifying employer|buyback"
-    r"|mohela|fedloan"
-    r"|nhsc|nurse corps"
-    r"|teacher loan forgiveness"
+    r"\b(te)?pslf\b"                              # PSLF or TEPSLF
+    r"|public service loan forgiv"                # forgive / forgiveness / forgiven
+    r"|loan forgiv|student loan forgiv"
+    r"|teacher loan forgiv"
+    # Past tense "loans were forgiven" / "forgive my loans" — anchor near 'loan'
+    r"|loans? (were |are |been |was )?forgiv"
+    r"|forgiv(e|en|ing) (my |our |the |student |federal |all )?(\w+ )?loans?"
+    r"|income.driven repayment|(?<!\w)idr(?!\w)"
+    # SAVE plan: anchor with policy/loan keywords to avoid "save plan B"
+    r"|(?<!\w)save plan(?=[.,!?:;)]|$|\s+(forbearance|borrowers|injunction|eligible|repayment|enrollees|currently|now))"
+    r"|\brepaye\b|(?<!\w)ibr(?!\w)|\bpaye\b"
+    r"|qualifying payment|qualifying employer"
+    # Buyback: anchor with PSLF/loan/payment context to avoid auto/stock buyback
+    r"|\b(pslf )?buyback\b (program|period|payment|process|backlog|eligibl)"
+    r"|(pslf|loan|payment).{0,15}\bbuyback\b"
+    r"|\bmohela\b|\bfedloan\b"
+    r"|\bnhsc\b|\bnurse corps\b"
 )

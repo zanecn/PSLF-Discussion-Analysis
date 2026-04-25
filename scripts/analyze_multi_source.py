@@ -183,16 +183,19 @@ def cross_source_sentiment_comparison(dfs: dict[str, pd.DataFrame]):
         print("  Need at least 2 sources with polarity data for comparison")
         return
 
-    # Pairwise comparisons with Bonferroni correction
-    # Uses both Welch's t-test and Mann-Whitney U (non-parametric, no normality assumption)
-    # Effect size: Glass's delta (uses control group SD, consistent with unequal-variance assumption)
+    # Pairwise comparisons with Bonferroni correction.
+    # Tests: Welch's t (parametric) + Mann-Whitney U (non-parametric).
+    # Effect size: Hedges' g (Hedges 1981) — pooled SD with small-sample correction.
+    # Switched from "Glass's delta with larger-group SD" (which is non-standard) per
+    # 2026-04 audit consensus. Hedges' g is symmetric and the standard choice for
+    # observational two-group comparisons of unequal n.
     source_names = list(valid_sources.keys())
     n_comparisons = len(source_names) * (len(source_names) - 1) // 2
     if n_comparisons == 0:
         return
     alpha_corrected = 0.05 / n_comparisons  # Bonferroni
     print(f"  Bonferroni-corrected alpha: {alpha_corrected:.4f} ({n_comparisons} comparisons)")
-    print(f"  Effect size: Glass's delta (denominator = larger group SD)")
+    print(f"  Effect size: Hedges' g (Hedges 1981) — pooled SD with bias correction")
     print(f"  Tests: Welch's t (parametric) + Mann-Whitney U (non-parametric)\n")
 
     MIN_GROUP_SIZE = 20  # minimum for reliable statistical comparison
@@ -207,20 +210,21 @@ def cross_source_sentiment_comparison(dfs: dict[str, pd.DataFrame]):
                 print(f"  {s1} vs {s2}: SKIPPED (n1={n1}, n2={n2}, min={MIN_GROUP_SIZE})")
                 continue
 
-            # Welch's t-test (does not assume equal variance)
             t_stat, p_welch = stats.ttest_ind(g1, g2, equal_var=False)
-
-            # Mann-Whitney U (non-parametric, no normality assumption)
             u_stat, p_mw = stats.mannwhitneyu(g1, g2, alternative="two-sided")
 
-            # Glass's delta: use the larger group's SD as denominator
-            # (consistent with Welch's unequal-variance assumption)
-            ref_std = g1.std() if n1 >= n2 else g2.std()
-            glass_d = (g1.mean() - g2.mean()) / ref_std if ref_std > 0 else 0.0
+            # Hedges' g (Hedges 1981, J. Educ. Stat.):
+            #   d = (m1 - m2) / s_pooled
+            #   s_pooled = sqrt(((n1-1)*var1 + (n2-1)*var2) / (n1 + n2 - 2))
+            #   g = d * (1 - 3/(4(n1+n2)-9))   [bias correction for small samples]
+            var1, var2 = float(g1.var(ddof=1)), float(g2.var(ddof=1))
+            s_pooled = np.sqrt(((n1 - 1) * var1 + (n2 - 1) * var2) / (n1 + n2 - 2))
+            d_cohen = (g1.mean() - g2.mean()) / s_pooled if s_pooled > 0 else 0.0
+            J = 1.0 - 3.0 / (4.0 * (n1 + n2) - 9.0)  # Hedges bias correction
+            hedges_g = d_cohen * J
 
-            # Effect size interpretation
-            abs_d = abs(glass_d)
-            d_label = "large" if abs_d >= 0.8 else "medium" if abs_d >= 0.5 else "small" if abs_d >= 0.2 else "negligible"
+            abs_g = abs(hedges_g)
+            g_label = "large" if abs_g >= 0.8 else "medium" if abs_g >= 0.5 else "small" if abs_g >= 0.2 else "negligible"
 
             sig = "***" if p_welch < 0.001 else "**" if p_welch < 0.01 else "*" if p_welch < 0.05 else "ns"
             bonf_sig = " (Bonf.)" if p_welch < alpha_corrected else ""
@@ -228,7 +232,7 @@ def cross_source_sentiment_comparison(dfs: dict[str, pd.DataFrame]):
 
             print(f"  {s1} vs {s2}:")
             print(f"    Welch t={t_stat:.3f}, p={p_welch:.6f} {sig}{bonf_sig} | MW U={u_stat:.0f}, p={p_mw:.6f} {mw_sig}")
-            print(f"    Glass's d={glass_d:.3f} ({d_label}), n1={n1}, n2={n2}")
+            print(f"    Hedges' g={hedges_g:+.3f} ({g_label}), n1={n1}, n2={n2}")
 
 
 def temporal_comparison(dfs: dict[str, pd.DataFrame], output_dir: str = "."):

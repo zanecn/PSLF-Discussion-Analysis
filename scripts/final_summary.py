@@ -98,14 +98,20 @@ for name, date_str, window in events:
     post = all_data[(all_data["date"] >= dt) & (all_data["date"] <= dt + pd.Timedelta(days=window))]["polarity"]
     if len(pre) >= 10 and len(post) >= 10:
         t, p = stats.ttest_ind(pre, post, equal_var=False)
-        ref_std = pre.std() if len(pre) >= len(post) else post.std()
-        d = (post.mean() - pre.mean()) / ref_std if ref_std > 0 else 0
+        # Hedges' g (Hedges 1981) — pooled SD with bias correction
+        n1, n2 = len(pre), len(post)
+        var1, var2 = float(pre.var(ddof=1)), float(post.var(ddof=1))
+        s_pooled = np.sqrt(((n1 - 1) * var1 + (n2 - 1) * var2) / (n1 + n2 - 2))
+        d_cohen = (post.mean() - pre.mean()) / s_pooled if s_pooled > 0 else 0
+        J = 1.0 - 3.0 / (4.0 * (n1 + n2) - 9.0)
+        g = d_cohen * J
         sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
         arrow = "+" if post.mean() > pre.mean() else ""
         print(f"\n  {name} ({date_str}):")
         print(f"    Polarity: {pre.mean():.4f} -> {post.mean():.4f} ({arrow}{post.mean()-pre.mean():.4f}) {sig}")
         print(f"    Neg rate: {(pre<0).mean()*100:.1f}% -> {(post<0).mean()*100:.1f}%")
-        print(f"    Glass d={d:+.3f}, n_pre={len(pre)}, n_post={len(post)}")
+        print(f"    Hedges' g={g:+.3f}, n_pre={len(pre)}, n_post={len(post)}")
+        print(f"    NOTE: associational only; pre/post is not interrupted time series.")
 
 # 3. Present day
 print(f"\n{'=' * W}")

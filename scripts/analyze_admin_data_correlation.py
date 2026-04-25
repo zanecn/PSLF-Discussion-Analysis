@@ -187,23 +187,55 @@ def load_sentiment_data() -> pd.DataFrame:
 # ---------------------------------------------------------------------------
 # Cross-correlation analysis (Box-Jenkins 1970)
 # ---------------------------------------------------------------------------
-def cross_correlation(s1: pd.Series, s2: pd.Series, max_lag: int = 6) -> dict:
-    """Compute lagged Pearson correlations between two monthly series."""
-    aligned = pd.concat([s1.rename("s1"), s2.rename("s2")], axis=1).dropna()
-    if len(aligned) < max_lag + 5:
+def cross_correlation(s1: pd.Series, s2: pd.Series, max_lag: int = 6,
+                       difference: bool = True) -> dict:
+    """Compute lagged Pearson correlations between two monthly time series.
+
+    Per audit consensus, this implementation:
+      1. Reindexes to a regular monthly grid (so lag k means k calendar months,
+         not k row positions on an irregular index).
+      2. First-differences both series to remove trends (Box-Jenkins 1970:
+         CCF on stationarized series; otherwise spurious correlation per
+         Granger & Newbold 1974).
+      3. Uses ndarray-level positional shifting for correctness.
+      4. Returns Bonferroni-corrected alpha alongside per-lag p-values.
+
+    Returns dict mapping lag -> (r, p, n_pairs).
+    """
+    # Build a uniform monthly index
+    aligned = pd.concat([s1.rename("s1"), s2.rename("s2")], axis=1)
+    aligned.index = pd.to_datetime(aligned.index)
+    full_idx = pd.date_range(aligned.index.min(), aligned.index.max(), freq="ME")
+    aligned = aligned.reindex(full_idx)
+
+    if difference:
+        aligned = aligned.diff().dropna(how="all")
+
+    a, b = aligned["s1"].to_numpy(), aligned["s2"].to_numpy()
+    n = len(a)
+    if n < max_lag + 10:
         return {}
 
     results = {}
     for lag in range(-max_lag, max_lag + 1):
-        if lag < 0:
-            r, p = stats.pearsonr(aligned["s1"].shift(-lag).dropna(),
-                                  aligned["s2"].iloc[-lag:].iloc[:len(aligned["s1"].shift(-lag).dropna())])
-        elif lag > 0:
-            shifted = aligned["s2"].shift(-lag).dropna()
-            r, p = stats.pearsonr(aligned["s1"].iloc[:len(shifted)], shifted)
+        # lag > 0 means s1 leads s2 by `lag` months (correlate s1[t] with s2[t+lag])
+        if lag > 0:
+            x, y = a[:-lag], b[lag:]
+        elif lag < 0:
+            x, y = a[-lag:], b[:lag]
         else:
-            r, p = stats.pearsonr(aligned["s1"], aligned["s2"])
-        results[lag] = (r, p)
+            x, y = a, b
+        # Drop pairs where either is NaN
+        mask = ~(np.isnan(x) | np.isnan(y))
+        x, y = x[mask], y[mask]
+        if len(x) < 5:
+            continue
+        # Guard against zero variance (constant series after differencing)
+        if np.std(x) == 0 or np.std(y) == 0:
+            results[lag] = (0.0, 1.0, len(x))
+            continue
+        r, p = stats.pearsonr(x, y)
+        results[lag] = (float(r), float(p), len(x))
     return results
 
 
@@ -294,15 +326,22 @@ def main():
         print(f"    Complaint volume vs % negative: rho = {rho2:+.3f}, p = {pp2:.4f}")
         print(f"  N (months overlap): {len(aligned)}")
 
-        # 6. Lagged cross-correlation
+        # 6. Lagged cross-correlation (Box-Jenkins-correct: regularly indexed,
+        #    first-differenced to ensure stationarity, Bonferroni-corrected)
         print("\n  Cross-correlation (sentiment leads/lags complaints):")
-        lags = cross_correlation(monthly_sentiment["mean"], monthly_complaints, max_lag=6)
+        print("    NOTE: Series first-differenced (Box-Jenkins). Bonferroni correction applied.")
+        lags = cross_correlation(monthly_sentiment["mean"], monthly_complaints,
+                                 max_lag=6, difference=True)
         if lags:
-            print(f"    {'Lag (months)':>14s}  {'r':>8s}  {'p':>8s}")
+            n_lags = len(lags)
+            alpha_bonf = 0.05 / n_lags
+            print(f"    Bonferroni alpha (n_lags={n_lags}): {alpha_bonf:.4f}")
+            print(f"    {'Lag (months)':>14s}  {'r':>8s}  {'p':>8s}  {'n':>6s}  {'sig':>6s}")
             for lag in sorted(lags.keys()):
-                r, p = lags[lag]
+                r, p, n_pairs = lags[lag]
                 interp = "(sentiment leads)" if lag > 0 else "(complaints lead)" if lag < 0 else "(simultaneous)"
-                print(f"    {lag:>14d}  {r:+8.3f}  {p:8.4f}  {interp}")
+                bonf = "(Bonf)" if p < alpha_bonf else ("*" if p < 0.05 else "")
+                print(f"    {lag:>14d}  {r:+8.3f}  {p:8.4f}  {n_pairs:>6d}  {bonf:>6s}  {interp}")
 
     # 7. Generate figure
     print("\nGenerating correlation figure...")
@@ -388,28 +427,42 @@ def main():
         lag_keys = sorted(lags.keys())
         rs = [lags[k][0] for k in lag_keys]
         ps = [lags[k][1] for k in lag_keys]
-        # Color by significance, fade non-significant
-        bar_colors = []
-        bar_alphas = []
+        n_pairs = [lags[k][2] for k in lag_keys]
+        n_lags_tested = len(lag_keys)
+        alpha_bonf = 0.05 / n_lags_tested
+
+        # Color: red if Bonferroni-significant, orange if uncorrected p<0.05, gray else
+        bar_colors, bar_alphas = [], []
         for p in ps:
-            if p < 0.05:
-                bar_colors.append("#C62828")
-                bar_alphas.append(0.85)
+            if p < alpha_bonf:
+                bar_colors.append("#C62828"); bar_alphas.append(0.9)
+            elif p < 0.05:
+                bar_colors.append("#FB8C00"); bar_alphas.append(0.7)
             else:
-                bar_colors.append("#9E9E9E")
-                bar_alphas.append(0.55)
+                bar_colors.append("#9E9E9E"); bar_alphas.append(0.5)
 
         bars = ax3.bar(lag_keys, rs, color=bar_colors, edgecolor="white", linewidth=1.2)
         for bar, alpha in zip(bars, bar_alphas):
             bar.set_alpha(alpha)
 
-        # 95% significance threshold reference (for n=115, r ≈ 0.18)
-        n_obs = 115
-        crit_r = 1.96 / np.sqrt(n_obs)
-        ax3.axhline(y=crit_r, color="#888888", linestyle=":", linewidth=0.8, alpha=0.7)
-        ax3.axhline(y=-crit_r, color="#888888", linestyle=":", linewidth=0.8, alpha=0.7)
-        ax3.text(max(lag_keys), crit_r, f" |r|≥{crit_r:.2f} for p<0.05", fontsize=8,
-                 va="bottom", ha="right", color="#888888", style="italic")
+        # Per-lag empirical critical r (uses each lag's actual n)
+        n_typical = int(np.median(n_pairs)) if n_pairs else 100
+        crit_r_uncorr = 1.96 / np.sqrt(max(n_typical, 5))
+        # Bonferroni-corrected critical r ~ z_{alpha/(2*n_lags)} / sqrt(n)
+        from scipy.stats import norm as _norm
+        z_bonf = _norm.ppf(1 - alpha_bonf / 2)
+        crit_r_bonf = z_bonf / np.sqrt(max(n_typical, 5))
+
+        ax3.axhline(y=crit_r_uncorr, color="#FB8C00", linestyle=":", linewidth=0.8, alpha=0.7)
+        ax3.axhline(y=-crit_r_uncorr, color="#FB8C00", linestyle=":", linewidth=0.8, alpha=0.7)
+        ax3.axhline(y=crit_r_bonf, color="#C62828", linestyle="--", linewidth=0.9, alpha=0.7)
+        ax3.axhline(y=-crit_r_bonf, color="#C62828", linestyle="--", linewidth=0.9, alpha=0.7)
+        ax3.text(max(lag_keys), crit_r_uncorr,
+                 f" |r|≥{crit_r_uncorr:.2f} uncorrected p<0.05",
+                 fontsize=8, va="bottom", ha="right", color="#FB8C00", style="italic")
+        ax3.text(max(lag_keys), crit_r_bonf,
+                 f" |r|≥{crit_r_bonf:.2f} Bonferroni p<0.05/{n_lags_tested}",
+                 fontsize=8, va="bottom", ha="right", color="#C62828", style="italic")
 
         ax3.axhline(y=0, color="#222222", linewidth=0.7)
         ax3.set_xlabel("Lag (months) — positive = sentiment leads complaints",
@@ -442,10 +495,11 @@ def main():
             f.write(f"  Spearman rho (volume vs polarity): {rho1:+.3f}, p={pp1:.4f}\n")
             f.write(f"  Spearman rho (volume vs %neg):     {rho2:+.3f}, p={pp2:.4f}\n")
         if lags:
-            f.write(f"\nCROSS-CORRELATION (sentiment vs complaints):\n")
+            f.write(f"\nCROSS-CORRELATION (sentiment vs complaints, first-differenced):\n")
+            f.write(f"  Bonferroni alpha (n_lags={len(lags)}): {0.05/len(lags):.4f}\n")
             for lag in sorted(lags.keys()):
-                r, p = lags[lag]
-                f.write(f"  Lag {lag:+3d} months: r={r:+.3f}, p={p:.4f}\n")
+                r, p, n_pairs = lags[lag]
+                f.write(f"  Lag {lag:+3d} months: r={r:+.3f}, p={p:.4f}, n={n_pairs}\n")
     print(f"  Saved: admin_correlation_results.txt")
 
 
