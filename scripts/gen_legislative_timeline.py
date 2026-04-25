@@ -84,19 +84,29 @@ def load_all_data():
     return all_data
 
 
-# Policy events
+# Policy events (chronological)
 EVENTS = [
     ("2010-10-01", "First PSLF\nEligible", "First borrowers complete 10 years"),
+    ("2017-08-31", "First PSLF\nDenials", "~99% of first applications denied"),
     ("2018-06-01", "TEPSLF\nCreated", "Temporary expanded PSLF"),
     ("2020-03-13", "COVID Pause\nBegins", "Payment & interest pause"),
     ("2021-10-06", "Limited PSLF\nWaiver", "Any payment type counts"),
+    ("2022-04-19", "IDR Account\nAdjustment", "Past forbearance counts toward PSLF"),
+    ("2022-07-01", "MOHELA\nTakes Over", "Replaces FedLoan as PSLF servicer"),
+    ("2022-08-24", "Biden Mass\nForgiveness", "$10K-20K plan announced"),
     ("2022-10-31", "Waiver\nDeadline", "Last day for limited waiver"),
+    ("2023-06-30", "Biden v.\nNebraska", "SCOTUS strikes down mass forgiveness"),
     ("2023-07-01", "SAVE Plan\nLaunched", "Most generous IDR plan"),
     ("2023-10-01", "Payments\nRestart", "COVID forbearance ends"),
+    ("2024-02-13", "First SAVE\nBlock (10C)", "10th Circuit Kansas injunction"),
     ("2024-07-01", "SAVE Plan\nBlocked", "8th Circuit injunction"),
+    ("2024-08-09", "SAVE Admin\nForbearance", "All SAVE borrowers stuck in limbo"),
     ("2025-03-07", "Trump PSLF\nExec Order", "Restricts PSLF processing"),
     ("2025-05-22", "OBBBA\nPassed", "Caps/changes IDR"),
-    ("2026-03-24", "Present\nDay", "Current analysis date"),
+    ("2025-10-30", "Final Trump\nPSLF Rule", "Excludes 'illegal purpose' employers"),
+    ("2025-11-15", "Cities\nLawsuit", "Boston/Chicago/SF/ABQ sue admin"),
+    ("2025-12-31", "Tax Exempt\nExpires", "IDR forgiveness becomes taxable"),
+    ("2026-04-24", "Present\nDay", "Current analysis date"),
 ]
 
 COLORS = {"reddit": "#FF6B35", "reddit_prof": "#E91E63", "sdn": "#2196F3"}
@@ -185,12 +195,16 @@ def fig2_pre_post(all_data):
     """Pre/post violin plots for key policy events."""
     key_events = [
         ("Limited PSLF Waiver", "2021-10-06", 90),
-        ("COVID Pause Ends / Payments Restart", "2023-10-01", 90),
-        ("SAVE Plan Blocked (8th Circuit)", "2024-07-01", 90),
+        ("IDR Account Adjustment", "2022-04-19", 90),
+        ("Biden Mass Forgiveness Announcement", "2022-08-24", 90),
+        ("Biden v. Nebraska SCOTUS", "2023-06-30", 90),
+        ("Payments Restart", "2023-10-01", 90),
+        ("SAVE Admin Forbearance", "2024-08-09", 90),
         ("Trump PSLF Executive Order", "2025-03-07", 60),
+        ("Final Trump PSLF Rule", "2025-10-30", 60),
     ]
 
-    fig, axes = plt.subplots(2, 2, figsize=(20, 14))
+    fig, axes = plt.subplots(4, 2, figsize=(20, 28))
     fig.suptitle(
         "PSLF Sentiment: Pre/Post Policy Event Analysis\n"
         f"(Strict filter, min {MIN_WORDS} words)",
