@@ -45,23 +45,66 @@ def safe_mean_polarity(series: pd.Series) -> float:
     return valid.mean() if len(valid) > 0 else 0.0
 
 
-STOP_WORDS = set(
-    "the a an is are was were be been being have has had do does did will would "
-    "could should may might shall can to of in for on with at by from it its "
-    "this that these those i you he she we they my your and or but not no if so "
-    "as just about than more very too also up out all any some into what how like "
-    "get who when their know because them there which one our even don much going "
-    "really still got make way want think need year years many well now back people "
-    "time new said only after before over other most first then through own where "
-    "here each made between since long right same such take come good him her two "
-    "find day http https www com amp deleted removed click".split()
-)
+# Literature-validated stopword filtering:
+#   1. NLTK English stopwords (Bird, Klein & Loper 2009; widely cited NLP standard)
+#   2. scikit-learn ENGLISH_STOP_WORDS (Pedregosa et al. 2011)
+#   3. Domain-specific augmentation per Manning, Raghavan & Schütze
+#      (Introduction to Information Retrieval 2008, Ch.2 §2.2.2):
+#      "very high-frequency terms with no discriminative power for the
+#       specific task" should be added to the stoplist.
+def _build_stopwords() -> set:
+    sw: set = set()
+    try:
+        from nltk.corpus import stopwords as _nltk_sw
+        sw.update(_nltk_sw.words("english"))
+    except Exception:
+        try:
+            import nltk
+            nltk.download("stopwords", quiet=True)
+            from nltk.corpus import stopwords as _nltk_sw
+            sw.update(_nltk_sw.words("english"))
+        except Exception:
+            pass
+    try:
+        from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS as _sk_sw
+        sw.update(_sk_sw)
+    except Exception:
+        pass
+    # Reddit/forum artifacts (deleted/removed user content, hyperlink fragments)
+    sw.update({"http", "https", "www", "com", "amp", "deleted", "removed",
+               "click", "edit", "x200b", "nbsp", "imgur", "youtube"})
+    # PSLF-specific high-frequency non-discriminative terms.
+    # Rationale (Manning IIR §2.2.2): every post in our corpus is, by selection,
+    # about loans/PSLF/payments. These terms thus have ~0 discriminative power
+    # and should be excluded to surface era-specific content. Keep narrower
+    # terms like "save", "mohela", "fedloan", "buyback", "waiver", which DO
+    # vary across eras.
+    sw.update({"loan", "loans", "student", "pslf", "forgiveness", "payment",
+               "payments", "pay", "paying", "paid", "school", "schools",
+               "would", "could", "should", "really", "much", "going", "still",
+               "got", "make", "want", "need", "think", "know", "like", "get",
+               "one", "two", "year", "years", "month", "months", "day", "days",
+               "way", "people", "time", "new", "back", "even", "also", "lot",
+               "say", "said", "see", "saw", "go", "going", "anyone", "someone"})
+    return sw
+
+
+STOP_WORDS = _build_stopwords()
 
 
 def make_wordcloud(texts: pd.Series, title: str, ax: plt.Axes) -> None:
-    """Generate a word cloud from text series and plot on axis."""
-    words = " ".join(texts.fillna("").str.lower()).split()
-    freq = Counter(w for w in words if len(w) > 2 and w not in STOP_WORDS and w.isalpha())
+    """Generate a word cloud from text series and plot on axis.
+
+    Filters by:
+      - alphabetic tokens only
+      - length >= 3 chars
+      - not in STOP_WORDS (NLTK + sklearn + domain-specific)
+    """
+    import re as _re
+    text_blob = " ".join(texts.fillna("").str.lower())
+    # Tokenize on word boundaries (Bird et al. 2009 NLTK convention)
+    tokens = _re.findall(r"\b[a-z]{3,}\b", text_blob)
+    freq = Counter(t for t in tokens if t not in STOP_WORDS)
     if len(freq) < 5:
         ax.text(0.5, 0.5, "Insufficient data", ha="center", va="center", fontsize=16)
         ax.set_title(title, fontsize=13)

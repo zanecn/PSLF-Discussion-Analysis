@@ -1,0 +1,26 @@
+PSLF SENTIMENT vs ADMINISTRATIVE DATA CORRELATION ANALYSIS
+Generated: 2026-04-25T02:56:26.155387+00:00
+
+Data: 9,340 sentiment posts, 11,087 CFPB complaints
+Date range: 2016-01-31 to 2026-03-31
+
+CONTEMPORANEOUS CORRELATIONS (n=115 months):
+  Pearson r (volume vs polarity): +0.046, p=0.6219
+  Pearson r (volume vs %neg):     +0.050, p=0.5921
+  Spearman rho (volume vs polarity): +0.062, p=0.5101
+  Spearman rho (volume vs %neg):     +0.067, p=0.4797
+
+CROSS-CORRELATION (sentiment vs complaints):
+  Lag  -6 months: r=+0.086, p=0.3750
+  Lag  -5 months: r=+0.170, p=0.0757
+  Lag  -4 months: r=+0.129, p=0.1773
+  Lag  -3 months: r=+0.005, p=0.9569
+  Lag  -2 months: r=+0.008, p=0.9319
+  Lag  -1 months: r=+0.059, p=0.5361
+  Lag  +0 months: r=+0.046, p=0.6219
+  Lag  +1 months: r=+0.059, p=0.5361
+  Lag  +2 months: r=+0.008, p=0.9319
+  Lag  +3 months: r=+0.005, p=0.9569
+  Lag  +4 months: r=+0.129, p=0.1773
+  Lag  +5 months: r=+0.170, p=0.0757
+  Lag  +6 months: r=+0.086, p=0.3750
