@@ -86,8 +86,13 @@ def fetch_cfpb_complaints(date_min: str = "2016-01-01",
     search_terms = ["PSLF", "public service loan forgiveness", "loan forgiveness",
                     "MOHELA", "FedLoan", "income driven", "SAVE plan"]
 
+    # Round-3 audit fix J: detect when we hit CFPB's 10000-result hard cap
+    # (Elasticsearch frm+size cannot exceed 10000 per query).
+    cfpb_cap_warnings = []
+
     for term in search_terms:
         print(f"  Searching: '{term}'")
+        term_count = 0
         for page in range(max_pages):
             params = {
                 "search_term": term,
@@ -120,6 +125,12 @@ def fetch_cfpb_complaints(date_min: str = "2016-01-01",
                         seen.add(cid)
                         src["query_matched"] = term
                         all_hits.append(src)
+                term_count += len(hits)
+                # Detect CFPB 10000-result hard cap (ES frm+size limit)
+                if (page + 1) * page_size >= 10000 and len(hits) == page_size:
+                    cfpb_cap_warnings.append(term)
+                    print(f"    [CFPB CAP] '{term}' hit 10000-result ceiling at page {page}")
+                    break
                 if len(hits) < page_size:
                     break
             except requests.RequestException as e:
@@ -127,6 +138,9 @@ def fetch_cfpb_complaints(date_min: str = "2016-01-01",
                 break
 
     print(f"  Total unique complaints: {len(all_hits):,}")
+    if cfpb_cap_warnings:
+        print(f"  [WARNING] {len(cfpb_cap_warnings)} search terms hit CFPB's 10K cap: {cfpb_cap_warnings}")
+        print(f"  Recommend date-window stratification for those terms.")
 
     if not all_hits:
         return pd.DataFrame()
@@ -237,6 +251,37 @@ def cross_correlation(s1: pd.Series, s2: pd.Series, max_lag: int = 6,
         r, p = stats.pearsonr(x, y)
         results[lag] = (float(r), float(p), len(x))
     return results
+
+
+# ---------------------------------------------------------------------------
+# Volume-artifact diagnostic (round-3 audit fix R3-2)
+# ---------------------------------------------------------------------------
+def compute_volume_artifact_ratio(reddit_dates: pd.Series,
+                                   cfpb_dates: pd.Series,
+                                   out_csv: str = "reddit_cfpb_volume_ratio.csv") -> pd.DataFrame:
+    """Compute year-stratified Reddit/CFPB volume ratio.
+
+    Rationale: If 2024-2026 Reddit volume increase were real, the
+    Reddit/CFPB ratio (CFPB has no API cap) would be ~constant.
+    A jump in the ratio is the signature of API-cap recency bias.
+
+    Writes a CSV with year, cfpb, reddit, ratio columns and returns the DataFrame.
+    """
+    cfpb_yearly = cfpb_dates.dt.year.value_counts().sort_index()
+    reddit_yearly = reddit_dates.dt.year.value_counts().sort_index()
+    common_years = sorted(set(cfpb_yearly.index) & set(reddit_yearly.index))
+    rows = []
+    for y in common_years:
+        c = int(cfpb_yearly.get(y, 0))
+        r = int(reddit_yearly.get(y, 0))
+        ratio = r / c if c > 0 else float("nan")
+        rows.append({"year": int(y), "cfpb_count": c, "reddit_count": r, "rc_ratio": ratio})
+    df = pd.DataFrame(rows)
+    df.to_csv(out_csv, index=False)
+    print(f"  Saved: {out_csv}")
+    print(f"  Reddit/CFPB ratio: 2017={df[df['year']==2017]['rc_ratio'].iloc[0]:.3f}, " +
+          (f"2026={df[df['year']==2026]['rc_ratio'].iloc[0]:.3f}" if 2026 in df['year'].values else "no 2026 data"))
+    return df
 
 
 # ---------------------------------------------------------------------------
@@ -501,6 +546,12 @@ def main():
                 r, p, n_pairs = lags[lag]
                 f.write(f"  Lag {lag:+3d} months: r={r:+.3f}, p={p:.4f}, n={n_pairs}\n")
     print(f"  Saved: admin_correlation_results.txt")
+
+    # Round-3 audit fix R3-2: produce R/C ratio CSV from script (was previously
+    # only in CLAUDE.md as an unverifiable static table)
+    print("\nComputing Reddit/CFPB volume ratio (volume artifact diagnostic)...")
+    rc_df = compute_volume_artifact_ratio(sent["date"], complaints_pslf["date"])
+    print(rc_df.to_string(index=False))
 
 
 if __name__ == "__main__":

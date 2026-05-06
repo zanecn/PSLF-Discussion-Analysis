@@ -308,15 +308,17 @@ def fig2_pre_post(all_data):
         ax = fig.add_subplot(gs[idx // 2, idx % 2])
         event_dt = pd.Timestamp(event_date)
 
-        pre = all_data[
+        # Keep date for proper moving-block bootstrap
+        pre_df = all_data[
             (all_data["date"] >= event_dt - pd.Timedelta(days=window)) &
             (all_data["date"] < event_dt)
-        ]["polarity"].dropna()
-
-        post = all_data[
+        ][["date", "polarity"]].dropna(subset=["polarity"]).sort_values("date")
+        post_df = all_data[
             (all_data["date"] >= event_dt) &
             (all_data["date"] <= event_dt + pd.Timedelta(days=window))
-        ]["polarity"].dropna()
+        ][["date", "polarity"]].dropna(subset=["polarity"]).sort_values("date")
+        pre = pre_df["polarity"]
+        post = post_df["polarity"]
 
         if len(pre) >= 10 and len(post) >= 10:
             t, p = stats.ttest_ind(pre, post, equal_var=False)
@@ -332,21 +334,32 @@ def fig2_pre_post(all_data):
             # (round-2 audit: pre/post designs need pre as control)
             pre_sd = float(pre.std(ddof=1))
             glass_delta = (post.mean() - pre.mean()) / pre_sd if pre_sd > 0 else 0.0
-            # Cluster-robust / HAC-style p-value via author-bootstrap
-            # (no author info at this aggregation; use block bootstrap on time)
+            # Moving-block bootstrap to preserve autocorrelation (Künsch 1989).
+            # Round-3 audit fix: previous implementation was iid permutation
+            # despite comments claiming otherwise. Now actually resamples
+            # contiguous time-ordered blocks.
+            #
+            # Block length L ~ n^(1/3) per Carlstein (1986); auto-selected.
+            # B=2000 reps for stable p-values around 0.005 (MC SE < 0.0016).
             try:
                 rng = np.random.default_rng(42)
-                # Concatenate then resample blocks of 30 obs to preserve autocorrelation
-                combined = pd.concat([pre, post]).reset_index(drop=True)
-                labels = np.array([0] * n1 + [1] * n2)
+                combined_sorted = pd.concat([pre_df, post_df]).sort_values("date").reset_index(drop=True)
+                vals = combined_sorted["polarity"].to_numpy()
+                n_total = len(vals)
+                block_len = max(int(np.ceil(n_total ** (1/3))), 5)
                 obs_t = abs((post.mean() - pre.mean()) / np.sqrt(var1/n1 + var2/n2))
-                B = 200
+                B = 2000
                 count_extreme = 0
-                block = 30
+                # Build all possible block start indices (overlapping blocks)
+                block_starts = np.arange(0, n_total - block_len + 1)
+                blocks_per_resample = int(np.ceil(n_total / block_len))
                 for _ in range(B):
-                    perm = rng.permutation(len(combined))
-                    a_vals = combined.iloc[perm[:n1]]
-                    b_vals = combined.iloc[perm[n1:]]
+                    # Sample contiguous blocks WITH replacement (Künsch 1989)
+                    starts = rng.choice(block_starts, size=blocks_per_resample, replace=True)
+                    resampled = np.concatenate([vals[s:s + block_len] for s in starts])[:n_total]
+                    # Re-assign first n1 to "pre" group, rest to "post"
+                    a_vals = resampled[:n1]
+                    b_vals = resampled[n1:n1 + n2]
                     if a_vals.std() == 0 or b_vals.std() == 0:
                         continue
                     t_b = abs((b_vals.mean() - a_vals.mean()) /
