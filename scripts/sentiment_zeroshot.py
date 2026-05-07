@@ -122,6 +122,12 @@ def main():
     parser.add_argument("--sample", type=int, default=200, help="Number of posts to classify (0=all)")
     parser.add_argument("--model", default="claude-sonnet-4-20250514", help="Claude model")
     parser.add_argument("--seed", type=int, default=42, help="Random seed for sampling")
+    parser.add_argument("--stratify-events", action="store_true",
+                        help="Sample N posts per event (pre + post window) instead of overall random sample. "
+                             "Use with --sample to control posts per event (default 100). "
+                             "Yields per-event triangulation power.")
+    parser.add_argument("--per-event", type=int, default=100,
+                        help="When --stratify-events is set, posts per event (pre+post combined)")
     args = parser.parse_args()
 
     if not HAS_ANTHROPIC:
@@ -158,8 +164,51 @@ def main():
     df = df[wc >= 20].copy()
     print(f"After min 20 words: {len(df):,} posts")
 
-    # Sample if requested — round-4 audit: stratify by year × source for triangulation
-    if args.sample > 0 and len(df) > args.sample:
+    # Event-stratified sampling: sample N posts per event window (round-4 audit)
+    if args.stratify_events:
+        # 8 policy events with 90d / 60d windows around each
+        EVENTS = [
+            ("Limited PSLF Waiver",            "2021-10-06", 90),
+            ("IDR Account Adjustment",         "2022-04-19", 90),
+            ("Biden Mass Forgiveness",         "2022-08-24", 90),
+            ("Biden v. Nebraska SCOTUS",       "2023-06-30", 90),
+            ("Payments Restart",               "2023-10-01", 90),
+            ("SAVE Admin Forbearance",         "2024-08-09", 90),
+            ("Trump PSLF EO",                  "2025-03-07", 60),
+            ("Final Trump PSLF Rule",          "2025-10-30", 60),
+        ]
+        if "created_utc" in df.columns:
+            df["_dt"] = pd.to_datetime(pd.to_numeric(df["created_utc"], errors="coerce"),
+                                       unit="s", utc=True).dt.tz_localize(None)
+        elif "date_posted" in df.columns:
+            df["_dt"] = pd.to_datetime(df["date_posted"], errors="coerce", utc=True).dt.tz_localize(None)
+        else:
+            print("[ERROR] Cannot find date column for event stratification")
+            sys.exit(1)
+        rng = np.random.default_rng(args.seed)
+        per_event = args.per_event
+        sampled_indices = set()
+        n_per_window = per_event // 2
+        per_event_summary = []
+        for ev_name, ev_date, win in EVENTS:
+            dt = pd.Timestamp(ev_date)
+            pre_mask = (df["_dt"] >= dt - pd.Timedelta(days=win)) & (df["_dt"] < dt)
+            post_mask = (df["_dt"] >= dt) & (df["_dt"] <= dt + pd.Timedelta(days=win))
+            pre_idx = df[pre_mask].index.tolist()
+            post_idx = df[post_mask].index.tolist()
+            pre_sample = list(rng.choice(pre_idx, size=min(n_per_window, len(pre_idx)),
+                                          replace=False)) if pre_idx else []
+            post_sample = list(rng.choice(post_idx, size=min(n_per_window, len(post_idx)),
+                                           replace=False)) if post_idx else []
+            sampled_indices.update(pre_sample)
+            sampled_indices.update(post_sample)
+            per_event_summary.append((ev_name, len(pre_sample), len(post_sample)))
+        df = df.loc[sorted(sampled_indices)].drop(columns=["_dt"])
+        print(f"Event-stratified sample: {len(df)} posts across {len(EVENTS)} events")
+        print(f"  {'Event':<35s} {'pre':>5s} {'post':>5s}")
+        for n, p, q in per_event_summary:
+            print(f"  {n:<35s} {p:>5d} {q:>5d}")
+    elif args.sample > 0 and len(df) > args.sample:
         # Build a stratification key
         if "created_utc" in df.columns:
             yr = pd.to_datetime(pd.to_numeric(df["created_utc"], errors="coerce"),
