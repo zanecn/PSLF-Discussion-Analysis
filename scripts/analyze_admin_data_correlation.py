@@ -185,7 +185,7 @@ def load_sentiment_data() -> pd.DataFrame:
         bm = filter_pslf_relevant(sdn["body"])
         ttm = filter_pslf_relevant(sdn["thread_title"])
         sdn = sdn[bm | ttm].copy()
-        sdn["date"] = pd.to_datetime(sdn["date_posted"], errors="coerce")
+        sdn["date"] = pd.to_datetime(sdn["date_posted"], errors="coerce", utc=True).dt.tz_convert(None)
         sdn["text"] = sdn["body"].fillna("")
         sdn["source"] = "sdn"
         sdn["profession"] = "sdn_medical"

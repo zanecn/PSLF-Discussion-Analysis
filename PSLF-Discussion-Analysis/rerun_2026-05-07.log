@@ -1,0 +1,774 @@
+=== rerun timestamp: 2026-05-07T19:17:19Z ===
+=== sandbox notes ===
+Network: rescrape blocked (reddit/SDN/CFPB/HF all 403). Pipeline run on existing CSVs.
+Sentiment: TextBlob + VADER (transformer unavailable due to HF block).
+
+=== multi-source analysis ===
+======================================================================
+PSLF MULTI-SOURCE SENTIMENT ANALYSIS
+Run at: 2026-05-07 19:17 UTC
+======================================================================
+  [SKIP] reddit_comments_pslf.csv not found. Run collect_reddit_comments.py first.
+  [FILTER] 3,261/10,015 PSLF-relevant profession posts retained
+  [FILTER] 4,679 PSLF-relevant posts retained from forum data
+
+======================================================================
+DATA SOURCE SUMMARY
+======================================================================
+
+  reddit_posts:
+    Records: 1,126
+    Date range: 2016-05-03 to 2025-10-08
+    Mean polarity: 0.0818 (std: 0.1113)
+    % Negative: 16.3%
+    Mean word count: 223
+
+  reddit_general_pslf:
+    Records: 703
+    Date range: 2021-10-01 to 2026-04-24
+    Mean polarity: 0.0694 (std: 0.1290)
+    % Negative: 24.3%
+    Mean word count: 175
+
+  reddit_general_student_loans:
+    Records: 694
+    Date range: 2017-05-17 to 2026-04-24
+    Mean polarity: 0.0728 (std: 0.1048)
+    % Negative: 19.9%
+    Mean word count: 216
+
+  reddit_medical:
+    Records: 388
+    Date range: 2013-04-23 to 2026-04-16
+    Mean polarity: 0.0686 (std: 0.1562)
+    % Negative: 21.9%
+    Mean word count: 149
+
+  reddit_nursing:
+    Records: 125
+    Date range: 2014-03-09 to 2026-04-12
+    Mean polarity: 0.1061 (std: 0.1526)
+    % Negative: 12.8%
+    Mean word count: 147
+
+  reddit_teaching:
+    Records: 196
+    Date range: 2014-03-27 to 2026-01-05
+    Mean polarity: 0.0969 (std: 0.1298)
+    % Negative: 16.8%
+    Mean word count: 159
+
+  reddit_law:
+    Records: 65
+    Date range: 2011-06-10 to 2026-01-26
+    Mean polarity: 0.0780 (std: 0.1573)
+    % Negative: 20.0%
+    Mean word count: 222
+
+  reddit_social_work:
+    Records: 72
+    Date range: 2013-10-18 to 2026-03-08
+    Mean polarity: 0.1072 (std: 0.1220)
+    % Negative: 11.1%
+    Mean word count: 163
+
+  reddit_federal_employee:
+    Records: 81
+    Date range: 2019-06-10 to 2026-02-06
+    Mean polarity: 0.0829 (std: 0.1119)
+    % Negative: 17.3%
+    Mean word count: 198
+
+  reddit_pharmacy:
+    Records: 53
+    Date range: 2015-03-27 to 2026-02-23
+    Mean polarity: 0.0959 (std: 0.1418)
+    % Negative: 13.2%
+    Mean word count: 193
+
+  reddit_physician_assistant:
+    Records: 204
+    Date range: 2016-02-17 to 2026-04-23
+    Mean polarity: 0.0956 (std: 0.1136)
+    % Negative: 15.7%
+    Mean word count: 211
+
+  reddit_occupational_therapy:
+    Records: 62
+    Date range: 2016-09-26 to 2026-04-15
+    Mean polarity: 0.1305 (std: 0.1327)
+    % Negative: 11.3%
+    Mean word count: 169
+
+  reddit_speech_language_pathology:
+    Records: 110
+    Date range: 2014-01-02 to 2026-04-19
+    Mean polarity: 0.1072 (std: 0.1347)
+    % Negative: 14.5%
+    Mean word count: 163
+
+  reddit_personalfinance:
+    Records: 476
+    Date range: 2013-05-04 to 2026-03-21
+    Mean polarity: 0.0934 (std: 0.0828)
+    % Negative: 8.6%
+    Mean word count: 288
+
+  reddit_financialindependence:
+    Records: 32
+    Date range: 2013-06-01 to 2026-01-01
+    Mean polarity: 0.0920 (std: 0.0777)
+    % Negative: 9.4%
+    Mean word count: 562
+
+  forum_sdn:
+    Records: 4,679
+    Date range: 2009-03-04 to 2026-04-23
+    Mean polarity: 0.1127 (std: 0.1240)
+    % Negative: 11.1%
+    Mean word count: 168
+
+======================================================================
+CROSS-SOURCE SENTIMENT COMPARISON
+======================================================================
+  Bonferroni-corrected alpha: 0.0004 (120 comparisons)
+  Effect size: Hedges' g (Hedges 1981) — pooled SD with bias correction
+  Tests: Welch's t (parametric) + Mann-Whitney U (non-parametric)
+
+  reddit_posts vs reddit_general_pslf:
+    Welch t=2.026, p=0.042969 * | MW U=355478, p=0.001638 **
+    Hedges' g=+0.104 (negligible), n1=943, n2=691
+  reddit_posts vs reddit_general_student_loans:
+    Welch t=1.646, p=0.099906 ns | MW U=333656, p=0.024658 *
+    Hedges' g=+0.083 (negligible), n1=943, n2=664
+  reddit_posts vs reddit_medical:
+    Welch t=1.472, p=0.141535 ns | MW U=182153, p=0.100797 ns
+    Hedges' g=+0.105 (negligible), n1=943, n2=365
+  reddit_posts vs reddit_nursing:
+    Welch t=-1.696, p=0.092129 ns | MW U=55432, p=0.611024 ns
+    Hedges' g=-0.208 (small), n1=943, n2=121
+  reddit_posts vs reddit_teaching:
+    Welch t=-1.515, p=0.131071 ns | MW U=83996, p=0.072750 ns
+    Hedges' g=-0.132 (negligible), n1=943, n2=194
+  reddit_posts vs reddit_law:
+    Welch t=0.172, p=0.864104 ns | MW U=23606, p=0.651580 ns
+    Hedges' g=+0.033 (negligible), n1=943, n2=52
+  reddit_posts vs reddit_social_work:
+    Welch t=-1.671, p=0.098837 ns | MW U=28010, p=0.081429 ns
+    Hedges' g=-0.227 (small), n1=943, n2=68
+  reddit_posts vs reddit_federal_employee:
+    Welch t=-0.088, p=0.929782 ns | MW U=37640, p=0.876700 ns
+    Hedges' g=-0.010 (negligible), n1=943, n2=79
+  reddit_posts vs reddit_pharmacy:
+    Welch t=-0.706, p=0.483311 ns | MW U=22819, p=0.399831 ns
+    Hedges' g=-0.125 (negligible), n1=943, n2=52
+  reddit_posts vs reddit_physician_assistant:
+    Welch t=-1.573, p=0.116878 ns | MW U=85946, p=0.048846 *
+    Hedges' g=-0.124 (negligible), n1=943, n2=200
+  reddit_posts vs reddit_occupational_therapy:
+    Welch t=-2.784, p=0.007043 ** | MW U=22350, p=0.006336 **
+    Hedges' g=-0.433 (small), n1=943, n2=60
+  reddit_posts vs reddit_speech_language_pathology:
+    Welch t=-1.882, p=0.062143 ns | MW U=45414, p=0.090221 ns
+    Hedges' g=-0.223 (small), n1=943, n2=107
+  reddit_posts vs reddit_personalfinance:
+    Welch t=-2.222, p=0.026441 * | MW U=212258, p=0.107813 ns
+    Hedges' g=-0.114 (negligible), n1=943, n2=475
+  reddit_posts vs reddit_financialindependence:
+    Welch t=-0.720, p=0.476020 ns | MW U=13970, p=0.475648 ns
+    Hedges' g=-0.093 (negligible), n1=943, n2=32
+  reddit_posts vs forum_sdn:
+    Welch t=-7.521, p=0.000000 *** (Bonf.) | MW U=1681260, p=0.000000 ***
+    Hedges' g=-0.254 (small), n1=943, n2=4125
+  reddit_general_pslf vs reddit_general_student_loans:
+    Welch t=-0.532, p=0.594974 ns | MW U=221953, p=0.300268 ns
+    Hedges' g=-0.029 (negligible), n1=691, n2=664
+  reddit_general_pslf vs reddit_medical:
+    Welch t=0.085, p=0.932280 ns | MW U=122876, p=0.493078 ns
+    Hedges' g=+0.006 (negligible), n1=691, n2=365
+  reddit_general_pslf vs reddit_nursing:
+    Welch t=-2.493, p=0.013759 * | MW U=36776, p=0.034576 *
+    Hedges' g=-0.276 (small), n1=691, n2=121
+  reddit_general_pslf vs reddit_teaching:
+    Welch t=-2.612, p=0.009454 ** | MW U=56293, p=0.000645 ***
+    Hedges' g=-0.213 (small), n1=691, n2=194
+  reddit_general_pslf vs reddit_law:
+    Welch t=-0.383, p=0.703522 ns | MW U=15898, p=0.165884 ns
+    Hedges' g=-0.065 (negligible), n1=691, n2=52
+  reddit_general_pslf vs reddit_social_work:
+    Welch t=-2.426, p=0.017455 * | MW U=18654, p=0.005025 **
+    Hedges' g=-0.294 (small), n1=691, n2=68
+  reddit_general_pslf vs reddit_federal_employee:
+    Welch t=-1.000, p=0.319584 ns | MW U=25097, p=0.240734 ns
+    Hedges' g=-0.106 (negligible), n1=691, n2=79
+  reddit_general_pslf vs reddit_pharmacy:
+    Welch t=-1.306, p=0.196758 ns | MW U=15218, p=0.065597 ns
+    Hedges' g=-0.204 (small), n1=691, n2=52
+  reddit_general_pslf vs reddit_physician_assistant:
+    Welch t=-2.786, p=0.005626 ** | MW U=57396, p=0.000261 ***
+    Hedges' g=-0.208 (small), n1=691, n2=200
+  reddit_general_pslf vs reddit_occupational_therapy:
+    Welch t=-3.429, p=0.001027 ** | MW U=14908, p=0.000304 ***
+    Hedges' g=-0.472 (small), n1=691, n2=60
+  reddit_general_pslf vs reddit_speech_language_pathology:
+    Welch t=-2.716, p=0.007446 ** | MW U=30344, p=0.002831 **
+    Hedges' g=-0.291 (small), n1=691, n2=107
+  reddit_general_pslf vs reddit_personalfinance:
+    Welch t=-3.871, p=0.000114 *** (Bonf.) | MW U=138019, p=0.000004 ***
+    Hedges' g=-0.213 (small), n1=691, n2=475
+  reddit_general_pslf vs reddit_financialindependence:
+    Welch t=-1.549, p=0.129450 ns | MW U=8988, p=0.073517 ns
+    Hedges' g=-0.177 (negligible), n1=691, n2=32
+  reddit_general_pslf vs forum_sdn:
+    Welch t=-8.199, p=0.000000 *** (Bonf.) | MW U=1116238, p=0.000000 ***
+    Hedges' g=-0.347 (small), n1=691, n2=4125
+  reddit_general_student_loans vs reddit_medical:
+    Welch t=0.460, p=0.645773 ns | MW U=121274, p=0.983556 ns
+    Hedges' g=+0.033 (negligible), n1=664, n2=365
+  reddit_general_student_loans vs reddit_nursing:
+    Welch t=-2.303, p=0.022761 * | MW U=36562, p=0.115596 ns
+    Hedges' g=-0.293 (small), n1=664, n2=121
+  reddit_general_student_loans vs reddit_teaching:
+    Welch t=-2.372, p=0.018408 * | MW U=55298, p=0.002700 **
+    Hedges' g=-0.217 (small), n1=664, n2=194
+  reddit_general_student_loans vs reddit_law:
+    Welch t=-0.233, p=0.816859 ns | MW U=15576, p=0.239897 ns
+    Hedges' g=-0.047 (negligible), n1=664, n2=52
+  reddit_general_student_loans vs reddit_social_work:
+    Welch t=-2.243, p=0.027724 * | MW U=18323, p=0.010447 *
+    Hedges' g=-0.323 (small), n1=664, n2=68
+  reddit_general_student_loans vs reddit_federal_employee:
+    Welch t=-0.765, p=0.446010 ns | MW U=24847, p=0.443959 ns
+    Hedges' g=-0.096 (negligible), n1=664, n2=79
+  reddit_general_student_loans vs reddit_pharmacy:
+    Welch t=-1.149, p=0.255345 ns | MW U=14954, p=0.107765 ns
+    Hedges' g=-0.214 (small), n1=664, n2=52
+  reddit_general_student_loans vs reddit_physician_assistant:
+    Welch t=-2.536, p=0.011720 * | MW U=56300, p=0.001097 **
+    Hedges' g=-0.213 (small), n1=664, n2=200
+  reddit_general_student_loans vs reddit_occupational_therapy:
+    Welch t=-3.278, p=0.001673 ** | MW U=14544, p=0.000530 ***
+    Hedges' g=-0.537 (medium), n1=664, n2=60
+  reddit_general_student_loans vs reddit_speech_language_pathology:
+    Welch t=-2.522, p=0.012888 * | MW U=29869, p=0.008171 **
+    Hedges' g=-0.314 (small), n1=664, n2=107
+  reddit_general_student_loans vs reddit_personalfinance:
+    Welch t=-3.708, p=0.000219 *** (Bonf.) | MW U=136994, p=0.000155 ***
+    Hedges' g=-0.214 (small), n1=664, n2=475
+  reddit_general_student_loans vs reddit_financialindependence:
+    Welch t=-1.340, p=0.188396 ns | MW U=8928, p=0.126837 ns
+    Hedges' g=-0.185 (negligible), n1=664, n2=32
+  reddit_general_student_loans vs forum_sdn:
+    Welch t=-8.849, p=0.000000 *** (Bonf.) | MW U=1098622, p=0.000000 ***
+    Hedges' g=-0.328 (small), n1=664, n2=4125
+  reddit_medical vs reddit_nursing:
+    Welch t=-2.328, p=0.020866 * | MW U=20124, p=0.143415 ns
+    Hedges' g=-0.241 (small), n1=365, n2=121
+  reddit_medical vs reddit_teaching:
+    Welch t=-2.284, p=0.022836 * | MW U=30918, p=0.013588 *
+    Hedges' g=-0.192 (negligible), n1=365, n2=194
+  reddit_medical vs reddit_law:
+    Welch t=-0.402, p=0.689035 ns | MW U=8642, p=0.297228 ns
+    Hedges' g=-0.060 (negligible), n1=365, n2=52
+  reddit_medical vs reddit_social_work:
+    Welch t=-2.285, p=0.024200 * | MW U=10286, p=0.024960 *
+    Hedges' g=-0.255 (small), n1=365, n2=68
+  reddit_medical vs reddit_federal_employee:
+    Welch t=-0.954, p=0.341485 ns | MW U=13690, p=0.482264 ns
+    Hedges' g=-0.096 (negligible), n1=365, n2=79
+  reddit_medical vs reddit_pharmacy:
+    Welch t=-1.281, p=0.204452 ns | MW U=8336, p=0.155945 ns
+    Hedges' g=-0.176 (negligible), n1=365, n2=52
+  reddit_medical vs reddit_physician_assistant:
+    Welch t=-2.358, p=0.018743 * | MW U=31690, p=0.009540 **
+    Hedges' g=-0.189 (negligible), n1=365, n2=200
+  reddit_medical vs reddit_occupational_therapy:
+    Welch t=-3.262, p=0.001576 ** | MW U=8284, p=0.002505 **
+    Hedges' g=-0.404 (small), n1=365, n2=60
+  reddit_medical vs reddit_speech_language_pathology:
+    Welch t=-2.511, p=0.012838 * | MW U=16676, p=0.021538 *
+    Hedges' g=-0.254 (small), n1=365, n2=107
+  reddit_medical vs reddit_personalfinance:
+    Welch t=-2.754, p=0.006086 ** | MW U=76694, p=0.004146 **
+    Hedges' g=-0.206 (small), n1=365, n2=475
+  reddit_medical vs reddit_financialindependence:
+    Welch t=-1.464, p=0.148795 ns | MW U=5050, p=0.204298 ns
+    Hedges' g=-0.154 (negligible), n1=365, n2=32
+  reddit_medical vs forum_sdn:
+    Welch t=-5.243, p=0.000000 *** (Bonf.) | MW U=616221, p=0.000000 ***
+    Hedges' g=-0.347 (small), n1=365, n2=4125
+  reddit_nursing vs reddit_teaching:
+    Welch t=0.549, p=0.583486 ns | MW U=11264, p=0.547815 ns
+    Hedges' g=+0.066 (negligible), n1=121, n2=194
+  reddit_nursing vs reddit_law:
+    Welch t=1.088, p=0.279520 ns | MW U=3138, p=0.980186 ns
+    Hedges' g=+0.182 (negligible), n1=121, n2=52
+  reddit_nursing vs reddit_social_work:
+    Welch t=-0.056, p=0.955261 ns | MW U=3731, p=0.289163 ns
+    Hedges' g=-0.008 (negligible), n1=121, n2=68
+  reddit_nursing vs reddit_federal_employee:
+    Welch t=1.236, p=0.217847 ns | MW U=4986, p=0.607397 ns
+    Hedges' g=+0.167 (negligible), n1=121, n2=79
+  reddit_nursing vs reddit_pharmacy:
+    Welch t=0.424, p=0.672510 ns | MW U=3032, p=0.706953 ns
+    Hedges' g=+0.068 (negligible), n1=121, n2=52
+  reddit_nursing vs reddit_physician_assistant:
+    Welch t=0.653, p=0.514629 ns | MW U=11521, p=0.472791 ns
+    Hedges' g=+0.081 (negligible), n1=121, n2=200
+  reddit_nursing vs reddit_occupational_therapy:
+    Welch t=-1.109, p=0.269570 ns | MW U=3056, p=0.084145 ns
+    Hedges' g=-0.166 (negligible), n1=121, n2=60
+  reddit_nursing vs reddit_speech_language_pathology:
+    Welch t=-0.059, p=0.952761 ns | MW U=6090, p=0.441516 ns
+    Hedges' g=-0.008 (negligible), n1=121, n2=107
+  reddit_nursing vs reddit_personalfinance:
+    Welch t=0.880, p=0.380511 ns | MW U=27625, p=0.510783 ns
+    Hedges' g=+0.125 (negligible), n1=121, n2=475
+  reddit_nursing vs reddit_financialindependence:
+    Welch t=0.721, p=0.472375 ns | MW U=1802, p=0.550622 ns
+    Hedges' g=+0.100 (negligible), n1=121, n2=32
+  reddit_nursing vs forum_sdn:
+    Welch t=-0.469, p=0.640217 ns | MW U=225421, p=0.069295 ns
+    Hedges' g=-0.053 (negligible), n1=121, n2=4125
+  reddit_teaching vs reddit_law:
+    Welch t=0.799, p=0.427205 ns | MW U=5240, p=0.667100 ns
+    Hedges' g=+0.139 (negligible), n1=194, n2=52
+  reddit_teaching vs reddit_social_work:
+    Welch t=-0.590, p=0.556308 ns | MW U=6277, p=0.553620 ns
+    Hedges' g=-0.080 (negligible), n1=194, n2=68
+  reddit_teaching vs reddit_federal_employee:
+    Welch t=0.893, p=0.373240 ns | MW U=8365, p=0.235664 ns
+    Hedges' g=+0.112 (negligible), n1=194, n2=79
+  reddit_teaching vs reddit_pharmacy:
+    Welch t=0.047, p=0.962483 ns | MW U=5130, p=0.850298 ns
+    Hedges' g=+0.008 (negligible), n1=194, n2=52
+  reddit_teaching vs reddit_physician_assistant:
+    Welch t=0.105, p=0.916670 ns | MW U=19432, p=0.978116 ns
+    Hedges' g=+0.011 (negligible), n1=194, n2=200
+  reddit_teaching vs reddit_occupational_therapy:
+    Welch t=-1.724, p=0.087995 ns | MW U=5088, p=0.141335 ns
+    Hedges' g=-0.257 (small), n1=194, n2=60
+  reddit_teaching vs reddit_speech_language_pathology:
+    Welch t=-0.643, p=0.520611 ns | MW U=10170, p=0.773513 ns
+    Hedges' g=-0.078 (negligible), n1=194, n2=107
+  reddit_teaching vs reddit_personalfinance:
+    Welch t=0.346, p=0.729897 ns | MW U=47908, p=0.419155 ns
+    Hedges' g=+0.035 (negligible), n1=194, n2=475
+  reddit_teaching vs reddit_financialindependence:
+    Welch t=0.296, p=0.768445 ns | MW U=3194, p=0.795083 ns
+    Hedges' g=+0.039 (negligible), n1=194, n2=32
+  reddit_teaching vs forum_sdn:
+    Welch t=-1.654, p=0.099623 ns | MW U=379882, p=0.233000 ns
+    Hedges' g=-0.127 (negligible), n1=194, n2=4125
+  reddit_law vs reddit_social_work:
+    Welch t=-1.110, p=0.269858 ns | MW U=1636, p=0.484511 ns
+    Hedges' g=-0.210 (small), n1=52, n2=68
+  reddit_law vs reddit_federal_employee:
+    Welch t=-0.197, p=0.844342 ns | MW U=2126, p=0.738367 ns
+    Hedges' g=-0.037 (negligible), n1=52, n2=79
+  reddit_law vs reddit_pharmacy:
+    Welch t=-0.610, p=0.543224 ns | MW U=1316, p=0.817469 ns
+    Hedges' g=-0.119 (negligible), n1=52, n2=52
+  reddit_law vs reddit_physician_assistant:
+    Welch t=-0.760, p=0.450264 ns | MW U=4984, p=0.645361 ns
+    Hedges' g=-0.142 (negligible), n1=52, n2=200
+  reddit_law vs reddit_occupational_therapy:
+    Welch t=-1.895, p=0.061017 ns | MW U=1312, p=0.147933 ns
+    Hedges' g=-0.361 (small), n1=52, n2=60
+  reddit_law vs reddit_speech_language_pathology:
+    Welch t=-1.151, p=0.252781 ns | MW U=2628, p=0.574295 ns
+    Hedges' g=-0.204 (small), n1=52, n2=107
+  reddit_law vs reddit_personalfinance:
+    Welch t=-0.698, p=0.487877 ns | MW U=12366, p=0.987755 ns
+    Hedges' g=-0.167 (negligible), n1=52, n2=475
+  reddit_law vs reddit_financialindependence:
+    Welch t=-0.544, p=0.587649 ns | MW U=823, p=0.937595 ns
+    Hedges' g=-0.105 (negligible), n1=52, n2=32
+  reddit_law vs forum_sdn:
+    Welch t=-1.583, p=0.119404 ns | MW U=97568, p=0.262552 ns
+    Hedges' g=-0.279 (small), n1=52, n2=4125
+  reddit_social_work vs reddit_federal_employee:
+    Welch t=1.251, p=0.213158 ns | MW U=3072, p=0.133693 ns
+    Hedges' g=+0.207 (small), n1=68, n2=79
+  reddit_social_work vs reddit_pharmacy:
+    Welch t=0.461, p=0.645910 ns | MW U=1888, p=0.528530 ns
+    Hedges' g=+0.086 (negligible), n1=68, n2=52
+  reddit_social_work vs reddit_physician_assistant:
+    Welch t=0.689, p=0.492140 ns | MW U=7118, p=0.564658 ns
+    Hedges' g=+0.100 (negligible), n1=68, n2=200
+  reddit_social_work vs reddit_occupational_therapy:
+    Welch t=-1.029, p=0.305400 ns | MW U=1874, p=0.427987 ns
+    Hedges' g=-0.182 (negligible), n1=68, n2=60
+  reddit_social_work vs reddit_speech_language_pathology:
+    Welch t=0.001, p=0.999550 ns | MW U=3732, p=0.775880 ns
+    Hedges' g=+0.000 (negligible), n1=68, n2=107
+  reddit_social_work vs reddit_personalfinance:
+    Welch t=0.903, p=0.369423 ns | MW U=17570, p=0.240600 ns
+    Hedges' g=+0.155 (negligible), n1=68, n2=475
+  reddit_social_work vs reddit_financialindependence:
+    Welch t=0.754, p=0.452857 ns | MW U=1158, p=0.607563 ns
+    Hedges' g=+0.137 (negligible), n1=68, n2=32
+  reddit_social_work vs forum_sdn:
+    Welch t=-0.363, p=0.717406 ns | MW U=139636, p=0.950590 ns
+    Hedges' g=-0.044 (negligible), n1=68, n2=4125
+  reddit_federal_employee vs reddit_pharmacy:
+    Welch t=-0.555, p=0.580348 ns | MW U=1906, p=0.487661 ns
+    Hedges' g=-0.103 (negligible), n1=79, n2=52
+  reddit_federal_employee vs reddit_physician_assistant:
+    Welch t=-0.850, p=0.396602 ns | MW U=7110, p=0.193496 ns
+    Hedges' g=-0.112 (negligible), n1=79, n2=200
+  reddit_federal_employee vs reddit_occupational_therapy:
+    Welch t=-2.239, p=0.027115 * | MW U=1843, p=0.025156 *
+    Hedges' g=-0.390 (small), n1=79, n2=60
+  reddit_federal_employee vs reddit_speech_language_pathology:
+    Welch t=-1.341, p=0.181658 ns | MW U=3756, p=0.194831 ns
+    Hedges' g=-0.193 (negligible), n1=79, n2=107
+  reddit_federal_employee vs reddit_personalfinance:
+    Welch t=-0.799, p=0.426372 ns | MW U=17444, p=0.316903 ns
+    Hedges' g=-0.120 (negligible), n1=79, n2=475
+  reddit_federal_employee vs reddit_financialindependence:
+    Welch t=-0.487, p=0.627496 ns | MW U=1145, p=0.440400 ns
+    Hedges' g=-0.087 (negligible), n1=79, n2=32
+  reddit_federal_employee vs forum_sdn:
+    Welch t=-2.333, p=0.022093 * | MW U=139508, p=0.028333 *
+    Hedges' g=-0.240 (small), n1=79, n2=4125
+  reddit_pharmacy vs reddit_physician_assistant:
+    Welch t=0.012, p=0.990246 ns | MW U=5066, p=0.776383 ns
+    Hedges' g=+0.002 (negligible), n1=52, n2=200
+  reddit_pharmacy vs reddit_occupational_therapy:
+    Welch t=-1.328, p=0.187008 ns | MW U=1329, p=0.178687 ns
+    Hedges' g=-0.251 (small), n1=52, n2=60
+  reddit_pharmacy vs reddit_speech_language_pathology:
+    Welch t=-0.480, p=0.632062 ns | MW U=2684, p=0.721728 ns
+    Hedges' g=-0.082 (negligible), n1=52, n2=107
+  reddit_pharmacy vs reddit_personalfinance:
+    Welch t=0.122, p=0.903085 ns | MW U=12646, p=0.776828 ns
+    Hedges' g=+0.027 (negligible), n1=52, n2=475
+  reddit_pharmacy vs reddit_financialindependence:
+    Welch t=0.162, p=0.871899 ns | MW U=848, p=0.886463 ns
+    Hedges' g=+0.032 (negligible), n1=52, n2=32
+  reddit_pharmacy vs forum_sdn:
+    Welch t=-0.848, p=0.400155 ns | MW U=100042, p=0.404267 ns
+    Hedges' g=-0.135 (negligible), n1=52, n2=4125
+  reddit_physician_assistant vs reddit_occupational_therapy:
+    Welch t=-1.845, p=0.068532 ns | MW U=5182, p=0.109342 ns
+    Hedges' g=-0.294 (small), n1=200, n2=60
+  reddit_physician_assistant vs reddit_speech_language_pathology:
+    Welch t=-0.758, p=0.449619 ns | MW U=10486, p=0.773288 ns
+    Hedges' g=-0.095 (negligible), n1=200, n2=107
+  reddit_physician_assistant vs reddit_personalfinance:
+    Welch t=0.247, p=0.805447 ns | MW U=49742, p=0.332470 ns
+    Hedges' g=+0.024 (negligible), n1=200, n2=475
+  reddit_physician_assistant vs reddit_financialindependence:
+    Welch t=0.227, p=0.820882 ns | MW U=3284, p=0.813858 ns
+    Hedges' g=+0.033 (negligible), n1=200, n2=32
+  reddit_physician_assistant vs forum_sdn:
+    Welch t=-2.062, p=0.040412 * | MW U=391853, p=0.231198 ns
+    Hedges' g=-0.138 (negligible), n1=200, n2=4125
+  reddit_occupational_therapy vs reddit_speech_language_pathology:
+    Welch t=1.083, p=0.280821 ns | MW U=3538, p=0.275388 ns
+    Hedges' g=+0.173 (negligible), n1=60, n2=107
+  reddit_occupational_therapy vs reddit_personalfinance:
+    Welch t=2.113, p=0.038410 * | MW U=16798, p=0.023953 *
+    Hedges' g=+0.413 (small), n1=60, n2=475
+  reddit_occupational_therapy vs reddit_financialindependence:
+    Welch t=1.754, p=0.082847 ns | MW U=1104, p=0.239440 ns
+    Hedges' g=+0.327 (small), n1=60, n2=32
+  reddit_occupational_therapy vs forum_sdn:
+    Welch t=1.037, p=0.303921 ns | MW U=133606, p=0.288829 ns
+    Hedges' g=+0.144 (negligible), n1=60, n2=4125
+  reddit_speech_language_pathology vs reddit_personalfinance:
+    Welch t=1.016, p=0.311649 ns | MW U=26730, p=0.401965 ns
+    Hedges' g=+0.146 (negligible), n1=107, n2=475
+  reddit_speech_language_pathology vs reddit_financialindependence:
+    Welch t=0.804, p=0.423744 ns | MW U=1766, p=0.788944 ns
+    Hedges' g=+0.122 (negligible), n1=107, n2=32
+  reddit_speech_language_pathology vs forum_sdn:
+    Welch t=-0.413, p=0.680612 ns | MW U=213177, p=0.547233 ns
+    Hedges' g=-0.044 (negligible), n1=107, n2=4125
+  reddit_personalfinance vs reddit_financialindependence:
+    Welch t=0.100, p=0.920626 ns | MW U=7316, p=0.723307 ns
+    Hedges' g=+0.017 (negligible), n1=475, n2=32
+  reddit_personalfinance vs forum_sdn:
+    Welch t=-4.510, p=0.000008 *** (Bonf.) | MW U=888704, p=0.000901 ***
+    Hedges' g=-0.160 (negligible), n1=475, n2=4125
+  reddit_financialindependence vs forum_sdn:
+    Welch t=-1.488, p=0.146421 ns | MW U=60758, p=0.438291 ns
+    Hedges' g=-0.167 (negligible), n1=32, n2=4125
+
+  Saved: ./multi_source_sentiment_comparison.png
+
+======================================================================
+FORUM vs REDDIT DISCOURSE COMPARISON
+======================================================================
+  Reddit mean word count: 223 (median: 154)
+  Forum mean word count:  168 (median: 88)
+
+  forum_sdn: n=4125, polarity=0.1127
+
+  Top Reddit keywords: ['school', 'what', 'like', 'get', 'how', 'loans', 'their', 'pslf', 'know', 'student', 'who', 'when', 'because', 'loan', 'payments']
+  Top Forum keywords:  ['loan', 'loans', 'pslf', 'student', 'years', 'pay', 'get', 'like', 'payments', 'repayment', 'forgiveness', 'work', 'federal', 'there', 'make']
+
+======================================================================
+CAVEATS
+======================================================================
+  - r/PSLF posts are tagged 'general_pslf' but contain a profession mix
+    that is not measured. Comparing 'r/PSLF most negative' against
+    profession-disaggregated buckets is apples-to-oranges.
+  - Reddit volume in 2024-2026 is amplified by the 1000-result API cap
+    (older posts unreachable). Temporal comparisons across years are
+    confounded with data-collection geometry.
+  - Pre/post tests are associational, not interrupted time series.
+  - SDN-vs-Reddit polarity comparison is confounded with population
+    (medical-only on SDN) and post length (longer on SDN).
+  - Generic 'loan forgiveness' regex matches now require a PSLF anchor
+    within 80 chars (round-2 fix); rejects mass-forgiveness-only posts.
+
+======================================================================
+Analysis complete!
+======================================================================
+
+=== legislative timeline ===
+Total posts: 7,738
+Saved: pslf_sentiment_legislative_timeline.png
+Saved: pslf_pre_post_events.png
+
+================================================================================
+WINDOW SENSITIVITY ANALYSIS (Hedges' g across 30/60/90/180d windows)
+  Event                                        30d     60d     90d    180d
+================================================================================
+  Limited PSLF Waiver                       +0.407  +0.296  +0.352  +0.327
+  IDR Account Adjustment                    -0.608  -0.464  -0.234  -0.091
+  Biden Mass Forgiveness Announcement       -0.590  -0.327  -0.242  -0.234
+  Biden v. Nebraska SCOTUS                  -0.322  -0.301  -0.430  -0.256
+  Payments Restart                          -0.113  +0.213  +0.355  -0.030
+  SAVE Admin Forbearance                    +1.031  +0.683  +0.513  +0.253
+  Trump PSLF Executive Order                -0.438  -0.403  -0.437  -0.379
+  Final Trump PSLF Rule                     +0.293  +0.330  +0.263  +0.103
+================================================================================
+
+================================================================================
+SENTIMENT EVOLUTION ACROSS LEGISLATIVE CHANGES
+  Pre/post Welch's t-tests, Hedges' g effect size.
+  Bonferroni-corrected alpha (n=8 tests): 0.0063
+  Note: pre/post is associational, not causal (no ITS counterfactual).
+================================================================================
+
+  Limited PSLF Waiver (2021-10-06, 90d window):
+    Before: n=316, polarity=0.0768, %neg=17.4%
+    After:  n=400, polarity=0.1186, %neg=13.2%
+    Change: +0.0418 polarity, -4.2pp negativity
+    Welch t=-4.635, p=0.000004 *** (Bonf.), Hedges' g=+0.352 (small)
+    Glass's delta_pre=+0.337, permutation p=0.0335
+
+  IDR Account Adjustment (2022-04-19, 90d window):
+    Before: n=246, polarity=0.1525, %neg=9.3%
+    After:  n=331, polarity=0.1219, %neg=9.7%
+    Change: -0.0306 polarity, +0.3pp negativity
+    Welch t=2.782, p=0.005602 ** (Bonf.), Hedges' g=-0.234 (small)
+    Glass's delta_pre=-0.234, permutation p=0.2414
+
+  Biden Mass Forgiveness Announcement (2022-08-24, 90d window):
+    Before: n=176, polarity=0.1345, %neg=12.5%
+    After:  n=123, polarity=0.1046, %neg=7.3%
+    Change: -0.0298 polarity, -5.2pp negativity
+    Welch t=2.126, p=0.034377 *, Hedges' g=-0.242 (small)
+    Glass's delta_pre=-0.229, permutation p=0.1709
+
+  Biden v. Nebraska SCOTUS (2023-06-30, 90d window):
+    Before: n=245, polarity=0.1290, %neg=3.7%
+    After:  n=281, polarity=0.0849, %neg=18.9%
+    Change: -0.0441 polarity, +15.2pp negativity
+    Welch t=4.993, p=0.000001 *** (Bonf.), Hedges' g=-0.430 (small)
+    Glass's delta_pre=-0.483, permutation p=0.0050
+
+  Payments Restart (2023-10-01, 90d window):
+    Before: n=266, polarity=0.0853, %neg=19.2%
+    After:  n=121, polarity=0.1263, %neg=13.2%
+    Change: +0.0410 polarity, -5.9pp negativity
+    Welch t=-3.045, p=0.002639 ** (Bonf.), Hedges' g=+0.355 (small)
+    Glass's delta_pre=+0.377, permutation p=0.0485
+
+  SAVE Admin Forbearance (2024-08-09, 90d window):
+    Before: n=219, polarity=0.0644, %neg=24.2%
+    After:  n=124, polarity=0.1335, %neg=12.9%
+    Change: +0.0691 polarity, -11.3pp negativity
+    Welch t=-4.566, p=0.000008 *** (Bonf.), Hedges' g=+0.513 (medium)
+    Glass's delta_pre=+0.515, permutation p=0.0100
+
+  Trump PSLF Executive Order (2025-03-07, 60d window):
+    Before: n=632, polarity=0.1291, %neg=14.1%
+    After:  n=472, polarity=0.0747, %neg=17.8%
+    Change: -0.0544 polarity, +3.7pp negativity
+    Welch t=6.971, p=0.000000 *** (Bonf.), Hedges' g=-0.403 (small)
+    Glass's delta_pre=-0.355, permutation p=0.0060
+
+  Final Trump PSLF Rule (2025-10-30, 60d window):
+    Before: n=649, polarity=0.0769, %neg=20.2%
+    After:  n=322, polarity=0.1141, %neg=18.6%
+    Change: +0.0372 polarity, -1.6pp negativity
+    Welch t=-4.718, p=0.000003 *** (Bonf.), Hedges' g=+0.330 (small)
+    Glass's delta_pre=+0.339, permutation p=0.0100
+Saved: pslf_profession_timecourse.png
+
+=== admin (CFPB) correlation ===
+Loading cached complaints from admin_data_pslf_complaints.csv
+
+CFPB student loan complaints: 12,552
+PSLF-relevant after strict filter: 8,937
+
+Loading sentiment data...
+  Sentiment posts: 8,228
+
+======================================================================
+CORRELATION: SENTIMENT VS CFPB COMPLAINT VOLUME
+======================================================================
+
+  Pearson:
+    Complaint volume vs polarity:  r = +0.056, p = 0.5622
+    Complaint volume vs % negative: r = +0.026, p = 0.7888
+
+  Spearman (rank, robust to outliers):
+    Complaint volume vs polarity:  rho = +0.045, p = 0.6397
+    Complaint volume vs % negative: rho = +0.075, p = 0.4386
+  N (months overlap): 110
+
+  Cross-correlation (sentiment leads/lags complaints):
+    NOTE: Series first-differenced (Box-Jenkins). Bonferroni correction applied.
+    Bonferroni alpha (n_lags=13): 0.0038
+      Lag (months)         r         p       n     sig
+                -6    +0.085    0.4004     100          (complaints lead)
+                -5    -0.038    0.7076     100          (complaints lead)
+                -4    -0.113    0.2626     100          (complaints lead)
+                -3    +0.077    0.4474     100          (complaints lead)
+                -2    -0.025    0.8056     100          (complaints lead)
+                -1    +0.051    0.6121     101          (complaints lead)
+                 0    -0.006    0.9541     101          (simultaneous)
+                 1    +0.090    0.3718     100          (sentiment leads)
+                 2    -0.056    0.5829      99          (sentiment leads)
+                 3    -0.123    0.2261      98          (sentiment leads)
+                 4    +0.079    0.4393      97          (sentiment leads)
+                 5    +0.121    0.2397      96          (sentiment leads)
+                 6    -0.157    0.1283      95          (sentiment leads)
+
+Generating correlation figure...
+  Saved: admin_sentiment_correlation.png
+  Saved: admin_correlation_results.txt
+
+Computing Reddit/CFPB volume ratio (volume artifact diagnostic)...
+  Saved: reddit_cfpb_volume_ratio.csv
+  Reddit/CFPB ratio: 2017=0.098, 2026=6.738
+ year  cfpb_count  reddit_count  rc_ratio
+ 2016         197            50  0.253807
+ 2017         793            78  0.098361
+ 2018         663           102  0.153846
+ 2019         678            82  0.120944
+ 2020         349           137  0.392550
+ 2021         364           904  2.483516
+ 2022         817           903  1.105263
+ 2023        1530           884  0.577778
+ 2024        1628           982  0.603194
+ 2025        1731          2791  1.612363
+ 2026         187          1260  6.737968
+
+=== final summary ===
+================================================================================
+PSLF DISCUSSION ANALYSIS: FINAL SUMMARY REPORT
+================================================================================
+Date: 2026-03-24
+Total posts: 9,066 (4,387 Reddit + 4,679 SDN)
+After sentiment filter (>=20 words): 8,228
+Platforms: 20 communities (18 subreddits + SDN forum)
+Scoring: TextBlob polarity + VADER compound (dual)
+
+================================================================================
+1. PROFESSION BREAKDOWN (PSLF-filtered, TextBlob)
+================================================================================
+
+  Profession                          n  Polarity    %Neg
+  ------------------------------------------------------
+  law                                52    0.0780   25.0%
+  general_pslf                      691    0.0694   24.7%
+  medical                           878    0.0708   22.7%
+  general_student_loans             664    0.0728   20.8%
+  federal_employee                   79    0.0829   17.7%
+  teaching                          194    0.0969   17.0%
+  teacher                           430    0.0929   16.3%
+  physician_assistant               200    0.0956   16.0%
+  speech_language_pathology         107    0.1072   15.0%
+  pharmacy                           52    0.0959   13.5%
+  nursing                           121    0.1061   13.2%
+  social_work                        68    0.1072   11.8%
+  occupational_therapy               60    0.1305   11.7%
+  financialindependence              32    0.0920    9.4%
+  personalfinance                   475    0.0934    8.6%
+  SDN Forum                        4125    0.1127   12.6%
+
+================================================================================
+2. POLICY EVENT IMPACTS (pre/post, all sources combined)
+================================================================================
+
+  Limited PSLF Waiver (2021-10-06):
+    Polarity: 0.0768 -> 0.1186 (+0.0418) ***
+    Neg rate: 17.4% -> 13.2%
+    Hedges' g=+0.352, n_pre=316, n_post=400
+    NOTE: associational only; pre/post is not interrupted time series.
+
+  Payments Restart (2023-10-01):
+    Polarity: 0.0853 -> 0.1263 (+0.0410) **
+    Neg rate: 19.2% -> 13.2%
+    Hedges' g=+0.355, n_pre=266, n_post=121
+    NOTE: associational only; pre/post is not interrupted time series.
+
+  SAVE Plan Blocked (2024-07-01):
+    Polarity: 0.0951 -> 0.1023 (+0.0071) ns
+    Neg rate: 15.8% -> 18.6%
+    Hedges' g=+0.053, n_pre=221, n_post=140
+    NOTE: associational only; pre/post is not interrupted time series.
+
+  Trump Exec Order (2025-03-07):
+    Polarity: 0.1291 -> 0.0747 (-0.0544) ***
+    Neg rate: 14.1% -> 17.8%
+    Hedges' g=-0.403, n_pre=632, n_post=472
+    NOTE: associational only; pre/post is not interrupted time series.
+
+================================================================================
+3. PRESENT DAY (March 2026)
+================================================================================
+  Last 30 days:     n=997, polarity=0.0773, %neg=20.5%
+  2024 H2 baseline: n=472, polarity=0.0956, %neg=16.7%
+  Post-waiver peak: n=456, polarity=0.1174, %neg=11.8%
+
+  Present vs 2024H2: t=-2.583, p=0.009950 **
+
+================================================================================
+4. PLATFORM COMPARISON
+================================================================================
+  Reddit: n=4,103, pol=0.0826, %neg=18.7%, mean words=208
+  SDN:    n=4,125, pol=0.1127, %neg=12.6%, mean words=168
+  t=-11.175, p=0.000000
+
+  VADER comparison:
+  Reddit VADER: mean=0.5323, %neg=18.7%
+  SDN VADER:    mean=0.4766, %neg=16.8%
+  TextBlob-VADER r=0.315 (Reddit)
+
+================================================================================
+5. OUTPUTS
+================================================================================
+  multi_source_sentiment_comparison.png: 0.8 MB
+  pslf_wordcloud_timecourse.png: 6.9 MB
+  pslf_sentiment_legislative_timeline.png: 2.0 MB
+  pslf_pre_post_events.png: 2.0 MB
+  pslf_profession_timecourse.png: 1.6 MB
+
+  Scripts: 15 Python files
+  Data: 96.53050327301025 MB total CSV
+
+================================================================================
+6. REPOSITORY
+================================================================================
+  Fork: https://github.com/zanecn/PSLF-Discussion-Analysis
+  PR: https://github.com/margaretcdeleon/PSLF-Discussion-Analysis/pull/1
+  Branch: playwright-sdn-scraper
+================================================================================

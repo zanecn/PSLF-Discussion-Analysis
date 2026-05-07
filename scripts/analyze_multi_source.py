@@ -38,7 +38,8 @@ MIN_WORDS_FOR_SENTIMENT = 20
 
 # m7 fix: only suppress specific noisy warnings, not all
 warnings.filterwarnings("ignore", category=FutureWarning)
-warnings.filterwarnings("ignore", category=pd.errors.SettingWithCopyWarning)
+if hasattr(pd.errors, "SettingWithCopyWarning"):
+    warnings.filterwarnings("ignore", category=pd.errors.SettingWithCopyWarning)
 
 
 # ---------------------------------------------------------------------------
@@ -138,7 +139,7 @@ def load_forum_data() -> pd.DataFrame:
     print(f"  [FILTER] {len(df):,} PSLF-relevant posts retained from forum data")
 
     df["data_source"] = "forum_" + df["source"].fillna("unknown")
-    df["date"] = pd.to_datetime(df["date_posted"], errors="coerce")
+    df["date"] = pd.to_datetime(df["date_posted"], errors="coerce", utc=True).dt.tz_convert(None)
     df["text"] = df["body"].fillna("")
     df["score"] = 0
     return _nullify_short_polarity(df)
