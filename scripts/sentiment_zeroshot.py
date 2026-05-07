@@ -158,10 +158,31 @@ def main():
     df = df[wc >= 20].copy()
     print(f"After min 20 words: {len(df):,} posts")
 
-    # Sample if requested
+    # Sample if requested — round-4 audit: stratify by year × source for triangulation
     if args.sample > 0 and len(df) > args.sample:
-        df = df.sample(n=args.sample, random_state=args.seed)
-        print(f"Sampled {args.sample} posts")
+        # Build a stratification key
+        if "created_utc" in df.columns:
+            yr = pd.to_datetime(pd.to_numeric(df["created_utc"], errors="coerce"),
+                                unit="s", utc=True).dt.year.fillna(2020).astype(int)
+        elif "date_posted" in df.columns:
+            yr = pd.to_datetime(df["date_posted"], errors="coerce", utc=True).dt.year.fillna(2020).astype(int)
+        else:
+            yr = pd.Series(2020, index=df.index)
+        src = df.get("subreddit", df.get("source", pd.Series("unk", index=df.index)))
+        df = df.assign(_strat=yr.astype(str) + "_" + src.astype(str))
+        # Stratified sample: at least 1 from each stratum, then proportional fill
+        try:
+            df_strat = df.groupby("_strat", group_keys=False).apply(
+                lambda g: g.sample(n=min(len(g), max(1, args.sample // df["_strat"].nunique())),
+                                   random_state=args.seed)
+            )
+            if len(df_strat) > args.sample:
+                df_strat = df_strat.sample(n=args.sample, random_state=args.seed)
+            df = df_strat.drop(columns=["_strat"])
+            print(f"Stratified sample: {len(df)} posts across {df.get('subreddit', df.get('source')).nunique()} sources × years")
+        except Exception:
+            df = df.sample(n=args.sample, random_state=args.seed)
+            print(f"Fallback random sample: {len(df)} posts")
 
     # Prepare posts for classification
     posts = []

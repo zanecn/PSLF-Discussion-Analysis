@@ -52,7 +52,12 @@ plt.rcParams.update({
 
 
 def load_all_data():
-    """Load and combine all data sources with strict PSLF filter."""
+    """Load and combine all data sources with strict PSLF filter.
+
+    Round-4 audit fix: keeps `text`, `source`, `profession`, AND `word_count`
+    for the length-residualised analysis (regress polarity ~ log(wc) + source
+    + profession; use residuals as the outcome).
+    """
     frames = []
 
     # Reddit medical/teacher (original)
@@ -97,14 +102,37 @@ def load_all_data():
     # Normalize all dates to tz-naive
     all_data["date"] = pd.to_datetime(all_data["date"], utc=True).dt.tz_localize(None)
 
+    # Compute word count BEFORE the polarity-nullification filter
+    all_data["word_count"] = all_data["text"].str.split().str.len()
+
     # Min word count filter
-    wc = all_data["text"].str.split().str.len()
-    all_data.loc[wc < MIN_WORDS, "polarity"] = np.nan
+    all_data.loc[all_data["word_count"] < MIN_WORDS, "polarity"] = np.nan
     all_data = all_data.dropna(subset=["polarity"])
     all_data = all_data[
         (all_data["date"] >= pd.Timestamp("2009-01-01")) &
         (all_data["date"] <= pd.Timestamp("2026-04-01"))
     ]
+
+    # Length-residualised polarity (round-4 audit fix):
+    # Regress polarity on log(word_count) + categorical source + profession.
+    # Use residuals as a length-, platform-, and profession-adjusted outcome.
+    # This addresses the Round-3 confound that 4/8 events have significantly
+    # different pre/post word counts (Payments Restart +292, SAVE -96, Trump EO +86, Final +70).
+    all_data["log_wc"] = np.log1p(all_data["word_count"])
+    # OLS via numpy: y = X @ beta + e ; residuals = y - X @ beta
+    # X = [1, log_wc, source_dummies..., profession_dummies...]
+    src_dum = pd.get_dummies(all_data["source"], prefix="src", drop_first=True, dtype=float)
+    prof_dum = pd.get_dummies(all_data["profession"], prefix="prof", drop_first=True, dtype=float)
+    X_design = pd.concat(
+        [pd.Series(1.0, index=all_data.index, name="intercept"),
+         all_data["log_wc"], src_dum, prof_dum],
+        axis=1,
+    ).to_numpy(dtype=float)
+    y = all_data["polarity"].to_numpy(dtype=float)
+    # Fit by least-squares (NumPy lstsq is numerically stable)
+    beta, *_ = np.linalg.lstsq(X_design, y, rcond=None)
+    yhat = X_design @ beta
+    all_data["polarity_resid"] = y - yhat
 
     return all_data
 
@@ -540,6 +568,56 @@ def fig2_pre_post(all_data):
                 row.append("n/a")
         sens_rows.append(row)
         print(f"  {row[0]:<40s} {row[1]:>7s} {row[2]:>7s} {row[3]:>7s} {row[4]:>7s}")
+    print("=" * 80)
+
+    # ---- LENGTH-RESIDUALISED ANALYSIS (round-4 audit fix #1) ----
+    # Re-run all 8 pre/post tests on polarity_resid (raw polarity minus the
+    # OLS fit on log(word_count) + source + profession). If headline effects
+    # survive on residuals, length confound is ruled out.
+    print("\n" + "=" * 80)
+    print("LENGTH-RESIDUALISED PRE/POST ANALYSIS")
+    print("  Outcome = residuals of polarity ~ log(word_count) + source + profession.")
+    print("  This adjusts for the Round-3 confound that 4/8 events have")
+    print("  significantly different pre/post word counts.")
+    print("=" * 80)
+    print(f"  {'Event':<40s} {'g_raw':>8s} {'g_resid':>9s} {'p_raw':>9s} {'p_resid':>9s}")
+    if "polarity_resid" not in all_data.columns:
+        print("  [SKIP] polarity_resid column not found")
+    else:
+        for event_name, event_date, window in key_events:
+            event_dt = pd.Timestamp(event_date)
+            mask_pre = (all_data["date"] >= event_dt - pd.Timedelta(days=window)) & \
+                       (all_data["date"] < event_dt)
+            mask_post = (all_data["date"] >= event_dt) & \
+                        (all_data["date"] <= event_dt + pd.Timedelta(days=window))
+            pre_raw = all_data.loc[mask_pre, "polarity"].dropna()
+            post_raw = all_data.loc[mask_post, "polarity"].dropna()
+            pre_res = all_data.loc[mask_pre, "polarity_resid"].dropna()
+            post_res = all_data.loc[mask_post, "polarity_resid"].dropna()
+            if min(len(pre_raw), len(post_raw), len(pre_res), len(post_res)) < 10:
+                continue
+            # Hedges' g on raw
+            n1, n2 = len(pre_raw), len(post_raw)
+            v1, v2 = float(pre_raw.var(ddof=1)), float(post_raw.var(ddof=1))
+            sp = np.sqrt(((n1-1)*v1 + (n2-1)*v2) / (n1+n2-2))
+            d_raw = (post_raw.mean() - pre_raw.mean()) / sp * (1 - 3/(4*(n1+n2)-9)) if sp > 0 else 0.0
+            _, p_raw = stats.ttest_ind(pre_raw, post_raw, equal_var=False)
+            # Hedges' g on residuals
+            n1r, n2r = len(pre_res), len(post_res)
+            v1r, v2r = float(pre_res.var(ddof=1)), float(post_res.var(ddof=1))
+            spr = np.sqrt(((n1r-1)*v1r + (n2r-1)*v2r) / (n1r+n2r-2))
+            d_res = (post_res.mean() - pre_res.mean()) / spr * (1 - 3/(4*(n1r+n2r)-9)) if spr > 0 else 0.0
+            _, p_res = stats.ttest_ind(pre_res, post_res, equal_var=False)
+            # Flag if residual analysis kills significance
+            flag = ""
+            if p_raw < 0.05 and p_res >= 0.05:
+                flag = "  [!] LOST sig on residuals"
+            elif p_raw >= 0.05 and p_res < 0.05:
+                flag = "  [!] GAINED sig on residuals"
+            elif abs(d_raw - d_res) > 0.15:
+                flag = "  [!] Effect size changed >0.15"
+            print(f"  {event_name:<40s} {d_raw:>+8.3f} {d_res:>+9.3f} "
+                  f"{p_raw:>9.4f} {p_res:>9.4f}{flag}")
     print("=" * 80)
 
     # Print results

@@ -1,7 +1,9 @@
-# PSLF Discussion Analysis Project
+# PSLF Online Discourse Analysis Project
 
 ## Overview
-Multi-source sentiment analysis of Public Service Loan Forgiveness (PSLF) discussions across online communities. Tracks how sentiment toward PSLF varies by profession, platform, and legislative era.
+Multi-source sentiment analysis of **online discussion** of Public Service Loan Forgiveness (PSLF) across Reddit communities and the Student Doctor Network (SDN) forum. Tracks how **discussant** sentiment varies by profession-self-selected subreddit, platform, and legislative era.
+
+**Scope clarification (round-4 audit fix):** This project studies **online PSLF discourse**, not the PSLF-borrower population. Reddit + SDN users skew young, white, male, more educated than the ~1M+ borrower population, and Bogleheads + allnurses are Cloudflare-blocked. Findings should be interpreted as discourse, not behavior.
 
 ## Repository
 - Fork: https://github.com/zanecn/PSLF-Discussion-Analysis
@@ -9,71 +11,93 @@ Multi-source sentiment analysis of Public Service Loan Forgiveness (PSLF) discus
 - PR #1: https://github.com/margaretcdeleon/PSLF-Discussion-Analysis/pull/1
 - Branch: `playwright-sdn-scraper`
 
-## Data (as of 2026-03-24)
-- **9,446 PSLF-relevant posts** (strict filter) from 20 communities
-  - Reddit: 4,167 posts from 18 subreddits (r/PSLF, r/StudentLoans, r/Residency, r/medicalschool, r/nursing, r/StudentNurse, r/nursepractitioner, r/Teachers, r/LawSchool, r/socialwork, r/fednews, r/govfire, r/pharmacy, r/physicianassistant, r/OccupationalTherapy, r/slp, r/personalfinance, r/financialindependence)
-  - SDN Forum: 5,279 posts (Playwright headless scraper, 200 threads)
-  - Original medical/teacher CSVs: 1,126 posts
-- **Dual sentiment scoring**: TextBlob polarity + VADER compound
-- **Strict PSLF filter** (`PSLF_STRICT_REGEX` in pslf_search_terms.py) — requires explicit PSLF/forgiveness/IDR terms
-- **Min 20 words** for sentiment scoring (TextBlob unreliable on short posts)
+## Data (as of 2026-05-07)
+- **9,000+ PSLF-relevant posts** (strict anchored filter, MIN_WORDS=20) from 20 communities
+  - Reddit: 11,793 raw → 4,200 PSLF-filtered + length-residualised
+  - SDN Forum: 45,334 raw → 4,700 PSLF-filtered
+- **Dual sentiment scoring**: TextBlob polarity + VADER compound (r=0.31, weak agreement)
+- **Strict PSLF filter** (`filter_pslf_relevant` in pslf_search_terms.py) — generic 'forgiveness' terms must co-occur with a PSLF-specific anchor (PSLF/MOHELA/qualifying employer/etc.) within 80 chars
+- **Length-residualised analysis**: outcome = residuals of polarity ~ log(word_count) + source + profession (round-4 fix)
+- **r/AskReddit baseline** (n=177) + **topical-near baseline** (n=7,750 off-PSLF posts in same subs)
 
 ## Key Scripts (in scripts/)
 - `collect_forum_data.py` — SDN scraper (Playwright headless + requests/BS4)
-- `collect_reddit_professions.py` — Reddit JSON API scraper (no auth needed)
+- `collect_reddit_professions.py` — Reddit JSON API scraper, year-windowed (round-3 fix)
+- `collect_reddit_baseline.py` — r/AskReddit + topical-near baselines
 - `collect_reddit_comments.py` — Reddit comment trees (needs PRAW API keys)
 - `analyze_multi_source.py` — Cross-platform/profession statistical analysis
 - `gen_hires_figs.py` — 300 DPI sentiment comparison + word cloud figures
-- `gen_legislative_timeline.py` — Policy event timeline + pre/post analysis + profession timecourse
+- `gen_legislative_timeline.py` — Policy event timeline + pre/post analysis (raw + residualised) + sensitivity + bootstrap
+- `gen_volume_artifact_figure.py` — Reddit/CFPB volume ratio diagnostic
+- `analyze_admin_data_correlation.py` — CFPB cross-correlation + R/C ratio
+- `confound_audit.py` — Profession × year, length × polarity, pre/post word count tests
 - `sentiment_vader.py` — VADER scoring (adds vader_compound columns to CSVs)
-- `sentiment_zeroshot.py` — Claude API classifier (needs ANTHROPIC_API_KEY with billing)
-- `pslf_search_terms.py` — Shared search terms, filter regexes, constants
-- `final_summary.py` — Generates full statistical summary report
+- `sentiment_zeroshot.py` — Claude API classifier (needs funded ANTHROPIC_API_KEY for n≈1000 stratified subsample, ~$10 cost)
+- `pslf_search_terms.py` — filter_pslf_relevant, anchored regex
+- `final_summary.py` — Statistical summary report
 
-## Key Findings (associational; pre/post tests are NOT interrupted time series)
-1. **Medical-professional posts are most negative** in associational comparison (22.3% neg, pol=0.070) — debt-to-income concerns
-2. **r/PSLF has highest negativity rate** (23.9%) — frustration with servicers/process
-3. **Social work (10.3% neg) and OT (11.0% neg) least negative** — near-automatic PSLF eligibility
-4. **Sentiment dropped 90 days after Trump PSLF EO (Mar 2025)** — pol -0.046, p<0.0001, Hedges' g=-0.30. NOT causally identified.
-5. **Sentiment rose 90 days after Limited Waiver (Oct 2021)** — pol +0.036, p<0.0001, Hedges' g=+0.33. NOT causally identified.
-6. **Sentiment dropped 90 days after Biden v. Nebraska SCOTUS (Jun 2023)** — Hedges' g=-0.43, the LARGEST shift. Window overlaps 2023-10-01 payment restart, so confounded.
-7. **Present day (2026-04) shows lower polarity** vs pre-COVID baseline (2018-2019).
-8. **SDN posts more positive than Reddit** in unadjusted comparison (0.113 vs 0.086, p<0.000001) — but confounded with population (medical-only on SDN) and post length.
+## Headline Findings (associational; survive 4 audit rounds)
 
-### Analytical Caveats (from 2026-04 independent audit consensus)
-- Pre/post tests are associational, not causal: there is no interrupted-time-series counterfactual.
-- Adjacent events (e.g., Biden v. Nebraska + Payments Restart, SAVE Block + SAVE Forbearance) have overlapping 90-day windows; their effects are not separately identified.
-- TextBlob-VADER correlation r=0.33 indicates the two scorers measure different constructs; headline numbers use TextBlob (limitation noted in all reports).
-- Reddit's 1000-result API cap is **partially real / partially confounded with growth** — see Volume-Artifact section below.
-- Cloudflare-blocked sources (Bogleheads, allnurses) → financially-sophisticated planners and dominant nursing community are missing.
-- r/AskReddit baseline: pol=0.050, %neg=26.4% (n=330). PSLF medical (pol=0.070, %neg=22.3%) is actually slightly MORE positive than Reddit baseline — challenges 'PSLF most negative' framing.
-- Permutation p-values (B=200) ~0.005 vs parametric p<0.0001 confirms autocorrelation inflated t-statistics 1-2 orders of magnitude. True effects are still significant after correction but with much wider uncertainty.
+All effects below are reported as Hedges' g + Glass's Δ_pre (raw) and length-residualised g (round-4 fix). Block-bootstrap p-values (Künsch 1989, B=2000) reported. Bonferroni α/8 = 0.0063.
 
-### Volume Artifact: Real Growth + API Cap (mixed; 2026-04 round-3 investigation)
-- **r/PSLF was created 2014-08-21** (CLAUDE.md previously said 2017 — corrected). 12-year sub history.
-- **Reddit's 1000-result hard cap is confirmed**: paginating /new backwards terminates at exactly 998 posts, spanning only ~30 days of recent activity in r/PSLF.
-- **CFPB ground truth shows real growth**: PSLF complaints went from 341 (2016) → 2,223 (2025) — about 6.5× increase.
-- **Reddit/CFPB ratio over time**:
-  | Year | CFPB | Reddit (scraped) | R/C ratio |
-  |------|------|------------------|-----------|
-  | 2017 | 1,391 | 80 | 0.058 |
-  | 2020 | 511 | 125 | 0.245 |
-  | 2024 | 2,116 | 414 | 0.196 |
-  | 2025 | 2,223 | 659 | 0.296 |
-  | 2026 (Q1) | 228 | 1,102 | **4.83** |
-- The 84× growth in R/C ratio from 2017 to 2026 is too large to be real growth alone. It's a **mix**: ~5-10× real PSLF growth (waiver, SAVE crisis, EO drove discussion), and ~10× API-cap recency bias.
-- **Recent-3-months pattern is starkest**: Mar 2026 R/C = 80, Apr 2026 R/C = ∞ (CFPB lags). Confirms the API-cap retrieves a recent-30d window in active subs.
-- **Implication**: Reddit volume increase is BOTH real AND inflated. Don't use the volume curve as evidence of "discussion intensity" without normalizing to CFPB or another non-capped source.
+| Event | g_raw | g_resid | bootstrap p | survives Bonferroni |
+|-------|-------|---------|-------------|---------------------|
+| **SAVE Admin Forbearance** (2024-08-09) | +0.51 | **+0.58** | 0.010 | ✓ |
+| **Trump PSLF EO** (2025-03-07) | −0.40 | −0.39 | 0.006 | ✓ |
+| **Biden v. Nebraska SCOTUS** (2023-06-30) | −0.43 | −0.39 | 0.005 | ✓ (window overlaps Payments Restart) |
+| **Limited PSLF Waiver** (2021-10-06) | +0.35 | +0.36 | <0.05 | ✓ |
+| **Final Trump PSLF Rule** (2025-10-30) | +0.30 | +0.18 | 0.013 | ✓ raw, weakens on residuals |
+| Payments Restart (2023-10-01) | +0.33 | +0.34 | 0.072 | ✗ borderline |
+| IDR Account Adjustment (2022-04-19) | −0.24 | −0.25 | 0.237 | ✗ NOT sig |
+| Biden Mass Forgiveness (2022-08-24) | −0.25 | −0.23 | 0.170 | ✗ NOT sig |
+
+Key descriptive observations (NO causal claims, NO behavioral interpretation):
+1. **The 90-day window following the SAVE administrative forbearance shows a +0.51 to +0.58 standardised mean increase in TextBlob polarity** (g grows under length adjustment). Several alternative mechanisms — selection of who keeps posting, post-period word count differences, adjacent-event contamination (8th Circuit SAVE injunction, Nov election) — are not ruled out.
+2. **The 90-day window following Biden v. Nebraska shows the largest negative shift (g=−0.43 raw, g=−0.39 residualised, Glass's Δ_pre=−0.48)**. Window overlaps with the October 2023 payments restart; effects not separately identified.
+3. **The 60-day window following the Trump PSLF EO shows the largest negative shift among PSLF-targeted events** (g=−0.40 raw and residualised; permutation p=0.006).
+4. **Cross-source baseline calibration**: r/AskReddit length-matched baseline polarity = 0.015. PSLF medical posts polarity = 0.072. PSLF discussion is *slightly more positive* than typical Reddit when length-adjusted — challenges any "PSLF most negative" framing.
+5. **CFPB-sentiment cross-correlation null** (all 13 lags p>0.05 after Bonferroni, first-differenced) — online sentiment and formal complaint volume are decoupled signals, NOT a redundant measurement.
+
+### Analytical Caveats (state explicitly in any write-up)
+- Pre/post tests are **associational**, not causal: no interrupted-time-series counterfactual.
+- Adjacent events (Biden v. Nebraska + Payments Restart, SAVE Block + SAVE Forbearance) have overlapping windows; effects not separately identified.
+- TextBlob-VADER correlation r=0.31 indicates weak inter-instrument agreement; **third-scorer triangulation pending API funding** (~$10).
+- Reddit's 1000-result API cap is **partially real / partially confounded with growth** — see Volume-Artifact section.
+- Cloudflare-blocked sources (Bogleheads, allnurses) → financially-sophisticated planners + dominant nursing community missing.
+- Block-bootstrap permutation (Künsch 1989, B=2000) revises 3/8 events to non-significant after autocorrelation correction; the parametric Welch's t had been inflated 30-100×.
+- Length confound: 4/8 events have significantly different pre/post word counts. Round-4 length-residualised analysis confirms primary findings survive (and SAVE Forbearance strengthens).
+- **Discourse vs borrower scope**: findings concern online PSLF discussants (Reddit + SDN demographics), not the ~1M+ PSLF-eligible borrower population.
+
+### Volume Artifact: Real Growth + API Cap (round-3 quantification)
+- **r/PSLF was created 2014-08-21**. 12-year sub history. Sub paginates back exactly 998 posts spanning ~30 days in active periods.
+- **CFPB ground truth shows real growth**: PSLF complaints 341 (2016) → 2,223 (2025), ~6.5× increase.
+- **Reddit/CFPB ratio over time** (`reddit_cfpb_volume_ratio.csv`):
+  - 2017: 0.12
+  - 2020: 0.41
+  - 2024: 0.60
+  - 2025: 1.63
+  - 2026 (Q1-May): **8.90**
+- The ~74× growth in R/C ratio is too large to be real growth alone. **Mix: ~6-7× real growth, ~10× API-cap recency bias.**
+- The year-windowed Reddit collector (round-3) recovered 3-4× more pre-2020 posts than the original sort-only approach.
 
 ## Audit History
-- 4 internal audit rounds (initial → audit 4): 46 issues fixed.
-- 2026-04 independent four-agent consensus audit: identified 5 CRITICAL fixes (filter divergence, wc<20 inconsistency, mislabeled Glass's delta, broken cross-correlation, Bonferroni inconsistency) + ~14 MAJOR.
-- All 5 CRITICALs resolved (commit will land soon). MAJORs partially resolved.
+- 4 internal audit rounds + 4 independent agent rounds.
+- Round 1: 46 internal issues fixed.
+- Round 2 (4-agent consensus): 5 CRITICAL fixes (filter divergence, wc<20 inconsistency, mislabeled Glass's delta, broken cross-correlation, Bonferroni inconsistency) + ~14 MAJOR. All resolved.
+- Round 3: real moving-block bootstrap (replacing iid permutation), R/C ratio diagnostic in code, improved baseline (length-matched + topical-near).
+- Round 4 (publication-readiness audit): length-residualised analysis added; ambiguity-aversion framing dropped (was unsupported); reframed as discourse-not-borrower study.
 
 ## Not Yet Done
-- Reddit API comments (needs client_id/client_secret from user)
-- Claude API zero-shot classification (needs funded ANTHROPIC_API_KEY)
-- Bogleheads forum (Cloudflare blocks even Playwright stealth)
-- allnurses.com (Cloudflare blocks headless browsers)
-- Topic modeling (LDA/BERTopic)
-- Interrupted time series (ARIMA) for causal inference
+- Claude API zero-shot classification (needs funded ANTHROPIC_API_KEY, ~$10)
+- Reddit API comments (needs client_id/client_secret)
+- Bogleheads + allnurses (Cloudflare blocks even Playwright stealth)
+- Topic modeling (LDA/BERTopic) — required for policy-venue submission
+- Interrupted time series (ARIMA + control series) — required for causal claims
+- Per-author longitudinal panels (within-subject design for adjacent-event identification)
+- OSF/AsPredicted pre-registration of event family (CONSORT-style flow)
+
+## Publication Status (round-4 audit verdict)
+- **Pre-print (arXiv cs.SI / SSRN)**: ready now
+- **PLOS One**: ~2 weeks of revisions (length residuals ✓ done; third-scorer triangulation pending; reframing ✓ done)
+- **Methods journal** (JCSS / EPJ Data Science): ~1 month of revisions (R/C diagnostic could be standalone methods note)
+- **Policy journal**: not without substantial reframing as discourse analysis with topic modeling
