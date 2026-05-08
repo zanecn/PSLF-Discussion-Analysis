@@ -17,7 +17,7 @@ Multi-source sentiment analysis of **online discussion** of Public Service Loan 
   - Reddit professions: 11,793 raw → 3,754 PSLF-filtered (+ length-residualised)
   - SDN Forum: 45,334 raw → 4,749 PSLF-filtered
   - 20 communities (18 subreddits + SDN)
-- **Dual sentiment scoring**: TextBlob polarity + VADER compound (r=0.31, weak agreement)
+- **Three-scorer sentiment**: TextBlob polarity + VADER compound + Claude Sonnet 4 zero-shot. Pearson correlations: TB×VA r=0.30, TB×CL r=0.08, VA×CL r=0.13 (all p<0.001). Three-rater Krippendorff's α (ordinal, n=2,002 with all 3 scorers): −0.04 with fixed thresholds, +0.18 with percentile-matched marginals — both well below the 0.667 floor for tentative reliability claims. Marginal distributions diverge sharply (VADER calls 71% of posts very_positive vs Claude's 3.5%).
 - **Strict PSLF filter** (`filter_pslf_relevant` in pslf_search_terms.py) — generic 'forgiveness' terms must co-occur with a PSLF-specific anchor (PSLF/MOHELA/qualifying employer/etc.) within 80 chars
 - **Length-residualised analysis**: outcome = residuals of polarity ~ log(word_count) + source + profession (round-4 fix; round-5 added QR rank check to drop perfectly-collinear src/profession dummies for SDN)
 - **r/AskReddit baseline** (n=177; small, not length-matched in raw form) + **topical-near baseline** (n=7,750 off-PSLF posts in same subs)
@@ -35,6 +35,7 @@ Multi-source sentiment analysis of **online discussion** of Public Service Loan 
 - `confound_audit.py` — Profession × year, length × polarity, pre/post word count tests
 - `sentiment_vader.py` — VADER scoring (adds vader_compound columns to CSVs)
 - `sentiment_zeroshot.py` — Claude API classifier (Sonnet 4); round-5 added preflight auth check + AuthenticationError fail-fast + 5-error circuit breaker (was silently catching auth errors and burning ~715 calls before this fix)
+- `sentiment_triangulation.py` — Round-5: three-scorer Krippendorff's α + per-event Claude pre/post + Figure 7 (TB×VA×CL forest plot). Emits `triangulation_results.{txt,csv}` and `triangulation_figure7.png`.
 - `pslf_search_terms.py` — filter_pslf_relevant, anchored regex
 - `final_summary.py` — Statistical summary report
 
@@ -61,11 +62,12 @@ Key descriptive observations (NO causal claims, NO behavioral interpretation):
 3. **The 90-day window following Biden v. Nebraska shows the largest negative shift in magnitude** (g=−0.43 raw, g=−0.39 residualised, Glass's Δ_pre=−0.48; bootstrap p=0.0065 — just at Bonferroni boundary). Window overlaps with the October 2023 payments restart; effects not separately identified.
 4. **Cross-source baseline calibration**: r/AskReddit length-matched baseline polarity = 0.015 (n=177; small sample, sensitivity to n is open). PSLF medical posts polarity = 0.072. PSLF discussion is *slightly more positive* than typical Reddit when length-adjusted — challenges any "PSLF most negative" framing.
 5. **CFPB-sentiment cross-correlation null** (all 13 lags p>0.05 after Bonferroni, first-differenced) — online sentiment and formal complaint volume are decoupled signals, NOT a redundant measurement.
+6. **Three-scorer triangulation reveals construct disagreement, not redundant measurement** (round-5, n=2,002 union of zero-shot subsamples). Krippendorff's α for the three-rater ordinal task is +0.18 even with percentile-matched marginals — well below 0.667. Direction concordance on the 8 events is partial: 3/8 events have all three scorers agreeing on sign (IDR Account Adjustment, **Trump PSLF EO**, Final Trump PSLF Rule); 5/8 events have at least one scorer disagreeing on direction. **The Trump PSLF EO is the most defensible single finding**: full-corpus bootstrap-Bonferroni significant *and* sign-concordant across all three scorers. **The SAVE Forbearance positive shift is direction-disputed** — VADER scores it g=−0.29 in the event-stratified subset while TextBlob (+0.16) and Claude (+0.29) agree on a positive shift. Caveat: the event-stratified subset n=50 pre + n=50 post is severely underpowered, and several events flip direction relative to the full-corpus run, so the pre/post head-to-head comparison must be read as descriptive concordance, not effect-size estimation.
 
 ### Analytical Caveats (state explicitly in any write-up)
 - Pre/post tests are **associational**, not causal: no interrupted-time-series counterfactual.
 - Adjacent events (Biden v. Nebraska + Payments Restart, SAVE Block + SAVE Forbearance) have overlapping windows; effects not separately identified.
-- TextBlob-VADER correlation r=0.31 indicates weak inter-instrument agreement; **third-scorer triangulation pending API funding** (~$10).
+- TextBlob-VADER correlation r=0.31 indicates weak inter-instrument agreement; **three-scorer triangulation complete (round-5)** confirms this extends to Claude (TB×CL r=0.08, VA×CL r=0.13, three-rater α=+0.18 with percentile-matched marginals). The three sentiment instruments are measuring different latent constructs, not noisy versions of the same construct. See `triangulation_results.txt`.
 - Reddit's 1000-result API cap is **partially real / partially confounded with growth** — see Volume-Artifact section.
 - Cloudflare-blocked sources (Bogleheads, allnurses) → financially-sophisticated planners + dominant nursing community missing.
 - Block-bootstrap permutation (Künsch 1989, B=2000) revises 3/8 events to non-significant after autocorrelation correction; the parametric Welch's t had been inflated 30-100×.
@@ -93,8 +95,8 @@ Key descriptive observations (NO causal claims, NO behavioral interpretation):
 - Round 5 (this session): bootstrap per-event seed + B_actual tracking (was deflating p-values when zero-variance surrogates were skipped); OLS collinearity QR rank check (src_sdn ≡ prof_sdn_medical for SDN posts); sentiment_zeroshot.py auth fail-fast + circuit breaker (after a 715-call burn on auth errors); legislative_timeline_results.txt artifact for traceability; sample-size and R/C-ratio reconciliation; final_summary.py rewritten to canonical 8-event list.
 
 ## Not Yet Done
-- Claude API zero-shot classification: **partially complete** — `zeroshot_reddit_n1000.csv` (n=721 valid), `zeroshot_sdn_n1000.csv` (n=615 valid). Event-stratified rerun in progress (re-running after auth-error burn was caught by round-5 fail-fast fix).
-- Krippendorff's α + per-event Claude pre/post triangulation + Figure 7 (pending event-stratified zero-shot completion)
+- Claude API zero-shot classification: **complete** — `zeroshot_reddit_n1000.csv` (n=721), `zeroshot_sdn_n1000.csv` (n=615), `zeroshot_reddit_eventstrat.csv` (n=715, ~50 pre + ~50 post per event).
+- Krippendorff's α + per-event Claude pre/post triangulation + Figure 7: **complete** — see `triangulation_results.txt` and `triangulation_figure7.png`.
 - Reddit API comments (needs client_id/client_secret)
 - Bogleheads + allnurses (Cloudflare blocks even Playwright stealth)
 - Topic modeling (LDA/BERTopic) — required for policy-venue submission
@@ -104,6 +106,6 @@ Key descriptive observations (NO causal claims, NO behavioral interpretation):
 
 ## Publication Status (round-4 audit verdict)
 - **Pre-print (arXiv cs.SI / SSRN)**: ready now
-- **PLOS One**: ~2 weeks of revisions (length residuals ✓ done; third-scorer triangulation in progress with Claude Sonnet 4 zero-shot; reframing ✓ done)
+- **PLOS One**: ~2 weeks of revisions (length residuals ✓ done; third-scorer triangulation ✓ done — but α=+0.18 means the paper must be reframed around Trump PSLF EO as the only triple-concordant + bootstrap-Bonferroni-significant event, with sentiment-instrument disagreement as a co-headline finding, not a side caveat; reframing ✓ done)
 - **Methods journal** (JCSS / EPJ Data Science): ~1 month of revisions (R/C diagnostic could be standalone methods note)
 - **Policy journal**: not without substantial reframing as discourse analysis with topic modeling

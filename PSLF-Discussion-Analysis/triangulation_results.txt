@@ -1,0 +1,80 @@
+================================================================================
+PSLF Sentiment Triangulation — TextBlob × VADER × Claude Sonnet 4
+Generated: 2026-05-07T17:59:15
+Source: scripts/sentiment_triangulation.py
+================================================================================
+
+INTER-RATER RELIABILITY (Krippendorff's alpha)
+--------------------------------------------------------------------------------
+Sample: union of 3 zero-shot subsamples, n=2,051 units
+Encoding: TextBlob & VADER discretized to 5-level ordinal {-2,-1,0,1,2};
+          Claude pslf_sentiment mapped to same scale.
+  TextBlob thresholds: < -0.4 / -0.1 / +0.1 / +0.4
+  VADER thresholds:    < -0.5 / -0.05 / +0.05 / +0.5 (Hutto & Gilbert 2014)
+
+Three-rater alpha (TextBlob, VADER, Claude):
+  Ordinal:  alpha = -0.0421
+  Nominal:  alpha = -0.1122
+  Interval: alpha = +0.0016
+
+Pairwise alpha (ordinal, fixed thresholds):
+   TextBlob x VADER    : alpha = -0.1350
+   TextBlob x Claude   : alpha = +0.0157
+      VADER x Claude   : alpha = -0.2615
+
+Sensitivity: alpha with percentile-matched marginals
+  (rules out alpha being depressed purely by class-frequency mismatch)
+  3-rater ordinal alpha (percentile): +0.1834
+   TextBlob x VADER    : alpha = +0.3367
+   TextBlob x Claude   : alpha = +0.0628
+      VADER x Claude   : alpha = +0.0894
+
+Continuous Pearson r (supplementary, on raw scores):
+   TextBlob x VADER    : r = +0.3006, p = 4.43e-43
+   TextBlob x Claude   : r = +0.0787, p = 0.000427
+      VADER x Claude   : r = +0.1259, p = 1.584e-08
+
+Spearman rank correlation (scale-free):
+   TextBlob x VADER    : rho = +0.3323, p = 8.127e-53
+   TextBlob x Claude   : rho = +0.0766, p = 0.0005999
+      VADER x Claude   : rho = +0.1028, p = 4.062e-06
+
+Marginal class distributions (5-level ordinal):
+     claude: -2:   63 (3.1%), -1:  287 (14.3%), 0: 1106 (55.2%), 1:  476 (23.8%), 2:   70 (3.5%)
+   textblob: -2:    4 (0.2%), -1:   78 (3.8%), 0: 1033 (50.4%), 1:  899 (43.8%), 2:   37 (1.8%)
+      vader: -2:  175 (8.5%), -1:  134 (6.5%), 0:   53 (2.6%), 1:  225 (11.0%), 2: 1464 (71.4%)
+
+Krippendorff (1980) interpretation thresholds:
+  alpha >= 0.800  reliable conclusions
+  alpha >= 0.667  tentative conclusions only
+  alpha <  0.667  too unreliable for substantive claims
+
+================================================================================
+PER-EVENT PRE/POST TESTS (event-stratified subsample)
+--------------------------------------------------------------------------------
+Sample: zeroshot_reddit_eventstrat.csv (~50 pre + ~50 post per event)
+
+Event                        date         win n_pre n_post    g_TB      p_TB    g_VA      p_VA    g_CL      p_CL
+--------------------------------------------------------------------------------------------------------------
+Limited PSLF Waiver          2021-10-06    90    27     45  -0.147    0.5467  -0.381    0.1196  +0.098    0.6711
+IDR Account Adjustment       2022-04-19    90    49     52  +0.133    0.4971  +0.069    0.7290  +0.016    0.9357
+Biden Mass Forgiveness       2022-08-24    90    53     50  +0.017    0.9307  +0.319    0.1035  -0.396    0.0480
+Biden v. Nebraska SCOTUS     2023-06-30    90    50     72  -0.277    0.1410  +0.094    0.6208  +0.341    0.0609
+Payments Restart             2023-10-01    90    65     50  +0.067    0.7363  -0.066    0.7296  -0.314    0.1029
+SAVE Admin Forbearance       2024-08-09    90    50     50  +0.161    0.4179  -0.293    0.1431  +0.286    0.1540
+Trump PSLF EO                2025-03-07    60    50     50  -0.217    0.2773  -0.319    0.1118  -0.188    0.3549
+Final Trump PSLF Rule        2025-10-30    60    50     50  +0.140    0.4831  +0.051    0.7972  +0.331    0.1076
+
+Direction concordance (sign of Hedges' g):
+  Limited PSLF Waiver               TB:- VA:- CL:+
+  IDR Account Adjustment            TB:+ VA:+ CL:+ [CONCORDANT]
+  Biden Mass Forgiveness            TB:+ VA:+ CL:-
+  Biden v. Nebraska SCOTUS          TB:- VA:+ CL:+
+  Payments Restart                  TB:+ VA:- CL:-
+  SAVE Admin Forbearance            TB:+ VA:- CL:+
+  Trump PSLF EO                     TB:- VA:- CL:- [CONCORDANT]
+  Final Trump PSLF Rule             TB:+ VA:+ CL:+ [CONCORDANT]
+
+================================================================================
+END OF ARTIFACT
+================================================================================
