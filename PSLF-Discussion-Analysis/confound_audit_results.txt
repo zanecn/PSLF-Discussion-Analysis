@@ -18,7 +18,7 @@ Stratified (medical Reddit only vs SDN):
   -> Naive delta=+0.0314; Stratified delta=+0.0422
 
 ================================================================================
-CONFOUND 2: Year × Profession sampling
+CONFOUND 2: Year Ã— Profession sampling
 ================================================================================
 
 Median year per profession (Reddit):
@@ -45,7 +45,7 @@ Range of median years: 6.0
      Cross-profession sentiment comparisons may reflect time, not profession.
 
 ================================================================================
-CONFOUND 3: Length × Polarity
+CONFOUND 3: Length Ã— Polarity
 ================================================================================
 
 Reddit:

@@ -142,7 +142,7 @@ EVENTS = [
     ("Biden v. Nebraska SCOTUS", "2023-06-30", 90),
     ("Payments Restart", "2023-10-01", 90),
     ("SAVE Admin Forbearance", "2024-08-09", 90),
-    ("Trump PSLF Exec Order", "2025-03-07", 60),
+    ("Trump PSLF Executive Order", "2025-03-07", 60),
     ("Final Trump PSLF Rule", "2025-10-30", 60),
 ]
 

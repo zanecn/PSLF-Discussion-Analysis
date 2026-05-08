@@ -172,10 +172,11 @@ def main():
     parser.add_argument("--seed", type=int, default=42, help="Random seed for sampling")
     parser.add_argument("--stratify-events", action="store_true",
                         help="Sample N posts per event (pre + post window) instead of overall random sample. "
-                             "Use with --sample to control posts per event (default 100). "
-                             "Yields per-event triangulation power.")
+                             "Combine with --per-event to control posts per event (default 100). "
+                             "Yields per-event triangulation power. NOTE: --sample is ignored in this mode.")
     parser.add_argument("--per-event", type=int, default=100,
-                        help="When --stratify-events is set, posts per event (pre+post combined)")
+                        help="When --stratify-events is set, posts per event (pre+post combined; "
+                             "split as N/2 pre, N/2 post)")
     parser.add_argument("--event-windows-full", action="store_true",
                         help="Score ALL posts in the 8 event windows (pre+post) at full corpus depth, "
                              "no subsampling. Path C in the round-5 triangulation strategy.")

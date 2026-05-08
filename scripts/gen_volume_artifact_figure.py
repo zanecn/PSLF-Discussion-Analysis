@@ -62,6 +62,17 @@ def main():
     reddit_norm = [reddit_yearly.get(y, 0) for y in common_years]
     ratio = [r / c if c > 0 else 0 for r, c in zip(reddit_norm, cfpb_norm)]
 
+    # Dynamic R/C-ratio multiplier from first vs latest non-zero year
+    # (was hardcoded "84×"; computed here so the annotation tracks the data).
+    nz = [(y, r) for y, r in zip(common_years, ratio) if r > 0]
+    if len(nz) >= 2:
+        first_y, first_r = nz[0]
+        last_y, last_r = nz[-1]
+        ratio_mult = last_r / first_r if first_r > 0 else float("nan")
+        mult_text = f"It grows ~{ratio_mult:.0f}× from {first_y} to {last_y}"
+    else:
+        mult_text = "It grows substantially"
+
     # ---- Figure ----
     fig, axes = plt.subplots(1, 3, figsize=(22, 7))
     fig.suptitle(
@@ -70,7 +81,7 @@ def main():
     )
     fig.text(0.5, 0.945,
              "If volume increase were entirely real, Reddit/CFPB ratio (right panel) would be flat. "
-             "It explodes 84× — confirming API-cap artifact.",
+             f"{mult_text} — confirming API-cap artifact.",
              ha="center", fontsize=11, style="italic", color="#555555")
 
     # Panel 1: Side-by-side absolute counts

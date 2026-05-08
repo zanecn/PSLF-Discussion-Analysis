@@ -99,8 +99,13 @@ def make_post_id(source: str, thread_id: str, post_number: int) -> str:
 # ---------------------------------------------------------------------------
 # Allnurses Search via Playwright
 # ---------------------------------------------------------------------------
-def search_allnurses(search_terms: list[str], max_pages: int = 3) -> list[dict]:
-    """Search allnurses.com using Playwright to bypass Cloudflare."""
+def search_allnurses(search_terms: list[str], max_pages: int = 3) -> tuple[list[dict], list[dict]]:
+    """Search allnurses.com using Playwright to bypass Cloudflare.
+
+    Returns (threads, cookies) — cookies are harvested from the Playwright
+    session so a subsequent requests-based scrape can stay past Cloudflare.
+    Returns ([], []) if Playwright is not installed.
+    """
     if not HAS_PLAYWRIGHT:
         print("  [ERROR] Playwright required")
         return [], []

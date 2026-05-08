@@ -282,8 +282,18 @@ def compute_alpha(merged):
         "vader": merged["vader_compound"].apply(vader_to_5).astype(float).value_counts().sort_index().to_dict(),
     }
 
+    # Subsample provenance: which zeroshot CSVs contributed (load_zeroshot tags
+    # rows with a 'subsample' column). Reported in the artifact so the count
+    # of subsamples isn't hardcoded.
+    if "subsample" in merged.columns:
+        subsamples = sorted(merged["subsample"].dropna().unique().tolist())
+    else:
+        subsamples = []
+
     return {
         "n_units": n_units,
+        "n_complete": int(len(sub)),  # rows with all 3 scorers (non-NaN)
+        "subsamples": subsamples,
         "alpha_ordinal": alpha_ordinal,
         "alpha_nominal": alpha_nominal,
         "alpha_interval": alpha_interval,
@@ -419,7 +429,16 @@ def write_artifacts(alpha_results, per_event):
         # ---- Krippendorff's alpha ----
         f.write("INTER-RATER RELIABILITY (Krippendorff's alpha)\n")
         f.write("-" * 80 + "\n")
-        f.write(f"Sample: union of 3 zero-shot subsamples, n={alpha_results['n_units']:,} units\n")
+        subs = alpha_results.get("subsamples", [])
+        n_sub = len(subs) if subs else 0
+        n_complete = alpha_results.get("n_complete", alpha_results["n_units"])
+        if subs:
+            f.write(f"Sample: union of {n_sub} zero-shot subsamples "
+                    f"({', '.join(subs)})\n")
+        else:
+            f.write("Sample: union of zero-shot subsamples\n")
+        f.write(f"  n_units (total rows after dedup):          {alpha_results['n_units']:,}\n")
+        f.write(f"  n_complete (all 3 scorers non-missing):    {n_complete:,}\n")
         f.write("Encoding: TextBlob & VADER discretized to 5-level ordinal {-2,-1,0,1,2};\n")
         f.write("          Claude pslf_sentiment mapped to same scale.\n")
         f.write(f"  TextBlob thresholds: < -0.4 / -0.1 / +0.1 / +0.4\n")

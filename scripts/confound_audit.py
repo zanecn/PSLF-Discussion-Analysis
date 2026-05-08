@@ -17,8 +17,13 @@ Output: confound_audit_results.txt
 """
 from __future__ import annotations
 
+import io
 import os
 import sys
+
+# Force UTF-8 stdout so '×' and other non-ASCII chars survive redirect on Windows
+# (otherwise cp1252 mangles them into '�' in the captured artifact file).
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 import numpy as np
 import pandas as pd

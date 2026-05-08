@@ -1,48 +1,50 @@
 ================================================================================
 PSLF Sentiment Triangulation — TextBlob × VADER × Claude Sonnet 4
-Generated: 2026-05-07T17:59:15
+Generated: 2026-05-07T18:33:41
 Source: scripts/sentiment_triangulation.py
 ================================================================================
 
 INTER-RATER RELIABILITY (Krippendorff's alpha)
 --------------------------------------------------------------------------------
-Sample: union of 3 zero-shot subsamples, n=2,051 units
+Sample: union of 3 zero-shot subsamples (reddit_cross, reddit_eventstrat, sdn_cross)
+  n_units (total rows after dedup):          1,805
+  n_complete (all 3 scorers non-missing):    1,805
 Encoding: TextBlob & VADER discretized to 5-level ordinal {-2,-1,0,1,2};
           Claude pslf_sentiment mapped to same scale.
   TextBlob thresholds: < -0.4 / -0.1 / +0.1 / +0.4
   VADER thresholds:    < -0.5 / -0.05 / +0.05 / +0.5 (Hutto & Gilbert 2014)
 
 Three-rater alpha (TextBlob, VADER, Claude):
-  Ordinal:  alpha = -0.0421
-  Nominal:  alpha = -0.1122
-  Interval: alpha = +0.0016
+  Ordinal:  alpha = -0.0477
+  Nominal:  alpha = -0.1109
+  Interval: alpha = -0.0029
 
 Pairwise alpha (ordinal, fixed thresholds):
-   TextBlob x VADER    : alpha = -0.1350
-   TextBlob x Claude   : alpha = +0.0157
-      VADER x Claude   : alpha = -0.2615
+   TextBlob x VADER    : alpha = -0.1398
+   TextBlob x Claude   : alpha = +0.0117
+      VADER x Claude   : alpha = -0.2703
 
 Sensitivity: alpha with percentile-matched marginals
   (rules out alpha being depressed purely by class-frequency mismatch)
-  3-rater ordinal alpha (percentile): +0.1834
-   TextBlob x VADER    : alpha = +0.3367
-   TextBlob x Claude   : alpha = +0.0628
-      VADER x Claude   : alpha = +0.0894
+  3-rater ordinal alpha (percentile): +0.1833
+   TextBlob x VADER    : alpha = +0.3401
+   TextBlob x Claude   : alpha = +0.0641
+      VADER x Claude   : alpha = +0.0825
 
 Continuous Pearson r (supplementary, on raw scores):
-   TextBlob x VADER    : r = +0.3006, p = 4.43e-43
-   TextBlob x Claude   : r = +0.0787, p = 0.000427
-      VADER x Claude   : r = +0.1259, p = 1.584e-08
+   TextBlob x VADER    : r = +0.3080, p = 5.752e-41
+   TextBlob x Claude   : r = +0.0764, p = 0.001154
+      VADER x Claude   : r = +0.1256, p = 8.56e-08
 
 Spearman rank correlation (scale-free):
-   TextBlob x VADER    : rho = +0.3323, p = 8.127e-53
-   TextBlob x Claude   : rho = +0.0766, p = 0.0005999
-      VADER x Claude   : rho = +0.1028, p = 4.062e-06
+   TextBlob x VADER    : rho = +0.3391, p = 8.36e-50
+   TextBlob x Claude   : rho = +0.0746, p = 0.001525
+      VADER x Claude   : rho = +0.0945, p = 5.758e-05
 
 Marginal class distributions (5-level ordinal):
-     claude: -2:   63 (3.1%), -1:  287 (14.3%), 0: 1106 (55.2%), 1:  476 (23.8%), 2:   70 (3.5%)
-   textblob: -2:    4 (0.2%), -1:   78 (3.8%), 0: 1033 (50.4%), 1:  899 (43.8%), 2:   37 (1.8%)
-      vader: -2:  175 (8.5%), -1:  134 (6.5%), 0:   53 (2.6%), 1:  225 (11.0%), 2: 1464 (71.4%)
+     claude: -2:   61 (3.4%), -1:  260 (14.4%), 0:  991 (54.9%), 1:  430 (23.8%), 2:   63 (3.5%)
+   textblob: -2:    4 (0.2%), -1:   69 (3.8%), 0:  905 (50.1%), 1:  797 (44.2%), 2:   30 (1.7%)
+      vader: -2:  150 (8.3%), -1:  118 (6.5%), 0:   44 (2.4%), 1:  204 (11.3%), 2: 1289 (71.4%)
 
 Krippendorff (1980) interpretation thresholds:
   alpha >= 0.800  reliable conclusions
@@ -56,14 +58,14 @@ Sample: zeroshot_reddit_eventstrat.csv (~50 pre + ~50 post per event)
 
 Event                        date         win n_pre n_post    g_TB      p_TB    g_VA      p_VA    g_CL      p_CL
 --------------------------------------------------------------------------------------------------------------
-Limited PSLF Waiver          2021-10-06    90    27     45  -0.147    0.5467  -0.381    0.1196  +0.098    0.6711
-IDR Account Adjustment       2022-04-19    90    49     52  +0.133    0.4971  +0.069    0.7290  +0.016    0.9357
-Biden Mass Forgiveness       2022-08-24    90    53     50  +0.017    0.9307  +0.319    0.1035  -0.396    0.0480
-Biden v. Nebraska SCOTUS     2023-06-30    90    50     72  -0.277    0.1410  +0.094    0.6208  +0.341    0.0609
-Payments Restart             2023-10-01    90    65     50  +0.067    0.7363  -0.066    0.7296  -0.314    0.1029
-SAVE Admin Forbearance       2024-08-09    90    50     50  +0.161    0.4179  -0.293    0.1431  +0.286    0.1540
-Trump PSLF EO                2025-03-07    60    50     50  -0.217    0.2773  -0.319    0.1118  -0.188    0.3549
-Final Trump PSLF Rule        2025-10-30    60    50     50  +0.140    0.4831  +0.051    0.7972  +0.331    0.1076
+Limited PSLF Waiver          2021-10-06    90    12     16  -0.349    0.3305  -0.349    0.3589  +0.027    0.9384
+IDR Account Adjustment       2022-04-19    90    27     40  +0.129    0.5661  +0.303    0.2460  +0.037    0.8792
+Biden Mass Forgiveness       2022-08-24    90    31     30  +0.249    0.3258  +0.287    0.2589  -0.666    0.0106
+Biden v. Nebraska SCOTUS     2023-06-30    90    36     48  -0.374    0.1029  +0.137    0.5440  +0.453    0.0348
+Payments Restart             2023-10-01    90    45     36  +0.088    0.7070  -0.120    0.5954  -0.411    0.0716
+SAVE Admin Forbearance       2024-08-09    90    38     37  +0.292    0.2066  -0.340    0.1449  +0.265    0.2525
+Trump PSLF EO                2025-03-07    60    41     42  -0.190    0.3842  -0.216    0.3236  -0.091    0.6774
+Final Trump PSLF Rule        2025-10-30    60    42     45  -0.021    0.9218  -0.004    0.9837  +0.225    0.2891
 
 Direction concordance (sign of Hedges' g):
   Limited PSLF Waiver               TB:- VA:- CL:+
@@ -73,7 +75,7 @@ Direction concordance (sign of Hedges' g):
   Payments Restart                  TB:+ VA:- CL:-
   SAVE Admin Forbearance            TB:+ VA:- CL:+
   Trump PSLF EO                     TB:- VA:- CL:- [CONCORDANT]
-  Final Trump PSLF Rule             TB:+ VA:+ CL:+ [CONCORDANT]
+  Final Trump PSLF Rule             TB:- VA:- CL:+
 
 ================================================================================
 END OF ARTIFACT

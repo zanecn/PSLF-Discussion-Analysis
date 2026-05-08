@@ -128,9 +128,15 @@ _GENERIC_FORGIVENESS = (
 
 
 def filter_pslf_relevant(series) -> "pd.Series":
-    """Vectorized version of has_pslf_relevance for pandas Series.
+    """Apply has_pslf_relevance over a pandas Series, returning a boolean mask.
 
-    Returns boolean mask. Use as drop-in replacement for:
+    Implementation note: this is a per-row apply (NOT vectorized) because the
+    anchor-window check is order-sensitive within each text. Acceptable for
+    the project's corpus sizes (<50K rows); a fully vectorized rewrite would
+    use str.contains for the strict path and only fall back to apply for the
+    generic-with-anchor path.
+
+    Use as drop-in replacement for:
         df["text"].str.lower().str.contains(PSLF_STRICT_REGEX, na=False)
     """
     import re as _re
