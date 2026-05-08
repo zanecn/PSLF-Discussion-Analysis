@@ -1,0 +1,94 @@
+================================================================================
+PSLF DISCUSSION ANALYSIS: FINAL SUMMARY REPORT
+================================================================================
+Generated: 2026-05-07
+Total posts: 9,629 (4,880 Reddit + 4,749 SDN)
+After sentiment filter (>=20 words): 8,788
+Platforms: 20 communities (18 subreddits + SDN forum)
+Scoring: TextBlob polarity + VADER compound (dual)
+Scope: online PSLF discourse, not the borrower population.
+
+================================================================================
+1. PROFESSION BREAKDOWN (PSLF-filtered, TextBlob)
+================================================================================
+
+  Profession                          n  Polarity    %Neg
+  ------------------------------------------------------
+  law                                53    0.0781   24.5%
+  general_pslf                      938    0.0692   23.8%
+  medical                           881    0.0708   22.6%
+  general_student_loans             732    0.0749   20.4%
+  teaching                          214    0.0938   17.8%
+  federal_employee                   79    0.0829   17.7%
+  teacher                           430    0.0929   16.3%
+  physician_assistant               203    0.0959   15.8%
+  pharmacy                           53    0.0939   15.1%
+  speech_language_pathology         107    0.1072   15.0%
+  nursing                           121    0.1061   13.2%
+  general_finance                   333    0.0812   12.9%
+  social_work                        68    0.1072   11.8%
+  occupational_therapy               61    0.1310   11.5%
+  personalfinance                   320    0.0971    8.8%
+  SDN Forum                        4195    0.1130   12.4%
+
+================================================================================
+2. POLICY EVENT IMPACTS (canonical 8 events; raw + length-residualised)
+================================================================================
+  Pre/post is associational, NOT causal (no ITS counterfactual).
+  Bonferroni alpha across 8 tests: 0.0063
+
+  Event                        date         win   g_raw  g_resid   glass         p  Bonf
+  Limited PSLF Waiver          2021-10-06    90  +0.350   +0.356  +0.336    0.0000     Y
+  IDR Account Adjustment       2022-04-19    90  -0.235   -0.247  -0.234    0.0055     Y
+  Biden Mass Forgiveness       2022-08-24    90  -0.246   -0.230  -0.232    0.0314     n
+  Biden v. Nebraska SCOTUS     2023-06-30    90  -0.431   -0.389  -0.484    0.0000     Y
+  Payments Restart             2023-10-01    90  +0.331   +0.338  +0.352    0.0048     Y
+  SAVE Admin Forbearance       2024-08-09    90  +0.513   +0.583  +0.515    0.0000     Y
+  Trump PSLF Exec Order        2025-03-07    60  -0.403   -0.396  -0.355    0.0000     Y
+  Final Trump PSLF Rule        2025-10-30    60  +0.303   +0.178  +0.312    0.0000     Y
+
+  See legislative_timeline_results.txt for bootstrap p-values and per-event detail.
+
+================================================================================
+3. PRESENT DAY
+================================================================================
+  Last 30 days                           n=   773, polarity=+0.0822, %neg=19.1%
+  2024 H2 baseline                       n=   472, polarity=+0.0956, %neg=16.7%
+  Post-waiver peak (2021-10 to 2022-01)  n=   458, polarity=+0.1171, %neg=12.0%
+
+  Present vs 2024H2: t=-1.778, p=0.075681 ns
+
+================================================================================
+4. PLATFORM COMPARISON (raw + length-adjusted note)
+================================================================================
+  Reddit: n=4,593, pol=+0.0817, %neg=18.8%, mean words=207
+  SDN:    n=4,195, pol=+0.1130, %neg=12.4%, mean words=172
+  Welch t=-12.109, p=0.000000
+  NOTE: cross-platform delta is confounded with population (SDN is medical-only)
+        and post length. See confound_audit_results.txt.
+
+  VADER comparison:
+    Reddit VADER: mean=+0.5342, %neg=18.6%
+    SDN VADER:    mean=+0.4838, %neg=16.6%
+    TextBlob-VADER r=0.311 (Reddit) — weak agreement.
+
+================================================================================
+5. OUTPUTS
+================================================================================
+  multi_source_sentiment_comparison.png: 1.53 MB
+  pslf_wordcloud_timecourse.png: 7.14 MB
+  pslf_sentiment_legislative_timeline.png: 2.10 MB
+  pslf_pre_post_events.png: 1.95 MB
+  pslf_profession_timecourse.png: 1.62 MB
+  legislative_timeline_results.txt: 0.01 MB
+  legislative_timeline_results.csv: 0.00 MB
+  admin_correlation_results.txt: 0.00 MB
+  confound_audit_results.txt: 0.00 MB
+
+================================================================================
+6. REPOSITORY
+================================================================================
+  Fork: https://github.com/zanecn/PSLF-Discussion-Analysis
+  PR: https://github.com/margaretcdeleon/PSLF-Discussion-Analysis/pull/1
+  Branch: playwright-sdn-scraper
+================================================================================

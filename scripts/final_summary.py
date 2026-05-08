@@ -4,15 +4,38 @@ Round-5 update: aligned with canonical 8-event list from
 gen_legislative_timeline.py; added length-residualised analysis, Glass's
 delta_pre, and dynamic date stamp. The canonical headline numbers live in
 legislative_timeline_results.txt — this script is a top-level overview.
+
+Output is teed to stdout AND a persistent artifact file (default
+final_summary_report.txt) so the summary is tracked alongside the other
+*_results.txt artifacts.
 """
+import argparse
+import io
 import os
 import sys
 import warnings
 from datetime import date
 
-sys.stdout = __import__("io").TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 warnings.filterwarnings("ignore")
+
+
+class _Tee:
+    """Write to multiple streams (stdout + file). Lightweight; no buffering tricks."""
+    def __init__(self, *streams):
+        self._streams = streams
+
+    def write(self, data):
+        for s in self._streams:
+            s.write(data)
+
+    def flush(self):
+        for s in self._streams:
+            try:
+                s.flush()
+            except Exception:
+                pass
 
 import numpy as np
 import pandas as pd
@@ -125,6 +148,22 @@ EVENTS = [
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Final summary report for PSLF Discussion Analysis")
+    parser.add_argument("--out", default="final_summary_report.txt",
+                        help="Path for persistent artifact (default: final_summary_report.txt). "
+                             "Pass empty string to skip writing a file.")
+    parser.add_argument("--no-stdout", action="store_true",
+                        help="Suppress stdout; only write to --out file.")
+    args = parser.parse_args()
+
+    # Tee stdout to a file artifact so the summary is captured like other *_results.txt
+    if args.out:
+        out_f = open(args.out, "w", encoding="utf-8")
+        if args.no_stdout:
+            sys.stdout = out_f
+        else:
+            sys.stdout = _Tee(sys.stdout, out_f)
+
     reddit, sdn = load()
     total = len(reddit) + len(sdn)
     valid = reddit["polarity"].notna().sum() + sdn["polarity"].notna().sum()
