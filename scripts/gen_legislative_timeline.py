@@ -119,17 +119,27 @@ def load_all_data():
     # This addresses the Round-3 confound that 4/8 events have significantly
     # different pre/post word counts (Payments Restart +292, SAVE -96, Trump EO +86, Final +70).
     all_data["log_wc"] = np.log1p(all_data["word_count"])
-    # OLS via numpy: y = X @ beta + e ; residuals = y - X @ beta
-    # X = [1, log_wc, source_dummies..., profession_dummies...]
+    # OLS: residualize polarity on log_wc + source + profession.
+    # Round-5 audit fix: SDN posts have source=='sdn' AND profession=='sdn_medical',
+    # which makes those two dummies perfectly collinear. Filter rank-deficient cols.
     src_dum = pd.get_dummies(all_data["source"], prefix="src", drop_first=True, dtype=float)
     prof_dum = pd.get_dummies(all_data["profession"], prefix="prof", drop_first=True, dtype=float)
-    X_design = pd.concat(
+    X_raw = pd.concat(
         [pd.Series(1.0, index=all_data.index, name="intercept"),
          all_data["log_wc"], src_dum, prof_dum],
         axis=1,
-    ).to_numpy(dtype=float)
+    )
+    # Drop perfectly-collinear columns (e.g., src_sdn ≡ prof_sdn_medical).
+    # Use QR-based rank check on the design matrix.
+    X_arr = X_raw.to_numpy(dtype=float)
+    _, R = np.linalg.qr(X_arr)
+    rank_tol = max(R.shape) * np.spacing(np.linalg.norm(X_arr))
+    keep = np.abs(np.diag(R)) > rank_tol
+    if not keep.all():
+        dropped = [c for c, k in zip(X_raw.columns, keep) if not k]
+        print(f"[length-resid] Dropped collinear columns: {dropped}")
+    X_design = X_arr[:, keep]
     y = all_data["polarity"].to_numpy(dtype=float)
-    # Fit by least-squares (NumPy lstsq is numerically stable)
     beta, *_ = np.linalg.lstsq(X_design, y, rcond=None)
     yhat = X_design @ beta
     all_data["polarity_resid"] = y - yhat
@@ -362,15 +372,19 @@ def fig2_pre_post(all_data):
             # (round-2 audit: pre/post designs need pre as control)
             pre_sd = float(pre.std(ddof=1))
             glass_delta = (post.mean() - pre.mean()) / pre_sd if pre_sd > 0 else 0.0
-            # Moving-block bootstrap to preserve autocorrelation (Künsch 1989).
-            # Round-3 audit fix: previous implementation was iid permutation
-            # despite comments claiming otherwise. Now actually resamples
-            # contiguous time-ordered blocks.
+            # Moving-block bootstrap to preserve WITHIN-BLOCK autocorrelation
+            # under H0 of no pre/post difference (Künsch 1989).
+            # The combined pre+post series is resampled in contiguous time-ordered
+            # blocks; the surrogate is then re-cut at index n1 to give surrogate
+            # "pre" and "post" groups. This is the standard null distribution
+            # for autocorrelated two-sample tests (Davison & Hinkley 1997 §4.3).
             #
-            # Block length L ~ n^(1/3) per Carlstein (1986); auto-selected.
-            # B=2000 reps for stable p-values around 0.005 (MC SE < 0.0016).
+            # Round-5 audit fixes:
+            #   - Per-event seed (idx-based) to decorrelate event bootstraps
+            #   - Track B_actual (skip zero-variance surrogates correctly)
+            #   - Block length L = ceil(n^(1/3)) per Carlstein (1986)
             try:
-                rng = np.random.default_rng(42)
+                rng = np.random.default_rng(42 + idx)  # per-event seed
                 combined_sorted = pd.concat([pre_df, post_df]).sort_values("date").reset_index(drop=True)
                 vals = combined_sorted["polarity"].to_numpy()
                 n_total = len(vals)
@@ -378,23 +392,23 @@ def fig2_pre_post(all_data):
                 obs_t = abs((post.mean() - pre.mean()) / np.sqrt(var1/n1 + var2/n2))
                 B = 2000
                 count_extreme = 0
-                # Build all possible block start indices (overlapping blocks)
+                B_actual = 0  # round-5 fix: skipped iterations don't count toward B
                 block_starts = np.arange(0, n_total - block_len + 1)
                 blocks_per_resample = int(np.ceil(n_total / block_len))
                 for _ in range(B):
-                    # Sample contiguous blocks WITH replacement (Künsch 1989)
                     starts = rng.choice(block_starts, size=blocks_per_resample, replace=True)
                     resampled = np.concatenate([vals[s:s + block_len] for s in starts])[:n_total]
-                    # Re-assign first n1 to "pre" group, rest to "post"
                     a_vals = resampled[:n1]
                     b_vals = resampled[n1:n1 + n2]
                     if a_vals.std() == 0 or b_vals.std() == 0:
-                        continue
+                        continue  # degenerate surrogate; skip
                     t_b = abs((b_vals.mean() - a_vals.mean()) /
                               np.sqrt(a_vals.var(ddof=1)/n1 + b_vals.var(ddof=1)/n2))
                     if t_b >= obs_t:
                         count_extreme += 1
-                p_perm = (count_extreme + 1) / (B + 1)
+                    B_actual += 1
+                # (count + 1) / (B + 1) per Davison & Hinkley (1997) eq. 4.11
+                p_perm = (count_extreme + 1) / (B_actual + 1) if B_actual > 0 else float("nan")
             except Exception:
                 p_perm = float("nan")
             sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
@@ -581,6 +595,7 @@ def fig2_pre_post(all_data):
     print("  significantly different pre/post word counts.")
     print("=" * 80)
     print(f"  {'Event':<40s} {'g_raw':>8s} {'g_resid':>9s} {'p_raw':>9s} {'p_resid':>9s}")
+    resid_results = []
     if "polarity_resid" not in all_data.columns:
         print("  [SKIP] polarity_resid column not found")
     else:
@@ -618,6 +633,12 @@ def fig2_pre_post(all_data):
                 flag = "  [!] Effect size changed >0.15"
             print(f"  {event_name:<40s} {d_raw:>+8.3f} {d_res:>+9.3f} "
                   f"{p_raw:>9.4f} {p_res:>9.4f}{flag}")
+            resid_results.append({
+                "event": event_name, "date": event_date, "window": window,
+                "n_pre": n1r, "n_post": n2r,
+                "g_raw": d_raw, "g_resid": d_res,
+                "p_raw": p_raw, "p_resid": p_res, "flag": flag.strip(),
+            })
     print("=" * 80)
 
     # Print results
@@ -637,6 +658,151 @@ def fig2_pre_post(all_data):
         print(f"    Change: {r['pol_post']-r['pol_pre']:+.4f} polarity, {r['neg_post']-r['neg_pre']:+.1f}pp negativity")
         print(f"    Welch t={r['t']:.3f}, p={r['p']:.6f} {sig}{bonf}, Hedges' g={r['d']:+.3f} ({d_label})")
         print(f"    Glass's delta_pre={r['glass_delta']:+.3f}, permutation p={r['p_perm']:.4f}")
+
+    return results, resid_results, sens_rows
+
+
+def write_results_artifact(results, resid_results, sens_rows, n_total,
+                           path="legislative_timeline_results.txt"):
+    """Persist headline numbers to a static text artifact for traceability.
+
+    Round-5 audit fix: previously the g_resid=+0.58 SAVE Forbearance number,
+    the 8-event Bonferroni table, and the bootstrap p-values existed only in
+    transient stdout. A reviewer could not independently verify the table
+    without re-running. This writer emits a parallel artefact alongside the
+    figures (compare admin_correlation_results.txt, confound_audit_results.txt).
+
+    Also emits a parallel CSV at legislative_timeline_results.csv for easy
+    downstream consumption.
+    """
+    import csv
+    from datetime import datetime
+
+    n_tests = len(results)
+    alpha_bonf = 0.05 / n_tests if n_tests > 0 else 0.05
+
+    # Build a date-indexed map of residualised stats
+    resid_map = {(r["event"], r["date"]): r for r in resid_results}
+
+    with open(path, "w", encoding="utf-8") as f:
+        f.write("=" * 80 + "\n")
+        f.write("PSLF Legislative Timeline — Pre/Post Event Analysis Results\n")
+        f.write(f"Generated: {datetime.now().isoformat(timespec='seconds')}\n")
+        f.write("Source: scripts/gen_legislative_timeline.py\n")
+        f.write("=" * 80 + "\n\n")
+
+        f.write(f"Sample: n={n_total:,} posts (Reddit + SDN, strict PSLF filter, "
+                f"min {MIN_WORDS} words)\n")
+        f.write(f"Tests: {n_tests} pre/post events; Welch's t + moving-block "
+                f"bootstrap (Künsch 1989, B=2000, per-event seed)\n")
+        f.write(f"Bonferroni alpha (n={n_tests}): {alpha_bonf:.4f}\n")
+        f.write("Effect size: Hedges' g (Hedges 1981, bias-corrected) "
+                "+ Glass's delta_pre (Lakens 2013)\n")
+        f.write("Length adjustment: residuals of polarity ~ log(word_count) "
+                "+ source + profession (round-4)\n")
+        f.write("Caveat: pre/post is associational, NOT causal — no ITS "
+                "counterfactual.\n\n")
+
+        # ---- Headline table ----
+        f.write("-" * 80 + "\n")
+        f.write("HEADLINE TABLE: g_raw, g_resid, parametric p, bootstrap p\n")
+        f.write("-" * 80 + "\n")
+        header = (f"{'Event':<40s} {'date':<11s} {'win':>4s} "
+                  f"{'n_pre':>6s} {'n_post':>6s} {'g_raw':>8s} {'g_resid':>9s} "
+                  f"{'glass_d':>8s} {'p_param':>9s} {'p_boot':>9s} "
+                  f"{'Bonf':>5s}\n")
+        f.write(header)
+        f.write("-" * len(header) + "\n")
+        for r in results:
+            key = (r["event"], r["date"])
+            g_resid = resid_map.get(key, {}).get("g_resid", float("nan"))
+            bonf_mark = "Y" if r["p"] < alpha_bonf else "n"
+            f.write(
+                f"{r['event']:<40s} {r['date']:<11s} {r['window']:>4d} "
+                f"{r['n_pre']:>6d} {r['n_post']:>6d} {r['d']:>+8.3f} "
+                f"{g_resid:>+9.3f} {r['glass_delta']:>+8.3f} "
+                f"{r['p']:>9.4f} {r['p_perm']:>9.4f} {bonf_mark:>5s}\n"
+            )
+
+        # ---- Window sensitivity ----
+        f.write("\n" + "-" * 80 + "\n")
+        f.write("WINDOW SENSITIVITY: Hedges' g across 30/60/90/180-day windows\n")
+        f.write("-" * 80 + "\n")
+        f.write(f"{'Event':<40s} {'30d':>8s} {'60d':>8s} {'90d':>8s} {'180d':>8s}\n")
+        for row in sens_rows:
+            f.write(f"{row[0]:<40s} {row[1]:>8s} {row[2]:>8s} {row[3]:>8s} {row[4]:>8s}\n")
+
+        # ---- Length-residualised flags ----
+        f.write("\n" + "-" * 80 + "\n")
+        f.write("LENGTH-RESIDUALISED FLAGS\n")
+        f.write("-" * 80 + "\n")
+        any_flag = False
+        for r in resid_results:
+            if r["flag"]:
+                f.write(f"{r['event']:<40s} ({r['date']})  {r['flag']}\n")
+                any_flag = True
+        if not any_flag:
+            f.write("None — all primary findings survive length adjustment.\n")
+
+        # ---- Per-event detail block ----
+        f.write("\n" + "-" * 80 + "\n")
+        f.write("PER-EVENT DETAIL\n")
+        f.write("-" * 80 + "\n")
+        for r in results:
+            key = (r["event"], r["date"])
+            rr = resid_map.get(key, {})
+            sig = "***" if r["p"] < 0.001 else "**" if r["p"] < 0.01 else \
+                  "*" if r["p"] < 0.05 else "ns"
+            bonf = " (Bonf.)" if r["p"] < alpha_bonf else ""
+            d_label = ("large" if abs(r["d"]) >= 0.8 else
+                       "medium" if abs(r["d"]) >= 0.5 else
+                       "small" if abs(r["d"]) >= 0.2 else "negligible")
+            f.write(f"\n{r['event']} ({r['date']}, {r['window']}d window):\n")
+            f.write(f"  Before: n={r['n_pre']:,}, polarity={r['pol_pre']:+.4f}, "
+                    f"%neg={r['neg_pre']:.1f}%\n")
+            f.write(f"  After:  n={r['n_post']:,}, polarity={r['pol_post']:+.4f}, "
+                    f"%neg={r['neg_post']:.1f}%\n")
+            f.write(f"  Change: {r['pol_post']-r['pol_pre']:+.4f} polarity, "
+                    f"{r['neg_post']-r['neg_pre']:+.1f}pp negativity\n")
+            f.write(f"  Welch t={r['t']:+.3f}, p={r['p']:.6f} {sig}{bonf}\n")
+            f.write(f"  Hedges' g={r['d']:+.3f} ({d_label}), "
+                    f"Glass's delta_pre={r['glass_delta']:+.3f}\n")
+            f.write(f"  Moving-block bootstrap p={r['p_perm']:.4f} "
+                    f"(B=2000, per-event seed)\n")
+            if rr:
+                f.write(f"  Length-residualised: g_resid={rr['g_resid']:+.3f}, "
+                        f"p_resid={rr['p_resid']:.4f}\n")
+
+        f.write("\n" + "=" * 80 + "\n")
+        f.write("END OF ARTIFACT\n")
+        f.write("=" * 80 + "\n")
+
+    print(f"Saved: {path}")
+
+    # ---- Parallel CSV ----
+    csv_path = path.rsplit(".", 1)[0] + ".csv"
+    with open(csv_path, "w", encoding="utf-8", newline="") as f:
+        w = csv.writer(f)
+        w.writerow([
+            "event", "date", "window_days", "n_pre", "n_post",
+            "pol_pre", "pol_post", "pct_neg_pre", "pct_neg_post",
+            "welch_t", "p_param", "g_hedges", "glass_delta_pre",
+            "p_bootstrap", "g_resid", "p_resid", "bonferroni_sig",
+        ])
+        for r in results:
+            key = (r["event"], r["date"])
+            rr = resid_map.get(key, {})
+            w.writerow([
+                r["event"], r["date"], r["window"], r["n_pre"], r["n_post"],
+                f"{r['pol_pre']:.6f}", f"{r['pol_post']:.6f}",
+                f"{r['neg_pre']:.3f}", f"{r['neg_post']:.3f}",
+                f"{r['t']:.4f}", f"{r['p']:.6f}", f"{r['d']:.4f}",
+                f"{r['glass_delta']:.4f}", f"{r['p_perm']:.6f}",
+                f"{rr.get('g_resid', float('nan')):.4f}",
+                f"{rr.get('p_resid', float('nan')):.6f}",
+                "Y" if r["p"] < alpha_bonf else "n",
+            ])
+    print(f"Saved: {csv_path}")
 
 
 def fig3_profession_timeline(all_data):
@@ -758,5 +924,6 @@ if __name__ == "__main__":
     all_data = load_all_data()
     print(f"Total posts: {len(all_data):,}")
     fig1_timeline(all_data)
-    fig2_pre_post(all_data)
+    results, resid_results, sens_rows = fig2_pre_post(all_data)
     fig3_profession_timeline(all_data)
+    write_results_artifact(results, resid_results, sens_rows, n_total=len(all_data))

@@ -66,31 +66,50 @@ Respond ONLY with valid JSON, no markdown:
 {"pslf_sentiment": "...", "primary_topic": "...", "pslf_stance": "..."}"""
 
 
-def classify_batch(client, posts: list[dict], model: str = "claude-sonnet-4-20250514") -> list[dict]:
-    """Classify a batch of posts using Claude API."""
-    results = []
+def classify_batch(client, posts: list[dict], model: str = "claude-sonnet-4-20250514",
+                   max_consecutive_errors: int = 5) -> list[dict]:
+    """Classify a batch of posts using Claude API.
 
-    for post in tqdm(posts, desc="Classifying"):
+    Round-5 audit fixes:
+      - Fail-fast on AuthenticationError / PermissionDeniedError (never transient)
+      - Circuit breaker after `max_consecutive_errors` consecutive failures
+      - Zero-guard on summary stats (handled in main() not here)
+      - max_tokens raised from 150 -> 250 (was truncating ~2.6% of responses)
+      - locals() instead of dir() for the parse-error raw_response capture
+    """
+    import anthropic as _anth
+
+    results = []
+    consecutive_errors = 0
+
+    for i, post in enumerate(tqdm(posts, desc="Classifying")):
         text = post.get("text", "")[:2000]  # Cap for token efficiency
         title = post.get("title", "")[:200]
 
         prompt = f"Post title: {title}\n\nPost text: {text}"
+        content = ""  # Initialize so JSONDecodeError handler can reference it safely
 
         try:
             response = client.messages.create(
                 model=model,
-                max_tokens=150,
+                max_tokens=250,  # Round-5: was 150, truncating ~2.6% of responses
                 system=SYSTEM_PROMPT,
                 messages=[{"role": "user", "content": prompt}],
             )
 
             content = response.content[0].text.strip()
-            # Parse JSON response
             parsed = json.loads(content)
             parsed["post_id"] = post.get("post_id", post.get("id", ""))
             parsed["source"] = post.get("source", "")
             parsed["profession"] = post.get("profession", "")
             results.append(parsed)
+            consecutive_errors = 0  # reset on success
+
+        except (_anth.AuthenticationError, _anth.PermissionDeniedError) as e:
+            # Never transient — abort immediately to save the user money
+            print(f"\n[FATAL] Authentication failed at post {i+1}/{len(posts)}: {str(e)[:150]}")
+            print(f"[FATAL] Aborting to avoid burning API credits. Check $env:ANTHROPIC_API_KEY.")
+            return results  # return what we have so far (likely 0 rows)
 
         except json.JSONDecodeError:
             results.append({
@@ -98,8 +117,10 @@ def classify_batch(client, posts: list[dict], model: str = "claude-sonnet-4-2025
                 "pslf_sentiment": "parse_error",
                 "primary_topic": "parse_error",
                 "pslf_stance": "unknown",
-                "raw_response": content[:200] if "content" in dir() else "",
+                "raw_response": content[:200] if content else "",
             })
+            consecutive_errors += 1
+
         except Exception as e:
             results.append({
                 "post_id": post.get("post_id", post.get("id", "")),
@@ -108,11 +129,37 @@ def classify_batch(client, posts: list[dict], model: str = "claude-sonnet-4-2025
                 "pslf_stance": "unknown",
                 "error": str(e)[:200],
             })
+            consecutive_errors += 1
+
+        # Circuit breaker: abort if too many consecutive failures
+        if consecutive_errors >= max_consecutive_errors:
+            print(f"\n[ABORT] {consecutive_errors} consecutive errors at post {i+1}/{len(posts)}.")
+            print(f"[ABORT] Returning partial results. Check API status, key validity, rate limits.")
+            return results
 
         # Rate limit: ~50 req/min for Sonnet
         time.sleep(0.5)
 
     return results
+
+
+def preflight_check(client, model: str) -> tuple[bool, str]:
+    """One-shot test call before iterating. Catches auth errors instantly."""
+    import anthropic as _anth
+    try:
+        response = client.messages.create(
+            model=model,
+            max_tokens=20,
+            system="Reply with one word.",
+            messages=[{"role": "user", "content": "Say OK."}],
+        )
+        return True, response.content[0].text.strip()
+    except _anth.AuthenticationError as e:
+        return False, f"AuthenticationError: {str(e)[:200]}"
+    except _anth.PermissionDeniedError as e:
+        return False, f"PermissionDeniedError: {str(e)[:200]}"
+    except Exception as e:
+        return False, f"{type(e).__name__}: {str(e)[:200]}"
 
 
 def main():
@@ -246,6 +293,17 @@ def main():
 
     # Classify
     client = anthropic.Anthropic(api_key=api_key)
+
+    # Round-5 audit fix: pre-flight test to catch auth errors before iterating
+    print(f"\nPre-flight check (1 test call to validate API key)...")
+    ok, msg = preflight_check(client, args.model)
+    if not ok:
+        print(f"[FATAL] Pre-flight failed: {msg}")
+        print(f"[FATAL] Aborting before iterating {len(posts)} posts.")
+        print(f"[FATAL] Verify $env:ANTHROPIC_API_KEY is set in THIS PowerShell window.")
+        sys.exit(1)
+    print(f"  Pre-flight OK (Claude replied: {msg!r})")
+
     print(f"\nClassifying {len(posts)} posts with {args.model}...")
     results = classify_batch(client, posts, model=args.model)
 
@@ -260,29 +318,44 @@ def main():
             for r in results:
                 writer.writerow(r)
 
-    # Summary
-    sentiments = [r.get("pslf_sentiment", "") for r in results if r.get("pslf_sentiment") not in ("parse_error", "api_error")]
-    topics = [r.get("primary_topic", "") for r in results if r.get("primary_topic") not in ("parse_error", "api_error")]
-    stances = [r.get("pslf_stance", "") for r in results if r.get("pslf_stance") not in ("unknown",)]
+    # Summary (round-5 audit: zero-guard on all distributions)
+    sentiments = [r.get("pslf_sentiment", "") for r in results
+                  if r.get("pslf_sentiment") not in ("parse_error", "api_error")]
+    topics = [r.get("primary_topic", "") for r in results
+              if r.get("primary_topic") not in ("parse_error", "api_error")]
+    stances = [r.get("pslf_stance", "") for r in results
+               if r.get("pslf_stance") not in ("unknown",)]
+    n_errors = sum(1 for r in results if r.get("pslf_sentiment") in ("parse_error", "api_error"))
 
     from collections import Counter
 
     print(f"\n{'='*60}")
     print(f"Zero-shot classification complete!")
     print(f"  Classified: {len(results)}")
+    print(f"  Errors: {n_errors} ({n_errors/max(len(results),1)*100:.1f}%)")
     print(f"  Output: {args.output}")
 
-    print(f"\n  Sentiment distribution:")
-    for s, c in Counter(sentiments).most_common():
-        print(f"    {s:20s}: {c:4d} ({c/len(sentiments)*100:.1f}%)")
+    if not sentiments:
+        print(f"\n  [WARNING] No valid sentiment classifications. ALL classifications failed.")
+        print(f"  Check {args.output} 'error' column for details.")
+    else:
+        print(f"\n  Sentiment distribution (n={len(sentiments)}):")
+        for s, c in Counter(sentiments).most_common():
+            print(f"    {s:20s}: {c:4d} ({c/len(sentiments)*100:.1f}%)")
 
-    print(f"\n  Topic distribution:")
-    for t, c in Counter(topics).most_common():
-        print(f"    {t:25s}: {c:4d} ({c/len(topics)*100:.1f}%)")
+    if not topics:
+        print(f"\n  [WARNING] No valid topic classifications.")
+    else:
+        print(f"\n  Topic distribution (n={len(topics)}):")
+        for t, c in Counter(topics).most_common():
+            print(f"    {t:25s}: {c:4d} ({c/len(topics)*100:.1f}%)")
 
-    print(f"\n  PSLF stance:")
-    for s, c in Counter(stances).most_common():
-        print(f"    {s:15s}: {c:4d} ({c/len(stances)*100:.1f}%)")
+    if not stances:
+        print(f"\n  [WARNING] No valid stance classifications.")
+    else:
+        print(f"\n  PSLF stance (n={len(stances)}):")
+        for s, c in Counter(stances).most_common():
+            print(f"    {s:15s}: {c:4d} ({c/len(stances)*100:.1f}%)")
 
     print(f"{'='*60}")
 
