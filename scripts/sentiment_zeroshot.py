@@ -164,7 +164,8 @@ def preflight_check(client, model: str) -> tuple[bool, str]:
 
 def main():
     parser = argparse.ArgumentParser(description="Zero-shot PSLF sentiment with Claude API")
-    parser.add_argument("--input", required=True, help="Input CSV file")
+    parser.add_argument("--input", required=True, nargs="+",
+                        help="Input CSV file(s). Multiple files are concatenated (Reddit medical + teacher + professions).")
     parser.add_argument("--output", default="zeroshot_sentiment.csv", help="Output CSV")
     parser.add_argument("--sample", type=int, default=200, help="Number of posts to classify (0=all)")
     parser.add_argument("--model", default="claude-sonnet-4-20250514", help="Claude model")
@@ -175,6 +176,14 @@ def main():
                              "Yields per-event triangulation power.")
     parser.add_argument("--per-event", type=int, default=100,
                         help="When --stratify-events is set, posts per event (pre+post combined)")
+    parser.add_argument("--event-windows-full", action="store_true",
+                        help="Score ALL posts in the 8 event windows (pre+post) at full corpus depth, "
+                             "no subsampling. Path C in the round-5 triangulation strategy.")
+    parser.add_argument("--exclude-scored-csv", nargs="*", default=[],
+                        help="Path(s) to existing zeroshot CSV(s); their post_ids will be skipped to avoid "
+                             "re-scoring posts already classified.")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Filter + dedup as usual, then print sample size and exit (no API calls).")
     args = parser.parse_args()
 
     if not HAS_ANTHROPIC:
@@ -187,9 +196,23 @@ def main():
         print("  Get a key at https://console.anthropic.com/settings/keys")
         sys.exit(1)
 
-    # Load and filter data
-    df = pd.read_csv(args.input)
-    print(f"Loaded {len(df):,} posts from {args.input}")
+    # Load and filter data (supports multiple input files for Reddit's split CSVs)
+    frames = []
+    for inp in args.input:
+        d = pd.read_csv(inp)
+        d["_input_file"] = inp
+        frames.append(d)
+        print(f"Loaded {len(d):,} posts from {inp}")
+    df = pd.concat(frames, ignore_index=True, sort=False)
+    if len(args.input) > 1:
+        print(f"Combined: {len(df):,} posts from {len(args.input)} files")
+        # Dedup by post id (Reddit medical/teacher CSVs overlap with reddit_professions_pslf.csv)
+        id_col = "post_id" if "post_id" in df.columns else ("id" if "id" in df.columns else None)
+        if id_col is not None:
+            before = len(df)
+            df = df.drop_duplicates(subset=[id_col], keep="first").reset_index(drop=True)
+            if len(df) < before:
+                print(f"After in-file dedup by {id_col}: {len(df):,} unique posts (removed {before - len(df):,})")
 
     # Determine text/title columns based on file format
     if "combined_text" in df.columns:
@@ -210,6 +233,57 @@ def main():
     wc = df[text_col].fillna("").str.split().str.len()
     df = df[wc >= 20].copy()
     print(f"After min 20 words: {len(df):,} posts")
+
+    # Event-windows-full: score ALL posts in any of the 8 event windows (Path C, round-5)
+    if args.event_windows_full:
+        EVENTS_FULL = [
+            ("Limited PSLF Waiver",            "2021-10-06", 90),
+            ("IDR Account Adjustment",         "2022-04-19", 90),
+            ("Biden Mass Forgiveness",         "2022-08-24", 90),
+            ("Biden v. Nebraska SCOTUS",       "2023-06-30", 90),
+            ("Payments Restart",               "2023-10-01", 90),
+            ("SAVE Admin Forbearance",         "2024-08-09", 90),
+            ("Trump PSLF EO",                  "2025-03-07", 60),
+            ("Final Trump PSLF Rule",          "2025-10-30", 60),
+        ]
+        if "created_utc" in df.columns:
+            df["_dt"] = pd.to_datetime(pd.to_numeric(df["created_utc"], errors="coerce"),
+                                       unit="s", utc=True).dt.tz_localize(None)
+        elif "date_posted" in df.columns:
+            df["_dt"] = pd.to_datetime(df["date_posted"], errors="coerce", utc=True).dt.tz_localize(None)
+        else:
+            print("[ERROR] Cannot find date column for event-windows-full mode")
+            sys.exit(1)
+        in_window = pd.Series(False, index=df.index)
+        per_event_counts = []
+        for ev_name, ev_date, win in EVENTS_FULL:
+            dt = pd.Timestamp(ev_date)
+            mask = ((df["_dt"] >= dt - pd.Timedelta(days=win)) &
+                    (df["_dt"] <= dt + pd.Timedelta(days=win)))
+            per_event_counts.append((ev_name, int(mask.sum())))
+            in_window |= mask
+        df = df[in_window].drop(columns=["_dt"]).copy()
+        print(f"Event-windows-full filter: {len(df):,} posts in any of the 8 event windows")
+        print(f"  {'Event':<35s} {'in-window':>10s}")
+        for n, c in per_event_counts:
+            print(f"  {n:<35s} {c:>10d}")
+
+    # Dedup against already-scored CSVs (saves money on re-scoring)
+    if args.exclude_scored_csv:
+        scored_ids = set()
+        for csv_path in args.exclude_scored_csv:
+            if os.path.exists(csv_path):
+                d = pd.read_csv(csv_path, usecols=["post_id"])
+                scored_ids |= set(d["post_id"].astype(str))
+                print(f"Loaded {len(d):,} already-scored ids from {csv_path}")
+        if scored_ids:
+            id_col = "post_id" if "post_id" in df.columns else ("id" if "id" in df.columns else None)
+            if id_col is None:
+                print("[WARN] No post_id/id column to dedup against; skipping --exclude-scored-csv")
+            else:
+                before = len(df)
+                df = df[~df[id_col].astype(str).isin(scored_ids)].copy()
+                print(f"After dedup against {len(scored_ids):,} prior ids: {len(df):,} posts (was {before:,})")
 
     # Event-stratified sampling: sample N posts per event window (round-4 audit)
     if args.stratify_events:
@@ -255,7 +329,7 @@ def main():
         print(f"  {'Event':<35s} {'pre':>5s} {'post':>5s}")
         for n, p, q in per_event_summary:
             print(f"  {n:<35s} {p:>5d} {q:>5d}")
-    elif args.sample > 0 and len(df) > args.sample:
+    elif (not args.event_windows_full) and args.sample > 0 and len(df) > args.sample:
         # Build a stratification key
         if "created_utc" in df.columns:
             yr = pd.to_datetime(pd.to_numeric(df["created_utc"], errors="coerce"),
@@ -290,6 +364,16 @@ def main():
             "source": str(row.get("source", row.get("subreddit", ""))),
             "profession": str(row.get("profession", "")),
         })
+
+    if args.dry_run:
+        # Round-trip cost estimate at observed Sonnet 4 rate (~$0.005/post including
+        # input + output tokens); rate is ~50 req/min with the 0.5s sleep below.
+        est_cost = len(posts) * 0.005
+        est_minutes = len(posts) * 0.5 / 60 + len(posts) * 2.0 / 60  # api latency + sleep
+        print(f"\n[DRY RUN] {len(posts):,} posts would be scored.")
+        print(f"  Estimated cost:     ~${est_cost:.2f}")
+        print(f"  Estimated wall-time: ~{est_minutes:.0f} min")
+        return
 
     # Classify
     client = anthropic.Anthropic(api_key=api_key)

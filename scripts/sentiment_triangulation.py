@@ -123,18 +123,44 @@ def hedges_g_var(g, n1, n2):
 # Step 1: Build unified merged DataFrame (post_id × scorer matrix)
 # ============================================================
 def load_zeroshot():
-    """Load all three zero-shot CSVs and tag with subsample."""
+    """Load all available zero-shot CSVs and tag with subsample.
+
+    Round-5 Path C addition: zeroshot_reddit_eventfull.csv and
+    zeroshot_sdn_eventfull.csv are scored over the FULL set of posts in any
+    of the 8 canonical event windows (after deduping against the cross-source
+    and event-stratified subsamples). Loaded if present; skipped otherwise.
+    """
+    candidates = [
+        ("zeroshot_reddit_n1000.csv", "reddit_cross"),
+        ("zeroshot_sdn_n1000.csv", "sdn_cross"),
+        ("zeroshot_reddit_eventstrat.csv", "reddit_eventstrat"),
+        ("zeroshot_reddit_eventfull.csv", "reddit_eventfull"),
+        ("zeroshot_sdn_eventfull.csv", "sdn_eventfull"),
+    ]
     frames = []
-    for f, label in [("zeroshot_reddit_n1000.csv", "reddit_cross"),
-                     ("zeroshot_sdn_n1000.csv", "sdn_cross"),
-                     ("zeroshot_reddit_eventstrat.csv", "reddit_eventstrat")]:
+    for f, label in candidates:
+        if not os.path.exists(f):
+            continue
         df = pd.read_csv(f)
         df = df[df["pslf_sentiment"].notna()].copy()
+        # Drop parse_error / api_error rows: they don't have valid sentiment
+        df = df[~df["pslf_sentiment"].isin(["parse_error", "api_error"])].copy()
         df["claude_numeric"] = df["pslf_sentiment"].map(CLAUDE_NUMERIC)
         df["subsample"] = label
-        frames.append(df[["post_id", "pslf_sentiment", "claude_numeric",
-                          "primary_topic", "pslf_stance", "source", "subsample"]])
+        cols = ["post_id", "pslf_sentiment", "claude_numeric",
+                "primary_topic", "pslf_stance", "source", "subsample"]
+        for c in cols:
+            if c not in df.columns:
+                df[c] = pd.NA
+        frames.append(df[cols])
+        print(f"  Loaded {len(df):,} from {f} (subsample={label})")
+    if not frames:
+        raise FileNotFoundError("No zeroshot_*.csv found in working directory.")
     out = pd.concat(frames, ignore_index=True)
+    # Deduplicate by post_id (event-stratified posts may be a subset of
+    # event-full posts after filling). Keep the first occurrence so the
+    # cross-source subsample takes precedence over the event-stratified.
+    out = out.drop_duplicates("post_id", keep="first").reset_index(drop=True)
     return out
 
 
