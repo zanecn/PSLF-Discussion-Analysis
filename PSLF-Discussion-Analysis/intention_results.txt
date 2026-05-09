@@ -1,0 +1,160 @@
+================================================================================
+PSLF Intention Analysis (Claude pslf_stance)
+Generated: 2026-05-08T19:31:21
+Source: scripts/pslf_intention_analysis.py
+================================================================================
+
+This script analyses INTENTION (Claude pslf_stance: pursuing,
+considering, rejecting, completed) as a separate construct from
+SENTIMENT (Claude pslf_sentiment) and AFFECT (TextBlob).
+Substantive research question: how does stated intention to
+pursue PSLF vary by profession and shift around policy events?
+
+Sample: n=4,791 unique posts with valid Claude scoring
+  with non-unknown stance: 3,243
+  with non-unknown stance AND date:  3,243
+
+--------------------------------------------------------------------------------
+OVERALL STANCE DISTRIBUTION
+--------------------------------------------------------------------------------
+  unknown          1,548  (32.3%)
+  considering      1,382  (28.8%)
+  pursuing         1,327  (27.7%)
+  rejecting          327  (6.8%)
+  completed          207  (4.3%)
+  TOTAL            4,791
+
+--------------------------------------------------------------------------------
+STANCE BY PROFESSION (% of non-unknown stance posts; n>=20)
+--------------------------------------------------------------------------------
+
+  Federal  (n=58)
+    pursuing         70.7%
+    considering      20.7%
+    rejecting         0.0%
+    completed         8.6%
+
+  Finance  (n=220)
+    pursuing         56.8%
+    considering      34.1%
+    rejecting         6.8%
+    completed         2.3%
+
+  Law  (n=37)
+    pursuing         29.7%
+    considering      62.2%
+    rejecting         5.4%
+    completed         2.7%
+
+  Medical  (n=311)
+    pursuing         56.3%
+    considering      36.0%
+    rejecting         6.1%
+    completed         1.6%
+
+  Nursing  (n=45)
+    pursuing         35.6%
+    considering      60.0%
+    rejecting         2.2%
+    completed         2.2%
+
+  OT  (n=45)
+    pursuing         40.0%
+    considering      53.3%
+    rejecting         6.7%
+    completed         0.0%
+
+  PA  (n=91)
+    pursuing         31.9%
+    considering      59.3%
+    rejecting         7.7%
+    completed         1.1%
+
+  Pharmacy  (n=36)
+    pursuing         38.9%
+    considering      55.6%
+    rejecting         5.6%
+    completed         0.0%
+
+  SDN (Medical)  (n=1,960)
+    pursuing         31.9%
+    considering      47.0%
+    rejecting        13.6%
+    completed         7.6%
+
+  SLP  (n=65)
+    pursuing         40.0%
+    considering      52.3%
+    rejecting         4.6%
+    completed         3.1%
+
+  Social Work  (n=37)
+    pursuing         54.1%
+    considering      35.1%
+    rejecting         5.4%
+    completed         5.4%
+
+  Teaching  (n=136)
+    pursuing         58.1%
+    considering      28.7%
+    rejecting         4.4%
+    completed         8.8%
+
+  r/PSLF  (n=111)
+    pursuing         77.5%
+    considering       4.5%
+    rejecting         0.0%
+    completed        18.0%
+
+  r/StudentLoans  (n=91)
+    pursuing         68.1%
+    considering      25.3%
+    rejecting         1.1%
+    completed         5.5%
+
+--------------------------------------------------------------------------------
+PRE/POST INTENTION SHIFTS BY EVENT
+Δ Rejecting Rate (pp) and 2-prop z-test; chi-sq for full distribution.
+--------------------------------------------------------------------------------
+Event                         win  n_pre  n_post  rej_pre%  rej_post%    Δ pp    p_rej   p_chi2
+Limited PSLF Waiver            90    232     263       7.3       13.3   +5.98   0.0304   0.0000
+IDR Account Adjustment         90    167     242       9.0       19.0  +10.03   0.0051   0.0000
+Biden Mass Forgiveness         90    127      46      18.1        4.3  -13.76   0.0229   0.0375
+Biden v. Nebraska SCOTUS       90    140     142       7.1        4.9   -2.21   0.4349   0.0229
+Payments Restart               90    138      75       3.6        2.7   -0.96   0.7084   0.9737
+SAVE Admin Forbearance         90    126      94      19.8        3.2  -16.65   0.0002   0.0010
+Trump PSLF EO                  60    331     355      12.4       14.9   +2.54   0.3331   0.0332
+Final Trump PSLF Rule          60    230     229      14.8        1.3  -13.47   0.0000   0.0000
+
+--------------------------------------------------------------------------------
+SENTIMENT × STANCE DECOUPLING
+If sentiment and intention were tightly coupled, negative-sentiment
+posts would be mostly rejecting. They aren't.
+--------------------------------------------------------------------------------
+pslf_stance     completed  considering  pursuing  rejecting  n_total  pct_pursuing  pct_rejecting
+pslf_sentiment                                                                                   
+very_negative           0           13        67        112      192          34.9           58.3
+negative                3          322       244        135      704          34.7           19.2
+neutral                 5          725       321         80     1131          28.4            7.1
+positive               29          321       660          0     1010          65.3            0.0
+very_positive         170            1        35          0      206          17.0            0.0
+
+Headline: of 704 'negative'-sentiment posts, 244 (34.7%) are still pursuing PSLF.
+Sentiment and intention are partially decoupled — affect doesn't determine commitment.
+
+--------------------------------------------------------------------------------
+TOPIC × STANCE (which topics drive which intention?)
+--------------------------------------------------------------------------------
+pslf_stance          completed  considering  pursuing  rejecting  n_total  pct_rejecting  pct_pursuing
+primary_topic                                                                                         
+financial_planning           1          574       417        149     1141           13.1          36.5
+career_impact                1          366       306         54      727            7.4          42.1
+policy_uncertainty           1          232       292         92      617           14.9          47.3
+general_question             3          187       169          7      366            1.9          46.2
+success_story              193           17        35          1      246            0.4          14.2
+servicer_issues              8            6       106          9      129            7.0          82.2
+frustration_venting          0            0         2         15       17           88.2          11.8
+
+================================================================================
+END OF ARTIFACT
+================================================================================
