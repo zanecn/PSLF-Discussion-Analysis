@@ -1,6 +1,6 @@
 ================================================================================
 PSLF Sentiment Triangulation — TextBlob × VADER × Claude Sonnet 4
-Generated: 2026-05-07T20:14:01
+Generated: 2026-05-08T18:33:09
 Source: scripts/sentiment_triangulation.py
 ================================================================================
 
@@ -24,9 +24,13 @@ Pairwise alpha (ordinal, fixed thresholds):
    TextBlob x Claude   : alpha = -0.0350
       VADER x Claude   : alpha = -0.2197
 
-Sensitivity: alpha with percentile-matched marginals
-  (rules out alpha being depressed purely by class-frequency mismatch)
-  3-rater ordinal alpha (percentile): +0.1680
+Upper-bound sensitivity: alpha with percentile-matched marginals
+  (Round 7 caveat: this is a CHARITABLE upper bound, not the canonical
+  number. Forcing equal-frequency quintiles aligns marginals between
+  TextBlob and VADER but NOT with Claude's true asymmetric distribution
+  (5%/18%/48%/25%/4%), which mechanically inflates alpha. Report the
+  fixed-threshold alpha as canonical and this as an upper bound.)
+  3-rater ordinal alpha (percentile, upper bound): +0.1680
    TextBlob x VADER    : alpha = +0.3126
    TextBlob x Claude   : alpha = +0.0527
       VADER x Claude   : alpha = +0.0896
@@ -52,9 +56,10 @@ Krippendorff (1980) interpretation thresholds:
   alpha <  0.667  too unreliable for substantive claims
 
 ================================================================================
-PER-EVENT PRE/POST TESTS (event-stratified subsample)
+PER-EVENT PRE/POST TESTS (well-powered after Path C event-window fill)
 --------------------------------------------------------------------------------
-Sample: zeroshot_reddit_eventstrat.csv (~50 pre + ~50 post per event)
+Sample: all posts in event windows from any zeroshot subsample (n_pre range 166–610, n_post range 109–437)
+Caveat: per-event Welch's t below ignores within-window autocorrelation. Round-7 follow-up: replace with stratified circular block bootstrap.
 
 Event                        date         win n_pre n_post    g_TB      p_TB    g_VA      p_VA    g_CL      p_CL
 --------------------------------------------------------------------------------------------------------------

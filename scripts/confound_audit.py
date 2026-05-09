@@ -96,10 +96,25 @@ def confound_1_platform_vs_population(reddit, sdn):
         print(f"  Reddit medical: n={len(rmed_pol):,}, pol={rmed_pol.mean():.4f}")
         print(f"  SDN: n={len(s_pol):,}, pol={s_pol.mean():.4f}")
         print(f"  Welch t={t2:.3f}, p={p2:.6f}")
-        print(f"  -> Naive delta={s_pol.mean()-r_pol.mean():+.4f}; Stratified delta={s_pol.mean()-rmed_pol.mean():+.4f}")
-        if abs(s_pol.mean() - rmed_pol.mean()) < 0.5 * abs(s_pol.mean() - r_pol.mean()):
-            print("  [!]  CONFOUND DETECTED: Stratified effect is <50% of naive effect")
-            print("     The 'SDN more positive than Reddit' finding is largely population-driven.")
+        naive_delta = s_pol.mean() - r_pol.mean()
+        strat_delta = s_pol.mean() - rmed_pol.mean()
+        print(f"  -> Naive delta={naive_delta:+.4f}; Stratified delta={strat_delta:+.4f}")
+        # Round-7 fix: previous condition only fired when stratification HALVED
+        # the effect (population was inflating the gap). Real-world case here is
+        # the opposite — stratification GROWS the gap (population was suppressing
+        # it). Either direction signals population confounding; check abs ratio
+        # in either direction.
+        if abs(naive_delta) > 0:
+            ratio = abs(strat_delta) / abs(naive_delta)
+            if ratio < 0.5:
+                print("  [!]  CONFOUND DETECTED: Stratified effect is <50% of naive effect "
+                      "(population was inflating the gap)")
+                print("     The 'SDN > Reddit polarity' finding is largely population-driven.")
+            elif ratio > 1.5:
+                print("  [!]  CONFOUND DETECTED: Stratified effect is >150% of naive effect "
+                      "(population was suppressing the gap)")
+                print("     SDN > Reddit-medical platform gap is LARGER than naive comparison "
+                      "suggested — population mix was masking platform effect.")
 
 
 def confound_2_year_profession(reddit, sdn):

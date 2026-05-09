@@ -115,8 +115,24 @@ def hedges_g(pre, post):
 
 
 def hedges_g_var(g, n1, n2):
-    """Variance of Hedges' g (Hedges & Olkin 1985 eq. 6.13)."""
-    return (n1 + n2) / (n1 * n2) + g**2 / (2.0 * (n1 + n2 - 2))
+    """Variance of Hedges' g with J^2 small-sample correction.
+
+    Round-7 audit fix: previously used Hedges & Olkin (1985) eq. 6.13 which
+    is the large-sample approximation that omits J^2 on the second term.
+    Borenstein et al. (2009, eq. 4.24) gives the corrected form:
+        var(g) = J^2 * [(n1+n2)/(n1*n2) + d^2/(2*(n1+n2-2))]
+    where J = 1 - 3/(4*(n1+n2)-9). For n=100-600 the J^2 correction
+    changes CI width by ~1-2%; matters at any methods-aware venue.
+    """
+    n_total = n1 + n2
+    if n_total <= 2:
+        return float("nan")
+    df = n_total - 2
+    J = 1.0 - 3.0 / (4.0 * n_total - 9.0)
+    # Convert g back to d for the variance formula (var formula uses d^2)
+    d = g / J if J > 0 else g
+    var_d = (n_total) / (n1 * n2) + d**2 / (2.0 * df)
+    return (J**2) * var_d
 
 
 # ============================================================
@@ -460,9 +476,13 @@ def write_artifacts(alpha_results, per_event):
         f.write("Pairwise alpha (ordinal, fixed thresholds):\n")
         for (a, b), v in alpha_results["pairs"].items():
             f.write(f"  {a:>9s} x {b:<9s}: alpha = {v:+.4f}\n")
-        f.write("\nSensitivity: alpha with percentile-matched marginals\n")
-        f.write("  (rules out alpha being depressed purely by class-frequency mismatch)\n")
-        f.write(f"  3-rater ordinal alpha (percentile): {alpha_results['alpha_pct_3rater']:+.4f}\n")
+        f.write("\nUpper-bound sensitivity: alpha with percentile-matched marginals\n")
+        f.write("  (Round 7 caveat: this is a CHARITABLE upper bound, not the canonical\n")
+        f.write("  number. Forcing equal-frequency quintiles aligns marginals between\n")
+        f.write("  TextBlob and VADER but NOT with Claude's true asymmetric distribution\n")
+        f.write("  (5%/18%/48%/25%/4%), which mechanically inflates alpha. Report the\n")
+        f.write("  fixed-threshold alpha as canonical and this as an upper bound.)\n")
+        f.write(f"  3-rater ordinal alpha (percentile, upper bound): {alpha_results['alpha_pct_3rater']:+.4f}\n")
         for (a, b), v in alpha_results["pairs_pct"].items():
             f.write(f"  {a:>9s} x {b:<9s}: alpha = {v:+.4f}\n")
         f.write("\nContinuous Pearson r (supplementary, on raw scores):\n")
@@ -488,9 +508,19 @@ def write_artifacts(alpha_results, per_event):
 
         # ---- Per-event ----
         f.write("=" * 80 + "\n")
-        f.write("PER-EVENT PRE/POST TESTS (event-stratified subsample)\n")
+        f.write("PER-EVENT PRE/POST TESTS (well-powered after Path C event-window fill)\n")
         f.write("-" * 80 + "\n")
-        f.write("Sample: zeroshot_reddit_eventstrat.csv (~50 pre + ~50 post per event)\n")
+        # Round-7 fix: was hardcoded "~50 pre + ~50 post" from before Path C.
+        # Now uses ALL posts in event windows that have all 3 scorers, drawing
+        # from cross-source + event-stratified + event-fill subsamples.
+        if not per_event.empty:
+            f.write(f"Sample: all posts in event windows from any zeroshot subsample "
+                    f"(n_pre range {per_event['n_pre'].min()}–{per_event['n_pre'].max()}, "
+                    f"n_post range {per_event['n_post'].min()}–{per_event['n_post'].max()})\n")
+            f.write("Caveat: per-event Welch's t below ignores within-window autocorrelation. "
+                    "Round-7 follow-up: replace with stratified circular block bootstrap.\n")
+        else:
+            f.write("Sample: empty.\n")
         f.write(f"\n{'Event':<28s} {'date':<11s} {'win':>4s} {'n_pre':>5s} {'n_post':>6s} "
                 f"{'g_TB':>7s} {'p_TB':>9s} {'g_VA':>7s} {'p_VA':>9s} "
                 f"{'g_CL':>7s} {'p_CL':>9s}\n")
