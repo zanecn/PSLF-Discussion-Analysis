@@ -269,6 +269,11 @@ def main():
         df = df[df[id_col].astype(str).isin(retest_ids)].copy()
         print(f"[retest mode] Restricted to {len(df):,} posts that appear in "
               f"{args.retest_source_csv} (from {before:,})")
+        if len(df) < len(retest_ids):
+            missing = len(retest_ids) - len(df)
+            print(f"[retest mode] WARNING: {missing} of {len(retest_ids)} source-CSV "
+                  f"post_ids are missing from the input CSV. Test-retest alpha will "
+                  f"be computed on the {len(df):,}-post intersection only.")
 
     # Event-windows-full: score ALL posts in any of the 8 event windows (Path C, round-5)
     if args.event_windows_full:

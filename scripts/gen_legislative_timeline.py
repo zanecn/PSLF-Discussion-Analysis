@@ -693,19 +693,27 @@ def fig2_pre_post(all_data):
     print("\n" + "=" * 80)
     print("SENTIMENT EVOLUTION ACROSS LEGISLATIVE CHANGES")
     print(f"  Pre/post Welch's t-tests, Hedges' g effect size.")
-    print(f"  Bonferroni-corrected alpha (n={len(results)} tests): {0.05/max(len(results),1):.4f}")
+    print(f"  Bonferroni-corrected alpha (n={len(results)} tests): {0.05/max(len(results),1):.5f}")
+    print(f"  Round-7 fix: Bonferroni flag below now applied to BOOTSTRAP p, not parametric")
+    print(f"  (parametric Welch's t is known-inflated 30-100x by autocorrelation).")
     print(f"  Note: pre/post is associational, not causal (no ITS counterfactual).")
     print("=" * 80)
+    alpha_b = 0.05 / max(len(results), 1)
     for r in results:
         sig = "***" if r["p"] < 0.001 else "**" if r["p"] < 0.01 else "*" if r["p"] < 0.05 else "ns"
-        bonf = " (Bonf.)" if r["p"] < (0.05 / max(len(results), 1)) else ""
+        # Round-7 re-audit fix: Bonferroni flag now applied to bootstrap p,
+        # not parametric. Was misleading to call parametric-significant
+        # events "Bonf." when the project explicitly distrusts parametric p.
+        boot_bonf = " (Bonf., bootstrap)" if (
+            not np.isnan(r.get("p_perm", float("nan"))) and r["p_perm"] < alpha_b) else ""
         d_label = "large" if abs(r["d"]) >= 0.8 else "medium" if abs(r["d"]) >= 0.5 else "small" if abs(r["d"]) >= 0.2 else "negligible"
         print(f"\n  {r['event']} ({r['date']}, {r['window']}d window):")
         print(f"    Before: n={r['n_pre']:,}, polarity={r['pol_pre']:.4f}, %neg={r['neg_pre']:.1f}%")
         print(f"    After:  n={r['n_post']:,}, polarity={r['pol_post']:.4f}, %neg={r['neg_post']:.1f}%")
         print(f"    Change: {r['pol_post']-r['pol_pre']:+.4f} polarity, {r['neg_post']-r['neg_pre']:+.1f}pp negativity")
-        print(f"    Welch t={r['t']:.3f}, p={r['p']:.6f} {sig}{bonf}, Hedges' g={r['d']:+.3f} ({d_label})")
-        print(f"    Glass's delta_pre={r['glass_delta']:+.3f}, permutation p={r['p_perm']:.4f}")
+        print(f"    Welch t={r['t']:.3f}, p={r['p']:.6f} {sig} (parametric, NOT used for Bonferroni)")
+        print(f"    Hedges' g={r['d']:+.3f} ({d_label}), Glass's delta_pre={r['glass_delta']:+.3f}")
+        print(f"    Block-permutation p={r['p_perm']:.4f}{boot_bonf}")
 
     return results, resid_results, sens_rows
 

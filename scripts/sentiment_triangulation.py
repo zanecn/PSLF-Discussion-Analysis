@@ -217,8 +217,9 @@ def hedges_g_var(g, n1, n2):
     J = 1.0 - 3.0 / (4.0 * n_total - 9.0)
     # Convert g back to d for the variance formula (var formula uses d^2)
     d = g / J if J > 0 else g
-    var_d = (n_total) / (n1 * n2) + d**2 / (2.0 * df)
-    return (J**2) * var_d
+    # var(d) = (n1+n2)/(n1*n2) + d^2/(2*df); var(g) = J^2 * var(d)
+    var_g = (J**2) * ((n_total) / (n1 * n2) + d**2 / (2.0 * df))
+    return var_g
 
 
 # ============================================================
