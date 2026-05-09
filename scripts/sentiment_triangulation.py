@@ -239,6 +239,9 @@ def load_zeroshot():
         ("zeroshot_reddit_eventstrat.csv", "reddit_eventstrat"),
         ("zeroshot_reddit_eventfull.csv", "reddit_eventfull"),
         ("zeroshot_sdn_eventfull.csv", "sdn_eventfull"),
+        # Round-7 expansion: Claude-scored PA/NP posts (52 from r/PAstudent +
+        # r/prephysicianassistant + r/CRNA after PSLF strict filter)
+        ("zeroshot_pa_np_expansion.csv", "pa_np_expansion"),
     ]
     frames = []
     for f, label in candidates:

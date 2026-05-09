@@ -100,6 +100,9 @@ def load_zeroshot_with_meta():
         ("zeroshot_reddit_eventstrat.csv", "reddit_eventstrat"),
         ("zeroshot_reddit_eventfull.csv", "reddit_eventfull"),
         ("zeroshot_sdn_eventfull.csv", "sdn_eventfull"),
+        # Round-7 expansion: Claude-scored PA/NP posts from r/PAstudent,
+        # r/prephysicianassistant, r/CRNA (52 PSLF-filtered new posts)
+        ("zeroshot_pa_np_expansion.csv", "pa_np_expansion"),
     ]
     zs_frames = []
     for f, label in candidates:
