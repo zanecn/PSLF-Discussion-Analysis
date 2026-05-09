@@ -186,7 +186,9 @@ def load_zeroshot_with_meta():
     zs = zs.drop_duplicates("post_id", keep="first").reset_index(drop=True)
     print(f"Loaded {len(zs):,} unique zeroshot rows from {len(zs_frames)} CSVs")
 
-    # Merge dates from source CSVs (and extract career_stage from body text)
+    # Merge dates + author + career_stage from source CSVs.
+    # Author is required for the per-author longitudinal analysis (Round-7
+    # composition-vs-change decomposition).
     reddit_frames = []
     for f in ["reddit_professions_pslf.csv",
               "comprehensive_medical_pslf_discussions.csv",
@@ -202,6 +204,8 @@ def load_zeroshot_with_meta():
                 keep.append("date")
             if "subreddit" in d.columns:
                 keep.append("subreddit")
+            if "author" in d.columns:
+                keep.append("author")
             if "profession" in d.columns:
                 d = d.rename(columns={"profession": "profession_orig"})
                 keep.append("profession_orig")
@@ -218,12 +222,20 @@ def load_zeroshot_with_meta():
     sdn["date"] = pd.to_datetime(sdn["date_posted"], errors="coerce",
                                   utc=True).dt.tz_localize(None)
     sdn["career_stage"] = sdn["body"].fillna("").apply(classify_career_stage)
-    sdn_src = sdn[["post_id", "date", "career_stage"]].drop_duplicates("post_id")
+    sdn_src = sdn[["post_id", "date", "author", "career_stage"]].drop_duplicates("post_id")
 
     zs = zs.merge(reddit_src, on="post_id", how="left", suffixes=("", "_r"))
     zs = zs.merge(sdn_src, on="post_id", how="left", suffixes=("", "_s"))
     if "date_s" in zs.columns:
         zs["date"] = zs["date"].fillna(zs["date_s"])
+    # Combine author from both sides (Reddit fills first, SDN fallback)
+    if "author_s" in zs.columns:
+        if "author" in zs.columns:
+            zs["author"] = zs["author"].fillna(zs["author_s"])
+        else:
+            zs["author"] = zs["author_s"]
+    if "author" not in zs.columns:
+        zs["author"] = pd.NA
     # Combine career_stage from both sides (Reddit fills first, SDN fallback)
     if "career_stage_s" in zs.columns:
         zs["career_stage"] = zs.get("career_stage", "unknown").fillna("unknown")
@@ -513,6 +525,101 @@ def topic_per_event_shift(zs, min_n_per_cell=20):
     return rows
 
 
+def per_author_stance_dynamics(zs, min_returning_authors=10):
+    """For each event, decompose pre/post stance shifts into:
+      (a) WITHIN-PERSON change among returning authors
+      (b) BETWEEN-PERSON composition turnover
+
+    For each author with at least one stance-classifiable post in BOTH
+    pre and post windows, take their MODAL stance per window. Track
+    transitions in a 4x4 matrix (pursuing/considering/rejecting/completed).
+
+    Returns:
+      author_event: per (event, author) row with pre_stance, post_stance,
+                    n_pre_posts, n_post_posts, profession
+      summary: per-event summary with returning_n, stable_pct,
+               shifted_to_rejecting_pct, shifted_from_rejecting_pct, etc.
+    """
+    valid = zs[(zs["pslf_stance"] != "unknown") &
+                zs["date"].notna() &
+                zs["author"].notna()].copy()
+    valid = valid[valid["author"].astype(str).str.lower() != "[deleted]"]
+    valid = valid[valid["author"].astype(str) != ""]
+
+    rows = []
+    summaries = []
+    for ev_name, ev_date, win in EVENTS:
+        dt = pd.Timestamp(ev_date)
+        pre = valid[(valid["date"] >= dt - pd.Timedelta(days=win)) &
+                     (valid["date"] < dt)]
+        post = valid[(valid["date"] >= dt) &
+                      (valid["date"] <= dt + pd.Timedelta(days=win))]
+        # Authors with at least one stance-classifiable post in each window
+        pre_authors = set(pre["author"].dropna().unique())
+        post_authors = set(post["author"].dropna().unique())
+        returning = pre_authors & post_authors
+        if len(returning) < min_returning_authors:
+            summaries.append({
+                "event": ev_name, "date": ev_date, "window": win,
+                "n_pre_authors": len(pre_authors),
+                "n_post_authors": len(post_authors),
+                "n_returning_authors": len(returning),
+                "n_below_threshold": True,
+            })
+            continue
+
+        # For each returning author, get modal pre and post stance
+        for author in returning:
+            pre_stances = pre.loc[pre["author"] == author, "pslf_stance"]
+            post_stances = post.loc[post["author"] == author, "pslf_stance"]
+            pre_mode = pre_stances.mode().iloc[0] if not pre_stances.empty else None
+            post_mode = post_stances.mode().iloc[0] if not post_stances.empty else None
+            prof = pre.loc[pre["author"] == author, "profession_display"].iloc[0]
+            rows.append({
+                "event": ev_name, "date": ev_date, "window": win,
+                "author": author,
+                "profession": prof,
+                "pre_stance": pre_mode, "post_stance": post_mode,
+                "n_pre_posts": len(pre_stances),
+                "n_post_posts": len(post_stances),
+                "shifted": pre_mode != post_mode,
+            })
+
+        # Summary stats for returning authors
+        ev_rows = [r for r in rows if r["event"] == ev_name]
+        if not ev_rows:
+            continue
+        ev_df = pd.DataFrame(ev_rows)
+        n_ret = len(ev_df)
+        stable = (ev_df["pre_stance"] == ev_df["post_stance"]).sum()
+        # Toward rejecting: anyone whose post_stance is rejecting and pre_stance wasn't
+        to_rej = ((ev_df["post_stance"] == "rejecting") &
+                  (ev_df["pre_stance"] != "rejecting")).sum()
+        # From rejecting: anyone whose pre was rejecting and post isn't
+        from_rej = ((ev_df["pre_stance"] == "rejecting") &
+                    (ev_df["post_stance"] != "rejecting")).sum()
+        # Pre/post rejecting rates among returning authors
+        pre_rej_returning = (ev_df["pre_stance"] == "rejecting").mean()
+        post_rej_returning = (ev_df["post_stance"] == "rejecting").mean()
+
+        summaries.append({
+            "event": ev_name, "date": ev_date, "window": win,
+            "n_pre_authors": len(pre_authors),
+            "n_post_authors": len(post_authors),
+            "n_returning_authors": n_ret,
+            "overlap_pct": n_ret / max(1, min(len(pre_authors), len(post_authors))) * 100,
+            "stable_pct": stable / n_ret * 100 if n_ret > 0 else float("nan"),
+            "shifted_pct": (n_ret - stable) / n_ret * 100 if n_ret > 0 else float("nan"),
+            "shifted_to_rejecting_n": to_rej,
+            "shifted_from_rejecting_n": from_rej,
+            "pre_rej_among_returning": pre_rej_returning * 100,
+            "post_rej_among_returning": post_rej_returning * 100,
+            "delta_rej_within_person": (post_rej_returning - pre_rej_returning) * 100,
+            "n_below_threshold": False,
+        })
+    return pd.DataFrame(rows), pd.DataFrame(summaries)
+
+
 def stance_by_career_stage(zs, min_n=20):
     """Stance proportions by career stage (medical posts only)."""
     valid = zs[(zs["pslf_stance"] != "unknown") &
@@ -672,6 +779,73 @@ def fig_topic_profession_event_heatmap(rows,
     ax.set_title("Topic Distribution Shift Significance: Profession × Event\n"
                  "(annotated with biggest single topic delta in pp)",
                  fontsize=13, fontweight="bold", loc="left")
+    plt.tight_layout()
+    plt.savefig(path, dpi=300, bbox_inches="tight")
+    plt.close()
+    print(f"Saved: {path}")
+
+
+def fig_per_author_decomposition(summary_df, pooled_event_results,
+                                   path="intention_within_vs_between_decomposition.png"):
+    """For each event, compare:
+      - aggregate Δ rejecting-rate (pooled, between-person; from event_results)
+      - within-person Δ rejecting-rate (returning authors only)
+
+    The gap between the two = magnitude of composition turnover.
+    """
+    if summary_df.empty:
+        return
+    has_data = summary_df[~summary_df["n_below_threshold"]].copy()
+    if has_data.empty:
+        print(f"[skip] No events meet returning-authors threshold for {path}")
+        return
+
+    # Pooled deltas come from event_results
+    pooled_map = {r["event"]: r["delta_rejecting_pp"]
+                  for r in pooled_event_results if r is not None}
+    has_data["delta_pooled"] = has_data["event"].map(pooled_map)
+    has_data = has_data.dropna(subset=["delta_pooled"])
+    if has_data.empty:
+        return
+
+    # Order chronologically per EVENTS list
+    event_order = [e[0] for e in EVENTS if e[0] in has_data["event"].values]
+    has_data = has_data.set_index("event").loc[event_order].reset_index()
+
+    fig, ax = plt.subplots(figsize=(13, max(5, 0.7 * len(has_data))))
+    y = np.arange(len(has_data))
+    width = 0.4
+    ax.barh(y - width/2, has_data["delta_pooled"], width,
+            label="POOLED (all posters; composition + change)",
+            color="#FB8C00", alpha=0.85)
+    ax.barh(y + width/2, has_data["delta_rej_within_person"], width,
+            label="WITHIN-PERSON (returning authors only)",
+            color="#1976D2", alpha=0.85)
+    ax.axvline(0, color="#222222", linewidth=1)
+    ax.set_yticks(y)
+    labels = [f"{r['event']}\n(n_returning={int(r['n_returning_authors'])}, "
+              f"overlap={r['overlap_pct']:.0f}%)"
+              for _, r in has_data.iterrows()]
+    ax.set_yticklabels(labels, fontsize=10)
+    ax.invert_yaxis()
+    ax.set_xlabel("Δ Rejecting Rate (pp, post − pre)", fontsize=12, fontweight="bold")
+    ax.set_title("Pre/post rejecting-rate change: POOLED vs WITHIN-PERSON\n"
+                 "Gap = composition-turnover effect; alignment = within-person change",
+                 fontsize=13, fontweight="bold", loc="left")
+    ax.legend(loc="lower right", fontsize=10, frameon=True,
+              facecolor="white", edgecolor="#CCCCCC")
+    # Annotate
+    for yi, (_, r) in enumerate(has_data.iterrows()):
+        ax.text(r["delta_pooled"] + (0.5 if r["delta_pooled"] >= 0 else -0.5),
+                yi - width/2,
+                f"{r['delta_pooled']:+.1f}pp",
+                va="center", ha="left" if r["delta_pooled"] >= 0 else "right",
+                fontsize=9, color="#FB8C00", fontweight="bold")
+        ax.text(r["delta_rej_within_person"] + (0.5 if r["delta_rej_within_person"] >= 0 else -0.5),
+                yi + width/2,
+                f"{r['delta_rej_within_person']:+.1f}pp",
+                va="center", ha="left" if r["delta_rej_within_person"] >= 0 else "right",
+                fontsize=9, color="#1976D2", fontweight="bold")
     plt.tight_layout()
     plt.savefig(path, dpi=300, bbox_inches="tight")
     plt.close()
@@ -863,6 +1037,7 @@ def write_artifacts(zs, dists, prof_counts, prof_props, event_results,
                      prof_event=None, prof_sent_event=None,
                      topic_event=None, topic_prof_event=None,
                      stage_props=None, stage_event=None,
+                     author_event=None, author_summary=None,
                      path="intention_results.txt"):
     with open(path, "w", encoding="utf-8") as f:
         f.write("=" * 80 + "\n")
@@ -982,15 +1157,21 @@ def write_artifacts(zs, dists, prof_counts, prof_props, event_results,
         if topic_event:
             f.write("\n" + "-" * 80 + "\n")
             f.write("PRE/POST TOPIC DISTRIBUTION SHIFTS BY EVENT\n")
-            f.write("Chi-sq test on full topic × pre/post contingency table.\n")
-            f.write("Per-topic delta is post-pre proportion (pp).\n")
+            f.write("Round-7 reframe: lead with EFFECT SIZES (per-topic delta_pp),\n")
+            f.write("not chi-sq p-values. At n>200 per side, chi-sq p<10⁻⁴ is\n")
+            f.write("essentially uninformative — the magnitudes are what matter.\n")
+            f.write("Cramér's V provided as a magnitude-of-association measure.\n")
             f.write("-" * 80 + "\n")
             for r in topic_event:
-                sig = "***" if r["p_chi2"] < 0.001 else "**" if r["p_chi2"] < 0.01 \
-                      else "*" if r["p_chi2"] < 0.05 else "ns"
+                # Compute Cramér's V from chi-sq
+                n_total = r["n_pre"] + r["n_post"]
+                # 2 rows × k cols: V = sqrt(chi^2 / (n * (min(rows,cols)-1)))
+                k = max(2, len(r["topic_shifts"]))
+                cramers_v = (r["chi2"] / (n_total * (min(2, k) - 1))) ** 0.5 if n_total > 0 else float("nan")
                 f.write(f"\n{r['event']} ({r['date']}, win={r['window']}d, "
                         f"n_pre={r['n_pre']}, n_post={r['n_post']}):\n")
-                f.write(f"  chi-sq = {r['chi2']:.2f}, p = {r['p_chi2']:.4f} {sig}\n")
+                f.write(f"  Cramer's V = {cramers_v:.3f}  "
+                        f"(small=0.10, medium=0.30, large=0.50; Cohen 1988)\n")
                 # Sort topics by abs delta
                 shifts = sorted(r["topic_shifts"].items(),
                                  key=lambda x: -abs(x[1]["delta_pp"]))
@@ -999,6 +1180,46 @@ def write_artifacts(zs, dists, prof_counts, prof_props, event_results,
                         f.write(f"    {t:<25s} {info['pre_pct']:>5.1f}% → "
                                 f"{info['post_pct']:>5.1f}% "
                                 f"(Δ {info['delta_pp']:>+5.1f} pp)\n")
+
+        if author_summary is not None and not author_summary.empty:
+            f.write("\n" + "=" * 80 + "\n")
+            f.write("PER-AUTHOR LONGITUDINAL ANALYSIS\n")
+            f.write("=" * 80 + "\n")
+            f.write("Round-7 floor-effect investigation follow-up. Decomposes pre/post\n")
+            f.write("rejecting-rate shifts into:\n")
+            f.write("  (a) WITHIN-PERSON change among returning authors (posted in BOTH windows)\n")
+            f.write("  (b) BETWEEN-PERSON composition turnover (gap to pooled estimate)\n")
+            f.write("\n")
+            f.write("For each returning author, MODAL stance per window. Shifts > 0 = more\n")
+            f.write("authors moving toward rejecting; Shifts < 0 = away from rejecting.\n")
+            f.write("Threshold: events with >=10 returning authors only.\n")
+            f.write("-" * 80 + "\n")
+            f.write(f"{'Event':<28s} {'win':>4s} {'pre_aut':>7s} {'post_aut':>8s} "
+                    f"{'returning':>9s} {'overlap%':>8s} {'stable%':>7s} "
+                    f"{'Δ rej WITHIN':>12s} {'to_rej':>7s} {'from_rej':>9s}\n")
+            for _, r in author_summary.iterrows():
+                if r["n_below_threshold"]:
+                    f.write(f"{r['event']:<28s} {int(r['window']):>4d} "
+                            f"{int(r['n_pre_authors']):>7d} {int(r['n_post_authors']):>8d} "
+                            f"{int(r['n_returning_authors']):>9d}  "
+                            f"(below 10-returning threshold)\n")
+                else:
+                    f.write(f"{r['event']:<28s} {int(r['window']):>4d} "
+                            f"{int(r['n_pre_authors']):>7d} {int(r['n_post_authors']):>8d} "
+                            f"{int(r['n_returning_authors']):>9d} "
+                            f"{r['overlap_pct']:>7.1f}% "
+                            f"{r['stable_pct']:>6.1f}% "
+                            f"{r['delta_rej_within_person']:>+12.2f} "
+                            f"{int(r['shifted_to_rejecting_n']):>7d} "
+                            f"{int(r['shifted_from_rejecting_n']):>9d}\n")
+
+            f.write("\nINTERPRETATION:\n")
+            f.write("  - 'stable%' = % of returning authors with same modal stance in both windows\n")
+            f.write("  - 'Δ rej WITHIN' = post-pre rejecting-rate AMONG RETURNING AUTHORS only\n")
+            f.write("  - Compare to the POOLED Δ in 'PRE/POST INTENTION SHIFTS BY EVENT' above:\n")
+            f.write("    * If pooled and within-person Δs ALIGN → the shift is genuine within-person change\n")
+            f.write("    * If they DIVERGE → the shift is largely composition turnover, not stance change\n")
+            f.write("  - See intention_within_vs_between_decomposition.png for the visual side-by-side\n")
 
         if stage_props is not None and not stage_props.empty:
             f.write("\n" + "-" * 80 + "\n")
@@ -1176,6 +1397,23 @@ def main():
                   f"biggest: {biggest[0]} {biggest[1]['delta_pp']:+.1f} pp "
                   f"(n_pre={r['n_pre']}, n_post={r['n_post']})")
 
+    print("\nPer-author longitudinal stance dynamics (Round-7 floor-effect follow-up)...")
+    author_event, author_summary = per_author_stance_dynamics(zs)
+    if not author_summary.empty:
+        has_data = author_summary[~author_summary["n_below_threshold"]]
+        print(f"  {len(has_data)} of {len(author_summary)} events meet the "
+              f">=10-returning-authors threshold")
+        for _, r in author_summary.iterrows():
+            if r["n_below_threshold"]:
+                print(f"  {r['event']:<28s}: {int(r['n_returning_authors'])} returning "
+                      f"(below threshold)")
+            else:
+                print(f"  {r['event']:<28s}: n_ret={int(r['n_returning_authors']):<4d}  "
+                      f"stable={r['stable_pct']:>5.1f}%  Δ rejecting (within-person) = "
+                      f"{r['delta_rej_within_person']:>+5.1f} pp  "
+                      f"(to_rej={int(r['shifted_to_rejecting_n'])}, "
+                      f"from_rej={int(r['shifted_from_rejecting_n'])})")
+
     print("\nCareer-stage breakdowns (subset of posts with explicit markers)...")
     n_with_stage = (zs["career_stage"] != "unknown").sum()
     print(f"  {n_with_stage:,} of {len(zs):,} posts ({n_with_stage/len(zs)*100:.1f}%) "
@@ -1206,13 +1444,15 @@ def main():
     fig_profession_event_heatmap(prof_event)
     fig_topic_event_shifts(topic_event)
     fig_topic_profession_event_heatmap(topic_prof_event)
+    fig_per_author_decomposition(author_summary, event_results)
 
     print("\nWriting artifacts...")
     write_artifacts(zs, dists, prof_counts, prof_props, event_results,
                      topic_ct, sent_stance,
                      prof_event=prof_event, prof_sent_event=prof_sent_event,
                      topic_event=topic_event, topic_prof_event=topic_prof_event,
-                     stage_props=stage_props, stage_event=stage_event)
+                     stage_props=stage_props, stage_event=stage_event,
+                     author_event=author_event, author_summary=author_summary)
 
     print("\nDone.")
 
