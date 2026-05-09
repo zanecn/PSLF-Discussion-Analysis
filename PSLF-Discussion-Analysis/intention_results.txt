@@ -1,6 +1,6 @@
 ================================================================================
 PSLF Intention Analysis (Claude pslf_stance)
-Generated: 2026-05-08T20:14:00
+Generated: 2026-05-08T20:20:08
 Source: scripts/pslf_intention_analysis.py
 ================================================================================
 
@@ -273,6 +273,54 @@ Final Trump PSLF Rule (2025-10-30, win=60d, n_pre=297, n_post=323):
     servicer_issues            13.8% →   5.0% (Δ  -8.9 pp)
     career_impact              16.5% →  23.5% (Δ  +7.0 pp)
     financial_planning         41.4% →  35.0% (Δ  -6.4 pp)
+
+--------------------------------------------------------------------------------
+STANCE BY CAREER STAGE (keyword-extracted from post text)
+Coverage: ~10% of all posts have explicit career-stage markers
+(MS1-4, PGY-X, 'as a resident', 'attending', etc.). High precision
+on the matched subset; missing posts are 'unknown'.
+Round-7 expansion: full-corpus Claude with career_stage in the
+prompt would push coverage to ~90%+.
+--------------------------------------------------------------------------------
+
+  attending  (n=108)
+    pursuing         19.4%
+    considering      64.8%
+    rejecting        14.8%
+    completed         0.9%
+
+  fellow  (n=204)
+    pursuing         29.9%
+    considering      65.2%
+    rejecting         3.4%
+    completed         1.5%
+
+  medical_student  (n=45)
+    pursuing         33.3%
+    considering      57.8%
+    rejecting         8.9%
+    completed         0.0%
+
+  pa_student  (n=26)
+    pursuing         11.5%
+    considering      80.8%
+    rejecting         7.7%
+    completed         0.0%
+
+  resident  (n=121)
+    pursuing         44.6%
+    considering      36.4%
+    rejecting        14.9%
+    completed         4.1%
+
+--------------------------------------------------------------------------------
+PRE/POST INTENTION SHIFTS BY EVENT × CAREER STAGE
+Per-cell n>=10 in both pre and post; career_stage n>=30 overall.
+--------------------------------------------------------------------------------
+Event                        Career Stage        n_pre  n_post  rej_pre%  rej_post%    Δ pp      p_z
+Limited PSLF Waiver          resident               10      16      20.0        6.2  -13.75   0.2857
+Trump PSLF EO                attending              11      21       0.0        0.0   +0.00      nan
+Trump PSLF EO                fellow                 12      28       0.0        0.0   +0.00      nan
 
 --------------------------------------------------------------------------------
 PRE/POST TOPIC SHIFTS BY EVENT × PROFESSION

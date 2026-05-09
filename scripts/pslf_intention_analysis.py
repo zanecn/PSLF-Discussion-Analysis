@@ -29,8 +29,70 @@ from datetime import datetime
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import re
 import warnings
 warnings.filterwarnings("ignore")
+
+# Career-stage regex classifier. Recall is moderate (~8-12% of posts have an
+# explicit career-stage marker), but precision is high on the matched subset.
+# This lets us do "among posts that mention career stage, do residents differ
+# from medical students?" descriptive analysis. Full-corpus Claude with an
+# updated prompt would push coverage up substantially.
+_CAREER_PATTERNS = {
+    "premed": re.compile(
+        r"\b(?:pre[\s\-]?med|pre[\s\-]?medical|aspiring (?:doctor|md)|"
+        r"applying to med(?:ical)? school|undergrad(?:uate)? (?:pre|considering)|"
+        r"mcat|amcas|aacomas)\b", re.I),
+    "medical_student": re.compile(
+        r"\b(?:m[1-4]\b|ms[\s\-]?[1-4]\b|m[1-4]/m[1-4]|"
+        r"med(?:ical)? student|first[\s\-]?year (?:medical|med)|"
+        r"second[\s\-]?year (?:medical|med)|third[\s\-]?year (?:medical|med)|"
+        r"fourth[\s\-]?year (?:medical|med)|"
+        r"starting med(?:ical)? school|in med(?:ical)? school|"
+        r"as a (?:current )?med(?:ical)? student)\b", re.I),
+    "resident": re.compile(
+        r"\b(?:pgy[\s\-]?[1-9]\b|pgy\d|resident(?:cy)?|"
+        r"as a resident|currently (?:in|a) residen(?:t|cy)|"
+        r"intern(?:\s+year)?|ms4 (?:into|matched|going into)|"
+        r"matched (?:into )?(?:im|family|peds|psych|surgery|gen surg))\b", re.I),
+    "attending": re.compile(
+        r"\b(?:as an attending|attending physician|"
+        r"practicing (?:physician|doc)|years out of residency|"
+        r"years out of training|finished residency|after residency|"
+        r"currently practicing|partnership track|"
+        r"private practice for \d+ years)\b", re.I),
+    "fellow": re.compile(
+        r"\b(?:fellow(?:ship)?|cardiology fellow|gi fellow|"
+        r"pccm fellow|hem[\s/]onc fellow|f[1-3]\b)\b", re.I),
+    "pa_student": re.compile(
+        r"\b(?:pa[\s\-]?student|pa school|prepa|pre[\s\-]?pa|"
+        r"starting pa school|in pa school|caspa)\b", re.I),
+    "np_student": re.compile(
+        r"\b(?:np student|dnp student|nurse practitioner student|"
+        r"starting (?:np|dnp))\b", re.I),
+    "nursing_student": re.compile(
+        r"\b(?:nursing student|bsn student|adn student|in nursing school)\b", re.I),
+    "crna_student": re.compile(
+        r"\b(?:srna|student (?:nurse anesthet|crna)|crna school)\b", re.I),
+}
+_CAREER_PRIORITY = ["fellow", "attending", "resident", "medical_student", "premed",
+                    "crna_student", "np_student", "pa_student", "nursing_student"]
+
+
+def classify_career_stage(text):
+    """Return career stage label or 'unknown'. Priority-ordered to favor
+    later-stage tags (fellow > attending > resident > med_student > premed)
+    when multiple match — handles posts like 'as a resident I remember
+    being a med student'."""
+    if not isinstance(text, str):
+        return "unknown"
+    matches = [stage for stage, pat in _CAREER_PATTERNS.items() if pat.search(text)]
+    if not matches:
+        return "unknown"
+    for p in _CAREER_PRIORITY:
+        if p in matches:
+            return p
+    return matches[0]
 
 import matplotlib
 matplotlib.use("Agg")
@@ -121,7 +183,7 @@ def load_zeroshot_with_meta():
     zs = zs.drop_duplicates("post_id", keep="first").reset_index(drop=True)
     print(f"Loaded {len(zs):,} unique zeroshot rows from {len(zs_frames)} CSVs")
 
-    # Merge dates from source CSVs
+    # Merge dates from source CSVs (and extract career_stage from body text)
     reddit_frames = []
     for f in ["reddit_professions_pslf.csv",
               "comprehensive_medical_pslf_discussions.csv",
@@ -140,18 +202,33 @@ def load_zeroshot_with_meta():
             if "profession" in d.columns:
                 d = d.rename(columns={"profession": "profession_orig"})
                 keep.append("profession_orig")
+            # Career-stage extraction from combined_text/body
+            text_col = "combined_text" if "combined_text" in d.columns else \
+                       ("selftext" if "selftext" in d.columns else None)
+            if text_col:
+                d["career_stage"] = d[text_col].fillna("").apply(classify_career_stage)
+                keep.append("career_stage")
             reddit_frames.append(d[keep])
     reddit_src = pd.concat(reddit_frames, ignore_index=True).drop_duplicates("post_id")
 
     sdn = pd.read_csv("forum_pslf_discussions.csv")
     sdn["date"] = pd.to_datetime(sdn["date_posted"], errors="coerce",
                                   utc=True).dt.tz_localize(None)
-    sdn_src = sdn[["post_id", "date"]].drop_duplicates("post_id")
+    sdn["career_stage"] = sdn["body"].fillna("").apply(classify_career_stage)
+    sdn_src = sdn[["post_id", "date", "career_stage"]].drop_duplicates("post_id")
 
     zs = zs.merge(reddit_src, on="post_id", how="left", suffixes=("", "_r"))
     zs = zs.merge(sdn_src, on="post_id", how="left", suffixes=("", "_s"))
     if "date_s" in zs.columns:
         zs["date"] = zs["date"].fillna(zs["date_s"])
+    # Combine career_stage from both sides (Reddit fills first, SDN fallback)
+    if "career_stage_s" in zs.columns:
+        zs["career_stage"] = zs.get("career_stage", "unknown").fillna("unknown")
+        zs.loc[zs["career_stage"] == "unknown", "career_stage"] = \
+            zs.loc[zs["career_stage"] == "unknown", "career_stage_s"].fillna("unknown")
+    if "career_stage" not in zs.columns:
+        zs["career_stage"] = "unknown"
+    zs["career_stage"] = zs["career_stage"].fillna("unknown")
     zs = zs.drop(columns=[c for c in zs.columns if c.endswith("_s")
                           or c.endswith("_r")], errors="ignore")
     zs["date"] = pd.to_datetime(zs["date"], utc=True, errors="coerce").dt.tz_localize(None)
@@ -431,6 +508,58 @@ def topic_per_event_shift(zs, min_n_per_cell=20):
             "topic_shifts": topic_shifts,
         })
     return rows
+
+
+def stance_by_career_stage(zs, min_n=20):
+    """Stance proportions by career stage (medical posts only)."""
+    valid = zs[(zs["pslf_stance"] != "unknown") &
+                (zs["career_stage"] != "unknown")].copy()
+    if valid.empty:
+        return pd.DataFrame(), pd.DataFrame()
+    counts = valid.groupby(["career_stage", "pslf_stance"]).size().unstack(fill_value=0)
+    n = counts.sum(axis=1)
+    counts = counts[n >= min_n].copy()
+    n_filt = counts.sum(axis=1)
+    props = counts.div(n_filt, axis=0)
+    props["n_total"] = n_filt
+    return counts, props
+
+
+def stance_per_event_by_career_stage(zs, min_n_per_cell=10):
+    """Per (event, career_stage), pre/post rejecting-rate shift."""
+    valid = zs[(zs["pslf_stance"] != "unknown") &
+                (zs["career_stage"] != "unknown") &
+                zs["date"].notna()].copy()
+    rows = []
+    for ev_name, ev_date, win in EVENTS:
+        dt = pd.Timestamp(ev_date)
+        for stage, sub_st in valid.groupby("career_stage"):
+            if len(sub_st) < 30:
+                continue
+            pre = sub_st[(sub_st["date"] >= dt - pd.Timedelta(days=win)) &
+                          (sub_st["date"] < dt)]
+            post = sub_st[(sub_st["date"] >= dt) &
+                           (sub_st["date"] <= dt + pd.Timedelta(days=win))]
+            if len(pre) < min_n_per_cell or len(post) < min_n_per_cell:
+                continue
+            n1, n2 = len(pre), len(post)
+            x1 = int((pre["pslf_stance"] == "rejecting").sum())
+            x2 = int((post["pslf_stance"] == "rejecting").sum())
+            pre_rej = x1 / n1
+            post_rej = x2 / n2
+            pooled = (x1 + x2) / (n1 + n2)
+            se = np.sqrt(pooled * (1 - pooled) * (1/n1 + 1/n2))
+            z = (post_rej - pre_rej) / se if se > 0 else 0.0
+            p_z = 2 * (1 - stats.norm.cdf(abs(z))) if se > 0 else float("nan")
+            rows.append({
+                "event": ev_name, "date": ev_date, "window": win,
+                "career_stage": stage,
+                "n_pre": n1, "n_post": n2,
+                "pre_rej_rate": pre_rej, "post_rej_rate": post_rej,
+                "delta_pp": (post_rej - pre_rej) * 100,
+                "z": z, "p_z": p_z,
+            })
+    return pd.DataFrame(rows)
 
 
 def topic_per_event_by_profession(zs, min_n_per_cell=20):
@@ -730,6 +859,7 @@ def write_artifacts(zs, dists, prof_counts, prof_props, event_results,
                      topic_ct, sent_stance_ct,
                      prof_event=None, prof_sent_event=None,
                      topic_event=None, topic_prof_event=None,
+                     stage_props=None, stage_event=None,
                      path="intention_results.txt"):
     with open(path, "w", encoding="utf-8") as f:
         f.write("=" * 80 + "\n")
@@ -866,6 +996,37 @@ def write_artifacts(zs, dists, prof_counts, prof_props, event_results,
                         f.write(f"    {t:<25s} {info['pre_pct']:>5.1f}% → "
                                 f"{info['post_pct']:>5.1f}% "
                                 f"(Δ {info['delta_pp']:>+5.1f} pp)\n")
+
+        if stage_props is not None and not stage_props.empty:
+            f.write("\n" + "-" * 80 + "\n")
+            f.write("STANCE BY CAREER STAGE (keyword-extracted from post text)\n")
+            f.write("Coverage: ~10% of all posts have explicit career-stage markers\n")
+            f.write("(MS1-4, PGY-X, 'as a resident', 'attending', etc.). High precision\n")
+            f.write("on the matched subset; missing posts are 'unknown'.\n")
+            f.write("Round-7 expansion: full-corpus Claude with career_stage in the\n")
+            f.write("prompt would push coverage to ~90%+.\n")
+            f.write("-" * 80 + "\n")
+            for stage, row in stage_props.iterrows():
+                n = int(row["n_total"])
+                f.write(f"\n  {stage}  (n={n:,})\n")
+                for s in ["pursuing", "considering", "rejecting", "completed"]:
+                    if s in row:
+                        f.write(f"    {s:<15s} {row[s] * 100:>5.1f}%\n")
+
+        if stage_event is not None and not stage_event.empty:
+            f.write("\n" + "-" * 80 + "\n")
+            f.write("PRE/POST INTENTION SHIFTS BY EVENT × CAREER STAGE\n")
+            f.write("Per-cell n>=10 in both pre and post; career_stage n>=30 overall.\n")
+            f.write("-" * 80 + "\n")
+            f.write(f"{'Event':<28s} {'Career Stage':<18s} {'n_pre':>6s} {'n_post':>7s} "
+                    f"{'rej_pre%':>9s} {'rej_post%':>10s} {'Δ pp':>7s} {'p_z':>8s}\n")
+            for _, r in stage_event.sort_values(["event", "career_stage"]).iterrows():
+                f.write(f"{r['event']:<28s} {r['career_stage']:<18s} "
+                        f"{int(r['n_pre']):>6d} {int(r['n_post']):>7d} "
+                        f"{r['pre_rej_rate']*100:>9.1f} "
+                        f"{r['post_rej_rate']*100:>10.1f} "
+                        f"{r['delta_pp']:>+7.2f} "
+                        f"{r['p_z']:>8.4f}\n")
 
         if topic_prof_event:
             f.write("\n" + "-" * 80 + "\n")
@@ -1012,6 +1173,30 @@ def main():
                   f"biggest: {biggest[0]} {biggest[1]['delta_pp']:+.1f} pp "
                   f"(n_pre={r['n_pre']}, n_post={r['n_post']})")
 
+    print("\nCareer-stage breakdowns (subset of posts with explicit markers)...")
+    n_with_stage = (zs["career_stage"] != "unknown").sum()
+    print(f"  {n_with_stage:,} of {len(zs):,} posts ({n_with_stage/len(zs)*100:.1f}%) "
+          f"have a detectable career-stage marker")
+    stage_counts, stage_props = stance_by_career_stage(zs)
+    if not stage_props.empty:
+        print(f"  Stance × career_stage breakdown:")
+        for stage, row in stage_props.iterrows():
+            print(f"    {stage:<18s} (n={int(row['n_total']):,})  "
+                  f"pursuing={row.get('pursuing', 0)*100:.1f}%  "
+                  f"considering={row.get('considering', 0)*100:.1f}%  "
+                  f"rejecting={row.get('rejecting', 0)*100:.1f}%  "
+                  f"completed={row.get('completed', 0)*100:.1f}%")
+    stage_event = stance_per_event_by_career_stage(zs)
+    if not stage_event.empty:
+        print(f"  {len(stage_event)} (event, career_stage) cells with n>=10 in pre and post")
+        sig = stage_event[stage_event["p_z"] < 0.05]
+        if not sig.empty:
+            print(f"  Significant pre/post rejecting-rate shifts (p<0.05):")
+            for _, r in sig.iterrows():
+                print(f"    {r['event']} × {r['career_stage']}: "
+                      f"{r['pre_rej_rate']*100:.1f}% → {r['post_rej_rate']*100:.1f}% "
+                      f"(Δ {r['delta_pp']:+.1f} pp, p={r['p_z']:.4f})")
+
     print("\nGenerating figures...")
     fig_intention_trajectory(zs)
     fig_event_forest(event_results)
@@ -1023,7 +1208,8 @@ def main():
     write_artifacts(zs, dists, prof_counts, prof_props, event_results,
                      topic_ct, sent_stance,
                      prof_event=prof_event, prof_sent_event=prof_sent_event,
-                     topic_event=topic_event, topic_prof_event=topic_prof_event)
+                     topic_event=topic_event, topic_prof_event=topic_prof_event,
+                     stage_props=stage_props, stage_event=stage_event)
 
     print("\nDone.")
 
