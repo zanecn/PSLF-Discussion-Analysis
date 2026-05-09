@@ -1,6 +1,6 @@
 ================================================================================
 PSLF Intention Analysis (Claude pslf_stance)
-Generated: 2026-05-08T22:41:40
+Generated: 2026-05-08T22:47:43
 Source: scripts/pslf_intention_analysis.py
 ================================================================================
 
@@ -280,32 +280,54 @@ Final Trump PSLF Rule (2025-10-30, win=60d, n_pre=297, n_post=323):
 ================================================================================
 PER-AUTHOR LONGITUDINAL ANALYSIS
 ================================================================================
-Round-7 floor-effect investigation follow-up. Decomposes pre/post
-rejecting-rate shifts into:
-  (a) WITHIN-PERSON change among returning authors (posted in BOTH windows)
-  (b) BETWEEN-PERSON composition turnover (gap to pooled estimate)
+Round-7 floor-effect investigation follow-up.
 
-For each returning author, MODAL stance per window. Shifts > 0 = more
-authors moving toward rejecting; Shifts < 0 = away from rejecting.
-Threshold: events with >=10 returning authors only.
+DESIGN-CONSTRAINT FINDING: 7 of 8 events have <10 returning authors
+with stance-classifiable posts in BOTH pre and post windows. The
+PSLF discussant pool is dominated by single-window posters; within-
+person stance dynamics are NOT IDENTIFIABLE FROM THIS CORPUS for most
+events. Pooled pre/post stance shifts must therefore be interpreted as
+DISCUSSANT-POOL COMPOSITION SHIFTS, not as borrower stance changes.
+This is a fundamental limitation of forum-based discourse data, not
+a fixable analysis choice.
+
+Method: returning author = posted ≥1 stance-classifiable post in BOTH
+windows. MODAL stance per window per author (deterministic tie-break:
+rejecting > considering > pursuing > completed). McNemar's exact test
+on matched-pairs rejecting transitions (paired data, not independent
+samples). 95% CI via paired-bootstrap (B=2000). Authors filtered to
+exclude [deleted], [removed], AutoModerator, bot accounts.
 --------------------------------------------------------------------------------
-Event                         win pre_aut post_aut returning overlap% stable% Δ rej WITHIN  to_rej  from_rej
-Limited PSLF Waiver            90      40       59         3  (below 10-returning threshold)
-IDR Account Adjustment         90      58       62         2  (below 10-returning threshold)
-Biden Mass Forgiveness         90      63       42         1  (below 10-returning threshold)
-Biden v. Nebraska SCOTUS       90      46       81         3  (below 10-returning threshold)
-Payments Restart               90      77       51         4  (below 10-returning threshold)
-SAVE Admin Forbearance         90      92       76         2  (below 10-returning threshold)
-Trump PSLF EO                  60     122      126        12     9.8%   50.0%       +16.67       3         1
-Final Trump PSLF Rule          60     185      117         3  (below 10-returning threshold)
+Event                         win pre_a post_a  ret overlap%  stab% Δrej WITHIN           95% CI  McNemar p
+Limited PSLF Waiver            90    40     59    3 (below 10-returning threshold; within-person inference infeasible)
+IDR Account Adjustment         90    58     62    2 (below 10-returning threshold; within-person inference infeasible)
+Biden Mass Forgiveness         90    63     42    1 (below 10-returning threshold; within-person inference infeasible)
+Biden v. Nebraska SCOTUS       90    46     81    3 (below 10-returning threshold; within-person inference infeasible)
+Payments Restart               90    77     51    4 (below 10-returning threshold; within-person inference infeasible)
+SAVE Admin Forbearance         90    92     76    2 (below 10-returning threshold; within-person inference infeasible)
+Trump PSLF EO                  60   122    126   12     9.8%  50.0%      +16.67   [-16.7, +50.0]     0.6250
+Final Trump PSLF Rule          60   185    117    3 (below 10-returning threshold; within-person inference infeasible)
 
-INTERPRETATION:
-  - 'stable%' = % of returning authors with same modal stance in both windows
-  - 'Δ rej WITHIN' = post-pre rejecting-rate AMONG RETURNING AUTHORS only
-  - Compare to the POOLED Δ in 'PRE/POST INTENTION SHIFTS BY EVENT' above:
-    * If pooled and within-person Δs ALIGN → the shift is genuine within-person change
-    * If they DIVERGE → the shift is largely composition turnover, not stance change
-  - See intention_within_vs_between_decomposition.png for the visual side-by-side
+TRANSITIONS DETAIL (returning authors with sufficient n):
+  Trump PSLF EO: 12 returning, 6 stable, 3 shifted TO rejecting, 1 shifted FROM rejecting, 2 other shifts
+
+INTERPRETATION (Round-7 audit-revised):
+  - The within-person Δ rejecting-rate is computed on a SELECTED
+    subset (returning authors), who are by construction the most
+    engaged posters. Engagement correlates with both committed-pursuing
+    and frustrated-rejecting stances; the within-person estimate may
+    not generalize to the full discussant pool.
+  - For events meeting the n>=10 threshold, the 95% CI on the within-
+    person Δ is wide enough at these sample sizes that the within-
+    person estimate is statistically indistinguishable from both 0
+    and from the pooled Δ. Treat as descriptive note only.
+  - McNemar p tests H0: equal probability of rejecting↑ vs rejecting↓
+    transitions among returning authors.
+  - For 7 of 8 events, the data design itself does not support within-
+    person inference. Composition-vs-change decomposition is
+    NOT IDENTIFIED from this corpus alone.
+  - See intention_within_vs_between_decomposition.png for the visual
+    side-by-side comparison.
 
 --------------------------------------------------------------------------------
 STANCE BY CAREER STAGE (keyword-extracted from post text)

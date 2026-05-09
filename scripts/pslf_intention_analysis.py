@@ -543,8 +543,14 @@ def per_author_stance_dynamics(zs, min_returning_authors=10):
     valid = zs[(zs["pslf_stance"] != "unknown") &
                 zs["date"].notna() &
                 zs["author"].notna()].copy()
-    valid = valid[valid["author"].astype(str).str.lower() != "[deleted]"]
-    valid = valid[valid["author"].astype(str) != ""]
+    # Round-7 audit fix: filter out anonymized/bot author names that would
+    # cause spurious "returning author" matches.
+    EXCLUDE_AUTHORS = {"[deleted]", "[removed]", "deleted", "removed",
+                       "automoderator", "auto-moderator", "guest",
+                       "anonymous", "n/a", "nan", "none", ""}
+    valid = valid[~valid["author"].astype(str).str.lower().isin(EXCLUDE_AUTHORS)]
+    valid = valid[~valid["author"].astype(str).str.lower().str.startswith("bot_", na=False)]
+    valid = valid[~valid["author"].astype(str).str.endswith("Bot", na=False)]
 
     rows = []
     summaries = []
@@ -568,12 +574,29 @@ def per_author_stance_dynamics(zs, min_returning_authors=10):
             })
             continue
 
+        # Round-7 audit fix: deterministic mode with tie-breaking by stance
+        # severity ordering (rejecting > considering > pursuing > completed).
+        # If an author has equal counts, the more "engaged-with-doubt" stance wins.
+        STANCE_PRIORITY = {"rejecting": 0, "considering": 1, "pursuing": 2,
+                           "completed": 3}
+
+        def deterministic_mode(stances):
+            if stances.empty:
+                return None
+            counts = stances.value_counts()
+            top_n = counts.iloc[0]
+            tied = counts[counts == top_n].index.tolist()
+            if len(tied) == 1:
+                return tied[0]
+            # Tie: prefer rejecting > considering > pursuing > completed
+            return min(tied, key=lambda s: STANCE_PRIORITY.get(s, 99))
+
         # For each returning author, get modal pre and post stance
         for author in returning:
             pre_stances = pre.loc[pre["author"] == author, "pslf_stance"]
             post_stances = post.loc[post["author"] == author, "pslf_stance"]
-            pre_mode = pre_stances.mode().iloc[0] if not pre_stances.empty else None
-            post_mode = post_stances.mode().iloc[0] if not post_stances.empty else None
+            pre_mode = deterministic_mode(pre_stances)
+            post_mode = deterministic_mode(post_stances)
             prof = pre.loc[pre["author"] == author, "profession_display"].iloc[0]
             rows.append({
                 "event": ev_name, "date": ev_date, "window": win,
@@ -598,9 +621,44 @@ def per_author_stance_dynamics(zs, min_returning_authors=10):
         # From rejecting: anyone whose pre was rejecting and post isn't
         from_rej = ((ev_df["pre_stance"] == "rejecting") &
                     (ev_df["post_stance"] != "rejecting")).sum()
+        # OTHER shifts: changed but neither to nor from rejecting (e.g. pursuing→considering)
+        other_shifts = (n_ret - stable) - to_rej - from_rej
         # Pre/post rejecting rates among returning authors
         pre_rej_returning = (ev_df["pre_stance"] == "rejecting").mean()
         post_rej_returning = (ev_df["post_stance"] == "rejecting").mean()
+        delta_rej_pp = (post_rej_returning - pre_rej_returning) * 100
+
+        # Round-7 audit fix: McNemar's exact test on the matched-pairs rejecting
+        # change (paired data; not independent samples). Tests H0: P(to_rej) = P(from_rej).
+        try:
+            from scipy.stats import binomtest
+            n_disc = to_rej + from_rej
+            if n_disc > 0:
+                # Exact two-sided binomial test under p=0.5
+                mcnemar_p = float(binomtest(min(to_rej, from_rej), n_disc, p=0.5,
+                                             alternative="two-sided").pvalue)
+            else:
+                mcnemar_p = 1.0
+        except Exception:
+            mcnemar_p = float("nan")
+
+        # Round-7 audit fix: Wilson 95% CI on the within-person Δ rejecting-rate
+        # via paired-bootstrap on the n_ret authors (B=2000)
+        try:
+            rng = np.random.default_rng(42)
+            boot_deltas = []
+            authors_arr = list(returning)
+            for _ in range(2000):
+                resampled_idx = rng.choice(len(authors_arr), size=len(authors_arr),
+                                            replace=True)
+                resampled = ev_df.iloc[resampled_idx]
+                d = ((resampled["post_stance"] == "rejecting").mean() -
+                     (resampled["pre_stance"] == "rejecting").mean()) * 100
+                boot_deltas.append(d)
+            ci_lo = float(np.percentile(boot_deltas, 2.5))
+            ci_hi = float(np.percentile(boot_deltas, 97.5))
+        except Exception:
+            ci_lo, ci_hi = float("nan"), float("nan")
 
         summaries.append({
             "event": ev_name, "date": ev_date, "window": win,
@@ -610,11 +668,14 @@ def per_author_stance_dynamics(zs, min_returning_authors=10):
             "overlap_pct": n_ret / max(1, min(len(pre_authors), len(post_authors))) * 100,
             "stable_pct": stable / n_ret * 100 if n_ret > 0 else float("nan"),
             "shifted_pct": (n_ret - stable) / n_ret * 100 if n_ret > 0 else float("nan"),
-            "shifted_to_rejecting_n": to_rej,
-            "shifted_from_rejecting_n": from_rej,
+            "shifted_to_rejecting_n": int(to_rej),
+            "shifted_from_rejecting_n": int(from_rej),
+            "shifted_other_n": int(other_shifts),
             "pre_rej_among_returning": pre_rej_returning * 100,
             "post_rej_among_returning": post_rej_returning * 100,
-            "delta_rej_within_person": (post_rej_returning - pre_rej_returning) * 100,
+            "delta_rej_within_person": delta_rej_pp,
+            "delta_ci95_lo": ci_lo, "delta_ci95_hi": ci_hi,
+            "mcnemar_p": mcnemar_p,
             "n_below_threshold": False,
         })
     return pd.DataFrame(rows), pd.DataFrame(summaries)
@@ -1185,41 +1246,72 @@ def write_artifacts(zs, dists, prof_counts, prof_props, event_results,
             f.write("\n" + "=" * 80 + "\n")
             f.write("PER-AUTHOR LONGITUDINAL ANALYSIS\n")
             f.write("=" * 80 + "\n")
-            f.write("Round-7 floor-effect investigation follow-up. Decomposes pre/post\n")
-            f.write("rejecting-rate shifts into:\n")
-            f.write("  (a) WITHIN-PERSON change among returning authors (posted in BOTH windows)\n")
-            f.write("  (b) BETWEEN-PERSON composition turnover (gap to pooled estimate)\n")
+            f.write("Round-7 floor-effect investigation follow-up.\n")
             f.write("\n")
-            f.write("For each returning author, MODAL stance per window. Shifts > 0 = more\n")
-            f.write("authors moving toward rejecting; Shifts < 0 = away from rejecting.\n")
-            f.write("Threshold: events with >=10 returning authors only.\n")
+            f.write("DESIGN-CONSTRAINT FINDING: 7 of 8 events have <10 returning authors\n")
+            f.write("with stance-classifiable posts in BOTH pre and post windows. The\n")
+            f.write("PSLF discussant pool is dominated by single-window posters; within-\n")
+            f.write("person stance dynamics are NOT IDENTIFIABLE FROM THIS CORPUS for most\n")
+            f.write("events. Pooled pre/post stance shifts must therefore be interpreted as\n")
+            f.write("DISCUSSANT-POOL COMPOSITION SHIFTS, not as borrower stance changes.\n")
+            f.write("This is a fundamental limitation of forum-based discourse data, not\n")
+            f.write("a fixable analysis choice.\n")
+            f.write("\n")
+            f.write("Method: returning author = posted ≥1 stance-classifiable post in BOTH\n")
+            f.write("windows. MODAL stance per window per author (deterministic tie-break:\n")
+            f.write("rejecting > considering > pursuing > completed). McNemar's exact test\n")
+            f.write("on matched-pairs rejecting transitions (paired data, not independent\n")
+            f.write("samples). 95% CI via paired-bootstrap (B=2000). Authors filtered to\n")
+            f.write("exclude [deleted], [removed], AutoModerator, bot accounts.\n")
             f.write("-" * 80 + "\n")
-            f.write(f"{'Event':<28s} {'win':>4s} {'pre_aut':>7s} {'post_aut':>8s} "
-                    f"{'returning':>9s} {'overlap%':>8s} {'stable%':>7s} "
-                    f"{'Δ rej WITHIN':>12s} {'to_rej':>7s} {'from_rej':>9s}\n")
+            f.write(f"{'Event':<28s} {'win':>4s} {'pre_a':>5s} {'post_a':>6s} "
+                    f"{'ret':>4s} {'overlap%':>8s} {'stab%':>6s} "
+                    f"{'Δrej WITHIN':>11s} {'95% CI':>16s} "
+                    f"{'McNemar p':>10s}\n")
             for _, r in author_summary.iterrows():
                 if r["n_below_threshold"]:
                     f.write(f"{r['event']:<28s} {int(r['window']):>4d} "
-                            f"{int(r['n_pre_authors']):>7d} {int(r['n_post_authors']):>8d} "
-                            f"{int(r['n_returning_authors']):>9d}  "
-                            f"(below 10-returning threshold)\n")
+                            f"{int(r['n_pre_authors']):>5d} {int(r['n_post_authors']):>6d} "
+                            f"{int(r['n_returning_authors']):>4d} "
+                            f"(below 10-returning threshold; within-person inference infeasible)\n")
                 else:
+                    ci_str = f"[{r['delta_ci95_lo']:+.1f}, {r['delta_ci95_hi']:+.1f}]"
                     f.write(f"{r['event']:<28s} {int(r['window']):>4d} "
-                            f"{int(r['n_pre_authors']):>7d} {int(r['n_post_authors']):>8d} "
-                            f"{int(r['n_returning_authors']):>9d} "
+                            f"{int(r['n_pre_authors']):>5d} {int(r['n_post_authors']):>6d} "
+                            f"{int(r['n_returning_authors']):>4d} "
                             f"{r['overlap_pct']:>7.1f}% "
-                            f"{r['stable_pct']:>6.1f}% "
-                            f"{r['delta_rej_within_person']:>+12.2f} "
-                            f"{int(r['shifted_to_rejecting_n']):>7d} "
-                            f"{int(r['shifted_from_rejecting_n']):>9d}\n")
+                            f"{r['stable_pct']:>5.1f}% "
+                            f"{r['delta_rej_within_person']:>+11.2f} "
+                            f"{ci_str:>16s} "
+                            f"{r['mcnemar_p']:>10.4f}\n")
 
-            f.write("\nINTERPRETATION:\n")
-            f.write("  - 'stable%' = % of returning authors with same modal stance in both windows\n")
-            f.write("  - 'Δ rej WITHIN' = post-pre rejecting-rate AMONG RETURNING AUTHORS only\n")
-            f.write("  - Compare to the POOLED Δ in 'PRE/POST INTENTION SHIFTS BY EVENT' above:\n")
-            f.write("    * If pooled and within-person Δs ALIGN → the shift is genuine within-person change\n")
-            f.write("    * If they DIVERGE → the shift is largely composition turnover, not stance change\n")
-            f.write("  - See intention_within_vs_between_decomposition.png for the visual side-by-side\n")
+            f.write("\nTRANSITIONS DETAIL (returning authors with sufficient n):\n")
+            for _, r in author_summary.iterrows():
+                if r["n_below_threshold"]:
+                    continue
+                f.write(f"  {r['event']}: {int(r['n_returning_authors'])} returning, "
+                        f"{int(r['stable_pct']*r['n_returning_authors']/100)} stable, "
+                        f"{int(r['shifted_to_rejecting_n'])} shifted TO rejecting, "
+                        f"{int(r['shifted_from_rejecting_n'])} shifted FROM rejecting, "
+                        f"{int(r['shifted_other_n'])} other shifts\n")
+
+            f.write("\nINTERPRETATION (Round-7 audit-revised):\n")
+            f.write("  - The within-person Δ rejecting-rate is computed on a SELECTED\n")
+            f.write("    subset (returning authors), who are by construction the most\n")
+            f.write("    engaged posters. Engagement correlates with both committed-pursuing\n")
+            f.write("    and frustrated-rejecting stances; the within-person estimate may\n")
+            f.write("    not generalize to the full discussant pool.\n")
+            f.write("  - For events meeting the n>=10 threshold, the 95% CI on the within-\n")
+            f.write("    person Δ is wide enough at these sample sizes that the within-\n")
+            f.write("    person estimate is statistically indistinguishable from both 0\n")
+            f.write("    and from the pooled Δ. Treat as descriptive note only.\n")
+            f.write("  - McNemar p tests H0: equal probability of rejecting↑ vs rejecting↓\n")
+            f.write("    transitions among returning authors.\n")
+            f.write("  - For 7 of 8 events, the data design itself does not support within-\n")
+            f.write("    person inference. Composition-vs-change decomposition is\n")
+            f.write("    NOT IDENTIFIED from this corpus alone.\n")
+            f.write("  - See intention_within_vs_between_decomposition.png for the visual\n")
+            f.write("    side-by-side comparison.\n")
 
         if stage_props is not None and not stage_props.empty:
             f.write("\n" + "-" * 80 + "\n")
