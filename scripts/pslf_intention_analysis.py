@@ -433,6 +433,119 @@ def topic_per_event_shift(zs, min_n_per_cell=20):
     return rows
 
 
+def topic_per_event_by_profession(zs, min_n_per_cell=20):
+    """For each (event, profession), compute topic distribution shift (chi-sq).
+
+    Returns list of dicts with event, profession, n_pre, n_post, chi2, p_chi2,
+    and the per-topic delta_pp dict.
+    """
+    valid = zs[~zs["primary_topic"].isin(["parse_error", "api_error"]) &
+                zs["date"].notna()].copy()
+    rows = []
+    for ev_name, ev_date, win in EVENTS:
+        dt = pd.Timestamp(ev_date)
+        for prof, sub_prof in valid.groupby("profession_display"):
+            if len(sub_prof) < 40:
+                continue
+            pre = sub_prof[(sub_prof["date"] >= dt - pd.Timedelta(days=win)) &
+                           (sub_prof["date"] < dt)]
+            post = sub_prof[(sub_prof["date"] >= dt) &
+                            (sub_prof["date"] <= dt + pd.Timedelta(days=win))]
+            if len(pre) < min_n_per_cell or len(post) < min_n_per_cell:
+                continue
+            pre_t = pre["primary_topic"].value_counts()
+            post_t = post["primary_topic"].value_counts()
+            all_topics = sorted(set(pre_t.index) | set(post_t.index))
+            ct = np.array([[pre_t.get(t, 0) for t in all_topics],
+                           [post_t.get(t, 0) for t in all_topics]])
+            try:
+                chi2, p_chi, _, _ = stats.chi2_contingency(ct)
+            except Exception:
+                chi2, p_chi = float("nan"), float("nan")
+            n_pre, n_post = ct[0].sum(), ct[1].sum()
+            topic_shifts = {}
+            for t in all_topics:
+                pre_p = pre_t.get(t, 0) / n_pre if n_pre > 0 else 0
+                post_p = post_t.get(t, 0) / n_post if n_post > 0 else 0
+                topic_shifts[t] = {
+                    "pre_pct": pre_p * 100,
+                    "post_pct": post_p * 100,
+                    "delta_pp": (post_p - pre_p) * 100,
+                }
+            rows.append({
+                "event": ev_name, "date": ev_date, "window": win,
+                "profession": prof,
+                "n_pre": int(n_pre), "n_post": int(n_post),
+                "chi2": chi2, "p_chi2": p_chi,
+                "topic_shifts": topic_shifts,
+            })
+    return rows
+
+
+def fig_topic_profession_event_heatmap(rows,
+                                        path="intention_topic_profession_event_heatmap.png"):
+    """Heatmap of (event x profession) chi-sq -log10(p) for topic distribution shifts.
+
+    Cells colored by significance of topic restructuring; annotated with the
+    largest single topic shift in each cell.
+    """
+    if not rows:
+        return
+    df = pd.DataFrame([{"event": r["event"], "profession": r["profession"],
+                        "neglog10p": -np.log10(max(r["p_chi2"], 1e-15)),
+                        "p_chi2": r["p_chi2"],
+                        "biggest_topic": max(r["topic_shifts"].items(),
+                                              key=lambda x: abs(x[1]["delta_pp"]))[0],
+                        "biggest_delta": max(r["topic_shifts"].items(),
+                                              key=lambda x: abs(x[1]["delta_pp"]))[1]["delta_pp"]}
+                       for r in rows])
+    pivot_p = df.pivot_table(index="profession", columns="event",
+                              values="neglog10p", aggfunc="mean")
+    pivot_topic = df.pivot_table(index="profession", columns="event",
+                                  values="biggest_topic", aggfunc="first")
+    pivot_delta = df.pivot_table(index="profession", columns="event",
+                                  values="biggest_delta", aggfunc="mean")
+    event_order = [e[0] for e in EVENTS if e[0] in pivot_p.columns]
+    pivot_p = pivot_p[event_order]
+    pivot_topic = pivot_topic[event_order]
+    pivot_delta = pivot_delta[event_order]
+    # Order professions by mean -log10(p)
+    row_order = pivot_p.mean(axis=1).sort_values(ascending=False).index
+    pivot_p = pivot_p.loc[row_order]
+    pivot_topic = pivot_topic.loc[row_order]
+    pivot_delta = pivot_delta.loc[row_order]
+
+    fig, ax = plt.subplots(figsize=(13, max(4, 0.6 * len(pivot_p))))
+    vmax = max(5, np.nanmax(pivot_p.values))
+    im = ax.imshow(pivot_p.values, cmap="YlOrRd", aspect="auto",
+                   vmin=0, vmax=vmax)
+    ax.set_xticks(range(len(pivot_p.columns)))
+    ax.set_xticklabels(pivot_p.columns, rotation=45, ha="right", fontsize=10)
+    ax.set_yticks(range(len(pivot_p.index)))
+    ax.set_yticklabels(pivot_p.index, fontsize=10)
+    # Annotate with biggest topic shift
+    for i in range(len(pivot_p.index)):
+        for j in range(len(pivot_p.columns)):
+            v = pivot_p.values[i, j]
+            if not np.isnan(v):
+                topic = pivot_topic.values[i, j]
+                delta = pivot_delta.values[i, j]
+                # Topic abbreviated
+                t_short = (topic[:8] if isinstance(topic, str) else "")
+                ax.text(j, i, f"{t_short}\n{delta:+.1f}", ha="center",
+                        va="center", fontsize=7,
+                        color="white" if v > vmax * 0.6 else "black")
+    cbar = plt.colorbar(im, ax=ax, shrink=0.7)
+    cbar.set_label("-log10(p) for topic chi-sq test", fontsize=10)
+    ax.set_title("Topic Distribution Shift Significance: Profession × Event\n"
+                 "(annotated with biggest single topic delta in pp)",
+                 fontsize=13, fontweight="bold", loc="left")
+    plt.tight_layout()
+    plt.savefig(path, dpi=300, bbox_inches="tight")
+    plt.close()
+    print(f"Saved: {path}")
+
+
 def fig_topic_event_shifts(topic_event_results, path="intention_topic_event_shifts.png"):
     """Faceted bar chart: topic delta_pp per event, one panel per event."""
     if not topic_event_results:
@@ -616,7 +729,7 @@ def fig_event_forest(event_results, path="intention_event_forest.png"):
 def write_artifacts(zs, dists, prof_counts, prof_props, event_results,
                      topic_ct, sent_stance_ct,
                      prof_event=None, prof_sent_event=None,
-                     topic_event=None,
+                     topic_event=None, topic_prof_event=None,
                      path="intention_results.txt"):
     with open(path, "w", encoding="utf-8") as f:
         f.write("=" * 80 + "\n")
@@ -754,6 +867,34 @@ def write_artifacts(zs, dists, prof_counts, prof_props, event_results,
                                 f"{info['post_pct']:>5.1f}% "
                                 f"(Δ {info['delta_pp']:>+5.1f} pp)\n")
 
+        if topic_prof_event:
+            f.write("\n" + "-" * 80 + "\n")
+            f.write("PRE/POST TOPIC SHIFTS BY EVENT × PROFESSION\n")
+            f.write("Per cell: chi-sq on profession-specific topic distribution.\n")
+            f.write("Per-cell n>=20 in both pre and post; profession n>=40 overall.\n")
+            f.write("-" * 80 + "\n")
+            # Group by event for readability
+            by_event = {}
+            for r in topic_prof_event:
+                by_event.setdefault(r["event"], []).append(r)
+            for ev_name, _, _ in EVENTS:
+                if ev_name not in by_event:
+                    continue
+                f.write(f"\n{ev_name}:\n")
+                for r in by_event[ev_name]:
+                    sig = "***" if r["p_chi2"] < 0.001 else "**" if r["p_chi2"] < 0.01 \
+                          else "*" if r["p_chi2"] < 0.05 else "ns"
+                    f.write(f"  {r['profession']:<18s} (n_pre={r['n_pre']}, n_post={r['n_post']}): "
+                            f"chi-sq p={r['p_chi2']:.4f} {sig}\n")
+                    # Top 3 movers
+                    shifts = sorted(r["topic_shifts"].items(),
+                                     key=lambda x: -abs(x[1]["delta_pp"]))[:3]
+                    for t, info in shifts:
+                        if abs(info["delta_pp"]) >= 1.5:
+                            f.write(f"    {t:<25s} {info['pre_pct']:>5.1f}% → "
+                                    f"{info['post_pct']:>5.1f}% "
+                                    f"(Δ {info['delta_pp']:>+5.1f} pp)\n")
+
         if prof_sent_event is not None and not prof_sent_event.empty:
             f.write("\n" + "-" * 80 + "\n")
             f.write("PRE/POST CLAUDE SENTIMENT SHIFTS BY EVENT × PROFESSION\n")
@@ -856,17 +997,33 @@ def main():
             for t, d in shifts[:2]:
                 print(f"    {t:<25s} {d:+.1f} pp")
 
+    print("\nPer-event × per-profession topic-distribution shifts...")
+    topic_prof_event = topic_per_event_by_profession(zs)
+    if topic_prof_event:
+        sig = sum(1 for r in topic_prof_event if r["p_chi2"] < 0.05)
+        print(f"  {len(topic_prof_event)} (event, profession) cells; "
+              f"{sig} significant at p<0.05")
+        # Top 5 most significant cells
+        sorted_cells = sorted(topic_prof_event, key=lambda r: r["p_chi2"])[:5]
+        for r in sorted_cells:
+            biggest = max(r["topic_shifts"].items(),
+                           key=lambda x: abs(x[1]["delta_pp"]))
+            print(f"  {r['event']} × {r['profession']}: chi-sq p={r['p_chi2']:.4f}; "
+                  f"biggest: {biggest[0]} {biggest[1]['delta_pp']:+.1f} pp "
+                  f"(n_pre={r['n_pre']}, n_post={r['n_post']})")
+
     print("\nGenerating figures...")
     fig_intention_trajectory(zs)
     fig_event_forest(event_results)
     fig_profession_event_heatmap(prof_event)
     fig_topic_event_shifts(topic_event)
+    fig_topic_profession_event_heatmap(topic_prof_event)
 
     print("\nWriting artifacts...")
     write_artifacts(zs, dists, prof_counts, prof_props, event_results,
                      topic_ct, sent_stance,
                      prof_event=prof_event, prof_sent_event=prof_sent_event,
-                     topic_event=topic_event)
+                     topic_event=topic_event, topic_prof_event=topic_prof_event)
 
     print("\nDone.")
 

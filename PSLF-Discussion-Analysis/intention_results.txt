@@ -1,6 +1,6 @@
 ================================================================================
 PSLF Intention Analysis (Claude pslf_stance)
-Generated: 2026-05-08T20:10:02
+Generated: 2026-05-08T20:14:00
 Source: scripts/pslf_intention_analysis.py
 ================================================================================
 
@@ -273,6 +273,64 @@ Final Trump PSLF Rule (2025-10-30, win=60d, n_pre=297, n_post=323):
     servicer_issues            13.8% →   5.0% (Δ  -8.9 pp)
     career_impact              16.5% →  23.5% (Δ  +7.0 pp)
     financial_planning         41.4% →  35.0% (Δ  -6.4 pp)
+
+--------------------------------------------------------------------------------
+PRE/POST TOPIC SHIFTS BY EVENT × PROFESSION
+Per cell: chi-sq on profession-specific topic distribution.
+Per-cell n>=20 in both pre and post; profession n>=40 overall.
+--------------------------------------------------------------------------------
+
+Limited PSLF Waiver:
+  SDN (Medical)      (n_pre=287, n_post=354): chi-sq p=0.0000 ***
+    success_story              41.1% →   5.6% (Δ -35.5 pp)
+    financial_planning         25.1% →  39.5% (Δ +14.5 pp)
+    policy_uncertainty          8.4% →  20.6% (Δ +12.3 pp)
+
+IDR Account Adjustment:
+  SDN (Medical)      (n_pre=191, n_post=255): chi-sq p=0.0000 ***
+    financial_planning         17.3% →  78.8% (Δ +61.5 pp)
+    general_question           35.6% →   0.4% (Δ -35.2 pp)
+    success_story              17.8% →   0.0% (Δ -17.8 pp)
+
+Biden Mass Forgiveness:
+  SDN (Medical)      (n_pre=106, n_post=65): chi-sq p=0.0000 ***
+    career_impact              54.7% →   1.5% (Δ -53.2 pp)
+    general_question            5.7% →  38.5% (Δ +32.8 pp)
+    servicer_issues             0.0% →  13.8% (Δ +13.8 pp)
+
+Biden v. Nebraska SCOTUS:
+  SDN (Medical)      (n_pre=189, n_post=178): chi-sq p=0.0000 ***
+    financial_planning         52.4% →  15.7% (Δ -36.7 pp)
+    policy_uncertainty          9.5% →  42.7% (Δ +33.2 pp)
+    career_impact              31.2% →   3.4% (Δ -27.8 pp)
+
+Payments Restart:
+  SDN (Medical)      (n_pre=173, n_post=63): chi-sq p=0.0000 ***
+    policy_uncertainty         41.6% →   6.3% (Δ -35.3 pp)
+    financial_planning         16.2% →  46.0% (Δ +29.8 pp)
+    career_impact               3.5% →  19.0% (Δ +15.6 pp)
+
+SAVE Admin Forbearance:
+  SDN (Medical)      (n_pre=96, n_post=23): chi-sq p=0.0000 ***
+    career_impact               3.1% → 100.0% (Δ +96.9 pp)
+    financial_planning         67.7% →   0.0% (Δ -67.7 pp)
+    general_question           28.1% →   0.0% (Δ -28.1 pp)
+
+Trump PSLF EO:
+  SDN (Medical)      (n_pre=494, n_post=317): chi-sq p=0.0000 ***
+    policy_uncertainty         63.6% →  36.3% (Δ -27.3 pp)
+    career_impact               7.5% →  25.6% (Δ +18.1 pp)
+    financial_planning          9.1% →  25.6% (Δ +16.4 pp)
+
+Final Trump PSLF Rule:
+  SDN (Medical)      (n_pre=77, n_post=197): chi-sq p=0.0000 ***
+    policy_uncertainty          0.0% →  27.9% (Δ +27.9 pp)
+    career_impact              45.5% →  32.5% (Δ -13.0 pp)
+    general_question           19.5% →   9.1% (Δ -10.3 pp)
+  r/StudentLoans     (n_pre=25, n_post=39): chi-sq p=0.5814 ns
+    servicer_issues             8.0% →  20.5% (Δ +12.5 pp)
+    general_question           28.0% →  20.5% (Δ  -7.5 pp)
+    financial_planning         44.0% →  41.0% (Δ  -3.0 pp)
 
 --------------------------------------------------------------------------------
 PRE/POST CLAUDE SENTIMENT SHIFTS BY EVENT × PROFESSION
