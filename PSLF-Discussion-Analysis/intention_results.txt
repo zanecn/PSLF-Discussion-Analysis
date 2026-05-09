@@ -1,6 +1,6 @@
 ================================================================================
 PSLF Intention Analysis (Claude pslf_stance)
-Generated: 2026-05-08T20:20:08
+Generated: 2026-05-08T22:32:33
 Source: scripts/pslf_intention_analysis.py
 ================================================================================
 
@@ -10,35 +10,36 @@ SENTIMENT (Claude pslf_sentiment) and AFFECT (TextBlob).
 Substantive research question: how does stated intention to
 pursue PSLF vary by profession and shift around policy events?
 
-Sample: n=4,842 unique posts with valid Claude scoring
-  with non-unknown stance: 3,257
-  with non-unknown stance AND date:  3,257
+Sample: n=6,982 unique posts with valid Claude scoring
+  with non-unknown stance: 5,226
+  with non-unknown stance AND date:  5,226
 
 --------------------------------------------------------------------------------
 OVERALL STANCE DISTRIBUTION
 --------------------------------------------------------------------------------
-  unknown          1,585  (32.7%)
-  considering      1,394  (28.8%)
-  pursuing         1,328  (27.4%)
-  rejecting          328  (6.8%)
-  completed          207  (4.3%)
-  TOTAL            4,842
+  pursuing         2,643  (37.9%)
+  considering      1,831  (26.2%)
+  unknown          1,756  (25.2%)
+  rejecting          424  (6.1%)
+  completed          327  (4.7%)
+  completing           1  (0.0%)
+  TOTAL            6,982
 
 --------------------------------------------------------------------------------
 STANCE BY PROFESSION (% of non-unknown stance posts; n>=20)
 --------------------------------------------------------------------------------
 
-  Federal  (n=58)
-    pursuing         70.7%
-    considering      20.7%
+  Federal  (n=64)
+    pursuing         71.9%
+    considering      20.3%
     rejecting         0.0%
-    completed         8.6%
+    completed         7.8%
 
-  Finance  (n=220)
-    pursuing         56.8%
-    considering      34.1%
-    rejecting         6.8%
-    completed         2.3%
+  Finance  (n=575)
+    pursuing         59.0%
+    considering      34.3%
+    rejecting         5.6%
+    completed         1.2%
 
   Law  (n=37)
     pursuing         29.7%
@@ -46,29 +47,29 @@ STANCE BY PROFESSION (% of non-unknown stance posts; n>=20)
     rejecting         5.4%
     completed         2.7%
 
-  Medical  (n=311)
-    pursuing         56.3%
-    considering      36.0%
-    rejecting         6.1%
-    completed         1.6%
+  Medical  (n=462)
+    pursuing         52.6%
+    considering      38.7%
+    rejecting         7.1%
+    completed         1.5%
 
-  Nursing  (n=46)
-    pursuing         34.8%
-    considering      60.9%
-    rejecting         2.2%
-    completed         2.2%
+  Nursing  (n=53)
+    pursuing         34.0%
+    considering      60.4%
+    rejecting         1.9%
+    completed         3.8%
 
-  OT  (n=45)
-    pursuing         40.0%
-    considering      53.3%
-    rejecting         6.7%
+  OT  (n=50)
+    pursuing         38.0%
+    considering      54.0%
+    rejecting         8.0%
     completed         0.0%
 
-  PA  (n=104)
-    pursuing         28.8%
-    considering      62.5%
-    rejecting         7.7%
-    completed         1.0%
+  PA  (n=147)
+    pursuing         27.2%
+    considering      63.9%
+    rejecting         8.2%
+    completed         0.7%
 
   Pharmacy  (n=36)
     pursuing         38.9%
@@ -82,35 +83,35 @@ STANCE BY PROFESSION (% of non-unknown stance posts; n>=20)
     rejecting        13.6%
     completed         7.6%
 
-  SLP  (n=65)
-    pursuing         40.0%
-    considering      52.3%
-    rejecting         4.6%
-    completed         3.1%
+  SLP  (n=82)
+    pursuing         47.6%
+    considering      45.1%
+    rejecting         4.9%
+    completed         2.4%
 
-  Social Work  (n=37)
-    pursuing         54.1%
-    considering      35.1%
-    rejecting         5.4%
-    completed         5.4%
+  Social Work  (n=47)
+    pursuing         53.2%
+    considering      36.2%
+    rejecting         6.4%
+    completed         4.3%
 
-  Teaching  (n=136)
-    pursuing         58.1%
-    considering      28.7%
-    rejecting         4.4%
-    completed         8.8%
+  Teaching  (n=235)
+    pursuing         57.0%
+    considering      30.2%
+    rejecting         5.1%
+    completed         7.7%
 
-  r/PSLF  (n=111)
-    pursuing         77.5%
-    considering       4.5%
-    rejecting         0.0%
-    completed        18.0%
+  r/PSLF  (n=862)
+    pursuing         80.4%
+    considering       5.8%
+    rejecting         0.5%
+    completed        13.2%
 
-  r/StudentLoans  (n=91)
-    pursuing         68.1%
-    considering      25.3%
-    rejecting         1.1%
-    completed         5.5%
+  r/StudentLoans  (n=616)
+    pursuing         64.4%
+    considering      24.4%
+    rejecting         8.0%
+    completed         3.2%
 
 --------------------------------------------------------------------------------
 PRE/POST INTENTION SHIFTS BY EVENT
@@ -131,29 +132,29 @@ SENTIMENT × STANCE DECOUPLING
 If sentiment and intention were tightly coupled, negative-sentiment
 posts would be mostly rejecting. They aren't.
 --------------------------------------------------------------------------------
-pslf_stance     completed  considering  pursuing  rejecting  n_total  pct_pursuing  pct_rejecting
-pslf_sentiment                                                                                   
-very_negative           0           13        67        113      193          34.7           58.5
-negative                3          324       245        135      707          34.7           19.1
-neutral                 5          734       321         80     1140          28.2            7.0
-positive               29          322       660          0     1011          65.3            0.0
-very_positive         170            1        35          0      206          17.0            0.0
+pslf_stance     completed  completing  considering  pursuing  rejecting  n_total  pct_pursuing  pct_rejecting
+pslf_sentiment                                                                                               
+very_negative           1           0           13       106        117      237          44.7           49.4
+negative                6           0          404       597        170     1177          50.7           14.4
+neutral                13           0         1004       853        137     2007          42.5            6.8
+positive               67           1          409      1048          0     1525          68.7            0.0
+very_positive         240           0            1        39          0      280          13.9            0.0
 
-Headline: of 707 'negative'-sentiment posts, 245 (34.7%) are still pursuing PSLF.
+Headline: of 1177 'negative'-sentiment posts, 597 (50.7%) are still pursuing PSLF.
 Sentiment and intention are partially decoupled — affect doesn't determine commitment.
 
 --------------------------------------------------------------------------------
 TOPIC × STANCE (which topics drive which intention?)
 --------------------------------------------------------------------------------
-pslf_stance          completed  considering  pursuing  rejecting  n_total  pct_rejecting  pct_pursuing
-primary_topic                                                                                         
-financial_planning           1          579       417        149     1146           13.0          36.4
-career_impact                1          370       307         54      732            7.4          41.9
-policy_uncertainty           1          234       292         93      620           15.0          47.1
-general_question             3          188       169          7      367            1.9          46.0
-success_story              193           17        35          1      246            0.4          14.2
-servicer_issues              8            6       106          9      129            7.0          82.2
-frustration_venting          0            0         2         15       17           88.2          11.8
+pslf_stance          completed  completing  considering  pursuing  rejecting  n_total  pct_rejecting  pct_pursuing
+primary_topic                                                                                                     
+financial_planning           3           0          782       989        216     1990           10.9          49.7
+career_impact                3           0          425       364         61      853            7.2          42.7
+policy_uncertainty           1           0          270       391        103      765           13.5          51.1
+general_question             7           0          326       387         16      736            2.2          52.6
+servicer_issues             21           1           10       453         12      497            2.4          91.1
+success_story              292           0           18        52          1      363            0.3          14.3
+frustration_venting          0           0            0         7         15       22           68.2          31.8
 
 --------------------------------------------------------------------------------
 PRE/POST INTENTION SHIFTS BY EVENT × PROFESSION
@@ -283,35 +284,35 @@ Round-7 expansion: full-corpus Claude with career_stage in the
 prompt would push coverage to ~90%+.
 --------------------------------------------------------------------------------
 
-  attending  (n=108)
-    pursuing         19.4%
-    considering      64.8%
-    rejecting        14.8%
-    completed         0.9%
+  attending  (n=127)
+    pursuing         22.0%
+    considering      62.2%
+    rejecting        15.0%
+    completed         0.8%
 
-  fellow  (n=204)
-    pursuing         29.9%
-    considering      65.2%
-    rejecting         3.4%
-    completed         1.5%
+  fellow  (n=263)
+    pursuing         36.5%
+    considering      56.3%
+    rejecting         4.6%
+    completed         2.7%
 
-  medical_student  (n=45)
-    pursuing         33.3%
-    considering      57.8%
-    rejecting         8.9%
+  medical_student  (n=59)
+    pursuing         33.9%
+    considering      59.3%
+    rejecting         6.8%
     completed         0.0%
 
-  pa_student  (n=26)
-    pursuing         11.5%
-    considering      80.8%
-    rejecting         7.7%
+  pa_student  (n=38)
+    pursuing         18.4%
+    considering      73.7%
+    rejecting         7.9%
     completed         0.0%
 
-  resident  (n=121)
-    pursuing         44.6%
-    considering      36.4%
-    rejecting        14.9%
-    completed         4.1%
+  resident  (n=167)
+    pursuing         44.3%
+    considering      38.9%
+    rejecting        13.8%
+    completed         3.0%
 
 --------------------------------------------------------------------------------
 PRE/POST INTENTION SHIFTS BY EVENT × CAREER STAGE

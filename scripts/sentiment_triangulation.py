@@ -242,6 +242,8 @@ def load_zeroshot():
         # Round-7 expansion: Claude-scored PA/NP posts (52 from r/PAstudent +
         # r/prephysicianassistant + r/CRNA after PSLF strict filter)
         ("zeroshot_pa_np_expansion.csv", "pa_np_expansion"),
+        # Round-7 fullcorpus: all remaining Reddit PSLF posts (~2,240, 100 errors)
+        ("zeroshot_reddit_fullcorpus.csv", "reddit_fullcorpus"),
     ]
     frames = []
     for f, label in candidates:
