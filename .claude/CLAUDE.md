@@ -1,9 +1,18 @@
 # PSLF Online Discourse Analysis Project
 
-## Overview
-Multi-source sentiment analysis of **online discussion** of Public Service Loan Forgiveness (PSLF) across Reddit communities and the Student Doctor Network (SDN) forum. Tracks how **discussant** sentiment varies by profession-self-selected subreddit, platform, and legislative era.
+## Overview (Round 7 reframing — 2026-05-08)
 
-**Scope clarification (round-4 audit fix):** This project studies **online PSLF discourse**, not the PSLF-borrower population. Reddit + SDN users skew young, white, male, more educated than the ~1M+ borrower population, and Bogleheads + allnurses are Cloudflare-blocked. Findings should be interpreted as discourse, not behavior.
+This project began as a multi-source sentiment analysis of online PSLF discussion. After Path C event-window Claude scoring (n=4,787 posts with all three scorers) and a Round-7 comprehensive audit, **the substantive headline has been replaced by a methodological one**:
+
+**Primary finding (methodological):** Three commonly-used sentiment instruments — TextBlob (lexical affect), VADER (expressive arousal, Hutto & Gilbert 2014), and Claude Sonnet 4 zero-shot (stance toward PSLF, per the prompt) — operationalize **substantially different latent constructs** on policy-discourse text. Krippendorff's α=+0.17 (percentile-matched ordinal, n=4,787) — well below the 0.667 floor for tentative reliability claims. Pearson r: TB×VADER +0.30, TB×Claude +0.02 (ns), VADER×Claude +0.12. The construct distinction is theoretically grounded in stance vs sentiment (Mohammad et al. 2016, SemEval-2016 Task 6) but its empirical magnitude on policy discourse has not been previously quantified.
+
+**Lead exemplar:** The 2025 Trump PSLF Executive Order produces directionally opposite Hedges' g across the three instruments on the same n=1,047 posts: TextBlob g=−0.39 (more negative-valence vocabulary), VADER g=+0.21 (more affective intensity), Claude g=+0.41 (more stance-positive engagement, "still pursuing PSLF"). This is *not* measurement noise — it is consistent construct dissociation visible across all 8 PSLF policy events.
+
+**Companion methodological finding:** Reddit's 1000-result API cap creates a quantifiable volume-growth artifact when measured against CFPB Consumer Complaints (no cap) as ground truth. R/C ratio grew ~74× from 2017 to 2026 (Q1-May, partial year); CFPB grew ~6.5× — implying ~6-7× real growth + ~10× recency-bias artifact.
+
+**Substantive single-event findings (formerly headline, now demoted):** Pre/post tests show Trump PSLF EO bootstrap-Bonferroni-significant on TextBlob alone (g=−0.39, p_boot=0.006). After Path C: NO event simultaneously survives bootstrap-Bonferroni AND has three-scorer direction concordance. Biden Mass Forgiveness and Biden v. Nebraska SCOTUS are triple-concordant negative but bootstrap-NS or window-confounded.
+
+**Scope clarification (round-4):** This project studies **online PSLF discourse**, not the PSLF-borrower population. Reddit + SDN users skew young, white, male, more educated than the ~1M+ borrower population, and Bogleheads + allnurses are Cloudflare-blocked. Findings should be interpreted as discourse construct measurement, not behavior.
 
 ## Repository
 - Fork: https://github.com/zanecn/PSLF-Discussion-Analysis
@@ -95,6 +104,60 @@ Key descriptive observations (NO causal claims, NO behavioral interpretation):
 - Round 5 (this session): bootstrap per-event seed + B_actual tracking (was deflating p-values when zero-variance surrogates were skipped); OLS collinearity QR rank check (src_sdn ≡ prof_sdn_medical for SDN posts); sentiment_zeroshot.py auth fail-fast + circuit breaker (after a 715-call burn on auth errors); legislative_timeline_results.txt artifact for traceability; sample-size and R/C-ratio reconciliation; final_summary.py rewritten to canonical 8-event list.
 - Path C (event-window Claude fill, ~$15.18, 3,035 posts): scored ALL Reddit + SDN posts in any of the 8 event windows at full corpus depth. Re-ran triangulation at n=4,787. Discovered the underpowered n=50/side eventstrat subsample had given false direction-concordance for Trump EO; with proper power, only Biden Mass Forgiveness and Biden v. Nebraska are triple-concordant. The substantive headline of the paper is meaningfully revised. Also fixed a per_event_tests bug that filtered to a single subsample (was missing the eventfull data even after Path C scoring landed).
 - Round 6 / Copilot PR review (2026-05-08): 7 items addressed — UTF-8 stdout wrapper in `confound_audit.py` (mojibake fix); dynamic R/C multiplier in `gen_volume_artifact_figure.py` (was hardcoded 84×); `--stratify-events` help text correction; Trump event label standardisation; dropped misleading "Vectorized" docstring; dynamic subsample count in triangulation artifact; corrected `collect_allnurses` return type.
+- Round 7 (post-Path-C comprehensive audit, 2026-05-08): 3-agent parallel audit (statistical methodology + triangulation construct validity + literature context). Key outputs:
+  - **Reframed headline**: project's primary contribution is now the construct-validity finding (TextBlob = lexical affect, VADER = expressive arousal, Claude-prompted = stance). The α=+0.17 is structural construct mismatch, not noise. Trump EO direction conflict is the lead exemplar, not an embarrassment.
+  - **17 statistical-methodology issues identified**, 4 publication-blockers (bootstrap implements wrong null hypothesis; Hedges' g variance missing J² factor; α has no bootstrap CI; percentile-matched α biases upward and is reported without that caveat).
+  - **Confound audit logic bug**: `confound_audit.py:99–102` only flags "CONFOUND DETECTED" when stratification *halves* the effect, but the SDN-vs-Reddit case actually shows stratification *grows* the gap (population was suppressing platform effect). Should be |stratified − naive|/|naive| > 0.5 in either direction.
+  - **Stale comment in triangulation_results.txt:57** ("~50 pre + ~50 post per event") contradicts the actual n=166–610/109–437 after Path C. Code path is correct; only the frozen comment is stale.
+  - **Stochastic Claude scoring**: `sentiment_zeroshot.py:93` does not set `temperature=0`. No test-retest α computed. Need to either re-score 200 posts at temperature=0 or compute test-retest α on a duplicate batch.
+  - **Family-wise correction undercounted**: project runs ~72 hypothesis tests across pre/post + window-sensitivity + residualised + triangulation; α/8 = 0.00625 only controls one family. Should switch to Holm-Bonferroni or Benjamini-Hochberg with explicit family declarations.
+  - **SAVE Forbearance window-sensitivity range** is +1.03 (30d) → +0.25 (180d), 4× span. Likely transient effect or regression to the mean. Not flagged in the artifact.
+  - See `audit_round7_findings.md` (to be created) for full 17-issue list with file:line citations and venue-specific implications.
+
+## Round 7 Critical Fixes (must-do before submission)
+
+These are required before submitting to any methods-aware venue (JCSS / EPJ Data Science / Political Analysis / Behavior Research Methods). They are **substantive code work** and warrant their own PR cycle, not inline patches:
+
+1. **Bootstrap implementation rewrite** (`gen_legislative_timeline.py:386–411`). Current code resamples the *combined* pre+post series in moving blocks and re-cuts at index n1. Replace with **stratified circular block bootstrap within each group** (Politis & Romano 1994) or **block-permutation test** (Bickel et al. 1989). Likely produces *larger* p-values than the current implementation.
+2. **Hedges' g variance includes J² factor** (`gen_legislative_timeline.py:484`, `sentiment_triangulation.py:117`). Use Borenstein et al. (2009) eq. 4.24, not Hedges & Olkin (1985) eq. 6.13 (large-sample approximation that omits J²).
+3. **Krippendorff's α bootstrap CI** (`sentiment_triangulation.py:208–306`). Add B=10,000 stratified bootstrap CI (Hayes & Krippendorff 2007). The `krippendorff` library does not compute these natively — needs explicit loop.
+4. **Acknowledge percentile-matched α as charitable bound, not canonical** (`sentiment_triangulation.py:255–268`). Forcing equal-frequency quintiles aligns marginals between TB and VADER but not with Claude's true asymmetric distribution. Headline number should be the fixed-threshold α (=−0.03) with the percentile-matched α as a sensitivity bound, OR explicitly reframe as "ordinal α with native scorer thresholds gives α=−0.03; an upper-bound estimate that controls for marginal frequency mismatch is α=+0.17; both are well below the 0.667 reliability floor."
+5. **Test-retest reliability for Claude** (`sentiment_zeroshot.py`). Re-score 200 posts at `temperature=0` (deterministic) and compute test-retest α. Current Claude scoring uses default temperature=1.0 → per-post output is sampled. Without test-retest, the Claude column has unknown ceiling reliability.
+6. **Confound-audit conditional asymmetry bug** (`confound_audit.py:99–102`). Replace the one-sided test with |stratified − naive|/|naive| > 0.5.
+
+## Round 7 Should-Fix (for quality)
+
+7. Replace Bonferroni with Holm-Bonferroni (or BH with explicit family declarations).
+8. Add HC3 robust SEs to OLS residualization, or cluster by thread/source/profession/month (generated-regressor problem; Pagan 1984).
+9. Add per-event bootstrap to `sentiment_triangulation.py` (currently uses parametric Welch's t with the same autocorrelation issue as the main analysis).
+10. Window-sensitivity SD report alongside g (4× span for SAVE Forbearance is currently unflagged).
+11. Switch p-value reporting to APA conventions (`p<10⁻⁷` instead of `p=0.000000`).
+12. Fix stale `~50 pre + ~50 post` comment in triangulation_results.txt:57.
+
+## Round 7 Reframing for the Paper
+
+The substantive contribution has changed. Drafting around this frame:
+
+**Title (working):** *Stance, Affect, and Arousal: Sentiment Construct Mismatch in Policy-Discourse Text*
+
+**Abstract framing (1 paragraph):** Three commonly-used sentiment instruments — TextBlob (lexicon polarity), VADER (Hutto & Gilbert 2014, social-media-tuned), and Claude Sonnet 4 zero-shot (LLM, prompted for stance toward a policy object) — are routinely treated as interchangeable in policy-discourse research. We demonstrate on a 9,629-post Public Service Loan Forgiveness corpus (Reddit + Student Doctor Network, 2010–2026) that they operationalize substantively different latent constructs: lexical affect, expressive arousal, and stance, respectively. Krippendorff's α=+0.17 (percentile-matched ordinal, n=4,787 with all three scorers) — well below the 0.667 floor for tentative reliability claims (Krippendorff 1980). The 2025 Trump PSLF Executive Order is the lead exemplar: directionally opposite Hedges' g across the three instruments on identical n=1,047 posts (TextBlob g=−0.39, VADER g=+0.21, Claude g=+0.41). The construct distinction is theoretically grounded in stance vs sentiment (Mohammad et al. 2016, SemEval-2016 Task 6) but has not been previously quantified at this scale on policy text. Implication: researchers using off-the-shelf sentiment tools must explicitly choose and defend the construct they are operationalizing; "sentiment" alone is no longer a publishable construct claim. We pair this finding with a quantification of Reddit's 1000-result API cap as a volume artifact (R/C ratio against CFPB Consumer Complaints as ground truth: ~6-7× real growth + ~10× recency-bias artifact 2017–2026).
+
+**Recommended venues:**
+- Tier 1 (target first): EPJ Data Science (SentiBench heir), Political Analysis (Heseltine & von Hohenberg 2024 precedent), Sociological Methods & Research (Chae & Davidson 2026 precedent).
+- Tier 2: PNAS Nexus, Journal of Computational Social Science, PLOS One, Behavior Research Methods.
+- Pre-print: arXiv cs.CL or cs.SI immediately.
+
+**Cannot claim** (in this paper, with this design):
+- "PSLF discourse responds to policy events" — substantive headline gone with Path C
+- "Trump EO had a robust effect on PSLF sentiment" — direction is contested across 2/3 scorers
+- "TextBlob/VADER/Claude are interchangeable" — refuted
+- "Online discourse predicts borrower behavior" — no causal design, no representative sample
+
+**Can claim**:
+- Three commonly-used sentiment instruments operationalize substantially different constructs on policy discourse
+- Construct mismatch is theoretically grounded (stance vs sentiment) and empirically demonstrated at α=+0.17, n=4,787
+- Trump PSLF EO is a clean exemplar of the dissociation: TB g=−0.39, VA g=+0.21, CL g=+0.41 on identical n=1,047
+- R/C volume artifact: Reddit's 1000-result API cap creates ~10× recency bias when measured against CFPB ground truth
 
 ## Not Yet Done
 - Claude API zero-shot classification: **complete** — `zeroshot_reddit_n1000.csv` (n=721), `zeroshot_sdn_n1000.csv` (n=615), `zeroshot_reddit_eventstrat.csv` (n=715, ~50 pre + ~50 post per event).
