@@ -112,12 +112,17 @@ def respect_rate_limit(response: requests.Response):
 
 def search_arctic_shift(sess: requests.Session, subreddit: str, after: int,
                          before: int, search_term: str | None = None,
-                         limit: int = 100) -> list[dict]:
+                         limit: int = 100, max_429_retries: int = 3) -> list[dict]:
     """Single search call to Arctic Shift posts API.
 
     Arctic Shift max limit per call is 100 (NOT 1000 — that's a recent change
     that bit us in early testing). We page by created_utc using
     `after`/`before` timestamps.
+
+    Round-7 fix: explicit 429 retry-after handling. The Arctic Shift API
+    returns 429s without warning when sustained call rate exceeds ~2/sec
+    even if X-RateLimit-Remaining is still >0. We back off honoring the
+    Retry-After header (or 60s default) and retry up to max_429_retries.
 
     Note: Arctic Shift's full-text search is approximate; we apply the
     project's anchored PSLF filter locally as a post-hoc verification.
@@ -132,17 +137,32 @@ def search_arctic_shift(sess: requests.Session, subreddit: str, after: int,
     if search_term:
         # Arctic Shift API uses 'query' (not 'q' as in some other clones)
         params["query"] = search_term
-    try:
-        r = sess.get(f"{API_BASE}/posts/search", params=params, timeout=60)
-        if r.status_code != 200:
-            tqdm.write(f"  [WARN] {subreddit} {search_term!r}: HTTP {r.status_code}")
+    for attempt in range(max_429_retries + 1):
+        try:
+            r = sess.get(f"{API_BASE}/posts/search", params=params, timeout=60)
+            if r.status_code == 429:
+                # Honor Retry-After if present, else back off 60s on first retry
+                retry_after = r.headers.get("Retry-After")
+                wait = int(retry_after) if retry_after and retry_after.isdigit() else 60
+                if attempt < max_429_retries:
+                    tqdm.write(f"  [429] {subreddit} {search_term!r}: backing off "
+                                f"{wait}s (attempt {attempt + 1}/{max_429_retries})")
+                    time.sleep(wait)
+                    continue
+                else:
+                    tqdm.write(f"  [WARN] {subreddit} {search_term!r}: "
+                                f"giving up after {max_429_retries} 429s")
+                    return []
+            if r.status_code != 200:
+                tqdm.write(f"  [WARN] {subreddit} {search_term!r}: HTTP {r.status_code}")
+                return []
+            respect_rate_limit(r)
+            data = r.json()
+            return data.get("data", [])
+        except Exception as e:
+            tqdm.write(f"  [ERROR] {subreddit} {search_term!r}: {e}")
             return []
-        respect_rate_limit(r)
-        data = r.json()
-        return data.get("data", [])
-    except Exception as e:
-        tqdm.write(f"  [ERROR] {subreddit} {search_term!r}: {e}")
-        return []
+    return []
 
 
 def paginate_subreddit_year(sess: requests.Session, subreddit: str,
