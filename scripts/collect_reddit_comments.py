@@ -29,8 +29,15 @@ from tqdm import tqdm
 # Config
 # ---------------------------------------------------------------------------
 POST_FILES = [
-    "comprehensive_medical_pslf_discussions.csv",
-    "comprehensive_teacher_pslf_discussions.csv",
+    # Round-7 expansion (2026-05-09): comment collector now reads from ALL
+    # PSLF-relevant Reddit source CSVs, not just the two legacy comprehensive_*
+    # files. Without this fix, comments were only being pulled for ~1,126 of
+    # the 3,806 PSLF-filtered Reddit posts in the project.
+    "reddit_professions_pslf.csv",                       # 11,845 raw → 3,806 PSLF
+    "comprehensive_medical_pslf_discussions.csv",        # 605 (legacy)
+    "comprehensive_teacher_pslf_discussions.csv",        # 521 (legacy)
+    "reddit_new_subs_pslf.csv",                          # 585 raw → 52 PSLF (PA/NP)
+    "reddit_arctic_shift_pslf.csv",                      # Arctic Shift output (when present)
 ]
 OUTPUT_FILE = "reddit_comments_pslf.csv"
 MAX_COMMENT_DEPTH = 5          # max nesting depth to collect
@@ -60,15 +67,61 @@ COMMENT_FIELDS = [
 # Helpers
 # ---------------------------------------------------------------------------
 def load_post_ids(files: list[str]) -> list[dict]:
-    """Load post IDs and metadata from existing CSVs."""
+    """Load post IDs and metadata from existing CSVs.
+
+    Round-7 update: applies PSLF strict filter on the broader CSVs
+    (reddit_professions_pslf.csv contains some non-PSLF posts that came
+    in via the broader search; we only want comments from PSLF-anchored
+    posts to keep the corpus consistent with the rest of the pipeline).
+    """
+    import sys, os
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    try:
+        from pslf_search_terms import filter_pslf_relevant
+        import pandas as pd
+        have_filter = True
+    except ImportError:
+        have_filter = False
+
     posts = []
     seen = set()
     for fpath in files:
         if not os.path.exists(fpath):
             print(f"  [WARN] File not found: {fpath}, skipping.")
             continue
+        # Use pandas for the filterable CSVs to apply the strict PSLF check
+        if have_filter:
+            try:
+                df = pd.read_csv(fpath)
+                # Find text columns
+                text_col = ("combined_text" if "combined_text" in df.columns
+                            else "selftext" if "selftext" in df.columns else None)
+                title_col = "title" if "title" in df.columns else None
+                if text_col and title_col:
+                    tm = filter_pslf_relevant(df[text_col].fillna(""))
+                    tt = filter_pslf_relevant(df[title_col].fillna(""))
+                    df = df[tm | tt].copy()
+                # Iterate filtered rows
+                pre_filter_count = 0
+                for _, row in df.iterrows():
+                    pid = str(row.get("id", "")).strip()
+                    if pid and pid not in seen:
+                        seen.add(pid)
+                        posts.append({
+                            "id": pid,
+                            "subreddit": row.get("subreddit", ""),
+                            "profession": row.get("profession", ""),
+                            "permalink": row.get("permalink", ""),
+                        })
+                        pre_filter_count += 1
+                print(f"  Loaded {pre_filter_count:,} PSLF-filtered posts from {fpath}")
+                continue
+            except Exception as e:
+                print(f"  [WARN] pandas load failed for {fpath} ({e}); falling back to csv.DictReader")
+        # Fallback: no PSLF filter, just dedup
         with open(fpath, "r", encoding="utf-8") as f:
             reader = csv.DictReader(f)
+            n = 0
             for row in reader:
                 pid = row.get("id", "").strip()
                 if pid and pid not in seen:
@@ -79,6 +132,8 @@ def load_post_ids(files: list[str]) -> list[dict]:
                         "profession": row.get("profession", ""),
                         "permalink": row.get("permalink", ""),
                     })
+                    n += 1
+            print(f"  Loaded {n:,} unfiltered posts from {fpath}")
     return posts
 
 
