@@ -313,7 +313,15 @@ def per_event_tests(merged):
     """For each of the 8 canonical events, compute pre/post on all 3 scorers
     using only the event-stratified subsample (where Claude was applied).
     """
-    es = merged[merged["subsample"] == "reddit_eventstrat"].copy()
+    # Path C fix: use ALL posts in event windows that have all 3 scorers,
+    # regardless of which subsample (cross-source / event-stratified /
+    # event-fill) they came from. The previous code filtered to just
+    # subsample=='reddit_eventstrat', which under-counted after the
+    # round-5 dedup moved overlap-with-cross-source posts into the
+    # reddit_cross subsample, AND ignored the new event-fill subsamples
+    # entirely.
+    es = merged.dropna(subset=["polarity", "vader_compound",
+                                "claude_numeric", "date"]).copy()
     rows = []
     for event_name, event_date, window in EVENTS:
         dt = pd.Timestamp(event_date)
@@ -322,7 +330,9 @@ def per_event_tests(merged):
         if len(pre) < 5 or len(post) < 5:
             continue
         row = {"event": event_name, "date": event_date, "window": window,
-               "n_pre": len(pre), "n_post": len(post)}
+               "n_pre": len(pre), "n_post": len(post),
+               "n_pre_subsamples": ",".join(sorted(pre["subsample"].dropna().unique())),
+               "n_post_subsamples": ",".join(sorted(post["subsample"].dropna().unique()))}
         for scorer, col in [("textblob", "polarity"),
                             ("vader", "vader_compound"),
                             ("claude", "claude_numeric")]:
