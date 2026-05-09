@@ -282,13 +282,17 @@ def main():
 
     if args.dry_run:
         # Just discover counts via paginated calls (limit=100 max per call)
-        print("\n[DRY RUN] Discovering post counts per subreddit-year (limit=100/call)...")
+        # Sample up to 5 subs to keep the dry-run fast; if user passed
+        # --subreddits with fewer than 5, use all of them.
+        sample_subs = subs_to_query[:5]
+        n_sampled = len(sample_subs)
+        print(f"\n[DRY RUN] Discovering post counts per (sub × year) for "
+              f"{n_sampled} of {len(subs_to_query)} subs, single search term 'PSLF', "
+              f"limit=100/call...")
         total_found = 0
-        for sub in subs_to_query[:5]:  # limit to first 5 for dry run
+        for sub in sample_subs:
             sub_total = 0
             for year in range(args.year_start, args.year_end + 1):
-                # Single call per year for the dry-run estimate (will undercount
-                # if there are >100 PSLF posts that year — flag those subs)
                 page = search_arctic_shift(
                     sess, sub,
                     int(datetime(year, 1, 1, tzinfo=timezone.utc).timestamp()),
@@ -296,19 +300,29 @@ def main():
                     "PSLF", limit=100)
                 if page:
                     new_count = sum(1 for p in page if p.get("id") not in existing_ids)
-                    flag = " (>=100 — pagination needed)" if len(page) >= 100 else ""
+                    flag = " (>=100 — pagination needed; full run will get more)" if len(page) >= 100 else ""
                     sub_total += new_count
                     if new_count > 0:
                         print(f"  r/{sub} {year}: {len(page):>3d} total, "
                               f"{new_count:>3d} new{flag}")
                 time.sleep(0.3)
             total_found += sub_total
-            print(f"  → r/{sub} subtotal: ~{sub_total} new posts (single search term, undercount)\n")
-        print(f"[DRY RUN] Discovered ~{total_found} new posts across first 5 subreddits "
-              f"with 1 search term ('PSLF').\n"
-              f"Full run uses {len(search_terms)} search terms across {len(subs_to_query)} subs;\n"
-              f"realistic total estimate: {total_found * len(search_terms) * len(subs_to_query) // 5} "
-              f"new posts (overlapping; actual after dedup likely 30-50% of this).")
+            if n_sampled > 1:
+                print(f"  → r/{sub} subtotal: ~{sub_total} new posts (single search term, page-1 only)\n")
+        # Estimate scaling for the full run
+        full_run_estimate = total_found * len(search_terms)
+        if n_sampled > 0:
+            full_run_estimate = full_run_estimate * len(subs_to_query) // n_sampled
+        # And add a pagination correction for the cap-hit years
+        # (very crude — assumes hitting cap means roughly 3x the page-1 count)
+        print(f"\n[DRY RUN] Sampled total: ~{total_found} new posts from "
+              f"{n_sampled} subs × 1 search term × page-1.")
+        print(f"Full run uses {len(search_terms)} search terms × "
+              f"{len(subs_to_query)} subs × pagination.\n"
+              f"Naive scaling estimate: ~{full_run_estimate} new posts before dedup;")
+        print(f"realistic estimate after dedup + pagination: "
+              f"{int(full_run_estimate * 0.4):,} - {int(full_run_estimate * 1.5):,} "
+              f"new posts (broad range; depends on overlap and cap-hit pagination yield).")
         return
 
     # Full run: per subreddit, per search term, paginate over year ranges
