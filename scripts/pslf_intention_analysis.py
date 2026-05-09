@@ -248,6 +248,139 @@ def stance_pre_post_event(zs, event_name, event_date, window_days):
     }
 
 
+def stance_per_event_by_profession(zs, min_n_per_cell=10):
+    """For each (event, profession), compute pre/post rejecting-rate shift.
+
+    Returns a DataFrame indexed by (event, profession) with columns:
+      n_pre, n_post, pre_rej_rate, post_rej_rate, delta_pp, p_z, p_chi2
+
+    Cells with n_pre or n_post < min_n_per_cell are dropped — sample sizes
+    are tight at the per-event × per-profession level.
+    """
+    valid = zs[(zs["pslf_stance"] != "unknown") & zs["date"].notna()].copy()
+    rows = []
+    for ev_name, ev_date, win in EVENTS:
+        dt = pd.Timestamp(ev_date)
+        for prof, sub_prof in valid.groupby("profession_display"):
+            if len(sub_prof) < 30:  # too sparse for any per-event split
+                continue
+            pre = sub_prof[(sub_prof["date"] >= dt - pd.Timedelta(days=win)) &
+                           (sub_prof["date"] < dt)]
+            post = sub_prof[(sub_prof["date"] >= dt) &
+                            (sub_prof["date"] <= dt + pd.Timedelta(days=win))]
+            if len(pre) < min_n_per_cell or len(post) < min_n_per_cell:
+                continue
+            pre_rej = (pre["pslf_stance"] == "rejecting").mean()
+            post_rej = (post["pslf_stance"] == "rejecting").mean()
+            # 2-prop z-test
+            n1, n2 = len(pre), len(post)
+            x1 = int((pre["pslf_stance"] == "rejecting").sum())
+            x2 = int((post["pslf_stance"] == "rejecting").sum())
+            pooled = (x1 + x2) / (n1 + n2)
+            se = np.sqrt(pooled * (1 - pooled) * (1/n1 + 1/n2))
+            z = (post_rej - pre_rej) / se if se > 0 else 0.0
+            p_z = 2 * (1 - stats.norm.cdf(abs(z))) if se > 0 else float("nan")
+            # Chi-sq on full stance distribution
+            try:
+                ct = pd.crosstab(pre["pslf_stance"], pd.Series(["pre"] * n1)).T
+                ct2 = pd.crosstab(post["pslf_stance"], pd.Series(["post"] * n2)).T
+                full = pd.concat([ct, ct2], axis=0).fillna(0)
+                chi2, p_chi, _, _ = stats.chi2_contingency(full)
+            except Exception:
+                chi2, p_chi = float("nan"), float("nan")
+            rows.append({
+                "event": ev_name, "date": ev_date, "window": win,
+                "profession": prof,
+                "n_pre": n1, "n_post": n2,
+                "pre_rej_rate": pre_rej, "post_rej_rate": post_rej,
+                "delta_pp": (post_rej - pre_rej) * 100,
+                "z": z, "p_z": p_z,
+                "chi2": chi2, "p_chi2": p_chi,
+            })
+    return pd.DataFrame(rows)
+
+
+def sentiment_per_event_by_profession(zs, min_n_per_cell=10):
+    """Per (event, profession), compute Claude pslf_sentiment mean shift
+    using the same numeric encoding as the triangulation (-2..+2).
+    """
+    valid = zs[~zs["pslf_sentiment"].isin(["parse_error", "api_error"])].copy()
+    valid = valid[valid["date"].notna()].copy()
+    sentiment_map = {"very_negative": -2, "negative": -1, "neutral": 0,
+                     "positive": 1, "very_positive": 2}
+    valid["claude_numeric"] = valid["pslf_sentiment"].map(sentiment_map)
+    rows = []
+    for ev_name, ev_date, win in EVENTS:
+        dt = pd.Timestamp(ev_date)
+        for prof, sub_prof in valid.groupby("profession_display"):
+            if len(sub_prof) < 30:
+                continue
+            pre = sub_prof[(sub_prof["date"] >= dt - pd.Timedelta(days=win)) &
+                           (sub_prof["date"] < dt)]["claude_numeric"].dropna()
+            post = sub_prof[(sub_prof["date"] >= dt) &
+                            (sub_prof["date"] <= dt + pd.Timedelta(days=win))]["claude_numeric"].dropna()
+            if len(pre) < min_n_per_cell or len(post) < min_n_per_cell:
+                continue
+            t, p = stats.ttest_ind(pre, post, equal_var=False)
+            # Hedges' g
+            v1, v2 = float(pre.var(ddof=1)), float(post.var(ddof=1))
+            sp = np.sqrt(((len(pre) - 1) * v1 + (len(post) - 1) * v2) /
+                         (len(pre) + len(post) - 2))
+            g = (post.mean() - pre.mean()) / sp if sp > 0 else 0.0
+            J = 1.0 - 3.0 / (4.0 * (len(pre) + len(post)) - 9.0)
+            g *= J
+            rows.append({
+                "event": ev_name, "date": ev_date, "window": win,
+                "profession": prof,
+                "n_pre": len(pre), "n_post": len(post),
+                "pre_mean": float(pre.mean()), "post_mean": float(post.mean()),
+                "g_claude": g, "p_claude": p,
+            })
+    return pd.DataFrame(rows)
+
+
+def fig_profession_event_heatmap(prof_event_df, path="intention_profession_event_heatmap.png"):
+    """Heatmap of (event × profession) → delta rejecting-rate (pp)."""
+    if prof_event_df.empty:
+        print(f"[skip] No data for {path}")
+        return
+    pivot = prof_event_df.pivot_table(
+        index="profession", columns="event",
+        values="delta_pp", aggfunc="mean")
+    # Order events chronologically
+    event_order = [e[0] for e in EVENTS if e[0] in pivot.columns]
+    pivot = pivot[event_order]
+    # Order professions by row sum of |delta| (most volatile first)
+    row_volatility = pivot.abs().sum(axis=1).sort_values(ascending=False)
+    pivot = pivot.loc[row_volatility.index]
+
+    fig, ax = plt.subplots(figsize=(13, max(4, 0.5 * len(pivot))))
+    vmax = max(15, np.nanmax(np.abs(pivot.values)))
+    im = ax.imshow(pivot.values, cmap="RdYlGn_r", aspect="auto",
+                   vmin=-vmax, vmax=vmax)
+    ax.set_xticks(range(len(pivot.columns)))
+    ax.set_xticklabels(pivot.columns, rotation=45, ha="right", fontsize=10)
+    ax.set_yticks(range(len(pivot.index)))
+    ax.set_yticklabels(pivot.index, fontsize=10)
+    # Annotate cells
+    for i in range(len(pivot.index)):
+        for j in range(len(pivot.columns)):
+            v = pivot.values[i, j]
+            if not np.isnan(v):
+                ax.text(j, i, f"{v:+.1f}", ha="center", va="center",
+                        fontsize=8,
+                        color="white" if abs(v) > vmax * 0.5 else "black")
+    cbar = plt.colorbar(im, ax=ax, shrink=0.7)
+    cbar.set_label("Δ Rejecting Rate (pp, post − pre)", fontsize=10)
+    ax.set_title("PSLF Rejecting-Rate Shift by Profession × Event\n"
+                 "(red = more rejecting after event; green = less)",
+                 fontsize=13, fontweight="bold", loc="left")
+    plt.tight_layout()
+    plt.savefig(path, dpi=300, bbox_inches="tight")
+    plt.close()
+    print(f"Saved: {path}")
+
+
 def stance_topic_cross(zs):
     """Stance × topic cross-tab."""
     valid = zs[(zs["pslf_stance"] != "unknown") &
@@ -375,7 +508,9 @@ def fig_event_forest(event_results, path="intention_event_forest.png"):
 
 
 def write_artifacts(zs, dists, prof_counts, prof_props, event_results,
-                     topic_ct, sent_stance_ct, path="intention_results.txt"):
+                     topic_ct, sent_stance_ct,
+                     prof_event=None, prof_sent_event=None,
+                     path="intention_results.txt"):
     with open(path, "w", encoding="utf-8") as f:
         f.write("=" * 80 + "\n")
         f.write("PSLF Intention Analysis (Claude pslf_stance)\n")
@@ -459,6 +594,51 @@ def write_artifacts(zs, dists, prof_counts, prof_props, event_results,
         f.write(topic_ct.to_string())
         f.write("\n")
 
+        # Per-event × profession breakdowns (Round-7 expansion: user request)
+        if prof_event is not None and not prof_event.empty:
+            f.write("\n" + "-" * 80 + "\n")
+            f.write("PRE/POST INTENTION SHIFTS BY EVENT × PROFESSION\n")
+            f.write("Δ Rejecting Rate (pp) per cell with n_pre, n_post >= 10\n")
+            f.write("NOTE: most non-SDN professions have n<10 in pre or post for most\n")
+            f.write("events, so per-event × per-profession coverage is dominated by\n")
+            f.write("SDN (Medical) — the largest medical-PSLF community in the corpus.\n")
+            f.write("For other professions, see the OVERALL stance × profession table\n")
+            f.write("above (which uses n>=20 cumulative, not per-event).\n")
+            f.write("-" * 80 + "\n")
+            f.write(f"{'Event':<28s} {'Profession':<18s} {'n_pre':>6s} {'n_post':>7s} "
+                    f"{'rej_pre%':>9s} {'rej_post%':>10s} {'Δ pp':>7s} {'p_z':>8s}\n")
+            for _, r in prof_event.sort_values(["event", "delta_pp"]).iterrows():
+                f.write(f"{r['event']:<28s} {r['profession']:<18s} "
+                        f"{int(r['n_pre']):>6d} {int(r['n_post']):>7d} "
+                        f"{r['pre_rej_rate']*100:>9.1f} "
+                        f"{r['post_rej_rate']*100:>10.1f} "
+                        f"{r['delta_pp']:>+7.2f} "
+                        f"{r['p_z']:>8.4f}\n")
+
+            # Headline movers
+            top = prof_event.copy()
+            top["abs_delta"] = top["delta_pp"].abs()
+            f.write("\nLargest absolute shifts (top 10 cells):\n")
+            for _, r in top.sort_values("abs_delta", ascending=False).head(10).iterrows():
+                marker = "↑" if r["delta_pp"] > 0 else "↓"
+                sig = "**" if r["p_z"] < 0.01 else "*" if r["p_z"] < 0.05 else ""
+                f.write(f"  {marker} {r['event']:<28s} × {r['profession']:<18s} "
+                        f"Δ {r['delta_pp']:>+6.1f} pp  (n_pre={int(r['n_pre'])}, "
+                        f"n_post={int(r['n_post'])}, p={r['p_z']:.3f}{sig})\n")
+
+        if prof_sent_event is not None and not prof_sent_event.empty:
+            f.write("\n" + "-" * 80 + "\n")
+            f.write("PRE/POST CLAUDE SENTIMENT SHIFTS BY EVENT × PROFESSION\n")
+            f.write("Hedges' g per cell on Claude pslf_sentiment numeric (-2..+2)\n")
+            f.write("-" * 80 + "\n")
+            f.write(f"{'Event':<28s} {'Profession':<18s} {'n_pre':>6s} {'n_post':>7s} "
+                    f"{'g_CL':>8s} {'p':>8s}\n")
+            for _, r in prof_sent_event.sort_values(["event", "g_claude"]).iterrows():
+                f.write(f"{r['event']:<28s} {r['profession']:<18s} "
+                        f"{int(r['n_pre']):>6d} {int(r['n_post']):>7d} "
+                        f"{r['g_claude']:>+8.3f} "
+                        f"{r['p_claude']:>8.4f}\n")
+
         f.write("\n" + "=" * 80 + "\n")
         f.write("END OF ARTIFACT\n")
         f.write("=" * 80 + "\n")
@@ -513,13 +693,37 @@ def main():
     topic_ct = stance_topic_cross(zs)
     print(topic_ct)
 
+    print("\nPer-event × per-profession intention shifts...")
+    prof_event = stance_per_event_by_profession(zs)
+    if not prof_event.empty:
+        # Print top movers
+        top = prof_event.copy()
+        top["abs_delta"] = top["delta_pp"].abs()
+        for _, r in top.sort_values("abs_delta", ascending=False).head(10).iterrows():
+            print(f"  {r['event']} × {r['profession']}: "
+                  f"rej {r['pre_rej_rate']*100:.1f}% → {r['post_rej_rate']*100:.1f}% "
+                  f"(Δ {r['delta_pp']:+.1f} pp, p={r['p_z']:.3f}, "
+                  f"n_pre={int(r['n_pre'])}, n_post={int(r['n_post'])})")
+
+    print("\nPer-event × per-profession Claude sentiment shifts...")
+    prof_sent_event = sentiment_per_event_by_profession(zs)
+    if not prof_sent_event.empty:
+        top = prof_sent_event.copy()
+        top["abs_g"] = top["g_claude"].abs()
+        for _, r in top.sort_values("abs_g", ascending=False).head(10).iterrows():
+            print(f"  {r['event']} × {r['profession']}: "
+                  f"g_CL={r['g_claude']:+.2f} (p={r['p_claude']:.3f}, "
+                  f"n_pre={int(r['n_pre'])}, n_post={int(r['n_post'])})")
+
     print("\nGenerating figures...")
     fig_intention_trajectory(zs)
     fig_event_forest(event_results)
+    fig_profession_event_heatmap(prof_event)
 
     print("\nWriting artifacts...")
     write_artifacts(zs, dists, prof_counts, prof_props, event_results,
-                     topic_ct, sent_stance)
+                     topic_ct, sent_stance,
+                     prof_event=prof_event, prof_sent_event=prof_sent_event)
 
     print("\nDone.")
 

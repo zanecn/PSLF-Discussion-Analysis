@@ -1,6 +1,6 @@
 ================================================================================
 PSLF Intention Analysis (Claude pslf_stance)
-Generated: 2026-05-08T19:31:21
+Generated: 2026-05-08T19:58:58
 Source: scripts/pslf_intention_analysis.py
 ================================================================================
 
@@ -154,6 +154,78 @@ general_question             3          187       169          7      366       
 success_story              193           17        35          1      246            0.4          14.2
 servicer_issues              8            6       106          9      129            7.0          82.2
 frustration_venting          0            0         2         15       17           88.2          11.8
+
+--------------------------------------------------------------------------------
+PRE/POST INTENTION SHIFTS BY EVENT × PROFESSION
+Δ Rejecting Rate (pp) per cell with n_pre, n_post >= 10
+NOTE: most non-SDN professions have n<10 in pre or post for most
+events, so per-event × per-profession coverage is dominated by
+SDN (Medical) — the largest medical-PSLF community in the corpus.
+For other professions, see the OVERALL stance × profession table
+above (which uses n>=20 cumulative, not per-event).
+--------------------------------------------------------------------------------
+Event                        Profession          n_pre  n_post  rej_pre%  rej_post%    Δ pp      p_z
+Biden Mass Forgiveness       SDN (Medical)          75      13      26.7        7.7  -18.97   0.1384
+Biden Mass Forgiveness       Medical                13      10       0.0       10.0  +10.00   0.2437
+Biden v. Nebraska SCOTUS     SDN (Medical)         107      78       8.4        2.6   -5.85   0.0968
+Biden v. Nebraska SCOTUS     Medical                12      15       8.3        6.7   -1.67   0.8695
+Final Trump PSLF Rule        SDN (Medical)          41     124      43.9        0.0  -43.90   0.0000
+Final Trump PSLF Rule        Finance                12      21      41.7        9.5  -32.14   0.0298
+Final Trump PSLF Rule        r/PSLF                 11      32       0.0        0.0   +0.00      nan
+Final Trump PSLF Rule        r/StudentLoans         22      35       0.0        0.0   +0.00      nan
+IDR Account Adjustment       Medical                14      19      14.3        5.3   -9.02   0.3729
+IDR Account Adjustment       SDN (Medical)         131     195       9.9       22.6  +12.64   0.0032
+Limited PSLF Waiver          SDN (Medical)         215     236       7.4       14.4   +6.96   0.0186
+Payments Restart             Medical                16      10       6.2        0.0   -6.25   0.4201
+Payments Restart             SDN (Medical)          77      33       2.6        3.0   +0.43   0.8984
+SAVE Admin Forbearance       SDN (Medical)          43      22      41.9        0.0  -41.86   0.0004
+SAVE Admin Forbearance       Medical                10      13      10.0        0.0  -10.00   0.2437
+SAVE Admin Forbearance       Finance                25      14       8.0        0.0   -8.00   0.2772
+SAVE Admin Forbearance       r/PSLF                 10      12       0.0        0.0   +0.00      nan
+Trump PSLF EO                Medical                14      20       0.0        0.0   +0.00      nan
+Trump PSLF EO                r/PSLF                 20      11       0.0        0.0   +0.00      nan
+Trump PSLF EO                SDN (Medical)         234     249      17.1       19.7   +2.58   0.4640
+Trump PSLF EO                Finance                20      13       5.0        7.7   +2.69   0.7515
+
+Largest absolute shifts (top 10 cells):
+  ↓ Final Trump PSLF Rule        × SDN (Medical)      Δ  -43.9 pp  (n_pre=41, n_post=124, p=0.000**)
+  ↓ SAVE Admin Forbearance       × SDN (Medical)      Δ  -41.9 pp  (n_pre=43, n_post=22, p=0.000**)
+  ↓ Final Trump PSLF Rule        × Finance            Δ  -32.1 pp  (n_pre=12, n_post=21, p=0.030*)
+  ↓ Biden Mass Forgiveness       × SDN (Medical)      Δ  -19.0 pp  (n_pre=75, n_post=13, p=0.138)
+  ↑ IDR Account Adjustment       × SDN (Medical)      Δ  +12.6 pp  (n_pre=131, n_post=195, p=0.003**)
+  ↓ SAVE Admin Forbearance       × Medical            Δ  -10.0 pp  (n_pre=10, n_post=13, p=0.244)
+  ↑ Biden Mass Forgiveness       × Medical            Δ  +10.0 pp  (n_pre=13, n_post=10, p=0.244)
+  ↓ IDR Account Adjustment       × Medical            Δ   -9.0 pp  (n_pre=14, n_post=19, p=0.373)
+  ↓ SAVE Admin Forbearance       × Finance            Δ   -8.0 pp  (n_pre=25, n_post=14, p=0.277)
+  ↑ Limited PSLF Waiver          × SDN (Medical)      Δ   +7.0 pp  (n_pre=215, n_post=236, p=0.019*)
+
+--------------------------------------------------------------------------------
+PRE/POST CLAUDE SENTIMENT SHIFTS BY EVENT × PROFESSION
+Hedges' g per cell on Claude pslf_sentiment numeric (-2..+2)
+--------------------------------------------------------------------------------
+Event                        Profession          n_pre  n_post     g_CL        p
+Biden Mass Forgiveness       Medical                14      13   -0.966   0.0170
+Biden Mass Forgiveness       SDN (Medical)         106      65   -0.351   0.0172
+Biden v. Nebraska SCOTUS     SDN (Medical)         188     178   -0.141   0.1786
+Biden v. Nebraska SCOTUS     Medical                14      20   +0.372   0.2887
+Final Trump PSLF Rule        Finance                14      21   +0.105   0.7624
+Final Trump PSLF Rule        r/StudentLoans         25      39   +0.161   0.5329
+Final Trump PSLF Rule        SDN (Medical)          77     197   +0.523   0.0001
+Final Trump PSLF Rule        r/PSLF                 12      33   +0.644   0.0476
+IDR Account Adjustment       Teaching               10      12   -0.642   0.1510
+IDR Account Adjustment       SDN (Medical)         191     255   -0.357   0.0004
+IDR Account Adjustment       Medical                18      19   +0.505   0.1229
+Limited PSLF Waiver          SDN (Medical)         287     354   -0.831   0.0000
+Payments Restart             Medical                20      11   -0.851   0.0444
+Payments Restart             SDN (Medical)         173      63   +0.173   0.1887
+SAVE Admin Forbearance       SDN (Medical)          96      23   -2.328   0.0000
+SAVE Admin Forbearance       Finance                27      15   +0.234   0.4634
+SAVE Admin Forbearance       Medical                10      14   +0.256   0.5287
+SAVE Admin Forbearance       r/PSLF                 10      14   +0.318   0.4172
+Trump PSLF EO                Finance                20      14   -0.639   0.0695
+Trump PSLF EO                Medical                14      21   -0.068   0.8520
+Trump PSLF EO                r/PSLF                 26      12   +0.064   0.8539
+Trump PSLF EO                SDN (Medical)         494     316   +0.568   0.0000
 
 ================================================================================
 END OF ARTIFACT

@@ -85,8 +85,14 @@ Key descriptive observations (NO causal claims, NO behavioral interpretation):
    - **Trump PSLF EO** had +2.5 pp rejecting-rate shift (p=0.333, NS) despite large negative sentiment shift — "resolute commitment under threat" pattern.
    - **IDR Account Adjustment** had +10.0 pp rejecting-rate increase (p=0.005) despite being a beneficial policy — technical complexity drove rejection.
    - **Administrative pauses substantially REDUCE rejection**: SAVE Admin Forbearance −16.6 pp (p=0.0002), Final Trump Rule −13.5 pp (p<0.0001), Biden Mass Forgiveness −13.8 pp (p=0.023).
-   - **Profession differences**: SDN (Medical) has highest rejecting rate at 13.6% (n=1,960); PA, Nursing, OT, SLP, Pharmacy skew "considering" (50–60%); Medical and Teaching skew "pursuing" (56–58%).
+   - **Profession differences (cumulative stance)**: SDN (Medical) has highest rejecting rate at 13.6% (n=1,960); PA, Nursing, OT, SLP, Pharmacy skew "considering" (50–60%); Medical and Teaching skew "pursuing" (56–58%).
    - **The discourse signature typology** (TB+/CL− = lexical relief masking stance disengagement; all− = genuine bad-news consensus; TB−/CL+ = resolute commitment under threat) is itself a contribution to policy-discourse research.
+
+8. **Per-event × per-profession intention shifts** (round-7 expansion, n>=10 per cell). Coverage is dominated by SDN (Medical) — the largest medical-PSLF community — because per-event sample sizes for other professions are tight. Where multi-profession data exists, two patterns emerge:
+   - **Convergent profession response** to administrative resolution: Final Trump PSLF Rule reduced rejecting-rate by 43.9 pp in SDN (Medical) AND by 32.1 pp in Finance (p=0.030, n_pre=12/n_post=21). The relief signal was not exclusive to medical communities. SAVE Admin Forbearance similarly reduced rejecting across SDN (-41.9 pp, p<0.001), Medical (-10 pp, NS), and Finance (-8 pp, NS).
+   - **Divergent profession response to ambiguous policy**: Biden Mass Forgiveness moved SDN (Medical) rejecting -19 pp (NS) but moved Reddit Medical +10 pp (NS) — opposite signs across two medical communities, plausibly a residency-vs-student-cohort split (SDN skews resident/attending; r/medicalschool skews pre-clinical). IDR Account Adjustment shows the same pattern: SDN +12.6 pp (p=0.003) vs Medical -9.0 pp (NS). Caveat: small per-event n's for Reddit Medical (≤20).
+   - **Limited PSLF Waiver SDN-only signal**: +7.0 pp (p=0.019) rejecting-rate INCREASE post-waiver in SDN (Medical) — the "good-news anxiety" pattern at scale. Other professions don't have enough per-event posts to corroborate.
+   - Coverage limit: PA, Nursing, Teaching, Law, OT, SLP, Pharmacy, etc. have insufficient per-event samples (n<10 in pre or post for most events) — profession-stratified per-event analysis here is principally a SDN-Medical-vs-Reddit-Medical comparison plus selected cells.
 
 ### Analytical Caveats (state explicitly in any write-up)
 - Pre/post tests are **associational**, not causal: no interrupted-time-series counterfactual.
