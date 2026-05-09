@@ -1,6 +1,6 @@
 ================================================================================
 PSLF Legislative Timeline — Pre/Post Event Analysis Results
-Generated: 2026-05-08T18:50:06
+Generated: 2026-05-08T18:59:54
 Source: scripts/gen_legislative_timeline.py
 ================================================================================
 
@@ -40,6 +40,37 @@ SAVE Admin Forbearance                     +1.031   +0.683   +0.513   +0.253   0
 Trump PSLF Executive Order                 -0.438   -0.403   -0.437   -0.375   0.030       
 Final Trump PSLF Rule                      +0.269   +0.303   +0.236   +0.090   0.094       
   [HIGH = window-sensitivity SD > 0.20; effect highly window-dependent]
+
+--------------------------------------------------------------------------------
+HC3 SINGLE-STAGE ADJUSTED ANALYSIS
+polarity ~ post + log_wc + source + profession  (per event)
+HC3 robust SE (MacKinnon & White 1985); fixes generated-regressor
+problem in the two-stage residualisation above (Pagan 1984).
+Round-7 should-fix #8.
+--------------------------------------------------------------------------------
+Event                                     beta_post    HC3 SE        t    p (HC3)      n
+Limited PSLF Waiver                         +0.0386    0.0090    +4.30    1.7e-05    721
+IDR Account Adjustment                      -0.0150    0.0117    -1.29     0.1976    578
+Biden Mass Forgiveness Announcement         -0.0301    0.0149    -2.02     0.0431    301
+Biden v. Nebraska SCOTUS                    -0.0554    0.0102    -5.43      <1e-7    527
+Payments Restart                            +0.0475    0.0147    +3.23     0.0013    389
+SAVE Admin Forbearance                      +0.0811    0.0170    +4.76    1.9e-06    343
+Trump PSLF Executive Order                  -0.0501    0.0077    -6.52      <1e-7   1104
+Final Trump PSLF Rule                       +0.0277    0.0113    +2.46     0.0140    985
+
+CAVEAT (Round-7 re-audit): HC3 corrects heteroskedasticity but NOT
+autocorrelation. Posts within a 60-90d event window are topically
+clustered (one news event spawns a cascade), so HC3 SEs are still
+anti-conservative. The 30-100x gap between HC3 p and bootstrap p above
+is the autocorrelation tax HC3 doesn't pay. The block-permutation
+bootstrap (p_boot column in the headline table) remains the conservative
+autocorrelation-aware test. HAC (Newey-West) over date-ordered
+observations or cluster-robust by month would be the principled fix
+for HC3 itself; deferred to separate PR cycle.
+
+Note: 'beta_post' is the length+source+profession adjusted mean
+shift in raw polarity units, not Hedges' g. Convert by dividing by
+the residual SD if you want a standardized effect size.
 
 --------------------------------------------------------------------------------
 LENGTH-RESIDUALISED FLAGS

@@ -543,9 +543,73 @@ def figure7(per_event):
 
 
 # ============================================================
+# Step 4.5: Claude test-retest reliability (Round-7 critical fix #5)
+# ============================================================
+def claude_test_retest(retest_csv_path, original_csv_path):
+    """Compute Krippendorff's alpha between two Claude scoring passes
+    on the same posts (e.g. default-temperature run vs temperature=0
+    deterministic re-score). Returns dict with alpha, CI, and per-class
+    confusion table.
+
+    Round-7 critical fix #5: Claude scoring uses default temperature=1.0
+    (sampled, stochastic). Without test-retest reliability, the Claude
+    column has unknown ceiling. This function provides the ceiling.
+
+    The retest run should be produced via:
+        sentiment_zeroshot.py --input ... \\
+          --retest-source-csv ORIGINAL_CSV \\
+          --temperature 0 \\
+          --output RETEST_CSV
+    """
+    if not (os.path.exists(retest_csv_path) and os.path.exists(original_csv_path)):
+        return None
+    a = pd.read_csv(original_csv_path)
+    b = pd.read_csv(retest_csv_path)
+    a_n_total = len(a)
+    b_n_total = len(b)
+    a = a[~a["pslf_sentiment"].isin(["parse_error", "api_error"])][["post_id", "pslf_sentiment"]].copy()
+    b = b[~b["pslf_sentiment"].isin(["parse_error", "api_error"])][["post_id", "pslf_sentiment"]].copy()
+    a["claude_a"] = a["pslf_sentiment"].map(CLAUDE_NUMERIC)
+    b["claude_b"] = b["pslf_sentiment"].map(CLAUDE_NUMERIC)
+    merged = a[["post_id", "claude_a"]].merge(
+        b[["post_id", "claude_b"]], on="post_id", how="inner")
+    merged = merged.dropna(subset=["claude_a", "claude_b"])
+    # Round-7 re-audit fix: log all three sample sizes so silent shrinkage
+    # (e.g. from filter changes between runs) is visible.
+    print(f"  [test-retest sizes] original CSV: {a_n_total}, retest CSV: {b_n_total}, "
+          f"valid intersection: {len(merged)}")
+    if len(merged) < a_n_total * 0.5:
+        print(f"  [test-retest WARNING] merged n ({len(merged)}) is <50% of original "
+              f"({a_n_total}); large shrinkage suggests filter divergence.")
+    if len(merged) < 50:
+        return {"n": int(len(merged)), "error": "insufficient overlap"}
+    rd = np.array([
+        merged["claude_a"].astype(float).to_numpy(),
+        merged["claude_b"].astype(float).to_numpy(),
+    ])
+    alpha_ord = krippendorff.alpha(reliability_data=rd, level_of_measurement="ordinal")
+    alpha_nom = krippendorff.alpha(reliability_data=rd, level_of_measurement="nominal")
+    ci_lo, ci_hi, B_actual = alpha_bootstrap_ci(rd, level="ordinal", B=2000)
+    # Per-class agreement (exact match rate by class)
+    same_class = (merged["claude_a"] == merged["claude_b"]).mean()
+    # Confusion matrix
+    confusion = pd.crosstab(merged["claude_a"], merged["claude_b"],
+                             rownames=["temp=1 (default)"],
+                             colnames=["temp=0 (retest)"]).fillna(0).astype(int)
+    return {
+        "n": int(len(merged)),
+        "alpha_ordinal": float(alpha_ord),
+        "alpha_nominal": float(alpha_nom),
+        "ci95": (float(ci_lo), float(ci_hi)),
+        "exact_match_rate": float(same_class),
+        "confusion": confusion.to_string(),
+    }
+
+
+# ============================================================
 # Step 5: Persist text + CSV artifacts
 # ============================================================
-def write_artifacts(alpha_results, per_event):
+def write_artifacts(alpha_results, per_event, test_retest_results=None):
     txt = "triangulation_results.txt"
     with open(txt, "w", encoding="utf-8") as f:
         f.write("=" * 80 + "\n")
@@ -669,6 +733,42 @@ def write_artifacts(alpha_results, per_event):
             mark = " [CONCORDANT]" if concordant else ""
             f.write(f"  {r['event']:<32s}  {sign_str}{mark}\n")
 
+        # ---- Claude test-retest (Round 7 critical fix #5) ----
+        if test_retest_results:
+            f.write("\n" + "=" * 80 + "\n")
+            f.write("CLAUDE TEST-RETEST RELIABILITY (temperature=1 vs temperature=0)\n")
+            f.write("Round-7 critical fix #5: ceiling reliability of stochastic single-pass\n")
+            f.write("Claude scoring. The default API call uses temperature=1.0 (sampled).\n")
+            f.write("A re-score at temperature=0 (deterministic) gives the upper bound\n")
+            f.write("on the alpha that any single-pass Claude scoring can achieve. If the\n")
+            f.write("test-retest alpha is well below 0.667, no amount of improved prompting\n")
+            f.write("or re-scoring can rescue the cross-instrument alpha; the LLM ceiling\n")
+            f.write("itself is the limit.\n")
+            f.write("-" * 80 + "\n")
+            for source, tr in test_retest_results.items():
+                f.write(f"\nSource: {source}\n")
+                f.write(f"  n (overlap):              {tr['n']:,}\n")
+                f.write(f"  alpha (ordinal):          {tr['alpha_ordinal']:+.4f}  "
+                        f"95% CI [{tr['ci95'][0]:+.4f}, {tr['ci95'][1]:+.4f}]\n")
+                f.write(f"  alpha (nominal):          {tr['alpha_nominal']:+.4f}\n")
+                f.write(f"  exact-match rate:         {tr['exact_match_rate']:.3f}\n")
+                f.write(f"  Confusion matrix:\n")
+                for line in tr["confusion"].split("\n"):
+                    f.write(f"    {line}\n")
+        else:
+            f.write("\n" + "-" * 80 + "\n")
+            f.write("CLAUDE TEST-RETEST RELIABILITY\n")
+            f.write("-" * 80 + "\n")
+            f.write("Not yet run. To compute, score 200+ posts at temperature=0:\n")
+            f.write("  python sentiment_zeroshot.py \\\n")
+            f.write("    --input forum_pslf_discussions.csv \\\n")
+            f.write("    --retest-source-csv zeroshot_sdn_n1000.csv \\\n")
+            f.write("    --temperature 0 \\\n")
+            f.write("    --output zeroshot_sdn_temp0_retest.csv\n")
+            f.write("Then re-run sentiment_triangulation.py.\n")
+            f.write("Cost: ~$3 for 615 SDN posts. Establishes Claude's deterministic\n")
+            f.write("ceiling (Round 7 critical fix #5).\n")
+
         f.write("\n" + "=" * 80 + "\n")
         f.write("END OF ARTIFACT\n")
         f.write("=" * 80 + "\n")
@@ -684,6 +784,23 @@ def main():
     print("Loading zero-shot CSVs...")
     zs = load_zeroshot()
     print(f"  Combined zero-shot rows: {len(zs):,}")
+
+    # Round-7 critical fix #5: Claude test-retest reliability
+    # Auto-detected from filename convention zeroshot_*_temp0_retest.csv
+    test_retest_results = {}
+    for original, retest in [
+        ("zeroshot_sdn_n1000.csv", "zeroshot_sdn_temp0_retest.csv"),
+        ("zeroshot_reddit_n1000.csv", "zeroshot_reddit_temp0_retest.csv"),
+    ]:
+        if os.path.exists(retest):
+            print(f"\n[test-retest] Found {retest}; computing Claude test-retest alpha "
+                  f"vs {original}...")
+            tr = claude_test_retest(retest, original)
+            if tr and "error" not in tr:
+                test_retest_results[original] = tr
+                print(f"  n={tr['n']}, alpha_ordinal={tr['alpha_ordinal']:+.4f} "
+                      f"95% CI [{tr['ci95'][0]:+.4f}, {tr['ci95'][1]:+.4f}], "
+                      f"exact-match={tr['exact_match_rate']:.3f}")
 
     print("Merging with TextBlob + VADER scores...")
     merged = attach_textblob_vader(zs)
@@ -706,7 +823,7 @@ def main():
     figure7(per_event)
 
     print("\nWriting artifacts...")
-    write_artifacts(alpha_results, per_event)
+    write_artifacts(alpha_results, per_event, test_retest_results=test_retest_results)
 
     print("\nTriangulation complete.")
 

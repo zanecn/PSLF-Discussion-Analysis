@@ -689,6 +689,77 @@ def fig2_pre_post(all_data):
             })
     print("=" * 80)
 
+    # ---- HC3 SINGLE-STAGE ADJUSTED ANALYSIS (Round-7 should-fix #8) ----
+    # The two-stage residualization above has a generated-regressor problem
+    # (Pagan 1984): the second-stage SE doesn't account for first-stage
+    # estimation uncertainty. The single-stage equivalent fits
+    #   polarity ~ post + log_wc + source + profession
+    # per event window, with HC3 robust covariance (MacKinnon & White 1985).
+    # The 'post' coefficient is the length+source+profession adjusted
+    # mean shift, with valid SE.
+    print("\n" + "=" * 80)
+    print("HC3 SINGLE-STAGE ADJUSTED ANALYSIS (Round-7 should-fix #8)")
+    print("  polarity ~ post_indicator + log_wc + source + profession (per event)")
+    print("  HC3 robust SE (MacKinnon & White 1985); no generated-regressor issue.")
+    print("=" * 80)
+    print(f"  {'Event':<40s} {'beta_post':>10s} {'HC3 SE':>9s} {'t':>8s} {'p (HC3)':>10s}")
+    hc3_results = []
+    try:
+        import statsmodels.api as sm
+        for event_name, event_date, window in key_events:
+            event_dt = pd.Timestamp(event_date)
+            mask_pre = (all_data["date"] >= event_dt - pd.Timedelta(days=window)) & \
+                       (all_data["date"] < event_dt)
+            mask_post = (all_data["date"] >= event_dt) & \
+                        (all_data["date"] <= event_dt + pd.Timedelta(days=window))
+            sub = all_data[mask_pre | mask_post].copy()
+            if len(sub) < 30:
+                continue
+            sub["post"] = mask_post.loc[sub.index].astype(int)
+            sub["log_wc"] = np.log1p(sub["word_count"])
+            # Build design: intercept + post + log_wc + source dummies + prof dummies
+            src_d = pd.get_dummies(sub["source"], prefix="src",
+                                   drop_first=True, dtype=float)
+            prof_d = pd.get_dummies(sub["profession"], prefix="prof",
+                                    drop_first=True, dtype=float)
+            X = pd.concat([
+                pd.Series(1.0, index=sub.index, name="const"),
+                sub["post"].astype(float),
+                sub["log_wc"],
+                src_d, prof_d,
+            ], axis=1)
+            # Drop perfectly-collinear columns (same QR rank check as round-5)
+            X_arr = X.to_numpy(dtype=float)
+            _, R = np.linalg.qr(X_arr)
+            tol = max(R.shape) * np.spacing(np.linalg.norm(X_arr))
+            keep = np.abs(np.diag(R)) > tol
+            X_design = X.iloc[:, keep]
+            try:
+                model = sm.OLS(sub["polarity"].to_numpy(dtype=float),
+                                X_design.to_numpy(dtype=float))
+                fit_hc3 = model.fit(cov_type="HC3")
+                # 'post' is column index 1 in X_design (assuming it survived)
+                if "post" not in X_design.columns:
+                    continue
+                idx = list(X_design.columns).index("post")
+                beta_post = float(fit_hc3.params[idx])
+                se_post = float(fit_hc3.bse[idx])
+                t_post = float(fit_hc3.tvalues[idx])
+                p_post = float(fit_hc3.pvalues[idx])
+                print(f"  {event_name:<40s} {beta_post:>+10.4f} {se_post:>9.4f} "
+                      f"{t_post:>+8.2f} {p_post:>10.4g}")
+                hc3_results.append({
+                    "event": event_name, "date": event_date, "window": window,
+                    "n_total": int(len(sub)),
+                    "beta_post": beta_post, "se_hc3": se_post,
+                    "t_hc3": t_post, "p_hc3": p_post,
+                })
+            except Exception as e:
+                print(f"  {event_name:<40s} [ERROR] {str(e)[:50]}")
+    except ImportError:
+        print("  [SKIP] statsmodels not installed; pip install statsmodels")
+    print("=" * 80)
+
     # Print results
     print("\n" + "=" * 80)
     print("SENTIMENT EVOLUTION ACROSS LEGISLATIVE CHANGES")
@@ -715,10 +786,11 @@ def fig2_pre_post(all_data):
         print(f"    Hedges' g={r['d']:+.3f} ({d_label}), Glass's delta_pre={r['glass_delta']:+.3f}")
         print(f"    Block-permutation p={r['p_perm']:.4f}{boot_bonf}")
 
-    return results, resid_results, sens_rows
+    return results, resid_results, sens_rows, hc3_results
 
 
 def write_results_artifact(results, resid_results, sens_rows, n_total,
+                           hc3_results=None,
                            path="legislative_timeline_results.txt"):
     """Persist headline numbers to a static text artifact for traceability.
 
@@ -827,6 +899,34 @@ def write_results_artifact(results, resid_results, sens_rows, n_total,
             f.write(f"{row[0]:<40s} {row[1]:>8s} {row[2]:>8s} {row[3]:>8s} "
                     f"{row[4]:>8s} {sd_str:>7s} {flag:>6s}\n")
         f.write("  [HIGH = window-sensitivity SD > 0.20; effect highly window-dependent]\n")
+
+        # ---- HC3 single-stage adjusted analysis (Round-7 should-fix #8) ----
+        if hc3_results:
+            f.write("\n" + "-" * 80 + "\n")
+            f.write("HC3 SINGLE-STAGE ADJUSTED ANALYSIS\n")
+            f.write("polarity ~ post + log_wc + source + profession  (per event)\n")
+            f.write("HC3 robust SE (MacKinnon & White 1985); fixes generated-regressor\n")
+            f.write("problem in the two-stage residualisation above (Pagan 1984).\n")
+            f.write("Round-7 should-fix #8.\n")
+            f.write("-" * 80 + "\n")
+            f.write(f"{'Event':<40s} {'beta_post':>10s} {'HC3 SE':>9s} "
+                    f"{'t':>8s} {'p (HC3)':>10s} {'n':>6s}\n")
+            for r in hc3_results:
+                f.write(f"{r['event']:<40s} {r['beta_post']:>+10.4f} "
+                        f"{r['se_hc3']:>9.4f} {r['t_hc3']:>+8.2f} "
+                        f"{fmt_p(r['p_hc3']):>10s} {r['n_total']:>6d}\n")
+            f.write("\nCAVEAT (Round-7 re-audit): HC3 corrects heteroskedasticity but NOT\n")
+            f.write("autocorrelation. Posts within a 60-90d event window are topically\n")
+            f.write("clustered (one news event spawns a cascade), so HC3 SEs are still\n")
+            f.write("anti-conservative. The 30-100x gap between HC3 p and bootstrap p above\n")
+            f.write("is the autocorrelation tax HC3 doesn't pay. The block-permutation\n")
+            f.write("bootstrap (p_boot column in the headline table) remains the conservative\n")
+            f.write("autocorrelation-aware test. HAC (Newey-West) over date-ordered\n")
+            f.write("observations or cluster-robust by month would be the principled fix\n")
+            f.write("for HC3 itself; deferred to separate PR cycle.\n")
+            f.write("\nNote: 'beta_post' is the length+source+profession adjusted mean\n")
+            f.write("shift in raw polarity units, not Hedges' g. Convert by dividing by\n")
+            f.write("the residual SD if you want a standardized effect size.\n")
 
         # ---- Length-residualised flags ----
         f.write("\n" + "-" * 80 + "\n")
@@ -1020,6 +1120,7 @@ if __name__ == "__main__":
     all_data = load_all_data()
     print(f"Total posts: {len(all_data):,}")
     fig1_timeline(all_data)
-    results, resid_results, sens_rows = fig2_pre_post(all_data)
+    results, resid_results, sens_rows, hc3_results = fig2_pre_post(all_data)
     fig3_profession_timeline(all_data)
-    write_results_artifact(results, resid_results, sens_rows, n_total=len(all_data))
+    write_results_artifact(results, resid_results, sens_rows, n_total=len(all_data),
+                            hc3_results=hc3_results)
