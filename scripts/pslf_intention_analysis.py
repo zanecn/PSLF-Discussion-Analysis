@@ -384,6 +384,109 @@ def fig_profession_event_heatmap(prof_event_df, path="intention_profession_event
     print(f"Saved: {path}")
 
 
+def topic_per_event_shift(zs, min_n_per_cell=20):
+    """For each event, compute the shift in TOPIC distribution (chi-sq).
+
+    Tracks which topic categories swell/shrink around each event. Substantive:
+    did Trump EO drive more 'policy_uncertainty' posts? Did SAVE Forbearance
+    drive more 'frustration_venting'? Etc.
+    """
+    valid = zs[~zs["primary_topic"].isin(["parse_error", "api_error"]) &
+                zs["date"].notna()].copy()
+    rows = []
+    topics = sorted(valid["primary_topic"].dropna().unique())
+    for ev_name, ev_date, win in EVENTS:
+        dt = pd.Timestamp(ev_date)
+        pre = valid[(valid["date"] >= dt - pd.Timedelta(days=win)) &
+                     (valid["date"] < dt)]
+        post = valid[(valid["date"] >= dt) &
+                      (valid["date"] <= dt + pd.Timedelta(days=win))]
+        if len(pre) < min_n_per_cell or len(post) < min_n_per_cell:
+            continue
+        pre_t = pre["primary_topic"].value_counts()
+        post_t = post["primary_topic"].value_counts()
+        # Chi-sq on topic × pre/post
+        all_topics = sorted(set(pre_t.index) | set(post_t.index))
+        ct = np.array([[pre_t.get(t, 0) for t in all_topics],
+                       [post_t.get(t, 0) for t in all_topics]])
+        try:
+            chi2, p_chi, dof, _ = stats.chi2_contingency(ct)
+        except Exception:
+            chi2, p_chi = float("nan"), float("nan")
+        # Per-topic shift (proportion in pre vs post)
+        n_pre, n_post = ct[0].sum(), ct[1].sum()
+        topic_shifts = {}
+        for t in all_topics:
+            pre_p = pre_t.get(t, 0) / n_pre if n_pre > 0 else 0
+            post_p = post_t.get(t, 0) / n_post if n_post > 0 else 0
+            topic_shifts[t] = {
+                "pre_pct": pre_p * 100,
+                "post_pct": post_p * 100,
+                "delta_pp": (post_p - pre_p) * 100,
+            }
+        rows.append({
+            "event": ev_name, "date": ev_date, "window": win,
+            "n_pre": int(n_pre), "n_post": int(n_post),
+            "chi2": chi2, "p_chi2": p_chi,
+            "topic_shifts": topic_shifts,
+        })
+    return rows
+
+
+def fig_topic_event_shifts(topic_event_results, path="intention_topic_event_shifts.png"):
+    """Faceted bar chart: topic delta_pp per event, one panel per event."""
+    if not topic_event_results:
+        return
+    n_events = len(topic_event_results)
+    fig, axes = plt.subplots(n_events, 1, figsize=(11, 1.6 * n_events),
+                              sharex=True)
+    if n_events == 1:
+        axes = [axes]
+    # Consistent topic ordering across all panels
+    all_topics = set()
+    for r in topic_event_results:
+        all_topics.update(r["topic_shifts"].keys())
+    all_topics = sorted(all_topics)
+    topic_colors = {
+        "financial_planning": "#1976D2",
+        "career_impact": "#43A047",
+        "policy_uncertainty": "#E53935",
+        "general_question": "#7B1FA2",
+        "success_story": "#FB8C00",
+        "servicer_issues": "#5E35B1",
+        "frustration_venting": "#C62828",
+    }
+    for ax, r in zip(axes, topic_event_results):
+        topics = list(r["topic_shifts"].keys())
+        deltas = [r["topic_shifts"][t]["delta_pp"] for t in topics]
+        colors = [topic_colors.get(t, "#888888") for t in topics]
+        x = np.arange(len(topics))
+        ax.bar(x, deltas, color=colors, alpha=0.85)
+        ax.axhline(0, color="#222222", linewidth=0.7)
+        ax.set_ylabel("Δ pp", fontsize=9)
+        ax.set_title(f"{r['event']} ({r['date']}, win={r['window']}d, "
+                     f"n_pre={r['n_pre']}, n_post={r['n_post']}, "
+                     f"chi2 p={r['p_chi2']:.4f})",
+                     fontsize=10, loc="left")
+        ax.set_xticks(x)
+        if ax is axes[-1]:
+            ax.set_xticklabels(topics, rotation=45, ha="right", fontsize=9)
+        else:
+            ax.set_xticklabels([])
+        # Annotate biggest shifts
+        for i, (d, t) in enumerate(zip(deltas, topics)):
+            if abs(d) >= 3:
+                ax.annotate(f"{d:+.1f}", xy=(i, d), ha="center",
+                             va="bottom" if d > 0 else "top", fontsize=8,
+                             fontweight="bold")
+    fig.suptitle("Topic Distribution Shift by Event (Δ percentage points, post − pre)",
+                  fontsize=13, fontweight="bold")
+    plt.tight_layout()
+    plt.savefig(path, dpi=300, bbox_inches="tight")
+    plt.close()
+    print(f"Saved: {path}")
+
+
 def stance_topic_cross(zs):
     """Stance × topic cross-tab."""
     valid = zs[(zs["pslf_stance"] != "unknown") &
@@ -513,6 +616,7 @@ def fig_event_forest(event_results, path="intention_event_forest.png"):
 def write_artifacts(zs, dists, prof_counts, prof_props, event_results,
                      topic_ct, sent_stance_ct,
                      prof_event=None, prof_sent_event=None,
+                     topic_event=None,
                      path="intention_results.txt"):
     with open(path, "w", encoding="utf-8") as f:
         f.write("=" * 80 + "\n")
@@ -629,6 +733,27 @@ def write_artifacts(zs, dists, prof_counts, prof_props, event_results,
                         f"Δ {r['delta_pp']:>+6.1f} pp  (n_pre={int(r['n_pre'])}, "
                         f"n_post={int(r['n_post'])}, p={r['p_z']:.3f}{sig})\n")
 
+        if topic_event:
+            f.write("\n" + "-" * 80 + "\n")
+            f.write("PRE/POST TOPIC DISTRIBUTION SHIFTS BY EVENT\n")
+            f.write("Chi-sq test on full topic × pre/post contingency table.\n")
+            f.write("Per-topic delta is post-pre proportion (pp).\n")
+            f.write("-" * 80 + "\n")
+            for r in topic_event:
+                sig = "***" if r["p_chi2"] < 0.001 else "**" if r["p_chi2"] < 0.01 \
+                      else "*" if r["p_chi2"] < 0.05 else "ns"
+                f.write(f"\n{r['event']} ({r['date']}, win={r['window']}d, "
+                        f"n_pre={r['n_pre']}, n_post={r['n_post']}):\n")
+                f.write(f"  chi-sq = {r['chi2']:.2f}, p = {r['p_chi2']:.4f} {sig}\n")
+                # Sort topics by abs delta
+                shifts = sorted(r["topic_shifts"].items(),
+                                 key=lambda x: -abs(x[1]["delta_pp"]))
+                for t, info in shifts:
+                    if abs(info["delta_pp"]) >= 1:  # filter trivial movements
+                        f.write(f"    {t:<25s} {info['pre_pct']:>5.1f}% → "
+                                f"{info['post_pct']:>5.1f}% "
+                                f"(Δ {info['delta_pp']:>+5.1f} pp)\n")
+
         if prof_sent_event is not None and not prof_sent_event.empty:
             f.write("\n" + "-" * 80 + "\n")
             f.write("PRE/POST CLAUDE SENTIMENT SHIFTS BY EVENT × PROFESSION\n")
@@ -718,15 +843,30 @@ def main():
                   f"g_CL={r['g_claude']:+.2f} (p={r['p_claude']:.3f}, "
                   f"n_pre={int(r['n_pre'])}, n_post={int(r['n_post'])})")
 
+    print("\nPer-event topic-distribution shifts...")
+    topic_event = topic_per_event_shift(zs)
+    if topic_event:
+        for r in topic_event:
+            sig = "***" if r["p_chi2"] < 0.001 else "**" if r["p_chi2"] < 0.01 \
+                  else "*" if r["p_chi2"] < 0.05 else "ns"
+            print(f"  {r['event']}: chi-sq p={r['p_chi2']:.4f} {sig}")
+            # Show 2 biggest movers
+            shifts = [(t, info["delta_pp"]) for t, info in r["topic_shifts"].items()]
+            shifts.sort(key=lambda x: -abs(x[1]))
+            for t, d in shifts[:2]:
+                print(f"    {t:<25s} {d:+.1f} pp")
+
     print("\nGenerating figures...")
     fig_intention_trajectory(zs)
     fig_event_forest(event_results)
     fig_profession_event_heatmap(prof_event)
+    fig_topic_event_shifts(topic_event)
 
     print("\nWriting artifacts...")
     write_artifacts(zs, dists, prof_counts, prof_props, event_results,
                      topic_ct, sent_stance,
-                     prof_event=prof_event, prof_sent_event=prof_sent_event)
+                     prof_event=prof_event, prof_sent_event=prof_sent_event,
+                     topic_event=topic_event)
 
     print("\nDone.")
 
