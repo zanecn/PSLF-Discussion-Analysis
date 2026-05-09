@@ -98,8 +98,12 @@ SUBREDDIT_PROFESSIONS = {
     "pharmacy": "pharmacy",
     # Allied health — OT/PT/SLP with grad school debt + nonprofit employers
     "physicianassistant": "physician_assistant",
+    "PAstudent": "physician_assistant",            # Round-7 expansion (2026-05-08)
+    "prephysicianassistant": "physician_assistant",  # Round-7 expansion
     "OccupationalTherapy": "occupational_therapy",
     "slp": "speech_language_pathology",
+    # CRNA: nurse anesthesia, $200K+ debt, hospital employment
+    "CRNA": "nursing",                             # Round-7 expansion
     # General-finance subs that incidentally discuss PSLF (added post-hoc 2026-04;
     # documented in audit consensus to align CSV with config)
     "personalfinance": "general_finance",

@@ -1,6 +1,6 @@
 ================================================================================
 PSLF Sentiment Triangulation — TextBlob × VADER × Claude Sonnet 4
-Generated: 2026-05-08T18:56:57
+Generated: 2026-05-08T19:38:01
 Source: scripts/sentiment_triangulation.py
 ================================================================================
 
@@ -85,18 +85,30 @@ Direction concordance (sign of Hedges' g):
   Trump PSLF EO                     TB:- VA:+ CL:+
   Final Trump PSLF Rule             TB:+ VA:- CL:+
 
+================================================================================
+CLAUDE TEST-RETEST RELIABILITY (temperature=1 vs temperature=0)
+Round-7 critical fix #5: ceiling reliability of stochastic single-pass
+Claude scoring. The default API call uses temperature=1.0 (sampled).
+A re-score at temperature=0 (deterministic) gives the upper bound
+on the alpha that any single-pass Claude scoring can achieve. If the
+test-retest alpha is well below 0.667, no amount of improved prompting
+or re-scoring can rescue the cross-instrument alpha; the LLM ceiling
+itself is the limit.
 --------------------------------------------------------------------------------
-CLAUDE TEST-RETEST RELIABILITY
---------------------------------------------------------------------------------
-Not yet run. To compute, score 200+ posts at temperature=0:
-  python sentiment_zeroshot.py \
-    --input forum_pslf_discussions.csv \
-    --retest-source-csv zeroshot_sdn_n1000.csv \
-    --temperature 0 \
-    --output zeroshot_sdn_temp0_retest.csv
-Then re-run sentiment_triangulation.py.
-Cost: ~$3 for 615 SDN posts. Establishes Claude's deterministic
-ceiling (Round 7 critical fix #5).
+
+Source: zeroshot_sdn_n1000.csv
+  n (overlap):              605
+  alpha (ordinal):          +0.9582  95% CI [+0.9377, +0.9753]
+  alpha (nominal):          +0.9263
+  exact-match rate:         0.952
+  Confusion matrix:
+    temp=0 (retest)   -2  -1    0    1   2
+    temp=1 (default)                      
+    -2                22   5    0    0   0
+    -1                 1  76    6    1   0
+     0                 0   0  292    9   0
+     1                 0   0    7  160   0
+     2                 0   0    0    0  26
 
 ================================================================================
 END OF ARTIFACT
