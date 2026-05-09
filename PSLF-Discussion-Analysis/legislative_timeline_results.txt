@@ -1,42 +1,45 @@
 ================================================================================
 PSLF Legislative Timeline — Pre/Post Event Analysis Results
-Generated: 2026-05-07T17:44:31
+Generated: 2026-05-08T18:41:57
 Source: scripts/gen_legislative_timeline.py
 ================================================================================
 
 Sample: n=7,918 posts (Reddit + SDN, strict PSLF filter, min 20 words)
-Tests: 8 pre/post events; Welch's t + moving-block bootstrap (Künsch 1989, B=2000, per-event seed)
-Bonferroni alpha (n=8): 0.0063
+Tests: 8 pre/post events; Welch's t + block-permutation test (Bickel et al. 1989, B=2000, per-event seed). Round-7 fix:
+  was moving-block bootstrap WITH replacement; now block PERMUTATION (without replacement), correct two-sample null.
+Bonferroni alpha (n=8): 0.00625
+Holm-Bonferroni step-down also applied (Round-7 should-fix #7); controls same FWER but uniformly more powerful.
 Effect size: Hedges' g (Hedges 1981, bias-corrected) + Glass's delta_pre (Lakens 2013)
 Length adjustment: residuals of polarity ~ log(word_count) + source + profession (round-4)
 Caveat: pre/post is associational, NOT causal — no ITS counterfactual.
 
 --------------------------------------------------------------------------------
-HEADLINE TABLE: g_raw, g_resid, parametric p, bootstrap p
+HEADLINE TABLE: g_raw, g_resid, parametric + bootstrap p (raw + Holm-adjusted)
 --------------------------------------------------------------------------------
-Event                                    date         win  n_pre n_post    g_raw   g_resid  glass_d   p_param    p_boot  Bonf
-------------------------------------------------------------------------------------------------------------------------------
-Limited PSLF Waiver                      2021-10-06    90    319    402   +0.350    +0.356   +0.336    0.0000    0.0320     Y
-IDR Account Adjustment                   2022-04-19    90    246    332   -0.235    -0.246   -0.234    0.0055    0.2109     Y
-Biden Mass Forgiveness Announcement      2022-08-24    90    176    125   -0.246    -0.232   -0.232    0.0314    0.1549     n
-Biden v. Nebraska SCOTUS                 2023-06-30    90    245    282   -0.431    -0.393   -0.484    0.0000    0.0065     Y
-Payments Restart                         2023-10-01    90    266    123   +0.331    +0.339   +0.352    0.0048    0.0715     Y
-SAVE Admin Forbearance                   2024-08-09    90    219    124   +0.513    +0.576   +0.515    0.0000    0.0170     Y
-Trump PSLF Executive Order               2025-03-07    60    632    472   -0.403    -0.394   -0.355    0.0000    0.0060     Y
-Final Trump PSLF Rule                    2025-10-30    60    655    330   +0.303    +0.180   +0.312    0.0000    0.0110     Y
+Event                                    date         win  n_pre n_post    g_raw   g_resid  glass_d   p_param    p_boot    p_holm  Bonf  Holm
+----------------------------------------------------------------------------------------------------------------------------------------------
+Limited PSLF Waiver                      2021-10-06    90    319    402   +0.350    +0.356   +0.336   4.4e-06    0.0385    0.1539     n     n
+IDR Account Adjustment                   2022-04-19    90    246    332   -0.235    -0.246   -0.234    0.0055    0.2054    0.3408     n     n
+Biden Mass Forgiveness Announcement      2022-08-24    90    176    125   -0.246    -0.232   -0.232    0.0314    0.1704    0.3408     n     n
+Biden v. Nebraska SCOTUS                 2023-06-30    90    245    282   -0.431    -0.393   -0.484   7.4e-07    0.0075    0.0600     n     n
+Payments Restart                         2023-10-01    90    266    123   +0.331    +0.339   +0.352    0.0048    0.0745    0.2234     n     n
+SAVE Admin Forbearance                   2024-08-09    90    219    124   +0.513    +0.576   +0.515   7.7e-06    0.0130    0.0750     n     n
+Trump PSLF Executive Order               2025-03-07    60    632    472   -0.403    -0.394   -0.355     <1e-7    0.0100    0.0700     n     n
+Final Trump PSLF Rule                    2025-10-30    60    655    330   +0.303    +0.180   +0.312   1.4e-05    0.0125    0.0750     n     n
 
 --------------------------------------------------------------------------------
-WINDOW SENSITIVITY: Hedges' g across 30/60/90/180-day windows
+WINDOW SENSITIVITY: Hedges' g across 30/60/90/180-day windows + SD
 --------------------------------------------------------------------------------
-Event                                         30d      60d      90d     180d
-Limited PSLF Waiver                        +0.397   +0.295   +0.350   +0.329
-IDR Account Adjustment                     -0.610   -0.465   -0.235   -0.089
-Biden Mass Forgiveness Announcement        -0.583   -0.331   -0.246   -0.236
-Biden v. Nebraska SCOTUS                   -0.326   -0.302   -0.431   -0.260
-Payments Restart                           -0.157   +0.186   +0.331   -0.034
-SAVE Admin Forbearance                     +1.031   +0.683   +0.513   +0.253
-Trump PSLF Executive Order                 -0.438   -0.403   -0.437   -0.375
-Final Trump PSLF Rule                      +0.269   +0.303   +0.236   +0.090
+Event                                         30d      60d      90d     180d      SD   flag
+Limited PSLF Waiver                        +0.397   +0.295   +0.350   +0.329   0.043       
+IDR Account Adjustment                     -0.610   -0.465   -0.235   -0.089   0.233   HIGH
+Biden Mass Forgiveness Announcement        -0.583   -0.331   -0.246   -0.236   0.162       
+Biden v. Nebraska SCOTUS                   -0.326   -0.302   -0.431   -0.260   0.073       
+Payments Restart                           -0.157   +0.186   +0.331   -0.034   0.219   HIGH
+SAVE Admin Forbearance                     +1.031   +0.683   +0.513   +0.253   0.326   HIGH
+Trump PSLF Executive Order                 -0.438   -0.403   -0.437   -0.375   0.030       
+Final Trump PSLF Rule                      +0.269   +0.303   +0.236   +0.090   0.094       
+  [HIGH = window-sensitivity SD > 0.20; effect highly window-dependent]
 
 --------------------------------------------------------------------------------
 LENGTH-RESIDUALISED FLAGS
@@ -53,7 +56,7 @@ Limited PSLF Waiver (2021-10-06, 90d window):
   Change: +0.0414 polarity, -3.8pp negativity
   Welch t=-4.629, p=0.000004 *** (Bonf.)
   Hedges' g=+0.350 (small), Glass's delta_pre=+0.336
-  Moving-block bootstrap p=0.0320 (B=2000, per-event seed)
+  Moving-block bootstrap p=0.0385 (B=2000, per-event seed)
   Length-residualised: g_resid=+0.356, p_resid=0.0000
 
 IDR Account Adjustment (2022-04-19, 90d window):
@@ -62,7 +65,7 @@ IDR Account Adjustment (2022-04-19, 90d window):
   Change: -0.0306 polarity, +0.3pp negativity
   Welch t=+2.790, p=0.005456 ** (Bonf.)
   Hedges' g=-0.235 (small), Glass's delta_pre=-0.234
-  Moving-block bootstrap p=0.2109 (B=2000, per-event seed)
+  Moving-block bootstrap p=0.2054 (B=2000, per-event seed)
   Length-residualised: g_resid=-0.246, p_resid=0.0034
 
 Biden Mass Forgiveness Announcement (2022-08-24, 90d window):
@@ -71,7 +74,7 @@ Biden Mass Forgiveness Announcement (2022-08-24, 90d window):
   Change: -0.0302 polarity, -5.3pp negativity
   Welch t=+2.162, p=0.031400 *
   Hedges' g=-0.246 (small), Glass's delta_pre=-0.232
-  Moving-block bootstrap p=0.1549 (B=2000, per-event seed)
+  Moving-block bootstrap p=0.1704 (B=2000, per-event seed)
   Length-residualised: g_resid=-0.232, p_resid=0.0425
 
 Biden v. Nebraska SCOTUS (2023-06-30, 90d window):
@@ -80,7 +83,7 @@ Biden v. Nebraska SCOTUS (2023-06-30, 90d window):
   Change: -0.0441 polarity, +15.1pp negativity
   Welch t=+5.011, p=0.000001 *** (Bonf.)
   Hedges' g=-0.431 (small), Glass's delta_pre=-0.484
-  Moving-block bootstrap p=0.0065 (B=2000, per-event seed)
+  Moving-block bootstrap p=0.0075 (B=2000, per-event seed)
   Length-residualised: g_resid=-0.393, p_resid=0.0000
 
 Payments Restart (2023-10-01, 90d window):
@@ -89,7 +92,7 @@ Payments Restart (2023-10-01, 90d window):
   Change: +0.0383 polarity, -4.5pp negativity
   Welch t=-2.854, p=0.004754 ** (Bonf.)
   Hedges' g=+0.331 (small), Glass's delta_pre=+0.352
-  Moving-block bootstrap p=0.0715 (B=2000, per-event seed)
+  Moving-block bootstrap p=0.0745 (B=2000, per-event seed)
   Length-residualised: g_resid=+0.339, p_resid=0.0035
 
 SAVE Admin Forbearance (2024-08-09, 90d window):
@@ -98,7 +101,7 @@ SAVE Admin Forbearance (2024-08-09, 90d window):
   Change: +0.0691 polarity, -11.3pp negativity
   Welch t=-4.566, p=0.000008 *** (Bonf.)
   Hedges' g=+0.513 (medium), Glass's delta_pre=+0.515
-  Moving-block bootstrap p=0.0170 (B=2000, per-event seed)
+  Moving-block bootstrap p=0.0130 (B=2000, per-event seed)
   Length-residualised: g_resid=+0.576, p_resid=0.0000
 
 Trump PSLF Executive Order (2025-03-07, 60d window):
@@ -107,7 +110,7 @@ Trump PSLF Executive Order (2025-03-07, 60d window):
   Change: -0.0544 polarity, +3.7pp negativity
   Welch t=+6.971, p=0.000000 *** (Bonf.)
   Hedges' g=-0.403 (small), Glass's delta_pre=-0.355
-  Moving-block bootstrap p=0.0060 (B=2000, per-event seed)
+  Moving-block bootstrap p=0.0100 (B=2000, per-event seed)
   Length-residualised: g_resid=-0.394, p_resid=0.0000
 
 Final Trump PSLF Rule (2025-10-30, 60d window):
@@ -116,7 +119,7 @@ Final Trump PSLF Rule (2025-10-30, 60d window):
   Change: +0.0342 polarity, -0.8pp negativity
   Welch t=-4.373, p=0.000014 *** (Bonf.)
   Hedges' g=+0.303 (small), Glass's delta_pre=+0.312
-  Moving-block bootstrap p=0.0110 (B=2000, per-event seed)
+  Moving-block bootstrap p=0.0125 (B=2000, per-event seed)
   Length-residualised: g_resid=+0.180, p_resid=0.0088
 
 ================================================================================

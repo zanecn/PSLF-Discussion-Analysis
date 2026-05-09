@@ -1,6 +1,6 @@
 ================================================================================
 PSLF Sentiment Triangulation — TextBlob × VADER × Claude Sonnet 4
-Generated: 2026-05-08T18:33:09
+Generated: 2026-05-08T18:42:53
 Source: scripts/sentiment_triangulation.py
 ================================================================================
 
@@ -15,7 +15,7 @@ Encoding: TextBlob & VADER discretized to 5-level ordinal {-2,-1,0,1,2};
   VADER thresholds:    < -0.5 / -0.05 / +0.05 / +0.5 (Hutto & Gilbert 2014)
 
 Three-rater alpha (TextBlob, VADER, Claude):
-  Ordinal:  alpha = -0.0315
+  Ordinal:  alpha = -0.0315  95% CI [-0.0482, -0.0143]  (bootstrap B=2000)
   Nominal:  alpha = -0.0888
   Interval: alpha = +0.0105
 
@@ -30,7 +30,7 @@ Upper-bound sensitivity: alpha with percentile-matched marginals
   TextBlob and VADER but NOT with Claude's true asymmetric distribution
   (5%/18%/48%/25%/4%), which mechanically inflates alpha. Report the
   fixed-threshold alpha as canonical and this as an upper bound.)
-  3-rater ordinal alpha (percentile, upper bound): +0.1680
+  3-rater ordinal alpha (percentile, upper bound): +0.1680  95% CI [+0.1512, +0.1852]
    TextBlob x VADER    : alpha = +0.3126
    TextBlob x Claude   : alpha = +0.0527
       VADER x Claude   : alpha = +0.0896
@@ -59,18 +59,21 @@ Krippendorff (1980) interpretation thresholds:
 PER-EVENT PRE/POST TESTS (well-powered after Path C event-window fill)
 --------------------------------------------------------------------------------
 Sample: all posts in event windows from any zeroshot subsample (n_pre range 166–610, n_post range 109–437)
-Caveat: per-event Welch's t below ignores within-window autocorrelation. Round-7 follow-up: replace with stratified circular block bootstrap.
+p_boot is block-permutation (Bickel et al. 1989, B=2000); preserves within-window autocorrelation.
+p_param is Welch's t (parametric, ignores autocorrelation; shown for comparison only).
 
-Event                        date         win n_pre n_post    g_TB      p_TB    g_VA      p_VA    g_CL      p_CL
---------------------------------------------------------------------------------------------------------------
-Limited PSLF Waiver          2021-10-06    90   315    399  +0.355    0.0000  +0.083    0.2823  -0.759    0.0000
-IDR Account Adjustment       2022-04-19    90   241    309  -0.261    0.0025  +0.654    0.0000  -0.299    0.0007
-Biden Mass Forgiveness       2022-08-24    90   166    117  -0.245    0.0362  -0.358    0.0047  -0.363    0.0016
-Biden v. Nebraska SCOTUS     2023-06-30    90   238    269  -0.436    0.0000  -0.303    0.0007  -0.049    0.5821
-Payments Restart             2023-10-01    90   253    119  +0.326    0.0067  +0.399    0.0002  -0.032    0.7655
-SAVE Admin Forbearance       2024-08-09    90   205    109  +0.511    0.0000  +0.052    0.6541  -0.386    0.0032
-Trump PSLF EO                2025-03-07    60   610    437  -0.393    0.0000  +0.212    0.0007  +0.412    0.0000
-Final Trump PSLF Rule        2025-10-30    60   291    319  +0.375    0.0000  -0.064    0.4310  +0.348    0.0000
+Event                         win n_pre n_post    g_TB  pBootTB    g_VA  pBootVA    g_CL  pBootCL
+----------------------------------------------------------------------------------------------------
+Limited PSLF Waiver            90   315    399  +0.355   0.0320  +0.083   0.6542  -0.759   0.0005
+IDR Account Adjustment         90   241    309  -0.261   0.1869  +0.654   0.0005  -0.299   0.1504
+Biden Mass Forgiveness         90   166    117  -0.245   0.1959  -0.358   0.1079  -0.363   0.0795
+Biden v. Nebraska SCOTUS       90   238    269  -0.436   0.0030  -0.303   0.0560  -0.049   0.7631
+Payments Restart               90   253    119  +0.326   0.1079  +0.399   0.0195  -0.032   0.8661
+SAVE Admin Forbearance         90   205    109  +0.511   0.0220  +0.052   0.8101  -0.386   0.0665
+Trump PSLF EO                  60   610    437  -0.393   0.0065  +0.212   0.1674  +0.412   0.0055
+Final Trump PSLF Rule          60   291    319  +0.375   0.0160  -0.064   0.6927  +0.348   0.0090
+
+(parametric p shown in CSV; not in this table since it is known-inflated by autocorrelation)
 
 Direction concordance (sign of Hedges' g):
   Limited PSLF Waiver               TB:+ VA:+ CL:-

@@ -1,7 +1,7 @@
 ================================================================================
 PSLF DISCUSSION ANALYSIS: FINAL SUMMARY REPORT
 ================================================================================
-Generated: 2026-05-07
+Generated: 2026-05-08
 Total posts: 9,629 (4,880 Reddit + 4,749 SDN)
 After sentiment filter (>=20 words): 8,788
 Platforms: 20 communities (18 subreddits + SDN forum)
@@ -52,11 +52,11 @@ Scope: online PSLF discourse, not the borrower population.
 ================================================================================
 3. PRESENT DAY
 ================================================================================
-  Last 30 days                           n=   773, polarity=+0.0822, %neg=19.1%
+  Last 30 days                           n=   762, polarity=+0.0826, %neg=19.0%
   2024 H2 baseline                       n=   472, polarity=+0.0956, %neg=16.7%
   Post-waiver peak (2021-10 to 2022-01)  n=   458, polarity=+0.1171, %neg=12.0%
 
-  Present vs 2024H2: t=-1.778, p=0.075681 ns
+  Present vs 2024H2: t=-1.726, p=0.084677 ns
 
 ================================================================================
 4. PLATFORM COMPARISON (raw + length-adjusted note)

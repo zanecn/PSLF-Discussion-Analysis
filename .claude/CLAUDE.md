@@ -4,7 +4,7 @@
 
 This project began as a multi-source sentiment analysis of online PSLF discussion. After Path C event-window Claude scoring (n=4,787 posts with all three scorers) and a Round-7 comprehensive audit, **the substantive headline has been replaced by a methodological one**:
 
-**Primary finding (methodological):** Three commonly-used sentiment instruments — TextBlob (lexical affect), VADER (expressive arousal, Hutto & Gilbert 2014), and Claude Sonnet 4 zero-shot (stance toward PSLF, per the prompt) — operationalize **substantially different latent constructs** on policy-discourse text. Krippendorff's α=+0.17 (percentile-matched ordinal, n=4,787) — well below the 0.667 floor for tentative reliability claims. Pearson r: TB×VADER +0.30, TB×Claude +0.02 (ns), VADER×Claude +0.12. The construct distinction is theoretically grounded in stance vs sentiment (Mohammad et al. 2016, SemEval-2016 Task 6) but its empirical magnitude on policy discourse has not been previously quantified.
+**Primary finding (methodological):** Three commonly-used sentiment instruments — TextBlob (lexical affect), VADER (expressive arousal, Hutto & Gilbert 2014), and Claude Sonnet 4 zero-shot (stance toward PSLF, per the prompt) — operationalize **substantially different latent constructs** on policy-discourse text. Three-rater Krippendorff's α=−0.03 (canonical fixed thresholds, 95% CI [−0.048, −0.014]) / +0.17 (charitable upper bound with percentile-matched marginals, 95% CI [+0.151, +0.185]) on n=4,787 posts with all three scorers. Both estimates are robustly far below the 0.667 floor for tentative reliability claims (Krippendorff 1980). Pearson r: TB×VADER +0.30, TB×Claude +0.02 (ns), VADER×Claude +0.12. The construct distinction is theoretically grounded in stance vs sentiment (Mohammad et al. 2016, SemEval-2016 Task 6) but its empirical magnitude on policy discourse has not been previously quantified at this scale.
 
 **Lead exemplar:** The 2025 Trump PSLF Executive Order produces directionally opposite Hedges' g across the three instruments on the same n=1,047 posts: TextBlob g=−0.39 (more negative-valence vocabulary), VADER g=+0.21 (more affective intensity), Claude g=+0.41 (more stance-positive engagement, "still pursuing PSLF"). This is *not* measurement noise — it is consistent construct dissociation visible across all 8 PSLF policy events.
 
@@ -50,20 +50,22 @@ This project began as a multi-source sentiment analysis of online PSLF discussio
 
 ## Headline Findings (associational; survive 4 audit rounds)
 
-All effects below are reported as Hedges' g + Glass's Δ_pre (raw) and length-residualised g (round-4 fix). Block-bootstrap p-values (Künsch 1989, B=2000, per-event seed — round-5 fix) reported. Bonferroni α/8 = 0.00625. Canonical numbers live in `legislative_timeline_results.txt`.
+All effects below are reported as Hedges' g + Glass's Δ_pre (raw) and length-residualised g (round-4 fix). **Block-permutation p-values** (Bickel et al. 1989, B=2000, per-event seed; Round-7 critical fix #1: was moving-block bootstrap WITH replacement, now block PERMUTATION WITHOUT replacement which is the correct two-sample autocorrelation-aware null). Bonferroni α/8 = 0.00625; Holm-Bonferroni step-down also reported. Canonical numbers live in `legislative_timeline_results.txt`.
 
-| Event | g_raw | g_resid | bootstrap p | parametric p | survives Bonferroni? |
-|-------|-------|---------|-------------|--------------|----------------------|
-| **Trump PSLF EO** (2025-03-07) | −0.40 | −0.39 | 0.0060 | <0.0001 | ✓ on bootstrap and parametric |
-| **Biden v. Nebraska SCOTUS** (2023-06-30) | −0.43 | −0.39 | 0.0065 | <0.0001 | borderline bootstrap (just over 0.00625), ✓ parametric. Window overlaps 2023-10-01 Payments Restart. |
-| **SAVE Admin Forbearance** (2024-08-09) | +0.51 | **+0.58** | 0.017 | <0.0001 | ✗ on bootstrap (passes 0.05, fails 0.00625), ✓ parametric |
-| **Final Trump PSLF Rule** (2025-10-30) | +0.30 | +0.18 | 0.011 | <0.0001 | ✗ on bootstrap, ✓ parametric. g_resid weakens. |
-| **Limited PSLF Waiver** (2021-10-06) | +0.35 | +0.36 | 0.032 | <0.0001 | ✗ on bootstrap, ✓ parametric |
-| Payments Restart (2023-10-01) | +0.33 | +0.34 | 0.072 | 0.005 | ✗ borderline. Window overlaps Biden v. Nebraska. |
-| IDR Account Adjustment (2022-04-19) | −0.24 | −0.25 | 0.211 | 0.006 | ✗ NS on bootstrap |
-| Biden Mass Forgiveness (2022-08-24) | −0.25 | −0.23 | 0.155 | 0.031 | ✗ NS |
+| Event | g_raw | g_resid | p_boot (corrected) | p_holm | parametric p | survives Bonf/Holm? |
+|-------|-------|---------|--------------------|--------|--------------|---------------------|
+| **Biden v. Nebraska SCOTUS** (2023-06-30) | −0.43 | −0.39 | **0.0075** | 0.060 | <1e-6 | ✗ neither |
+| **Trump PSLF EO** (2025-03-07) | −0.40 | −0.39 | **0.0100** | 0.070 | <1e-7 | ✗ neither |
+| **SAVE Admin Forbearance** (2024-08-09) | +0.51 | **+0.58** | 0.0130 | 0.075 | <1e-5 | ✗ neither |
+| **Final Trump PSLF Rule** (2025-10-30) | +0.30 | +0.18 | 0.0125 | 0.075 | <1e-4 | ✗ neither |
+| **Limited PSLF Waiver** (2021-10-06) | +0.35 | +0.36 | 0.0385 | 0.154 | <1e-5 | ✗ neither |
+| Payments Restart (2023-10-01) | +0.33 | +0.34 | 0.0745 | 0.224 | 0.0048 | ✗ neither (window overlaps Biden v. Nebraska) |
+| Biden Mass Forgiveness (2022-08-24) | −0.25 | −0.23 | 0.170 | 0.341 | 0.031 | ✗ NS |
+| IDR Account Adjustment (2022-04-19) | −0.24 | −0.25 | 0.205 | 0.341 | 0.006 | ✗ NS |
 
-**Key correction (round-5)**: prior versions of this table claimed 5 events "survive Bonferroni" by conflating p<0.05 with the Bonferroni threshold. With α/8 = 0.00625 applied strictly to the autocorrelation-corrected bootstrap p, only Trump PSLF EO clearly passes. Biden v. Nebraska is at the boundary. The parametric p column inflates significance because Welch's t ignores within-window autocorrelation; bootstrap is the more honest test.
+**Round-7 substantive update**: with the corrected bootstrap, **ZERO events survive bootstrap-Bonferroni or Holm-Bonferroni at family-wise α=0.05.** Trump PSLF EO p_boot moved from 0.006 → 0.0100, just outside the α/8=0.00625 threshold. Biden v. Nebraska SCOTUS p_boot moved from 0.0065 → 0.0075, also outside. The parametric p column is known-inflated 30–100× by autocorrelation and should not be the basis for substantive claims. The audit's prediction that "a properly stratified block bootstrap will likely give larger p-values" was confirmed.
+
+**Window-sensitivity flag (Round-7 should-fix #10)**: three events have window-sensitivity SD > 0.20 (IDR Account Adjustment SD=0.233; Payments Restart SD=0.219; SAVE Admin Forbearance SD=0.326), indicating effects are highly window-dependent (likely transient or regression to the mean). Trump PSLF EO is the most window-stable (SD=0.030).
 
 Key descriptive observations (NO causal claims, NO behavioral interpretation):
 1. **The 60-day window following the Trump PSLF EO is the only event with a clear bootstrap-Bonferroni-significant shift** (g=−0.40 raw, g=−0.39 residualised; bootstrap p=0.006 < α/8=0.00625). Direction matches the policy mechanism (rule restricts PSLF processing for "illegal-purpose" employers).

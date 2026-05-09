@@ -67,7 +67,8 @@ Respond ONLY with valid JSON, no markdown:
 
 
 def classify_batch(client, posts: list[dict], model: str = "claude-sonnet-4-20250514",
-                   max_consecutive_errors: int = 5) -> list[dict]:
+                   max_consecutive_errors: int = 5,
+                   temperature: float | None = None) -> list[dict]:
     """Classify a batch of posts using Claude API.
 
     Round-5 audit fixes:
@@ -76,6 +77,9 @@ def classify_batch(client, posts: list[dict], model: str = "claude-sonnet-4-2025
       - Zero-guard on summary stats (handled in main() not here)
       - max_tokens raised from 150 -> 250 (was truncating ~2.6% of responses)
       - locals() instead of dir() for the parse-error raw_response capture
+    Round-7 critical fix #5:
+      - `temperature` argument (None = API default = 1.0; pass 0 for
+        deterministic re-scoring used in test-retest reliability runs).
     """
     import anthropic as _anth
 
@@ -90,12 +94,15 @@ def classify_batch(client, posts: list[dict], model: str = "claude-sonnet-4-2025
         content = ""  # Initialize so JSONDecodeError handler can reference it safely
 
         try:
-            response = client.messages.create(
+            kwargs = dict(
                 model=model,
                 max_tokens=250,  # Round-5: was 150, truncating ~2.6% of responses
                 system=SYSTEM_PROMPT,
                 messages=[{"role": "user", "content": prompt}],
             )
+            if temperature is not None:
+                kwargs["temperature"] = temperature
+            response = client.messages.create(**kwargs)
 
             content = response.content[0].text.strip()
             parsed = json.loads(content)
@@ -185,6 +192,15 @@ def main():
                              "re-scoring posts already classified.")
     parser.add_argument("--dry-run", action="store_true",
                         help="Filter + dedup as usual, then print sample size and exit (no API calls).")
+    parser.add_argument("--temperature", type=float, default=None,
+                        help="Override Claude temperature (default uses API default = 1.0). "
+                             "Set --temperature 0 for deterministic re-scoring "
+                             "(use this for test-retest reliability runs, Round 7 critical fix #5).")
+    parser.add_argument("--retest-source-csv", default=None,
+                        help="Path to an existing zeroshot CSV. When set, the script will RE-SCORE "
+                             "the same post_ids that appear in this CSV (instead of filtering anew). "
+                             "Use with --temperature 0 to compute test-retest reliability against "
+                             "the original (sampled-temperature) Claude scores.")
     args = parser.parse_args()
 
     if not HAS_ANTHROPIC:
@@ -234,6 +250,25 @@ def main():
     wc = df[text_col].fillna("").str.split().str.len()
     df = df[wc >= 20].copy()
     print(f"After min 20 words: {len(df):,} posts")
+
+    # Test-retest source mode (Round-7 critical fix #5): instead of filtering
+    # anew, restrict to post_ids that appear in an existing zeroshot CSV. Used
+    # with --temperature 0 to compute test-retest reliability against the
+    # original (default-temperature) Claude scoring.
+    if args.retest_source_csv:
+        if not os.path.exists(args.retest_source_csv):
+            print(f"[ERROR] --retest-source-csv path does not exist: {args.retest_source_csv}")
+            sys.exit(1)
+        retest_ids = set(pd.read_csv(args.retest_source_csv,
+                                      usecols=["post_id"])["post_id"].astype(str))
+        id_col = "post_id" if "post_id" in df.columns else ("id" if "id" in df.columns else None)
+        if id_col is None:
+            print("[ERROR] No post_id/id column to filter by; cannot run --retest-source-csv mode")
+            sys.exit(1)
+        before = len(df)
+        df = df[df[id_col].astype(str).isin(retest_ids)].copy()
+        print(f"[retest mode] Restricted to {len(df):,} posts that appear in "
+              f"{args.retest_source_csv} (from {before:,})")
 
     # Event-windows-full: score ALL posts in any of the 8 event windows (Path C, round-5)
     if args.event_windows_full:
@@ -330,7 +365,7 @@ def main():
         print(f"  {'Event':<35s} {'pre':>5s} {'post':>5s}")
         for n, p, q in per_event_summary:
             print(f"  {n:<35s} {p:>5d} {q:>5d}")
-    elif (not args.event_windows_full) and args.sample > 0 and len(df) > args.sample:
+    elif (not args.event_windows_full) and (not args.retest_source_csv) and args.sample > 0 and len(df) > args.sample:
         # Build a stratification key
         if "created_utc" in df.columns:
             yr = pd.to_datetime(pd.to_numeric(df["created_utc"], errors="coerce"),
@@ -389,8 +424,10 @@ def main():
         sys.exit(1)
     print(f"  Pre-flight OK (Claude replied: {msg!r})")
 
-    print(f"\nClassifying {len(posts)} posts with {args.model}...")
-    results = classify_batch(client, posts, model=args.model)
+    temp_str = f" (temperature={args.temperature})" if args.temperature is not None else ""
+    print(f"\nClassifying {len(posts)} posts with {args.model}{temp_str}...")
+    results = classify_batch(client, posts, model=args.model,
+                              temperature=args.temperature)
 
     # Save results
     if results:

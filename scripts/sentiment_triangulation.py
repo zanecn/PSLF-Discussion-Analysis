@@ -114,6 +114,92 @@ def hedges_g(pre, post):
     return d * J
 
 
+def block_permutation_p(pre_dated, post_dated, scorer_col,
+                        B=2000, seed=42):
+    """Block-permutation p-value for two-sample mean difference (Bickel et al. 1989).
+
+    Round-7 should-fix #9: per-event triangulation tests previously used
+    parametric Welch's t, which ignores within-window autocorrelation.
+    Block permutation preserves it.
+
+    pre_dated, post_dated: DataFrames with 'date' + scorer_col columns.
+    Returns p-value (two-sided absolute t).
+    """
+    rng = np.random.default_rng(seed)
+    pre_dated = pre_dated.dropna(subset=["date", scorer_col])
+    post_dated = post_dated.dropna(subset=["date", scorer_col])
+    n1 = len(pre_dated)
+    n2 = len(post_dated)
+    if n1 < 5 or n2 < 5:
+        return float("nan")
+    combined = pd.concat([pre_dated, post_dated]).sort_values("date").reset_index(drop=True)
+    vals = combined[scorer_col].to_numpy(dtype=float)
+    n_total = len(vals)
+    block_len = max(int(np.ceil(n_total ** (1/3))), 5)
+    n_blocks = int(np.ceil(n_total / block_len))
+    block_slices = [(b * block_len, min((b + 1) * block_len, n_total))
+                    for b in range(n_blocks)]
+    pre = vals[:n1]   # original order; pre is earlier dates
+    # Wait — combined is sorted by date, so first n1 elements aren't necessarily pre.
+    # Use the actual pre/post group means as the observed statistic.
+    a_obs = pre_dated[scorer_col].to_numpy(dtype=float)
+    b_obs = post_dated[scorer_col].to_numpy(dtype=float)
+    if a_obs.std() == 0 or b_obs.std() == 0:
+        return float("nan")
+    t_obs = abs((b_obs.mean() - a_obs.mean()) /
+                np.sqrt(a_obs.var(ddof=1) / n1 + b_obs.var(ddof=1) / n2))
+    count_extreme = 0
+    B_actual = 0
+    for _ in range(B):
+        perm = rng.permutation(n_blocks)
+        resampled = np.concatenate([vals[s:e] for b in perm
+                                     for s, e in [block_slices[b]]])
+        a_vals = resampled[:n1]
+        b_vals = resampled[n1:n1 + n2]
+        if a_vals.std() == 0 or b_vals.std() == 0:
+            continue
+        t_b = abs((b_vals.mean() - a_vals.mean()) /
+                  np.sqrt(a_vals.var(ddof=1) / n1 + b_vals.var(ddof=1) / n2))
+        if t_b >= t_obs:
+            count_extreme += 1
+        B_actual += 1
+    return (count_extreme + 1) / (B_actual + 1) if B_actual > 0 else float("nan")
+
+
+def alpha_bootstrap_ci(reliability_data, level="ordinal",
+                       B=2000, alpha=0.05, seed=42):
+    """Stratified bootstrap CI for Krippendorff's alpha.
+
+    Round-7 audit fix #3: previously reported alpha as a point estimate only.
+    Hayes & Krippendorff (2007, Communication Methods & Measures) recommend
+    bootstrap CIs (typically B=10,000) since alpha lacks an analytic SE.
+    Implementation: resample units (columns of reliability_data) with
+    replacement, recompute alpha, take percentile interval.
+
+    B=2000 is a quality-vs-speed tradeoff (B=10,000 takes ~5x longer for
+    n=4,787 units). User can pass B=10000 explicitly for the manuscript.
+    """
+    rng = np.random.default_rng(seed)
+    n_units = reliability_data.shape[1]
+    boot_alphas = []
+    for _ in range(B):
+        idx = rng.choice(n_units, size=n_units, replace=True)
+        rd_b = reliability_data[:, idx]
+        try:
+            a = krippendorff.alpha(reliability_data=rd_b,
+                                    level_of_measurement=level)
+            if not np.isnan(a):
+                boot_alphas.append(a)
+        except Exception:
+            continue
+    if len(boot_alphas) < 100:
+        return float("nan"), float("nan"), len(boot_alphas)
+    boot_alphas = np.asarray(boot_alphas)
+    lo = float(np.percentile(boot_alphas, 100 * alpha / 2))
+    hi = float(np.percentile(boot_alphas, 100 * (1 - alpha / 2)))
+    return lo, hi, len(boot_alphas)
+
+
 def hedges_g_var(g, n1, n2):
     """Variance of Hedges' g with J^2 small-sample correction.
 
@@ -306,6 +392,12 @@ def compute_alpha(merged):
     else:
         subsamples = []
 
+    # Bootstrap CI for the headline three-rater alpha (both fixed and pct).
+    # B=2000 by default; manuscript run can use B=10000 by passing larger.
+    print("  Bootstrap CI on three-rater alpha (B=2000)...")
+    ci_fixed = alpha_bootstrap_ci(reliability_data, level="ordinal", B=2000)
+    ci_pct = alpha_bootstrap_ci(rd_pct, level="ordinal", B=2000)
+
     return {
         "n_units": n_units,
         "n_complete": int(len(sub)),  # rows with all 3 scorers (non-NaN)
@@ -313,6 +405,9 @@ def compute_alpha(merged):
         "alpha_ordinal": alpha_ordinal,
         "alpha_nominal": alpha_nominal,
         "alpha_interval": alpha_interval,
+        "alpha_ordinal_ci95": ci_fixed[:2],     # (lo, hi)
+        "alpha_pct_ci95": ci_pct[:2],
+        "alpha_boot_B": ci_fixed[2],            # # of valid bootstrap iterations
         "pairs": pairs,
         "alpha_pct_3rater": alpha_pct,
         "pairs_pct": pairs_pct,
@@ -349,21 +444,27 @@ def per_event_tests(merged):
                "n_pre": len(pre), "n_post": len(post),
                "n_pre_subsamples": ",".join(sorted(pre["subsample"].dropna().unique())),
                "n_post_subsamples": ",".join(sorted(post["subsample"].dropna().unique()))}
-        for scorer, col in [("textblob", "polarity"),
-                            ("vader", "vader_compound"),
-                            ("claude", "claude_numeric")]:
+        for s_idx, (scorer, col) in enumerate([("textblob", "polarity"),
+                                                ("vader", "vader_compound"),
+                                                ("claude", "claude_numeric")]):
             a = pre[col].dropna().to_numpy()
             b = post[col].dropna().to_numpy()
             if len(a) < 2 or len(b) < 2:
                 row[f"g_{scorer}"] = float("nan")
                 row[f"p_{scorer}"] = float("nan")
+                row[f"p_boot_{scorer}"] = float("nan")
                 row[f"mean_pre_{scorer}"] = float("nan")
                 row[f"mean_post_{scorer}"] = float("nan")
                 continue
             g = hedges_g(a, b)
             t, p = stats.ttest_ind(a, b, equal_var=False)
+            # Round-7 should-fix #9: add block-permutation p (autocorrelation-aware)
+            p_boot = block_permutation_p(
+                pre[["date", col]], post[["date", col]], scorer_col=col,
+                B=2000, seed=42 + s_idx)
             row[f"g_{scorer}"] = g
             row[f"p_{scorer}"] = p
+            row[f"p_boot_{scorer}"] = p_boot
             row[f"mean_pre_{scorer}"] = float(a.mean())
             row[f"mean_post_{scorer}"] = float(b.mean())
         rows.append(row)
@@ -470,7 +571,10 @@ def write_artifacts(alpha_results, per_event):
         f.write(f"  TextBlob thresholds: < -0.4 / -0.1 / +0.1 / +0.4\n")
         f.write(f"  VADER thresholds:    < -0.5 / -0.05 / +0.05 / +0.5 (Hutto & Gilbert 2014)\n\n")
         f.write("Three-rater alpha (TextBlob, VADER, Claude):\n")
-        f.write(f"  Ordinal:  alpha = {alpha_results['alpha_ordinal']:+.4f}\n")
+        ci_lo, ci_hi = alpha_results.get("alpha_ordinal_ci95", (float("nan"), float("nan")))
+        boot_B = alpha_results.get("alpha_boot_B", 0)
+        f.write(f"  Ordinal:  alpha = {alpha_results['alpha_ordinal']:+.4f}  "
+                f"95% CI [{ci_lo:+.4f}, {ci_hi:+.4f}]  (bootstrap B={boot_B})\n")
         f.write(f"  Nominal:  alpha = {alpha_results['alpha_nominal']:+.4f}\n")
         f.write(f"  Interval: alpha = {alpha_results['alpha_interval']:+.4f}\n\n")
         f.write("Pairwise alpha (ordinal, fixed thresholds):\n")
@@ -482,7 +586,10 @@ def write_artifacts(alpha_results, per_event):
         f.write("  TextBlob and VADER but NOT with Claude's true asymmetric distribution\n")
         f.write("  (5%/18%/48%/25%/4%), which mechanically inflates alpha. Report the\n")
         f.write("  fixed-threshold alpha as canonical and this as an upper bound.)\n")
-        f.write(f"  3-rater ordinal alpha (percentile, upper bound): {alpha_results['alpha_pct_3rater']:+.4f}\n")
+        ci_lo_p, ci_hi_p = alpha_results.get("alpha_pct_ci95", (float("nan"), float("nan")))
+        f.write(f"  3-rater ordinal alpha (percentile, upper bound): "
+                f"{alpha_results['alpha_pct_3rater']:+.4f}  "
+                f"95% CI [{ci_lo_p:+.4f}, {ci_hi_p:+.4f}]\n")
         for (a, b), v in alpha_results["pairs_pct"].items():
             f.write(f"  {a:>9s} x {b:<9s}: alpha = {v:+.4f}\n")
         f.write("\nContinuous Pearson r (supplementary, on raw scores):\n")
@@ -517,20 +624,35 @@ def write_artifacts(alpha_results, per_event):
             f.write(f"Sample: all posts in event windows from any zeroshot subsample "
                     f"(n_pre range {per_event['n_pre'].min()}–{per_event['n_pre'].max()}, "
                     f"n_post range {per_event['n_post'].min()}–{per_event['n_post'].max()})\n")
-            f.write("Caveat: per-event Welch's t below ignores within-window autocorrelation. "
-                    "Round-7 follow-up: replace with stratified circular block bootstrap.\n")
+            f.write("p_boot is block-permutation (Bickel et al. 1989, B=2000); "
+                    "preserves within-window autocorrelation.\n")
+            f.write("p_param is Welch's t (parametric, ignores autocorrelation; "
+                    "shown for comparison only).\n")
         else:
             f.write("Sample: empty.\n")
-        f.write(f"\n{'Event':<28s} {'date':<11s} {'win':>4s} {'n_pre':>5s} {'n_post':>6s} "
-                f"{'g_TB':>7s} {'p_TB':>9s} {'g_VA':>7s} {'p_VA':>9s} "
-                f"{'g_CL':>7s} {'p_CL':>9s}\n")
-        f.write("-" * 110 + "\n")
+
+        # Helper to format p-values APA-style (Round-7 should-fix #11)
+        def fmt_p(p):
+            if p is None or (isinstance(p, float) and np.isnan(p)):
+                return "  n/a"
+            if p < 1e-7:
+                return "<1e-7"
+            if p < 1e-4:
+                return f"{p:.1e}"
+            return f"{p:.4f}"
+
+        f.write(f"\n{'Event':<28s} {'win':>4s} {'n_pre':>5s} {'n_post':>6s} "
+                f"{'g_TB':>7s} {'pBootTB':>8s} {'g_VA':>7s} {'pBootVA':>8s} "
+                f"{'g_CL':>7s} {'pBootCL':>8s}\n")
+        f.write("-" * 100 + "\n")
         for _, r in per_event.iterrows():
-            f.write(f"{r['event']:<28s} {r['date']:<11s} {int(r['window']):>4d} "
+            f.write(f"{r['event']:<28s} {int(r['window']):>4d} "
                     f"{int(r['n_pre']):>5d} {int(r['n_post']):>6d} "
-                    f"{r['g_textblob']:>+7.3f} {r['p_textblob']:>9.4f} "
-                    f"{r['g_vader']:>+7.3f} {r['p_vader']:>9.4f} "
-                    f"{r['g_claude']:>+7.3f} {r['p_claude']:>9.4f}\n")
+                    f"{r['g_textblob']:>+7.3f} {fmt_p(r.get('p_boot_textblob', float('nan'))):>8s} "
+                    f"{r['g_vader']:>+7.3f} {fmt_p(r.get('p_boot_vader', float('nan'))):>8s} "
+                    f"{r['g_claude']:>+7.3f} {fmt_p(r.get('p_boot_claude', float('nan'))):>8s}\n")
+        f.write("\n(parametric p shown in CSV; not in this table since it is "
+                "known-inflated by autocorrelation)\n")
 
         # Direction concordance
         f.write("\nDirection concordance (sign of Hedges' g):\n")

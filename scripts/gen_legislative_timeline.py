@@ -25,6 +25,35 @@ from pslf_search_terms import PSLF_STRICT_REGEX, filter_pslf_relevant
 
 MIN_WORDS = 20
 
+
+def holm_bonferroni(pvals, alpha=0.05):
+    """Holm-Bonferroni step-down correction (Holm 1979).
+
+    Round-7 should-fix #7: naive Bonferroni at α/k is overly conservative
+    when only a few tests are likely null. Holm-Bonferroni controls the
+    same family-wise error rate but is uniformly more powerful.
+
+    Returns (adjusted_pvals, reject_flags) where reject_flags are bool
+    masks indicating which null hypotheses are rejected at family-wise
+    error rate `alpha`.
+    """
+    pvals = np.asarray(pvals, dtype=float)
+    k = len(pvals)
+    if k == 0:
+        return np.array([]), np.array([], dtype=bool)
+    # Sort p-values ascending; remember original index
+    order = np.argsort(pvals)
+    sorted_p = pvals[order]
+    # Holm-adjusted p_i = (k - i) * sorted_p_i, monotonized
+    adj_sorted = np.maximum.accumulate(
+        np.minimum(1.0, sorted_p * (k - np.arange(k)))
+    )
+    # Restore original order
+    adj = np.empty_like(adj_sorted)
+    adj[order] = adj_sorted
+    reject = adj < alpha
+    return adj, reject
+
 # ---- Aesthetic theme (consistent across figures) ----
 plt.rcParams.update({
     "figure.facecolor": "white",
@@ -372,42 +401,61 @@ def fig2_pre_post(all_data):
             # (round-2 audit: pre/post designs need pre as control)
             pre_sd = float(pre.std(ddof=1))
             glass_delta = (post.mean() - pre.mean()) / pre_sd if pre_sd > 0 else 0.0
-            # Moving-block bootstrap to preserve WITHIN-BLOCK autocorrelation
-            # under H0 of no pre/post difference (Künsch 1989).
-            # The combined pre+post series is resampled in contiguous time-ordered
-            # blocks; the surrogate is then re-cut at index n1 to give surrogate
-            # "pre" and "post" groups. This is the standard null distribution
-            # for autocorrelated two-sample tests (Davison & Hinkley 1997 §4.3).
+            # Block-permutation test for autocorrelation-aware two-sample p-value
+            # (Bickel et al. 1989; Politis & Romano 1994).
             #
-            # Round-5 audit fixes:
+            # Round-7 audit fix: the previous implementation resampled blocks
+            # WITH REPLACEMENT from the combined series and re-cut at index n1.
+            # That biases the null distribution because the surrogate "pre" sample
+            # is biased toward whichever group is more common at the resampled
+            # block-starts. The standard two-sample autocorrelation-aware test
+            # PERMUTES blocks WITHOUT REPLACEMENT, preserving within-block
+            # autocorrelation while breaking between-group correlation.
+            #
+            # Algorithm:
+            #   1. Sort combined pre+post by date.
+            #   2. Divide into contiguous blocks of length L = ceil(n^(1/3))
+            #      (Carlstein 1986 — note this rate is for sample-mean variance;
+            #      for two-sample tests Hall et al. 1995 give different rates,
+            #      but n^(1/3) is conventional and produces L=9-11 for our n).
+            #   3. For each iteration: permute the block ORDER (without replacement),
+            #      take first n1 elements as surrogate "pre", next n2 as surrogate
+            #      "post". Compute Welch t. Repeat B times.
+            #   4. p = (count_extreme + 1) / (B_actual + 1), per Davison & Hinkley
+            #      (1997) eq. 4.11.
+            #
+            # Round-5 audit fixes preserved:
             #   - Per-event seed (idx-based) to decorrelate event bootstraps
             #   - Track B_actual (skip zero-variance surrogates correctly)
-            #   - Block length L = ceil(n^(1/3)) per Carlstein (1986)
             try:
                 rng = np.random.default_rng(42 + idx)  # per-event seed
                 combined_sorted = pd.concat([pre_df, post_df]).sort_values("date").reset_index(drop=True)
                 vals = combined_sorted["polarity"].to_numpy()
                 n_total = len(vals)
                 block_len = max(int(np.ceil(n_total ** (1/3))), 5)
+                n_blocks = int(np.ceil(n_total / block_len))
                 obs_t = abs((post.mean() - pre.mean()) / np.sqrt(var1/n1 + var2/n2))
                 B = 2000
                 count_extreme = 0
-                B_actual = 0  # round-5 fix: skipped iterations don't count toward B
-                block_starts = np.arange(0, n_total - block_len + 1)
-                blocks_per_resample = int(np.ceil(n_total / block_len))
+                B_actual = 0
+                # Pre-compute block boundaries (last block may be shorter)
+                block_slices = [(b * block_len, min((b + 1) * block_len, n_total))
+                                for b in range(n_blocks)]
                 for _ in range(B):
-                    starts = rng.choice(block_starts, size=blocks_per_resample, replace=True)
-                    resampled = np.concatenate([vals[s:s + block_len] for s in starts])[:n_total]
+                    # Permute block order WITHOUT replacement (Bickel et al. 1989)
+                    perm = rng.permutation(n_blocks)
+                    resampled = np.concatenate([vals[s:e] for b in perm
+                                                for s, e in [block_slices[b]]])
+                    # Concatenated array is length n_total by construction
                     a_vals = resampled[:n1]
                     b_vals = resampled[n1:n1 + n2]
                     if a_vals.std() == 0 or b_vals.std() == 0:
-                        continue  # degenerate surrogate; skip
+                        continue
                     t_b = abs((b_vals.mean() - a_vals.mean()) /
                               np.sqrt(a_vals.var(ddof=1)/n1 + b_vals.var(ddof=1)/n2))
                     if t_b >= obs_t:
                         count_extreme += 1
                     B_actual += 1
-                # (count + 1) / (B + 1) per Davison & Hinkley (1997) eq. 4.11
                 p_perm = (count_extreme + 1) / (B_actual + 1) if B_actual > 0 else float("nan")
             except Exception:
                 p_perm = float("nan")
@@ -681,8 +729,27 @@ def write_results_artifact(results, resid_results, sens_rows, n_total,
     n_tests = len(results)
     alpha_bonf = 0.05 / n_tests if n_tests > 0 else 0.05
 
+    # Round-7 should-fix #7: Holm-Bonferroni step-down adjustment.
+    # Compute on bootstrap p (the autocorrelation-corrected one) since the
+    # parametric p is known-inflated 30-100x.
+    p_boot_array = [r.get("p_perm", float("nan")) for r in results]
+    p_boot_holm, holm_reject = holm_bonferroni(
+        [p if not np.isnan(p) else 1.0 for p in p_boot_array], alpha=0.05)
+    p_param_array = [r["p"] for r in results]
+    p_param_holm, _ = holm_bonferroni(p_param_array, alpha=0.05)
+
     # Build a date-indexed map of residualised stats
     resid_map = {(r["event"], r["date"]): r for r in resid_results}
+
+    # Helper for APA-style p-value reporting (Round-7 should-fix #11)
+    def fmt_p(p):
+        if p is None or (isinstance(p, float) and np.isnan(p)):
+            return "  n/a"
+        if p < 1e-7:
+            return "<1e-7"
+        if p < 1e-4:
+            return f"{p:.1e}"
+        return f"{p:.4f}"
 
     with open(path, "w", encoding="utf-8") as f:
         f.write("=" * 80 + "\n")
@@ -693,9 +760,13 @@ def write_results_artifact(results, resid_results, sens_rows, n_total,
 
         f.write(f"Sample: n={n_total:,} posts (Reddit + SDN, strict PSLF filter, "
                 f"min {MIN_WORDS} words)\n")
-        f.write(f"Tests: {n_tests} pre/post events; Welch's t + moving-block "
-                f"bootstrap (Künsch 1989, B=2000, per-event seed)\n")
-        f.write(f"Bonferroni alpha (n={n_tests}): {alpha_bonf:.4f}\n")
+        f.write(f"Tests: {n_tests} pre/post events; Welch's t + block-permutation "
+                f"test (Bickel et al. 1989, B=2000, per-event seed). Round-7 fix:\n")
+        f.write(f"  was moving-block bootstrap WITH replacement; now block "
+                f"PERMUTATION (without replacement), correct two-sample null.\n")
+        f.write(f"Bonferroni alpha (n={n_tests}): {alpha_bonf:.5f}\n")
+        f.write(f"Holm-Bonferroni step-down also applied (Round-7 should-fix #7); "
+                f"controls same FWER but uniformly more powerful.\n")
         f.write("Effect size: Hedges' g (Hedges 1981, bias-corrected) "
                 "+ Glass's delta_pre (Lakens 2013)\n")
         f.write("Length adjustment: residuals of polarity ~ log(word_count) "
@@ -705,32 +776,49 @@ def write_results_artifact(results, resid_results, sens_rows, n_total,
 
         # ---- Headline table ----
         f.write("-" * 80 + "\n")
-        f.write("HEADLINE TABLE: g_raw, g_resid, parametric p, bootstrap p\n")
+        f.write("HEADLINE TABLE: g_raw, g_resid, parametric + bootstrap p (raw + Holm-adjusted)\n")
         f.write("-" * 80 + "\n")
         header = (f"{'Event':<40s} {'date':<11s} {'win':>4s} "
                   f"{'n_pre':>6s} {'n_post':>6s} {'g_raw':>8s} {'g_resid':>9s} "
                   f"{'glass_d':>8s} {'p_param':>9s} {'p_boot':>9s} "
-                  f"{'Bonf':>5s}\n")
+                  f"{'p_holm':>9s} {'Bonf':>5s} {'Holm':>5s}\n")
         f.write(header)
         f.write("-" * len(header) + "\n")
-        for r in results:
+        for i, r in enumerate(results):
             key = (r["event"], r["date"])
             g_resid = resid_map.get(key, {}).get("g_resid", float("nan"))
-            bonf_mark = "Y" if r["p"] < alpha_bonf else "n"
+            bonf_mark = "Y" if (not np.isnan(r["p_perm"]) and r["p_perm"] < alpha_bonf) else "n"
+            holm_mark = "Y" if holm_reject[i] else "n"
             f.write(
                 f"{r['event']:<40s} {r['date']:<11s} {r['window']:>4d} "
                 f"{r['n_pre']:>6d} {r['n_post']:>6d} {r['d']:>+8.3f} "
                 f"{g_resid:>+9.3f} {r['glass_delta']:>+8.3f} "
-                f"{r['p']:>9.4f} {r['p_perm']:>9.4f} {bonf_mark:>5s}\n"
+                f"{fmt_p(r['p']):>9s} {fmt_p(r['p_perm']):>9s} "
+                f"{fmt_p(p_boot_holm[i]):>9s} {bonf_mark:>5s} {holm_mark:>5s}\n"
             )
 
         # ---- Window sensitivity ----
+        # Round-7 should-fix #10: report SD across the 4 window choices to
+        # flag events with high window-dependence (e.g. SAVE Forbearance
+        # ranges +1.03 → +0.25 across 30d/180d).
         f.write("\n" + "-" * 80 + "\n")
-        f.write("WINDOW SENSITIVITY: Hedges' g across 30/60/90/180-day windows\n")
+        f.write("WINDOW SENSITIVITY: Hedges' g across 30/60/90/180-day windows + SD\n")
         f.write("-" * 80 + "\n")
-        f.write(f"{'Event':<40s} {'30d':>8s} {'60d':>8s} {'90d':>8s} {'180d':>8s}\n")
+        f.write(f"{'Event':<40s} {'30d':>8s} {'60d':>8s} {'90d':>8s} "
+                f"{'180d':>8s} {'SD':>7s} {'flag':>6s}\n")
         for row in sens_rows:
-            f.write(f"{row[0]:<40s} {row[1]:>8s} {row[2]:>8s} {row[3]:>8s} {row[4]:>8s}\n")
+            # row = [event_name, '30d_str', '60d_str', '90d_str', '180d_str']
+            try:
+                gs = [float(row[i]) for i in (1, 2, 3, 4) if row[i] != "n/a"]
+                sd = float(np.std(gs, ddof=1)) if len(gs) >= 2 else float("nan")
+                flag = " HIGH" if (not np.isnan(sd) and sd > 0.20) else ""
+            except (ValueError, IndexError):
+                sd = float("nan")
+                flag = ""
+            sd_str = f"{sd:.3f}" if not np.isnan(sd) else "  n/a"
+            f.write(f"{row[0]:<40s} {row[1]:>8s} {row[2]:>8s} {row[3]:>8s} "
+                    f"{row[4]:>8s} {sd_str:>7s} {flag:>6s}\n")
+        f.write("  [HIGH = window-sensitivity SD > 0.20; effect highly window-dependent]\n")
 
         # ---- Length-residualised flags ----
         f.write("\n" + "-" * 80 + "\n")
