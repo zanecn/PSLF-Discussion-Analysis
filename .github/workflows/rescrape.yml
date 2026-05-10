@@ -1,0 +1,78 @@
+name: PSLF rescrape & analyze
+
+on:
+  workflow_dispatch:
+    inputs:
+      with_comments:
+        description: "Also collect Reddit comment trees (needs REDDIT_CLIENT_ID/SECRET)"
+        type: boolean
+        default: false
+      with_zeroshot:
+        description: "Also run Claude zero-shot scorer (needs ANTHROPIC_API_KEY)"
+        type: boolean
+        default: false
+      analyze_only:
+        description: "Skip scraping, reuse committed CSVs"
+        type: boolean
+        default: false
+  schedule:
+    # Monthly on the 1st at 06:00 UTC
+    - cron: "0 6 1 * *"
+
+jobs:
+  rescrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: playwright-sdn-scraper
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Build pipeline args
+        id: args
+        run: |
+          ARGS=""
+          [[ "${{ inputs.with_comments }}" == "true" ]]   && ARGS="$ARGS --with-comments"
+          [[ "${{ inputs.with_zeroshot }}" == "true" ]]   && ARGS="$ARGS --with-zeroshot"
+          [[ "${{ inputs.analyze_only }}"  == "true" ]]   && ARGS="$ARGS --analyze-only"
+          echo "args=$ARGS" >> "$GITHUB_OUTPUT"
+
+      - name: Run pipeline
+        env:
+          REDDIT_CLIENT_ID:     ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          ANTHROPIC_API_KEY:    ${{ secrets.ANTHROPIC_API_KEY }}
+        run: bash run_pipeline.sh ${{ steps.args.outputs.args }}
+
+      - name: Upload outputs as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pslf-pipeline-${{ github.run_id }}
+          path: |
+            PSLF-Discussion-Analysis/*.png
+            PSLF-Discussion-Analysis/*.csv
+            PSLF-Discussion-Analysis/*.log
+            PSLF-Discussion-Analysis/*.txt
+          retention-days: 30
+
+      - name: Commit refreshed data back to branch
+        if: ${{ inputs.analyze_only != true && success() }}
+        run: |
+          git config user.name  "pslf-pipeline-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add PSLF-Discussion-Analysis/*.csv PSLF-Discussion-Analysis/*.png PSLF-Discussion-Analysis/*.txt PSLF-Discussion-Analysis/*.log || true
+          if ! git diff --cached --quiet; then
+            STAMP=$(date -u +%Y-%m-%d)
+            git commit -m "Automated rescrape ${STAMP} via GitHub Actions"
+            git push origin HEAD:playwright-sdn-scraper
+          else
+            echo "No data changes to commit"
+          fi
