@@ -1,0 +1,78 @@
+================================================================================
+POLICY P1: State-level PSLF discourse heat map
+================================================================================
+
+Total state-mention observations: 9,397
+States with at least one mention: 51
+Years covered: [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
+
+TOP 15 STATES BY DISCOURSE VOLUME
+--------------------------------------------------------------------------------
+state        n   mean_pol      sd    %neg
+   PA      986    +0.1017   0.122   5.78%
+   CA      938    +0.0963   0.114   5.65%
+   VA      716    +0.0992   0.145   8.10%
+   OR      603    +0.0817   0.111   8.79%
+   MD      559    +0.1142   0.098   3.94%
+   TX      458    +0.0919   0.124   5.24%
+   MO      369    +0.0512   0.152  17.07%
+   NY      348    +0.0966   0.119   4.31%
+   FL      308    +0.0880   0.119   8.77%
+   IN      306    +0.0892   0.150   9.15%
+   WA      298    +0.0929   0.128   4.36%
+   OK      280    +0.1249   0.120   3.57%
+   MA      260    +0.0815   0.098   7.31%
+   MS      229    +0.0923   0.137   7.42%
+   ID      215    +0.0717   0.138  10.23%
+
+PSLF DISTRESS HOTSPOTS (high volume + below-median mean polarity)
+--------------------------------------------------------------------------------
+  MO: n=  369 mean_pol=+0.0512 %neg= 17.1%
+  SC: n=  106 mean_pol=+0.0619 %neg= 11.3%
+  ID: n=  215 mean_pol=+0.0717 %neg= 10.2%
+  ME: n=  108 mean_pol=+0.0778 %neg= 10.2%
+  MA: n=  260 mean_pol=+0.0815 %neg=  7.3%
+  OR: n=  603 mean_pol=+0.0817 %neg=  8.8%
+  NC: n=  155 mean_pol=+0.0821 %neg=  8.4%
+  FL: n=  308 mean_pol=+0.0880 %neg=  8.8%
+  IN: n=  306 mean_pol=+0.0892 %neg=  9.2%
+  CO: n=  127 mean_pol=+0.0895 %neg=  3.1%
+
+TRUMP PSLF EO IMPACT BY STATE (2024 vs 2025)
+--------------------------------------------------------------------------------
+Largest negative shifts (states most affected):
+  OK: 2024=+0.1433 2025=+0.1004 Δ=-0.0428  (n_24=58, n_25=60)
+  PA: 2024=+0.1273 2025=+0.1102 Δ=-0.0171  (n_24=168, n_25=338)
+  MD: 2024=+0.1204 2025=+0.1074 Δ=-0.0130  (n_24=53, n_25=203)
+  OR: 2024=+0.0771 2025=+0.0698 Δ=-0.0073  (n_24=101, n_25=161)
+  CA: 2024=+0.0926 2025=+0.0882 Δ=-0.0044  (n_24=193, n_25=187)
+  IN: 2024=+0.0745 2025=+0.0728 Δ=-0.0017  (n_24=57, n_25=98)
+  VA: 2024=+0.0752 2025=+0.0853 Δ=+0.0100  (n_24=84, n_25=215)
+  MO: 2024=+0.0492 2025=+0.0695 Δ=+0.0203  (n_24=132, n_25=82)
+  TX: 2024=+0.0792 2025=+0.1064 Δ=+0.0272  (n_24=92, n_25=104)
+
+Least affected (or improved):
+  OK: 2024=+0.1433 2025=+0.1004 Δ=-0.0428  (n_24=58, n_25=60)
+  PA: 2024=+0.1273 2025=+0.1102 Δ=-0.0171  (n_24=168, n_25=338)
+  MD: 2024=+0.1204 2025=+0.1074 Δ=-0.0130  (n_24=53, n_25=203)
+  OR: 2024=+0.0771 2025=+0.0698 Δ=-0.0073  (n_24=101, n_25=161)
+  CA: 2024=+0.0926 2025=+0.0882 Δ=-0.0044  (n_24=193, n_25=187)
+  IN: 2024=+0.0745 2025=+0.0728 Δ=-0.0017  (n_24=57, n_25=98)
+  VA: 2024=+0.0752 2025=+0.0853 Δ=+0.0100  (n_24=84, n_25=215)
+  MO: 2024=+0.0492 2025=+0.0695 Δ=+0.0203  (n_24=132, n_25=82)
+  TX: 2024=+0.0792 2025=+0.1064 Δ=+0.0272  (n_24=92, n_25=104)
+
+POLICY USES
+--------------------------------------------------------------------------------
+- Federal Student Aid: prioritize outreach in distress hotspots
+- State financial counseling: target states with sustained negative discourse
+- DOE communication: track state-level reception of policy announcements
+- HRSA: cross-reference with HPSA designations (next analysis)
+
+CAVEATS
+--------------------------------------------------------------------------------
+- State mentions are noisy; many posts mention multiple states
+- Reddit/SDN demographics skew young/educated/white (not representative
+  of full PSLF-eligible borrower population)
+- TextBlob polarity is one of three sentiment instruments; results would
+  shift if using VADER or Claude

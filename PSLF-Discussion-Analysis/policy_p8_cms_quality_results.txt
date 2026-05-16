@@ -1,0 +1,52 @@
+================================================================================
+POLICY P8: PSLF GAP vs HOSPITAL QUALITY (CMS Care Compare)
+================================================================================
+
+CMS hospitals: 5,426
+NRMP institutions: 797
+NRMP-CMS matched: 251 (31.5%)
+NRMP rows with CMS data: 9,364
+
+HEURISTIC PSLF CLASS vs CMS-OWNERSHIP-DERIVED PSLF CLASS
+--------------------------------------------------------------------------------
+cms_pslf_class  ambiguous  pslf_eligible  pslf_ineligible_for_profit
+pslf_class                                                          
+ambiguous               0            102                          15
+pslf_friendly           3            113                          17
+pslf_hostile            0              1                           0
+
+Concordance rate: 45.0%
+
+CMS-DERIVED PSLF GAP
+--------------------------------------------------------------------------------
+  CMS PSLF-eligible:     n=1,103, mean fill = 0.9650
+  CMS PSLF-ineligible:   n=5, mean fill = 1.0000
+  Gap: -3.50 pp, p=2.616e-13
+
+HOSPITAL QUALITY (Overall Star Rating) BY PSLF CLASS
+--------------------------------------------------------------------------------
+  pslf_eligible: n=7,169, mean rating = 3.05
+  pslf_ineligible_for_profit: n=1,583, mean rating = 2.59
+  ambiguous: n=32, mean rating = 3.59
+
+WITHIN-STAR-TIER PSLF GAP (matched-quality comparison)
+--------------------------------------------------------------------------------
+  1.0 stars: n_e=870, n_i=123, gap=-7.69pp, p=5.149e-18
+  2.0 stars: n_e=1,478, n_i=475, gap=-0.35pp, p=0.7868
+  3.0 stars: n_e=2,353, n_i=921, gap=-1.48pp, p=0.05089
+  4.0 stars: n_e=1,365, n_i=59, gap=+2.80pp, p=0.2909
+  5.0 stars: n_e=1,103, n_i=5, gap=-3.50pp, p=2.616e-13
+
+OLS REGRESSION: fill_rate ~ PSLF_eligible + star_rating + state_FE
+--------------------------------------------------------------------------------
+  N obs: 8,752
+  R-squared: 0.0338
+  PSLF-eligible coef: -1.58 pp (SE=0.94pp, p=0.09226)
+  Star rating coef: +1.30 pp/star (SE=0.25, p=1.134e-07)
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+Critical test: if the PSLF-eligibility coefficient survives controlling
+for hospital quality (star rating) and state fixed effects, the +12.86pp
+PSLF gap reflects the PSLF mechanism, not a quality differential.
+

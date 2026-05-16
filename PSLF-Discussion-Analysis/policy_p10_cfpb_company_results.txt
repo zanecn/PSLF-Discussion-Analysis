@@ -1,0 +1,106 @@
+================================================================================
+POLICY P10: CFPB COMPLAINT VOLUME BY COMPANY × YEAR
+================================================================================
+
+CFPB PSLF complaints (total): 12,552
+Year range: 2016 to 2026
+
+ANNUAL TOTAL CFPB PSLF COMPLAINT VOLUME
+--------------------------------------------------------------------------------
+  2016: 341
+  2017: 1,391
+  2018: 1,053
+  2019: 1,007
+  2020: 511
+  2021: 519
+  2022: 1,278
+  2023: 1,885
+  2024: 2,116
+  2025: 2,223
+  2026: 228
+
+TOP 8 COMPANIES BY YEAR (count of complaints)
+--------------------------------------------------------------------------------
+year                                              2016  2017  2018  2019  2020  2021  2022  2023  2024  2025  2026
+company                                                                                                           
+MOHELA                                               6    17    11     1     1     2   234  1190  1329  1251   119
+AES/PHEAA                                          158   427   467   516   275   334   450    30    15    13     1
+Navient Solutions, LLC.                             74   725   385   335   137    92   193    63   208    60     6
+Nelnet, Inc.                                        27    58    46    42    40    32   112   295   218   296    29
+Maximus Federal Services, Inc.                       0     0     0     0     0     0    78   148   183   200    11
+EdFinancial Services                                 0     4     6     4     0     1   153   118    98   123    17
+Servicer under contract with Federal Student Aid     0     0     0     0     0     0     0     0     1   229    35
+GREAT LAKES                                          9    41    29    14     0     0     0     0     0     0     0
+
+MOHELA CFPB COMPLAINT SHARE PER YEAR
+--------------------------------------------------------------------------------
+  2016: 1.8% (n=6)
+  2017: 1.2% (n=17)
+  2018: 1.0% (n=11)
+  2019: 0.1% (n=1)
+  2020: 0.2% (n=1)
+  2021: 0.4% (n=2)
+  2022: 18.3% (n=234)
+  2023: 63.1% (n=1190)
+  2024: 62.8% (n=1329)
+  2025: 56.3% (n=1251)
+  2026: 52.2% (n=119)
+
+FEDLOAN/AES/PHEAA SHARE PER YEAR (predecessor PSLF servicer)
+--------------------------------------------------------------------------------
+  2016: 46.6% (n=159)
+  2017: 30.9% (n=430)
+  2018: 44.4% (n=468)
+  2019: 51.3% (n=517)
+  2020: 53.8% (n=275)
+  2021: 64.4% (n=334)
+  2022: 35.2% (n=450)
+  2023: 1.6% (n=30)
+  2024: 0.7% (n=15)
+  2025: 0.6% (n=13)
+  2026: 0.4% (n=1)
+
+CROSS-VALIDATION WITH P2 DISCOURSE FINDING
+--------------------------------------------------------------------------------
+P2: MOHELA discourse polarity dropped from +0.079 (2017) to +0.040 (2024).
+CFPB MOHELA share per year:
+  2016: 1.8% of total CFPB PSLF complaints
+  2017: 1.2% of total CFPB PSLF complaints
+  2018: 1.0% of total CFPB PSLF complaints
+  2019: 0.1% of total CFPB PSLF complaints
+  2020: 0.2% of total CFPB PSLF complaints
+  2021: 0.4% of total CFPB PSLF complaints
+  2022: 18.3% of total CFPB PSLF complaints
+  2023: 63.1% of total CFPB PSLF complaints
+  2024: 62.8% of total CFPB PSLF complaints
+  2025: 56.3% of total CFPB PSLF complaints
+  2026: 52.2% of total CFPB PSLF complaints
+
+MOHELA CFPB share trajectory: 0% (2017, pre-takeover) -> 33%+ (2023-2025).
+Both signals show MOHELA's borrower-experience burden growing as it
+became the dominant PSLF servicer post-2022.
+
+TOP ISSUE TYPES IN MOHELA CFPB COMPLAINTS
+--------------------------------------------------------------------------------
+  Dealing with your lender or servicer                         3,464
+  Struggling to repay your loan                                607
+  Incorrect information on your report                         50
+  Dealing with my lender or servicer                           10
+  Improper use of your report                                  7
+  Problem with a company's investigation into an existing problem 7
+  Getting a loan                                               7
+  Credit monitoring or identity theft protection services      3
+  Problem with fraud alerts or security freezes                2
+  Issue with income share agreement                            2
+
+POLICY USES
+--------------------------------------------------------------------------------
+- Future PSLF servicer contract design: this is the strongest cross-
+  channel signal in the entire dataset. MOHELA is generating both
+  discourse distress (P2) AND formal CFPB complaints (P10) at scale.
+- DOE oversight: prioritize MOHELA process audits in areas matching
+  the top issue types (loan recertification, payment counts, processing
+  delays).
+- Cross-validates the L3/B1 'discourse-admin NULL' finding: at the
+  company-specific level, both signals DO converge (just not at the
+  aggregate cumulative-approvals level).

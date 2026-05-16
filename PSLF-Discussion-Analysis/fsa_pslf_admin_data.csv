@@ -1,0 +1,19 @@
+month,cumulative_approved,context,month_dt,monthly_approval_increment
+2017-09,0,PSLF first eligible: 10-year clock starts triggering,2017-09-01,0.0
+2018-09,96,First-cohort wave; 99% denial rate widely reported,2018-09-01,96.0
+2019-09,1216,"TEPSLF added 1,120; reform pressure mounts",2019-09-01,1120.0
+2020-09,4140,Pre-pandemic baseline; TEPSLF trickle,2020-09-01,2924.0
+2021-08,7088,Just before Limited Waiver,2021-08-01,2948.0
+2021-10,8115,Limited Waiver ANNOUNCED Oct 6; processing surge starts,2021-10-01,1027.0
+2022-01,67500,Limited Waiver processing accelerating,2022-01-01,59385.0
+2022-04,145000,IDR Account Adjustment ANNOUNCED April; momentum continues,2022-04-01,77500.0
+2022-09,175000,Year-end Waiver push,2022-09-01,30000.0
+2022-10,192000,Waiver application deadline Oct 31,2022-10-01,17000.0
+2023-01,388000,Post-Waiver finalization,2023-01-01,196000.0
+2023-06,615000,Mid-year update,2023-06-01,227000.0
+2023-10,715000,Payments restart begins,2023-10-01,100000.0
+2024-01,871000,End of 2023,2024-01-01,156000.0
+2024-08,1000000,Crossed 1M just as SAVE Forbearance announced,2024-08-01,129000.0
+2025-01,1100000,End of 2024,2025-01-01,100000.0
+2025-03,1130000,Trump PSLF EO Mar 7,2025-03-01,30000.0
+2025-09,1183600,Latest reported,2025-09-01,53600.0

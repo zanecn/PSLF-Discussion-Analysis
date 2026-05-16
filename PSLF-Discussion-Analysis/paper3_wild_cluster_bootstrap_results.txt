@@ -1,0 +1,50 @@
+==========================================================================================
+PAPER 3 WILD-CLUSTER BOOTSTRAP P-VALUES (Round 16 strengthener)
+==========================================================================================
+
+Method: Webb (2014) 6-point wild bootstrap; B=2,000; WCR-1 (under-the-null restricted residuals)
+References: Cameron, Gelbach & Miller (2008) REStat; Cameron & Miller (2015) JHR
+            MacKinnon & Webb (2018) Econometrics Journal — KEY citation for few-treated-cluster regime
+            Roodman, MacKinnon, Nielsen & Webb (2019) Stata Journal — implementation reference
+
+Round 17+ audit caveat: With G_treated = 23 (S1) or G_treated = 9 (S2/S3), inference falls
+within the few-treated-cluster regime where MacKinnon & Webb (2018) document conventional
+cluster-robust inference can have mis-sized rejection rates. The WCR-1 wild-cluster bootstrap
+implementation here is their recommended single-test variant for this regime. Reported p-values
+should be interpreted as the most-defensible currently-available point estimates; randomization
+inference (permuting hostile-vs-ambiguous within strata) is the natural complement.
+
+
+S1: Status quo (all 23 hostile)
+  n_clusters: 789, n_hostile_inst: 23
+  Point β (PSLF-hostile): -18.07 pp
+  Cluster-robust t-statistic: -5.266
+  Wild-cluster bootstrap p-value (B=2000): 0.0000e+00
+
+S2: HCA-academic reclassified as ambiguous
+  n_clusters: 789, n_hostile_inst: 9
+  Point β (PSLF-hostile): -16.25 pp
+  Cluster-robust t-statistic: -5.884
+  Wild-cluster bootstrap p-value (B=2000): 1.7000e-02
+
+S3: Drop HCA-academic partnerships
+  n_clusters: 775, n_hostile_inst: 9
+  Point β (PSLF-hostile): -17.14 pp
+  Cluster-robust t-statistic: -6.293
+  Wild-cluster bootstrap p-value (B=2000): 6.0000e-03
+
+INTERPRETATION:
+------------------------------------------------------------------------------------------
+
+The Cameron-Miller (2015) recommendation for n_clusters < 30 is to confirm
+cluster-robust asymptotic p-values with wild-cluster bootstrap. If wild-cluster
+p-values agree with the asymptotic p-values from cluster-robust SE, the
+inference is robust to the small-cluster concern.
+
+For Paper 3:
+  - S1 has 23 hostile clusters → small-sample correction matters
+  - S2/S3 have 9 hostile clusters → small-sample correction matters MORE
+
+If wild-cluster bootstrap p-values are similar to cluster-robust p-values,
+the headline survives the small-cluster concern. If wild-cluster p-values are
+substantially larger, the cluster-robust SE was overstating precision.

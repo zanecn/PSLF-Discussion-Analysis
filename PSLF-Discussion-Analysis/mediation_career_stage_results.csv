@@ -1,0 +1,16 @@
+or,p,ci_lo,ci_hi,n,n_neg,cohort,analysis,career_stage
+7.3294,0.0000,4.2038,12.7791,1469,483,Reddit r/PSLF,pooled,
+0.2718,0.0000,0.2169,0.3407,1960,588,SDN (Medical),pooled,
+0.1822,0.0000,0.1122,0.2957,999,126,Reddit Finance,pooled,
+1.4107,0.2219,0.8516,2.3370,969,263,Reddit r/StudentLoans,pooled,
+0.7990,0.5895,0.4277,1.4927,566,157,Reddit Medical,pooled,
+0.9429,1.0000,0.2789,3.1871,66,16,SDN (Medical),stratified,resident
+0.0159,0.0000,0.0019,0.1338,88,24,SDN (Medical),stratified,attending
+0.0851,0.0169,0.0100,0.7265,152,55,SDN (Medical),stratified,fellow
+,,,,95,29,Reddit Medical,stratified,resident
+0.5952,0.9874,0.0883,4.0116,33,7,Reddit Medical,stratified,attending
+1.8148,0.9409,0.2059,15.9939,76,15,Reddit Medical,stratified,fellow
+1.1600,0.9236,0.4682,2.8740,209,52,,career_stage_only,resident
+0.0742,0.0000,0.0257,0.2141,137,35,,career_stage_only,attending
+0.6485,0.4890,0.2612,1.6098,292,81,,career_stage_only,fellow
+0.0970,0.0329,0.0140,0.6727,68,11,,career_stage_only,medical_student

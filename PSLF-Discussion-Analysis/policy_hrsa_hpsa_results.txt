@@ -1,0 +1,32 @@
+================================================================================
+POLICY P4: PSLF x HRSA HPSA INTERACTION
+================================================================================
+
+HPSA primary-care records: 19,045 (designated)
+NRMP program-years: 30,763
+States with data: 48
+
+PSLF-ELIGIBILITY GAP BY STATE HPSA TIER
+--------------------------------------------------------------------------------
+  high    : n_friendly=12,301, n_hostile=722
+            friendly_fill=0.9426, hostile_fill=0.8175
+            Δ=+12.52pp, p=2.285e-25
+
+  medium  : n_friendly=4,409, n_hostile=41
+            friendly_fill=0.9305, hostile_fill=0.6879
+            Δ=+24.26pp, p=0.0002796
+
+STATE-LEVEL CORRELATION: HPSA density vs mean NRMP fill rate
+--------------------------------------------------------------------------------
+  Pearson r=+0.227, p=0.1199
+  Spearman rho=+0.098, p=0.5067
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+
+POLICY USES
+--------------------------------------------------------------------------------
+- HRSA workforce planning: does PSLF reach shortage areas as designed?
+- Congress: testing PSLF's stated workforce-targeting goal
+- DOE: data for PSLF program defense or reform discussions
+- Future: ZIP-level matching of NRMP institution addresses to HPSA boundaries

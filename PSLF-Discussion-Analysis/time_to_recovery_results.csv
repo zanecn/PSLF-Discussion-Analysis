@@ -1,0 +1,37 @@
+event,cohort,baseline_mean,baseline_sd,n_baseline,initial_post_mean,shift_magnitude,recovery_day,censored,n_post
+Limited PSLF Waiver,SDN (Medical),0.0750,0.1219,289,0.1268,0.0518,8,False,551
+Limited PSLF Waiver,Reddit r/PSLF,0.0811,0.1298,402,0.0698,-0.0113,2,False,2523
+Limited PSLF Waiver,Reddit r/StudentLoans,0.1037,0.1382,107,0.0614,-0.0423,13,False,371
+Limited PSLF Waiver,Reddit Finance,0.0922,0.0735,46,0.1096,0.0175,-1,True,173
+IDR Account Adjustment,SDN (Medical),0.1755,0.1276,192,0.1187,-0.0568,16,False,408
+IDR Account Adjustment,Reddit r/PSLF,0.0745,0.1228,1329,0.0743,-0.0002,2,False,5619
+IDR Account Adjustment,Reddit r/StudentLoans,0.0717,0.1310,185,0.0813,0.0095,2,False,820
+IDR Account Adjustment,Reddit Finance,0.0744,0.0752,84,0.1030,0.0286,-1,True,127
+Biden Mass Forgiveness,SDN (Medical),0.1521,0.1168,107,0.0954,-0.0567,4,False,138
+Biden Mass Forgiveness,Reddit r/PSLF,0.0706,0.1297,2424,0.0768,0.0062,2,False,6656
+Biden Mass Forgiveness,Reddit r/StudentLoans,0.0662,0.1222,240,0.0903,0.0241,2,False,1112
+Biden Mass Forgiveness,Reddit Finance,0.0894,0.0779,64,0.0737,-0.0156,-1,True,113
+Biden Mass Forgiveness,Reddit Medical,0.0471,0.2394,36,0.0834,0.0363,-1,True,42
+Biden v. Nebraska SCOTUS,SDN (Medical),0.1354,0.0793,189,0.0819,-0.0535,43,False,243
+Biden v. Nebraska SCOTUS,Reddit r/PSLF,0.0704,0.1495,2078,0.0695,-0.0009,2,False,5482
+Biden v. Nebraska SCOTUS,Reddit r/StudentLoans,0.0740,0.1407,396,0.0897,0.0157,2,False,6553
+Biden v. Nebraska SCOTUS,Reddit Finance,0.0776,0.0878,72,0.0734,-0.0042,2,False,369
+Payments Restart,SDN (Medical),0.0913,0.1132,174,0.2459,0.1546,96,False,415
+Payments Restart,Reddit r/PSLF,0.0719,0.1324,3084,0.0536,-0.0184,2,False,3862
+Payments Restart,Reddit r/StudentLoans,0.0728,0.1322,4037,0.0524,-0.0204,2,False,4847
+Payments Restart,Reddit Finance,0.0944,0.0806,228,0.1174,0.0229,13,False,293
+Payments Restart,Reddit Medical,0.0580,0.1078,50,0.0282,-0.0298,-1,True,54
+SAVE Admin Forbearance,SDN (Medical),0.0420,0.1435,97,,,94,False,105
+SAVE Admin Forbearance,Reddit r/PSLF,0.0468,0.1179,836,0.0466,-0.0002,2,False,2715
+SAVE Admin Forbearance,Reddit r/StudentLoans,0.0533,0.1316,2180,0.0309,-0.0224,2,False,3508
+SAVE Admin Forbearance,Reddit Finance,0.0805,0.0768,86,0.0519,-0.0286,-1,True,150
+SAVE Admin Forbearance,Reddit Medical,0.0529,0.1216,32,0.0369,-0.0160,-1,True,70
+Trump PSLF EO,SDN (Medical),0.1382,0.1609,498,0.0935,-0.0447,2,False,561
+Trump PSLF EO,Reddit r/PSLF,0.0616,0.1258,2164,0.0527,-0.0089,2,False,3132
+Trump PSLF EO,Reddit r/StudentLoans,0.0485,0.1371,2191,0.0409,-0.0076,2,False,4218
+Trump PSLF EO,Reddit Finance,0.0711,0.0759,86,0.0545,-0.0166,36,False,172
+Trump PSLF EO,Reddit Medical,0.0615,0.1278,46,0.0804,0.0189,77,False,229
+Final Trump PSLF Rule,SDN (Medical),0.0720,0.0948,92,0.1222,0.0502,45,False,423
+Final Trump PSLF Rule,Reddit r/PSLF,0.0585,0.1124,965,0.0808,0.0223,2,False,1237
+Final Trump PSLF Rule,Reddit r/StudentLoans,0.0620,0.1348,1437,0.0655,0.0034,2,False,1283
+Final Trump PSLF Rule,Reddit Finance,0.0746,0.0641,71,0.1352,0.0606,35,False,100

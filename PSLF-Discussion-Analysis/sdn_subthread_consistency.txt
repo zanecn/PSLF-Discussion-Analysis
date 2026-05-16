@@ -1,0 +1,84 @@
+================================================================================
+SDN within-cohort consistency check
+Generated: 2026-05-10T11:18:31
+================================================================================
+
+PURPOSE
+--------------------------------------------------------------------------------
+Tests whether SDN's distinctive per-event response is consistent across
+SDN sub-thread types (residency, medical_school, admissions, financial,
+etc.) or driven by specific sub-communities.
+
+Sample: 4,195 PSLF-filtered SDN posts (wc>=20) across 184 unique threads.
+
+SUB-THREAD DISTRIBUTION
+--------------------------------------------------------------------------------
+  other                 2,334
+  financial             1,172
+  medical_school          270
+  residency               249
+  hpsp_military            84
+  specialty                64
+  admissions               22
+
+PER-EVENT x PER-SUBTHREAD HEDGES' G
+--------------------------------------------------------------------------------
+
+Limited PSLF Waiver:
+  subthread             n_pre n_post       g   p_boot
+  financial               130     48  +0.417   0.2248 
+  other                    40    278  +0.422   0.1988 
+  medical_school          100     20  +1.205   0.0130 *
+
+IDR Account Adjustment:
+  subthread             n_pre n_post       g   p_boot
+  financial                26    230  -0.879   0.3626 
+  other                   135     35  -0.313   0.4615 
+
+Biden Mass Forgiveness:
+  subthread             n_pre n_post       g   p_boot
+  financial                41     43  -0.555   0.1698 
+  other                    16     15  +0.223   0.4725 
+
+Biden v. Nebraska SCOTUS:
+  subthread             n_pre n_post       g   p_boot
+  financial                27     60  -0.453   0.1698 
+  other                   162     92  -0.441   0.1399 
+
+Payments Restart:
+  subthread             n_pre n_post       g   p_boot
+  financial                60     30  +0.240   0.5584 
+  other                    87     21  +1.756   0.0020 **
+
+Trump PSLF EO:
+  subthread             n_pre n_post       g   p_boot
+  financial               100     40  -0.769   0.0470 *
+  other                   374    240  -0.330   0.0779 
+
+Final Trump PSLF Rule:
+  subthread             n_pre n_post       g   p_boot
+  other                    40    142  +0.372   0.3297 
+  financial                31     20  +0.943   0.2767 
+
+WITHIN-SDN CONSISTENCY VERDICTS
+--------------------------------------------------------------------------------
+  Limited PSLF Waiver            POS-DOMINANT (3/3)                  median g=+0.422  (3 sub-threads with adequate n)
+  IDR Account Adjustment         NEG-DOMINANT (2/2)                  median g=-0.596  (2 sub-threads with adequate n)
+  Biden Mass Forgiveness         MIXED (1 pos, 1 neg, 0 null)        median g=-0.166  (2 sub-threads with adequate n)
+  Biden v. Nebraska SCOTUS       NEG-DOMINANT (2/2)                  median g=-0.447  (2 sub-threads with adequate n)
+  Payments Restart               POS-DOMINANT (2/2)                  median g=+0.998  (2 sub-threads with adequate n)
+  Trump PSLF EO                  NEG-DOMINANT (2/2)                  median g=-0.549  (2 sub-threads with adequate n)
+  Final Trump PSLF Rule          POS-DOMINANT (2/2)                  median g=+0.657  (2 sub-threads with adequate n)
+
+KEY TESTS (BH-FDR-significant SDN cells from per_profession)
+--------------------------------------------------------------------------------
+
+  Trump PSLF EO (expected: NEGATIVE direction in all SDN sub-threads):
+    other                g=-0.330 - (n=374/240)
+    financial            g=-0.769 * (n=100/40)
+
+  SAVE Admin Forbearance: NO SUB-THREADS HAVE ADEQUATE n
+
+================================================================================
+END OF ARTIFACT
+================================================================================

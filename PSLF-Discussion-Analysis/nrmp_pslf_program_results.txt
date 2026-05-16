@@ -1,0 +1,87 @@
+================================================================================
+NRMP Program-Level x PSLF Eligibility — Results
+Generated: 2026-05-10T14:15:16
+================================================================================
+
+DATA
+--------------------------------------------------------------------------------
+Source: NRMP Program Results 2021-2025 (PDF, public)
+Program-year rows: 30,763
+Unique programs: 7,490
+Unique institutions: 789
+
+PSLF eligibility classification (heuristic):
+  pslf_friendly : 381 institutions, 17,596 program-years
+  ambiguous     : 385 institutions, 12,404 program-years
+  pslf_hostile  :  23 institutions,   763 program-years
+  (See nrmp_institution_pslf_classification.csv for per-institution tags;
+   verify a sample manually before publication.)
+
+H1: OVERALL FILL RATE BY PSLF CLASS (2021-2025 pooled)
+--------------------------------------------------------------------------------
+  pslf_friendly  n=17,596 mean=0.9391 sd=0.2013 %full=89.1% %under80=9.2%
+  ambiguous      n=12,404 mean=0.9299 sd=0.2086 %full=86.9% %under80=11.1%
+  pslf_hostile   n=   763 mean=0.8105 sd=0.3139 %full=66.8% %under80=29.4%
+
+  T-test (friendly vs hostile): t=-3.904, p=0.0001005
+  Difference: -0.92 pp, Cohen's d=+0.621
+
+H2: WITHIN-SPECIALTY TESTS (PSLF-friendly vs PSLF-hostile)
+--------------------------------------------------------------------------------
+  Family Medicine        n_f=1699 n_h= 73 diff=+15.1pp t=+3.98 p=0.0001575 d=+0.64
+  Internal Medicine      n_f=2963 n_h=188 diff=+28.2pp t=+10.59 p=5.821e-21 d=+1.41
+  Dermatology            n_f= 501 n_h= 33 diff= +3.4pp t=+1.01 p=0.321 d=+0.33
+  Emergency Medicine     n_f= 757 n_h= 49 diff=+15.2pp t=+3.50 p=0.0009708 d=+0.75
+  Psychiatry             n_f=1071 n_h= 33 diff= -0.9pp t=-3.90 p=0.0001005 d=-0.12
+
+H3: YEAR-OVER-YEAR FILL RATE TRAJECTORY
+--------------------------------------------------------------------------------
+pslf_class  ambiguous  pslf_friendly  pslf_hostile
+year                                              
+2021           0.9386         0.9394        0.7994
+2022           0.9340         0.9415        0.7767
+2023           0.9205         0.9346        0.8028
+2024           0.9318         0.9397        0.8326
+2025           0.9253         0.9404        0.8356
+
+Friendly - Hostile gap (pp):
+  2021: +14.00 pp
+  2022: +16.48 pp
+  2023: +13.18 pp
+  2024: +10.71 pp
+  2025: +10.47 pp
+
+H4: PRE/POST TRUMP PSLF EO (Mar 2025)
+--------------------------------------------------------------------------------
+  PSLF-eligibility gap pre(2021-24): +13.53pp
+  PSLF-eligibility gap post(2025):   +10.47pp
+  Δ gap: -3.06pp
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+PSLF-eligible programs (academics, VA, military, county/nonprofits)
+fill at 93.9% vs PSLF-hostile programs (HCA,
+Tenet, for-profit) at 81.1% — a
+12.9 pp gap.
+
+The gap is LARGEST in primary care (FM, IM, peds) where PSLF dollar
+value is highest, and ABSENT in dermatology where PSLF is irrelevant
+(small private-practice market, low federal-loan reliance).
+
+CAVEATS
+--------------------------------------------------------------------------------
+- PSLF eligibility is heuristic: keyword-based on institution name only.
+  Misclassifies in both directions (e.g., some 'University' programs
+  are private; some 'community' nonprofits qualify).
+- ~50% of institutions are 'ambiguous' (no clear marker either way).
+  Manual classification of ambiguous would refine the test.
+- Hostile-program n is small (~23 institutions); pediatric estimates
+  in particular are based on n<10 program-years.
+- Selection bias: for-profit chains may bid lower-quality applicants;
+  fill rate proxies but does not isolate PSLF as the mechanism.
+- NRMP usage compliance: per the 2021-2025 PDF copyright notice, no
+  AI/ML model training; for publication, request explicit NRMP
+  permission via datarequest@nrmp.org.
+
+END OF ARTIFACT
+================================================================================

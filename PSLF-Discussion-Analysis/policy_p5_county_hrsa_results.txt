@@ -1,0 +1,28 @@
+================================================================================
+POLICY P5: COUNTY-LEVEL HRSA HPSA x NRMP
+================================================================================
+
+Designated HPSAs: 19,045
+Counties with HPSAs: 2,927
+NRMP institutions matched to counties: 661
+Match rate (direct city==county): 83.9%
+
+PSLF-ELIGIBILITY GAP BY COUNTY HPSA-SEVERITY TIER
+--------------------------------------------------------------------------------
+  low     : n_friendly=4,491 friendly_fill=0.9193  Δ=+26.17pp, p=1.254e-18
+  medium  : n_friendly=4,216 friendly_fill=0.9496  Δ=+15.72pp, p=6.55e-14
+  high    : n_friendly=5,626 friendly_fill=0.9475  Δ=+12.31pp, p=0.002082
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+  High-shortage county gap: +12.31 pp
+  Low-shortage county gap:  +26.17 pp
+  -> Gap NARROWER in high-shortage counties.
+     PSLF benefit is muted in highest-shortage areas where for-profit alternatives may not exist.
+
+CAVEATS
+--------------------------------------------------------------------------------
+- Direct city==county-name matching captures only some institutions;
+  ZIP-level geocoding would improve coverage substantially
+- HPSA designations are population-/geographic-/facility-typed; this
+  analysis pools all designation types within a county

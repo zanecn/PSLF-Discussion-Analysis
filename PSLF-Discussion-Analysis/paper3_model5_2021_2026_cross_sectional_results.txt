@@ -1,0 +1,23 @@
+==========================================================================================
+PAPER 3 MODEL 5 — 6-YEAR (2021-2026) CROSS-SECTIONAL (Round 17)
+==========================================================================================
+Total dataset (2021-2026): n=37,450 program-year rows
+Unique institutions: 872
+Years: [2021, 2022, 2023, 2024, 2025, 2026]
+
+Specification                                        n_total  n_h_inst  n_h_rows     β (pp)                 95% CI          p
+----------------------------------------------------------------------------------------------------------------------------------
+  S1: All 23 hostile (status quo)                     35,193        20       645    -16.31          [-22.49, -10.14]  2.192e-07
+  S2: HCA-academic reclassified as ambiguous          35,193         8       165    -13.68           [-18.36, -9.01]  9.414e-09
+  S3: Drop HCA-academic partnerships                  34,713         8       165    -14.50           [-19.15, -9.84]  1.023e-09
+
+INTERPRETATION:
+  Compared to the 2021-2025-only Model 5 (Round 16):
+    S1: 2021-2025 β=−18.07 pp, p=1.4e-7  (n=29,349)
+    S2: 2021-2025 β=−16.25 pp, p=4.0e-9  (n=29,349)
+    S3: 2021-2025 β=−17.14 pp, p=3.1e-10 (n=28,957)
+
+  Adding 2026 data shifts the cross-sectional β somewhat (toward 0)
+  consistent with the multi-year narrowing trend documented in
+  paper3_trend_regression_results.txt. The cross-sectional differential
+  remains substantial and statistically significant in all three specifications.

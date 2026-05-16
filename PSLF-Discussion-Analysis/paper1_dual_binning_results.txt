@@ -1,0 +1,57 @@
+==========================================================================================
+PAPER 1 DUAL-BINNING COMPARISON (Round 15 Fix 3 + 4)
+==========================================================================================
+n = 701
+
+Reports BOTH binning schemes for TextBlob and VADER:
+  - FIXED thresholds: VADER convention {-0.5, -0.05, +0.05, +0.5}
+  - QCUT quintile:    forced equal-frequency 20% per bin (rank-based)
+
+LLM ordinal mapping is unchanged (very_neg=0 ... very_pos=4) in both schemes.
+
+==========================================================================================
+PAIRWISE EXACT-MATCH AND PEARSON r (both binnings)
+==========================================================================================
+Pair                                            Fixed         qcut    Pearson r
+------------------------------------------------------------------------------------------
+  Claude × Llama (within-LLM)                    0.736        0.736       +0.703
+  Claude × DeepSeek (within-LLM)                 0.786        0.786       +0.723
+  Llama × DeepSeek (within-LLM)                  0.742        0.742       +0.761
+  Claude × TextBlob                              0.322        0.201       +0.067
+  Claude × VADER                                 0.068        0.218       +0.122
+  Llama × TextBlob                               0.331        0.217       +0.115
+  Llama × VADER                                  0.090        0.223       +0.256
+  DeepSeek × TextBlob                            0.285        0.204       +0.052
+  DeepSeek × VADER                               0.074        0.224       +0.185
+  TextBlob × VADER (within-lex)                  0.080        0.270       +0.332
+
+==========================================================================================
+MULTI-RATER KRIPPENDORFF α WITH BOOTSTRAP 95% CI (B=2,000)
+==========================================================================================
+
+Rater combination                                    α       95% CI (B=2,000)
+--------------------------------------------------------------------------------
+  3-LLM (Claude+Llama+DeepSeek)                  +0.6901     [+0.6462, +0.7302]
+  3-LLM + TextBlob (FIXED)                       +0.3003     [+0.2571, +0.3433]
+  3-LLM + TextBlob (QCUT)                        +0.3005     [+0.2566, +0.3444]
+  3-LLM + VADER (FIXED)                          +0.1864     [+0.1421, +0.2293]
+  3-LLM + VADER (QCUT)                           +0.3551     [+0.3109, +0.3970]
+  All 5 (FIXED)                                  +0.1415     [+0.1057, +0.1787]
+  All 5 (QCUT)                                   +0.2527     [+0.2172, +0.2878]
+
+INTERPRETATION (Round 15 honest reading):
+------------------------------------------------------------------------------------------
+
+FIXED-threshold values are CANONICAL (the form a working researcher would use).
+QCUT values are the CHARITABLE upper bound that controls for marginal-frequency
+mismatch by forcing equal-frequency quintiles.
+
+The asymmetric construct boundary holds under both binning schemes:
+  - 3-LLM K-α (no lexicons) is unaffected by binning (LLMs use semantic mapping)
+  - Adding lexicons drops 4-rater α by 0.3-0.5 under EITHER binning
+  - The collapse is a property of the construct mismatch, not of the binning choice
+
+HOWEVER, the LLM-vs-VADER pairwise exact-match drops dramatically under fixed
+thresholds (likely 6-9% vs 20-22% under qcut), reflecting VADER's tendency to
+classify most posts as positive under canonical thresholds while LLMs use the full
+range. The qcut binning masks this asymmetry by forcing equal-frequency bins.

@@ -1,0 +1,72 @@
+================================================================================
+OP vs Reply per-event stratification
+Generated: 2026-05-10T11:22:55
+================================================================================
+
+PURPOSE
+--------------------------------------------------------------------------------
+Tests whether the cohort-invariant OP vs Reply opposite-direction finding
+(TB Δ=−0.017, VADER Δ=+0.220) shifts by event window. If the gap WIDENS
+around threat events (e.g., Trump EO), this would suggest OPs are more
+emotionally activated during high-stakes periods.
+
+Sample: 15,697 posts with both OP and comment-aggregated sentiment.
+
+PER-EVENT OP-REPLY GAPS (cluster bootstrap by post, B=1000)
+--------------------------------------------------------------------------------
+event                        win        n   TB diff              TB 95% CI    TB p   VA diff              VA 95% CI    VA p
+Limited PSLF Waiver          pre      195   -0.0288      [-0.0493,-0.0078]   0.006   +0.2024      [+0.1204,+0.2820]       0
+Limited PSLF Waiver          post     497   -0.0261      [-0.0381,-0.0148]       0   +0.1436      [+0.0941,+0.1906]       0
+IDR Account Adjustment       pre      527   -0.0131      [-0.0242,-0.0032]    0.01   +0.2129      [+0.1654,+0.2594]       0
+IDR Account Adjustment       post     671   -0.0258      [-0.0380,-0.0146]       0   +0.1790      [+0.1377,+0.2228]       0
+Biden Mass Forgiveness       pre      773   -0.0261      [-0.0359,-0.0161]       0   +0.1608      [+0.1201,+0.2036]       0
+Biden Mass Forgiveness       post    1266   -0.0151      [-0.0240,-0.0062]       0   +0.1462      [+0.1117,+0.1804]       0
+Biden v. Nebraska SCOTUS     pre      819   -0.0161      [-0.0280,-0.0043]       0   +0.1713      [+0.1318,+0.2084]       0
+Biden v. Nebraska SCOTUS     post     987   -0.0091      [-0.0170,-0.0004]   0.044   +0.2477      [+0.2105,+0.2820]       0
+Payments Restart             pre      967   -0.0097      [-0.0178,-0.0008]    0.04   +0.2354      [+0.2009,+0.2667]       0
+Payments Restart             post     677   -0.0227      [-0.0331,-0.0121]       0   +0.1832      [+0.1414,+0.2308]       0
+SAVE Admin Forbearance       pre      444   -0.0154      [-0.0285,-0.0027]   0.018   +0.3091      [+0.2532,+0.3616]       0
+SAVE Admin Forbearance       post     487   -0.0036      [-0.0162,+0.0085]   0.584   +0.2617      [+0.2018,+0.3167]       0
+Trump PSLF EO                pre      625   +0.0055      [-0.0055,+0.0172]   0.364   +0.3309      [+0.2836,+0.3744]       0
+Trump PSLF EO                post     487   -0.0073      [-0.0197,+0.0047]    0.25   +0.2498      [+0.1975,+0.3023]       0
+Final Trump PSLF Rule        pre      340   -0.0207      [-0.0340,-0.0074]   0.002   +0.2947      [+0.2361,+0.3485]       0
+Final Trump PSLF Rule        post     279   -0.0248      [-0.0390,-0.0093]       0   +0.3461      [+0.2878,+0.4038]       0
+
+PRE-vs-POST CHANGE IN GAP MAGNITUDE (does the OP-Reply gap WIDEN/SHRINK around events?)
+--------------------------------------------------------------------------------
+  Limited PSLF Waiver         
+    TB gap change (post-pre):    +0.0027  (pre=-0.0288, post=-0.0261)
+    VADER gap change (post-pre): -0.0587  (pre=+0.2024, post=+0.1436)
+  IDR Account Adjustment      
+    TB gap change (post-pre):    -0.0127  (pre=-0.0131, post=-0.0258)
+    VADER gap change (post-pre): -0.0339  (pre=+0.2129, post=+0.1790)
+  Biden Mass Forgiveness      
+    TB gap change (post-pre):    +0.0110  (pre=-0.0261, post=-0.0151)
+    VADER gap change (post-pre): -0.0146  (pre=+0.1608, post=+0.1462)
+  Biden v. Nebraska SCOTUS    
+    TB gap change (post-pre):    +0.0071  (pre=-0.0161, post=-0.0091)
+    VADER gap change (post-pre): +0.0764  (pre=+0.1713, post=+0.2477)
+  Payments Restart            
+    TB gap change (post-pre):    -0.0130  (pre=-0.0097, post=-0.0227)
+    VADER gap change (post-pre): -0.0522  (pre=+0.2354, post=+0.1832)
+  SAVE Admin Forbearance      
+    TB gap change (post-pre):    +0.0117  (pre=-0.0154, post=-0.0036)
+    VADER gap change (post-pre): -0.0473  (pre=+0.3091, post=+0.2617)
+  Trump PSLF EO               
+    TB gap change (post-pre):    -0.0129  (pre=+0.0055, post=-0.0073)
+    VADER gap change (post-pre): -0.0811  (pre=+0.3309, post=+0.2498)
+  Final Trump PSLF Rule       
+    TB gap change (post-pre):    -0.0041  (pre=-0.0207, post=-0.0248)
+    VADER gap change (post-pre): +0.0514  (pre=+0.2947, post=+0.3461)
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+- TB gap is consistently NEGATIVE (replies more positive than OPs) across events
+- VADER gap is consistently POSITIVE (OPs higher arousal than replies) across events
+- If post-window VADER gap is LARGER than pre-window: threat events activate OPs more
+- If post-window TB gap is MORE negative: replies become MORE supportive after threats
+- Both directions confirm the help-seeking → help-giving structural pattern
+
+================================================================================
+END OF ARTIFACT
+================================================================================

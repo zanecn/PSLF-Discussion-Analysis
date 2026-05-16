@@ -1,0 +1,67 @@
+================================================================================
+POLICY P12: NHSC vs PSLF — COMPARATIVE FORGIVENESS PROGRAMS
+================================================================================
+
+NHSC FY2024 obligated providers (national total): 17,706
+NHSC time trend FY2019-2025:
+  FY2019: 13,306
+  FY2020: 16,562
+  FY2021: 20,448
+  FY2022: 20,697
+  FY2023: 18,703
+  FY2024: 17,706
+  FY2025: 18,846
+
+NHSC CONCENTRATION vs HPSA DENSITY (state-level)
+--------------------------------------------------------------------------------
+  Pearson r(HPSA count, NHSC total) = +0.789 (p=3.199e-13)
+  Interpretation: NHSC IS allocated to high-HPSA states
+  (positive correlation; targeted forgiveness program working as designed)
+
+TOP 10 STATES BY NHSC PROVIDERS PER HPSA (efficient targeting)
+--------------------------------------------------------------------------------
+  RI: NHSC= 193, HPSAs= 14, per-HPSA=13.8
+  DC: NHSC= 158, HPSAs= 12, per-HPSA=13.2
+  CT: NHSC= 451, HPSAs= 41, per-HPSA=11.0
+  MP: NHSC=  21, HPSAs=  2, per-HPSA=10.5
+  MD: NHSC= 371, HPSAs= 43, per-HPSA=8.6
+  VT: NHSC=  96, HPSAs= 16, per-HPSA=6.0
+  NY: NHSC=1132, HPSAs=190, per-HPSA=6.0
+  DE: NHSC=  63, HPSAs= 12, per-HPSA=5.2
+  MA: NHSC= 303, HPSAs= 64, per-HPSA=4.7
+  HI: NHSC= 121, HPSAs= 33, per-HPSA=3.7
+
+NHSC PRIMARY-CARE PRESENCE vs NRMP PRIMARY-CARE FILL
+--------------------------------------------------------------------------------
+  Pearson r = +0.063, p=0.667, n=49 states
+
+PSLF-ELIGIBILITY GAP BY NHSC CONCENTRATION TIER (primary care only)
+--------------------------------------------------------------------------------
+  low      NHSC: n_f=1,167, n_h=46, PSLF gap=+33.81pp, p=1e-08
+  medium   NHSC: n_f=2,090, n_h=112, PSLF gap=+6.91pp, p=0.02307
+  high     NHSC: n_f=2,480, n_h=112, PSLF gap=+37.44pp, p=4.501e-20
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+Two complementary federal forgiveness programs:
+- NHSC: TARGETED (HPSA-specific, primary care-focused, requires service obligation)
+- PSLF: BROAD-BASED (any 501(c)(3) employer, any specialty, no geographic
+  targeting beyond employer eligibility)
+
+If NHSC works as designed, we should see:
+- Strong positive HPSA-NHSC correlation -> targeted allocation works
+- Higher NHSC presence -> some compensating effect on workforce shortages
+
+PSLF gap is LARGER in high-NHSC states (+37.44pp) than low
+(+33.81pp). NHSC and PSLF may be ADDITIVE rather than
+substitutive — both programs reinforce 501(c)(3) advantage.
+
+POLICY USES
+--------------------------------------------------------------------------------
+- Congressional reform: shows TWO federal forgiveness programs operating
+  with overlapping but distinct designs (NHSC=targeted, PSLF=broad)
+- HRSA: NHSC is well-allocated to high-HPSA states (positive correlation)
+- DOE/HRSA coordination: assess whether redundancy or complementarity
+  with current PSLF + NHSC overlap
+- For NHSC scaling: shows the program is doing what it should do; expansion
+  could supplement workforce deficit areas where PSLF doesn't reach

@@ -1,0 +1,88 @@
+==========================================================================================
+PAPER 1 MULTI-LLM WITH SDN INCLUDED (Round 16 Strengthener 1)
+==========================================================================================
+
+5-instrument intersection: n=1001 (Reddit=701, SDN=300)
+
+==========================================================================================
+PAIRWISE EXACT-MATCH AND PEARSON r — STRATIFIED BY COHORT
+==========================================================================================
+
+--- ALL (Reddit + SDN) (n=1001) ---
+Pair                                          Fixed       qcut    Pearson r
+--------------------------------------------------------------------------------
+  Claude × Llama (within-LLM)                  0.682      0.682       +0.737
+  Claude × DeepSeek (within-LLM)               0.759      0.759       +0.785
+  Llama × DeepSeek (within-LLM)                0.713      0.713       +0.811
+  Claude × TextBlob                            0.301      0.217       +0.021
+  Claude × VADER                               0.090      0.196       +0.089
+  Llama × TextBlob                             0.310      0.217       +0.092
+  Llama × VADER                                0.118      0.230       +0.247
+  DeepSeek × TextBlob                          0.259      0.209       +0.028
+  DeepSeek × VADER                             0.106      0.203       +0.194
+  TextBlob × VADER (within-lex)                0.112      0.234       +0.333
+
+--- Reddit only (n=701) ---
+Pair                                          Fixed       qcut    Pearson r
+--------------------------------------------------------------------------------
+  Claude × Llama (within-LLM)                  0.736      0.736       +0.703
+  Claude × DeepSeek (within-LLM)               0.786      0.786       +0.723
+  Llama × DeepSeek (within-LLM)                0.742      0.742       +0.761
+  Claude × TextBlob                            0.322      0.205       +0.067
+  Claude × VADER                               0.068      0.223       +0.122
+  Llama × TextBlob                             0.331      0.224       +0.115
+  Llama × VADER                                0.090      0.230       +0.256
+  DeepSeek × TextBlob                          0.285      0.211       +0.052
+  DeepSeek × VADER                             0.074      0.213       +0.185
+  TextBlob × VADER (within-lex)                0.080      0.264       +0.332
+
+--- SDN only (n=300) ---
+Pair                                          Fixed       qcut    Pearson r
+--------------------------------------------------------------------------------
+  Claude × Llama (within-LLM)                  0.557      0.557       +0.775
+  Claude × DeepSeek (within-LLM)               0.697      0.697       +0.832
+  Llama × DeepSeek (within-LLM)                0.647      0.647       +0.862
+  Claude × TextBlob                            0.250      0.243       -0.034
+  Claude × VADER                               0.140      0.133       +0.042
+  Llama × TextBlob                             0.260      0.200       +0.064
+  Llama × VADER                                0.183      0.230       +0.224
+  DeepSeek × TextBlob                          0.197      0.203       +0.007
+  DeepSeek × VADER                             0.180      0.180       +0.201
+  TextBlob × VADER (within-lex)                0.187      0.163       +0.344
+
+==========================================================================================
+MULTI-RATER KRIPPENDORFF α WITH BOOTSTRAP 95% CI
+==========================================================================================
+
+--- ALL (Reddit + SDN) (n=1001) ---
+Combo                                                α                 95% CI
+--------------------------------------------------------------------------------
+  3-LLM (Claude+Llama+DeepSeek)                  +0.7590     [+0.7241, +0.7868]
+  3-LLM + TextBlob (FIXED)                       +0.3415     [+0.3079, +0.3760]
+  3-LLM + TextBlob (QCUT)                        +0.3347     [+0.2980, +0.3705]
+  3-LLM + VADER (FIXED)                          +0.2385     [+0.2021, +0.2728]
+  3-LLM + VADER (QCUT)                           +0.3983     [+0.3611, +0.4331]
+  All 5 (FIXED)                                  +0.1703     [+0.1402, +0.1981]
+  All 5 (QCUT)                                   +0.2723     [+0.2410, +0.3018]
+
+--- Reddit only (n=701) ---
+Combo                                                α                 95% CI
+--------------------------------------------------------------------------------
+  3-LLM (Claude+Llama+DeepSeek)                  +0.6901     [+0.6462, +0.7302]
+  3-LLM + TextBlob (FIXED)                       +0.3003     [+0.2571, +0.3433]
+  3-LLM + TextBlob (QCUT)                        +0.3025     [+0.2597, +0.3459]
+  3-LLM + VADER (FIXED)                          +0.1864     [+0.1421, +0.2293]
+  3-LLM + VADER (QCUT)                           +0.3510     [+0.3056, +0.3933]
+  All 5 (FIXED)                                  +0.1415     [+0.1057, +0.1787]
+  All 5 (QCUT)                                   +0.2532     [+0.2172, +0.2884]
+
+--- SDN only (n=300) ---
+Combo                                                α                 95% CI
+--------------------------------------------------------------------------------
+  3-LLM (Claude+Llama+DeepSeek)                  +0.8306     [+0.7870, +0.8661]
+  3-LLM + TextBlob (FIXED)                       +0.4026     [+0.3550, +0.4498]
+  3-LLM + TextBlob (QCUT)                        +0.3719     [+0.3138, +0.4325]
+  3-LLM + VADER (FIXED)                          +0.3123     [+0.2543, +0.3681]
+  3-LLM + VADER (QCUT)                           +0.4504     [+0.3894, +0.5084]
+  All 5 (FIXED)                                  +0.2180     [+0.1698, +0.2646]
+  All 5 (QCUT)                                   +0.2921     [+0.2394, +0.3441]

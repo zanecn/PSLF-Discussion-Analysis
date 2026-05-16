@@ -1,0 +1,7 @@
+cohort,pre_mean,post_mean_d0_d30,days_to_recover,n_post
+Reddit r/PSLF,0.06446,0.05369,2,14581
+Reddit r/StudentLoans,0.06185,0.05299,2,16409
+Reddit Finance,0.12719,0.10086,10,681
+Reddit Medical,0.06172,0.03642,2,871
+Reddit PA,0.13767,0.10882,52,330
+Reddit Nursing,0.16566,0.01307,-1,191

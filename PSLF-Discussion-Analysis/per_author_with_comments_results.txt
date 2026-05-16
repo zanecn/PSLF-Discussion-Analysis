@@ -1,0 +1,60 @@
+================================================================================
+Per-Author Longitudinal Re-Evaluation (with comments expansion)
+Generated: 2026-05-10T21:26:06
+================================================================================
+
+PURPOSE
+--------------------------------------------------------------------------------
+Round 8 found per-author longitudinal panel infeasible for 7/8 events
+at post-level. This re-evaluation:
+  - Adds comments to the author-presence universe (does adding comments
+    expand author overlap meaningfully?)
+  - Recomputes within-person stance shifts (which still require
+    Claude-stance OPs in BOTH pre and post windows)
+
+AUTHOR OVERLAP COMPARISON: posts-only vs posts+comments
+--------------------------------------------------------------------------------
+Event                         pct_post  pct_p+c   n_ret_stance verdict                  
+Limited PSLF Waiver                4.1      9.1              3 INFEASIBLE (n<10)        
+IDR Account Adjustment             8.6     13.7              4 INFEASIBLE (n<10)        
+Biden Mass Forgiveness            10.4     14.0              3 INFEASIBLE (n<10)        
+Biden v. Nebraska SCOTUS           5.4     10.7              4 INFEASIBLE (n<10)        
+Payments Restart                   7.2     12.4              8 INFEASIBLE (n<10)        
+SAVE Admin Forbearance             6.4     13.0              4 INFEASIBLE (n<10)        
+Trump PSLF EO                      6.9     14.0             13 FEASIBLE (n>=10)         
+Final Trump PSLF Rule              4.6      9.5              4 INFEASIBLE (n<10)        
+
+WITHIN-PERSON STANCE SHIFT (returning authors with Claude OP in both windows)
+--------------------------------------------------------------------------------
+Event                         n_ret  rej_pre% rej_post%    Δpp  McNm_p  to_rej  from_rej  stable
+Limited PSLF Waiver               3         -         -      -       -       -         -       -
+IDR Account Adjustment            4         -         -      -       -       -         -       -
+Biden Mass Forgiveness            3         -         -      -       -       -         -       -
+Biden v. Nebraska SCOTUS          4         -         -      -       -       -         -       -
+Payments Restart                  8     12.5%     0.0% -12.5  1.0000       0         1       7
+SAVE Admin Forbearance            4         -         -      -       -       -         -       -
+Trump PSLF EO                    13      7.7%    23.1% +15.4  0.6250       3         1       9
+Final Trump PSLF Rule             4         -         -      -       -       -         -       -
+
+FEASIBILITY SUMMARY (Round 8 post-level threshold)
+--------------------------------------------------------------------------------
+  Events meeting n>=10 returning-with-stance: 1/8
+  (Round 8 post-level result: 1/8; comments don't help directly because
+   stance still requires a Claude-scored OP in both windows.)
+
+  Events where ADDING comments raised author overlap >5pp:
+    Limited PSLF Waiver            4.1% ->   9.1%  (+5.0pp)
+    IDR Account Adjustment         8.6% ->  13.7%  (+5.1pp)
+    Biden v. Nebraska SCOTUS       5.4% ->  10.7%  (+5.3pp)
+    Payments Restart               7.2% ->  12.4%  (+5.2pp)
+    SAVE Admin Forbearance         6.4% ->  13.0%  (+6.7pp)
+    Trump PSLF EO                  6.9% ->  14.0%  (+7.1pp)
+
+WITHIN-PERSON STANCE SHIFTS: SIGNIFICANT MOVEMENTS
+--------------------------------------------------------------------------------
+  Cells where McNemar p<0.05 with n_returning>=10:
+    (none) - no Bonferroni-uncorrected significant within-person shifts
+
+================================================================================
+END OF ARTIFACT
+================================================================================

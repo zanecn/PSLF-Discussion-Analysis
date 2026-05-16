@@ -1,0 +1,70 @@
+L2: DISCOURSE -> NRMP FILL RATES
+================================================================================
+
+SDN PSLF posts in 2018-2025: 4,474
+NRMP specialty-year cells (2021-2025): 136
+Merged sentiment×fill cells: 35
+
+CONTEMPORANEOUS CORRELATIONS
+--------------------------------------------------------------------------------
+  Pearson r=+0.029, p=0.8675, n=35
+  Spearman rho=+0.018, p=0.9199
+
+LAGGED CORRELATION (year-1 sentiment -> year fill)
+--------------------------------------------------------------------------------
+  Pearson r=-0.313, p=0.1115, n=27
+
+FIRST-DIFFERENCE (within-specialty year-over-year)
+--------------------------------------------------------------------------------
+  Δ-Δ r=-0.075, p=0.7262, n=24
+
+PER-SPECIALTY YEAR-OVER-YEAR (descriptive)
+--------------------------------------------------------------------------------
+
+  Family Medicine:
+    2021: n_sdn=  21 polar=+0.131  fill= 92.7%  (725 programs)
+    2023: n_sdn=  31 polar=+0.127  fill= 88.6%  (761 programs)
+    2024: n_sdn=  90 polar=+0.153  fill= 87.8%  (786 programs)
+    2025: n_sdn=  51 polar=+0.056  fill= 85.0%  (808 programs)
+
+  Internal Medicine:
+    2021: n_sdn=  20 polar=+0.247  fill= 94.8%  (1018 programs)
+    2022: n_sdn=  33 polar=+0.184  fill= 94.7%  (1053 programs)
+    2023: n_sdn=  20 polar=+0.115  fill= 95.6%  (1078 programs)
+    2024: n_sdn=  20 polar=+0.164  fill= 94.9%  (1093 programs)
+    2025: n_sdn=  41 polar=+0.065  fill= 96.1%  (1136 programs)
+
+  Pediatrics:
+    2021: n_sdn=  20 polar=+0.098  fill= 98.5%  (251 programs)
+    2023: n_sdn=  21 polar=+0.113  fill= 97.0%  (267 programs)
+    2024: n_sdn=  11 polar=+0.198  fill= 91.9%  (272 programs)
+    2025: n_sdn=  31 polar=+0.108  fill= 95.3%  (269 programs)
+
+  Emergency Medicine:
+    2021: n_sdn=  22 polar=+0.093  fill= 99.5%  (272 programs)
+    2022: n_sdn=  10 polar=+0.322  fill= 92.5%  (277 programs)
+    2023: n_sdn=  43 polar=+0.115  fill= 81.6%  (286 programs)
+    2024: n_sdn=  31 polar=+0.092  fill= 95.5%  (291 programs)
+    2025: n_sdn=  32 polar=+0.072  fill= 97.9%  (290 programs)
+
+  Psychiatry:
+    2021: n_sdn=  54 polar=+0.157  fill= 99.8%  (313 programs)
+    2023: n_sdn=  41 polar=+0.178  fill= 99.0%  (366 programs)
+    2025: n_sdn=  30 polar=+0.122  fill= 99.7%  (401 programs)
+
+  Anesthesiology:
+    2023: n_sdn=  52 polar=+0.096  fill= 99.7%  (277 programs)
+    2024: n_sdn=  22 polar=+0.128  fill=100.0%  (283 programs)
+    2025: n_sdn=  32 polar=+0.123  fill= 99.7%  (291 programs)
+
+  Radiology-Diagnostic:
+    2021: n_sdn=  20 polar=+0.133  fill= 98.4%  (225 programs)
+    2022: n_sdn=  20 polar=+0.176  fill= 99.9%  (224 programs)
+    2023: n_sdn=  13 polar=+0.200  fill=100.0%  (218 programs)
+    2025: n_sdn=  10 polar=+0.214  fill= 98.4%  (222 programs)
+
+  Pathology:
+    2021: n_sdn=  41 polar=+0.202  fill= 96.4%  (155 programs)
+    2022: n_sdn=  13 polar=+0.145  fill= 98.3%  (156 programs)
+    2024: n_sdn=  13 polar=+0.097  fill= 98.9%  (162 programs)
+    2025: n_sdn=  53 polar=+0.129  fill= 99.5%  (162 programs)

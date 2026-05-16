@@ -1,0 +1,49 @@
+================================================================================
+POLICY P3: PSLF PROCESS-SPECIFIC ISSUE PREVALENCE
+================================================================================
+
+Total process-mention rows: 142,689
+
+PROCESS SUMMARY (sorted by mention volume)
+--------------------------------------------------------------------------------
+process                           n   mean_pol  %concern    %neg
+Loan_Consolidation           49,919    +0.0709     16.8%   12.1%
+Payment_Count_Dispute        21,134    +0.0680     22.6%   13.0%
+IDR_Recertification          19,615    +0.0603     18.4%   13.8%
+Employment_Certification     17,284    +0.0666     21.2%   13.8%
+PSLF_Buyback                 16,458    +0.0589     18.2%   15.2%
+Form_Processing_Delay         5,717    +0.0495     32.9%   17.8%
+IDR_Adjustment                3,176    +0.0681     17.3%   13.4%
+Employer_Determination        2,794    +0.0698     24.8%   11.1%
+MOHELA_Specific_Issue         2,788    +0.0054     96.4%   27.9%
+Limited_Waiver                1,970    +0.0457     21.6%   15.8%
+PSLF_Help_Tool                1,834    +0.0734     22.1%   11.8%
+
+YEAR-OVER-YEAR MENTION VOLUME (last 8 years)
+--------------------------------------------------------------------------------
+process  Employer_Determination  Employment_Certification  Form_Processing_Delay  IDR_Adjustment  IDR_Recertification  Limited_Waiver  Loan_Consolidation  MOHELA_Specific_Issue  PSLF_Buyback  PSLF_Help_Tool  Payment_Count_Dispute
+year                                                                                                                                                                                                                                 
+2019                         47                       236                     22               0                  412               0                 491                      3             0              11                    354
+2020                        102                       579                     55               2                  652               0                 943                      5             2              43                    700
+2021                        274                      1336                    197               0                  906             101                2787                     15             3             290                   1537
+2022                        664                      5999                   1111             258                 1601            1116               15166                    506            16             724                   5165
+2023                        683                      3894                   1018            1666                 3703             632               13228                    865           464             441                   4952
+2024                        310                      1961                   1092             930                 4663              85                9139                    641          2957             155                   2813
+2025                        507                      2469                   1949             294                 5680              29                5188                    685         10542             144                   4060
+2026                        101                       500                    203              26                 1048               7                1232                     59          2473              22                    873
+
+KEY POLICY POINTS
+--------------------------------------------------------------------------------
+
+POLICY USES
+--------------------------------------------------------------------------------
+- Federal Student Aid: prioritize process-improvement work for top issues
+- DOE rule-making: target rule simplification at top complaint sources
+- Servicer SLAs: tie performance to specific process metrics that drive complaints
+- CFPB: use as triage signal for which processes warrant deeper investigation
+
+CAVEATS
+--------------------------------------------------------------------------------
+- Self-selected discussion: not representative of all PSLF borrowers
+- Keyword extraction may miss informal references / abbreviations
+- 'has_concern' marker is heuristic — manual coding sample would refine

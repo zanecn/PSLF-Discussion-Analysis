@@ -1,0 +1,12 @@
+process,n,mean_polarity,pct_concern,pct_negative
+Loan_Consolidation,49919,0.0709,16.8433,12.0615
+Payment_Count_Dispute,21134,0.0680,22.6034,12.9649
+IDR_Recertification,19615,0.0603,18.4349,13.7752
+Employment_Certification,17284,0.0666,21.1525,13.7757
+PSLF_Buyback,16458,0.0589,18.1918,15.1841
+Form_Processing_Delay,5717,0.0495,32.8844,17.7891
+IDR_Adjustment,3176,0.0681,17.2859,13.3816
+Employer_Determination,2794,0.0698,24.7674,11.0594
+MOHELA_Specific_Issue,2788,0.0054,96.3773,27.8694
+Limited_Waiver,1970,0.0457,21.6244,15.8376
+PSLF_Help_Tool,1834,0.0734,22.0829,11.7775

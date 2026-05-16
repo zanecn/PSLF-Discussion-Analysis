@@ -1,0 +1,4 @@
+nhsc_tier,n_friendly,n_hostile,friendly_fill,hostile_fill,gap_pp,p
+low,1167,46,0.9206,0.5825,33.8062,0.0000
+medium,2090,112,0.8930,0.8239,6.9110,0.0231
+high,2480,112,0.9487,0.5743,37.4410,0.0000

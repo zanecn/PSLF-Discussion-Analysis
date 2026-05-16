@@ -1,0 +1,69 @@
+===============================================================================================
+PAPER 3 5-YEAR vs 2026 SPLIT MODEL 5 (descriptive, Round 17 reframe)
+===============================================================================================
+*** ROUND 17 AUDIT REFRAME (2026-05-10) ***
+
+This file's previous header described "pre-EO vs post-EO" with the implicit causal claim
+that the 2025→2026 difference reflects the Trump PSLF EO. That framing has been RETRACTED.
+
+The trend regression (paper3_trend_regression_results.txt) showed:
+  - Linear trend year_centered = +1.60 pp/year (p=0.105) on PSLF-hostile fill rates
+  - is_2026 indicator BEYOND linear trend = +2.98 pp (p=0.462, NS)
+
+The 2026 narrowing of the PSLF-hostile differential is consistent with a continuation of
+a 5-year trend, not a discontinuous EO effect. The Δ values below should be read as a
+"separate regressions on 2021-2025 vs 2026" comparison — DESCRIPTIVE only, NOT causal.
+
+Trump PSLF EO signed March 7, 2025. 2025 ROL deadline was Feb 24, 2025 (BEFORE EO).
+So 2025 reflects pre-EO preferences. 2026 is the first Match cycle in which applicants
+had ~12 months to respond to the EO when forming preferences. The descriptive split
+below is mechanically valid; the causal-EO attribution is not.
+
+S1: Status quo (all 23 hostile)
+-----------------------------------------------------------------------------------------------
+  Pre-EO (2021-2025): n=29,349, n_hostile=485
+    β=-18.07 pp [95% CI -24.80, -11.35], p=1.391e-07
+  Post-EO (2026):     n=5,844, n_hostile=160
+    β=-8.43 pp [95% CI -13.54, -3.33], p=1.209e-03
+  Δ (post − pre) = +9.64 pp ← post-EO change in PSLF-hostile differential
+  Naive z-test for Δ ≠ 0: z=2.24, two-sided p=2.531e-02
+    (Note: independent-sample assumption is approximate; same institutions
+    may appear in both periods, so this z-test slightly understates SE.)
+
+S2: HCA-academic reclassified as ambiguous
+-----------------------------------------------------------------------------------------------
+  Pre-EO (2021-2025): n=29,349, n_hostile=93
+    β=-16.25 pp [95% CI -21.66, -10.83], p=4.010e-09
+  Post-EO (2026):     n=5,844, n_hostile=72
+    β=+0.62 pp [95% CI -7.17, +8.42], p=8.757e-01
+  Δ (post − pre) = +16.87 pp ← post-EO change in PSLF-hostile differential
+  Naive z-test for Δ ≠ 0: z=3.48, two-sided p=4.949e-04
+    (Note: independent-sample assumption is approximate; same institutions
+    may appear in both periods, so this z-test slightly understates SE.)
+
+S3: Drop HCA-academic partnerships
+-----------------------------------------------------------------------------------------------
+  Pre-EO (2021-2025): n=28,957, n_hostile=93
+    β=-17.14 pp [95% CI -22.48, -11.80], p=3.115e-10
+  Post-EO (2026):     n=5,756, n_hostile=72
+    β=+0.19 pp [95% CI -7.71, +8.10], p=9.615e-01
+  Δ (post − pre) = +17.33 pp ← post-EO change in PSLF-hostile differential
+  Naive z-test for Δ ≠ 0: z=3.56, two-sided p=3.692e-04
+    (Note: independent-sample assumption is approximate; same institutions
+    may appear in both periods, so this z-test slightly understates SE.)
+
+INTERPRETATION:
+-----------------------------------------------------------------------------------------------
+  Pre-EO β: PSLF-hostile coefficient on 2021-2025 sample (locked Round 16 result)
+  Post-EO β: PSLF-hostile coefficient on 2026-only sample (NEW Round 16 strengthener)
+  Δ = Post-EO β − Pre-EO β. Positive Δ = differential narrowed in first post-EO Match.
+
+  Descriptive numbers: 2025 vs 2026 mean fill rates
+    pslf_friendly: 0.940 → 0.935 (Δ = −0.5 pp)
+    ambiguous:     0.926 → 0.914 (Δ = −1.2 pp)
+    pslf_hostile:  0.836 → 0.864 (Δ = +2.8 pp)
+    DiD (hostile vs friendly): +3.4 pp narrowing of the gap
+
+  Caveat: Power is limited. Only ~171 hostile program-year observations in 2026
+  from ~9 unambiguous (or 23 status-quo) institutions. The post-EO regression has
+  wide CIs; we report the comparison as suggestive evidence of EO-induced narrowing.

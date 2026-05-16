@@ -244,6 +244,11 @@ def load_zeroshot():
         ("zeroshot_pa_np_expansion.csv", "pa_np_expansion"),
         # Round-7 fullcorpus: all remaining Reddit PSLF posts (~2,240, 100 errors)
         ("zeroshot_reddit_fullcorpus.csv", "reddit_fullcorpus"),
+        # Round-8: Arctic Shift event-window fill (~2,600 posts targeted at
+        # under-served (event x profession) cells, especially general_pslf,
+        # general_student_loans, and general_finance which were thin in earlier
+        # subsamples).
+        ("zeroshot_reddit_arctic_shift_fill.csv", "reddit_arctic_shift_fill"),
     ]
     frames = []
     for f, label in candidates:
@@ -274,11 +279,13 @@ def load_zeroshot():
 
 def attach_textblob_vader(zs):
     """Merge polarity + vader_compound from the source CSVs into the zeroshot frame."""
-    # Reddit sources
+    # Reddit sources (round-8: include Arctic Shift)
     reddit_frames = []
     for f in ["reddit_professions_pslf.csv",
               "comprehensive_medical_pslf_discussions.csv",
-              "comprehensive_teacher_pslf_discussions.csv"]:
+              "comprehensive_teacher_pslf_discussions.csv",
+              "reddit_new_subs_pslf.csv",
+              "reddit_arctic_shift_pslf.csv"]:
         if os.path.exists(f):
             d = pd.read_csv(f)
             cols = {"id": "post_id"}
@@ -791,18 +798,25 @@ def main():
     print(f"  Combined zero-shot rows: {len(zs):,}")
 
     # Round-7 critical fix #5: Claude test-retest reliability
-    # Auto-detected from filename convention zeroshot_*_temp0_retest.csv
+    # Auto-detected from filename convention zeroshot_*_temp{0,1}_retest.csv
+    # Round-9 audit added strict temp=1 vs temp=1 retest design (Fix 9)
     test_retest_results = {}
     for original, retest in [
-        ("zeroshot_sdn_n1000.csv", "zeroshot_sdn_temp0_retest.csv"),
+        ("zeroshot_sdn_n1000.csv",    "zeroshot_sdn_temp0_retest.csv"),
         ("zeroshot_reddit_n1000.csv", "zeroshot_reddit_temp0_retest.csv"),
+        # Round-9 strict test-retest design: temp=1 vs temp=1
+        ("zeroshot_reddit_n1000.csv", "zeroshot_reddit_temp1_retest.csv"),
     ]:
         if os.path.exists(retest):
             print(f"\n[test-retest] Found {retest}; computing Claude test-retest alpha "
                   f"vs {original}...")
             tr = claude_test_retest(retest, original)
             if tr and "error" not in tr:
-                test_retest_results[original] = tr
+                # Use retest filename as key so multiple retests for the same original
+                # (e.g. temp0 and temp1) don't overwrite each other
+                test_retest_results[retest] = tr
+                tr["original_csv"] = original
+                tr["retest_csv"] = retest
                 print(f"  n={tr['n']}, alpha_ordinal={tr['alpha_ordinal']:+.4f} "
                       f"95% CI [{tr['ci95'][0]:+.4f}, {tr['ci95'][1]:+.4f}], "
                       f"exact-match={tr['exact_match_rate']:.3f}")

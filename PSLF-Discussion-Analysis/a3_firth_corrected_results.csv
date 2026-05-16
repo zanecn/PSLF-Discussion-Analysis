@@ -1,0 +1,7 @@
+cohort,career_stage,kind,n,a,b,c,d,naive_OR,HA_OR,HA_lo,HA_hi,Firth_OR,Firth_lo,Firth_hi
+SDN (Medical),ALL,pooled,1960,367,221,1179,193,0.2718,0.2722,0.2172,0.3411,,,
+SDN (Medical),resident,stratified,66,11,5,35,15,0.9429,0.9129,0.2810,2.9662,,,
+SDN (Medical),attending,stratified,88,12,12,63,1,0.0159,0.0236,0.0039,0.1428,,,
+SDN (Medical),fellow,stratified,152,49,6,96,1,0.0851,0.1184,0.0194,0.7220,,,
+Reddit r/PSLF,ALL,pooled,1469,469,14,809,177,7.3294,7.0998,4.1074,12.2723,,,
+Reddit Finance,ALL,pooled,999,93,33,820,53,0.1822,0.1820,0.1124,0.2947,,,

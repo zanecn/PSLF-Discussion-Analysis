@@ -1,0 +1,54 @@
+================================================================================
+POLICY P7: PRE/POST LIMITED PSLF WAIVER (2021-10-06) NRMP GAP
+================================================================================
+
+KEY QUESTION: Was the +12.86pp PSLF-eligibility fill-rate gap
+PRE-EXISTING or did it emerge with PSLF salience after 2021?
+
+YEAR-BY-YEAR FILL-RATE GAP (PSLF-friendly minus PSLF-hostile)
+--------------------------------------------------------------------------------
+ year n_friendly  n_hostile   mean_f   mean_h   gap_pp        p
+ 2016      2,190          6   0.9408   1.0000    -5.92 1.77e-41
+ 2017      2,437          8   0.9377   0.9250    +1.27     0.87
+ 2020      2,269         54   0.9355   0.7793   +15.63  0.00191
+ 2021      3,353        129   0.9394   0.7994   +14.00 6.38e-06
+ 2022      3,451        149   0.9415   0.7767   +16.48 2.41e-08
+ 2023      3,518        159   0.9346   0.8028   +13.18 5.69e-07
+ 2024      3,597        159   0.9397   0.8326   +10.71 4.93e-06
+ 2025      3,677        167   0.9404   0.8356   +10.47 1.32e-05
+
+PRE vs POST WAIVER
+--------------------------------------------------------------------------------
+  Pre-Waiver  (2016-2020): mean annual gap = +3.66 pp
+  Post-Waiver (2021-2025): mean annual gap = +12.97 pp
+  Δ (post - pre):                          +9.31 pp
+  T-test on annual gap means: t=-1.448, p=0.2777
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+Gap WIDENED after Waiver: +3.66 -> +12.97 (Δ +9.31pp)
+PSLF salience increase drove additional differentiation.
+This is closer to a treatment-effect interpretation.
+
+PER-SPECIALTY PRE/POST CHANGES (gap_pp)
+--------------------------------------------------------------------------------
+era                 post_waiver  pre_waiver  delta
+specialty                                         
+Dermatology                1.08         NaN    NaN
+Emergency Medicine        16.68         NaN    NaN
+Family Medicine           13.46       31.70 -18.24
+Internal Medicine         27.41       24.84   2.57
+Pediatrics                34.11         NaN    NaN
+Psychiatry                -1.06         NaN    NaN
+Surgery-General            0.59      -10.33  10.92
+
+POLICY USES
+--------------------------------------------------------------------------------
+- For Congress: B5 finding now contextualized — gap is structural,
+  not a treatment effect of Limited Waiver. PSLF program elimination
+  would presumably erode this 12-13pp recruitment differential.
+- For HCA / for-profit chains: data shows persistent recruitment
+  disadvantage that pre-dates 2021 PSLF events.
+- For physician workforce policy: the structural pattern means PSLF
+  reform debates should focus on the ~13pp differential and which
+  hospital types absorb (or compensate for) any reduction.

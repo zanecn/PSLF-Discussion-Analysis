@@ -113,6 +113,24 @@ def load_all_data():
         pf["source"] = "reddit_prof"
         frames.append(pf[["date", "polarity", "text", "source", "profession"]])
 
+    # Arctic Shift Reddit (round-7+: historical pull bypassing JSON-API 1000-cap)
+    # Adds substantial pre-2018 depth (~4.3K posts) plus ~6x recent-year volume.
+    if os.path.exists("reddit_arctic_shift_pslf.csv"):
+        ar = pd.read_csv("reddit_arctic_shift_pslf.csv")
+        text_col = "combined_text" if "combined_text" in ar.columns else (
+            "selftext" if "selftext" in ar.columns else "body")
+        title_col = "title" if "title" in ar.columns else None
+        tm = filter_pslf_relevant(ar[text_col].fillna(""))
+        tt = (filter_pslf_relevant(ar[title_col].fillna(""))
+              if title_col else pd.Series(False, index=ar.index))
+        ar = ar[tm | tt].copy()
+        ar["date"] = pd.to_datetime(pd.to_numeric(ar["created_utc"], errors="coerce"), unit="s")
+        ar["text"] = ar[text_col].fillna("")
+        ar["source"] = "reddit_arctic_shift"
+        if "profession" not in ar.columns:
+            ar["profession"] = "general_pslf"
+        frames.append(ar[["date", "polarity", "text", "source", "profession"]])
+
     # SDN forum
     if os.path.exists("forum_pslf_discussions.csv"):
         sdn = pd.read_csv("forum_pslf_discussions.csv")

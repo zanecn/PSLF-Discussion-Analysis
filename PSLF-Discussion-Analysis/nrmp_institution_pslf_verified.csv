@@ -1,0 +1,798 @@
+institution,pslf_class,evidence,ein,propublica_match,subsec_code,ntee_code,state,original_class
+Mobile Infirmary Med Ctr,pslf_eligible_501c3,ProPublica match: Mobile Infirmary Association (501c3),630288856,Mobile Infirmary Association,3.0,E220,AL,pslf_friendly
+South Baldwin Reg Med Ctr,no_propublica_match,no ProPublica result,,,,,AL,pslf_friendly
+Southeast Health,pslf_eligible_501c3,ProPublica match: Southwest Health (501c3),920682043,Southwest Health,3.0,E11,AL,ambiguous
+St Vincents East,pslf_eligible_501c3,ProPublica match: St Vincents East (501c3),630578923,St Vincents East,3.0,E220,AL,ambiguous
+Thomas Hospital,pslf_eligible_501c3,ProPublica match: St Thomas Mar Thoma Congregation Houston (501c3),832147046,St Thomas Mar Thoma Congregation Houston,3.0,X20,AL,ambiguous
+UAB Selma Fam Med Res,no_propublica_match,no ProPublica result,,,,,AL,ambiguous
+Providence Hospital,pslf_eligible_501c3,ProPublica match: Providence College (501c3),50258932,Providence College,3.0,B420,AK,ambiguous
+U Washington Soldotna,no_propublica_match,no ProPublica result,,,,,AK,pslf_friendly
+Abrazo Health Network,no_propublica_match,no ProPublica result,,,,,AZ,ambiguous
+Barrow Neurological Inst at SJHMC,no_propublica_match,no ProPublica result,,,,,AZ,ambiguous
+Creighton University,pslf_eligible_501c3,ProPublica match: Creighton University (501c3),470376583,Creighton University,3.0,B430,AZ,pslf_friendly
+Dignity East Valley,pslf_eligible_501c3,ProPublica match: Dignity Health Foundation East Valley (501c3),742418514,Dignity Health Foundation East Valley,3.0,E11,AZ,ambiguous
+El Rio Health,pslf_eligible_501c3,ProPublica match: El Rio Health Center Foundation Inc (501c3),860816675,El Rio Health Center Foundation Inc,3.0,T30Z,AZ,ambiguous
+HonorHealth,pslf_eligible_501c3,ProPublica match: Honorhealth (501c3),860181654,Honorhealth,3.0,E200,AZ,ambiguous
+MHC Healthcare,pslf_eligible_501c3,ProPublica match: Mhc Foundation (501c3),814700867,Mhc Foundation,3.0,D11,AZ,pslf_friendly
+Mayo Clinic School of Grad Med Educ,no_propublica_match,no ProPublica result,,,,,AZ,pslf_friendly
+Midwestern University OPTI,no_propublica_match,no ProPublica result,,,,,AZ,pslf_friendly
+North Country HealthCare,pslf_eligible_501c3,ProPublica match: North County (501c3),202255589,North County,3.0,,AZ,pslf_friendly
+Phoenix Childrens Hospital,pslf_eligible_501c3,ProPublica match: Phoenix Childrens Project (501c3),900137202,Phoenix Childrens Project,3.0,K30,AZ,pslf_friendly
+Tucson Hospitals Med Ed,no_propublica_match,no ProPublica result,,,,,AZ,pslf_friendly
+Yuma Regional Med Ctr,pslf_eligible_501c3,ProPublica match: Yuma Regional Medical Center (501c3),866007596,Yuma Regional Medical Center,3.0,E20,AZ,pslf_friendly
+Baptist Health,pslf_eligible_501c3,ProPublica match: Baptist Health (501c3),710236856,Baptist Health,3.0,E220,AR,ambiguous
+Baptist Mem Med Education,no_propublica_match,no ProPublica result,,,,,AR,ambiguous
+CHI St Vincent Hot Springs,pslf_eligible_501c3,ProPublica match: Chi St Vincent Hot Springs (501c3),261125064,Chi St Vincent Hot Springs,3.0,E21,AR,ambiguous
+Conway Reg Health Sys,no_propublica_match,no ProPublica result,,,,,AR,ambiguous
+St Bernards Med Ctr,pslf_eligible_501c3,ProPublica match: St Bernards Congregation (501c3),390806197,St Bernards Congregation,3.0,,AR,pslf_friendly
+UAMS Regional Centers,no_propublica_match,no ProPublica result,,,,,AR,ambiguous
+Unity Health,pslf_eligible_501c3,ProPublica match: Unity Health (501c3),811097358,Unity Health,3.0,E20,AR,ambiguous
+White River Health System,pslf_eligible_501c3,ProPublica match: White River (501c3),237371142,White River,3.0,,AR,pslf_friendly
+Adventist Health Glendale,pslf_eligible_501c3,ProPublica match: Glendale Adventist Medical Center (501c3),951816017,Glendale Adventist Medical Center,3.0,E220,CA,ambiguous
+Adventist Health Hanford,pslf_eligible_501c3,ProPublica match: Adventist Health Volunteer Guild Of Hanford (501c3),946076765,Adventist Health Volunteer Guild Of Hanford,3.0,,CA,ambiguous
+Adventist Health Ukiah Valley,pslf_eligible_501c3,ProPublica match: Ukiah Adventist Hospital (501c3),941639901,Ukiah Adventist Hospital,3.0,,CA,ambiguous
+Adventist Health White Memorial,pslf_eligible_501c3,ProPublica match: White Memorial Medical Center (501c3),952282647,White Memorial Medical Center,3.0,E220,CA,pslf_friendly
+Alameda Health Sys-Highland Hosp,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+AltaMed Health Services,pslf_eligible_501c3,ProPublica match: Altamed Health Services Corp (501c3),952810095,Altamed Health Services Corp,3.0,E320,CA,pslf_friendly
+Arrowhead Reg Med Ctr,no_propublica_match,no ProPublica result,,,,,CA,pslf_friendly
+Casa Colina Hosp,pslf_eligible_501c3,ProPublica match: Casa Colina Inc (501c3),953655256,Casa Colina Inc,3.0,F020,CA,ambiguous
+Cedars-Sinai Med Ctr,pslf_eligible_501c3,ProPublica match: Cedars Sinai Medical Center (501c3),951644600,Cedars Sinai Medical Center,3.0,E220,CA,pslf_friendly
+Charles R Drew University,no_propublica_match,no ProPublica result,,,,,CA,pslf_friendly
+Childrens Hospital-LA,pslf_eligible_501c3,ProPublica match: Childrens Fund (501c3),541946170,Childrens Fund,3.0,,CA,pslf_friendly
+Childrens Hospital-Oakland,pslf_eligible_501c3,ProPublica match: Childrens Fund (501c3),541946170,Childrens Fund,3.0,,CA,pslf_friendly
+City Of Hope,pslf_eligible_501c3,ProPublica match: City Of Hope (501c3),383955107,City Of Hope,3.0,P60,CA,ambiguous
+Clinica Sierra Vista,pslf_eligible_501c3,ProPublica match: Clinica Sierra Vista (501c3),952707101,Clinica Sierra Vista,3.0,E320,CA,ambiguous
+College Med Ctr,pslf_eligible_501c3,ProPublica match: Malcolm Bernard Historically Black Colleges & Univ College F (501c3),272691193,Malcolm Bernard Historically Black Colleges & Univ College Fair,3.0,B80,CA,pslf_friendly
+Community Mem Health Sys,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Contra Costa Reg Med Ctr,no_propublica_match,no ProPublica result,,,,,CA,pslf_friendly
+Desert Regional Med Ctr,pslf_eligible_501c3,ProPublica match: Naffaa Utah   Dmr Desert Mountain Region (501c3),920357915,Naffaa Utah   Dmr Desert Mountain Region,3.0,R99,CA,pslf_friendly
+Dignity Methodist Hosp-Sacramento,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Dignity Northridge Hosp Med Ctr,no_propublica_match,no ProPublica result,,,,,CA,pslf_friendly
+Eisenhower Med Ctr,pslf_eligible_501c3,ProPublica match: Eisenhower Foundation (501c3),480634284,Eisenhower Foundation,3.0,,CA,pslf_friendly
+Emanate Health,pslf_eligible_501c3,ProPublica match: Emanate Health (501c3),953885523,Emanate Health,3.0,E210,CA,ambiguous
+Family Health Ctrs of San Diego,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Gracelight Community Health,pslf_eligible_501c3,ProPublica match: Gracelight Community Health (501c3),953702136,Gracelight Community Health,3.0,,CA,ambiguous
+Harbor-UCLA Med Ctr,pslf_eligible_501c3,ProPublica match: Harbor Ucla Medical Foundation Inc (501c3),330003558,Harbor Ucla Medical Foundation Inc,3.0,E220,CA,pslf_friendly
+Huntington Memorial Hosp,pslf_eligible_501c3,ProPublica match: Huntington Memorial Hospital Inc (501c3),351970706,Huntington Memorial Hospital Inc,3.0,E220,CA,pslf_friendly
+John Muir Health,pslf_eligible_501c3,ProPublica match: John Muir Health (501c3),941461843,John Muir Health,3.0,E210,CA,ambiguous
+KPC Health Hemet Valley Med Ctr,no_propublica_match,no ProPublica result,,,,,CA,pslf_friendly
+Kaiser Permanente-Central Valley,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Kaiser Permanente-Fontana,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Kaiser Permanente-Los Angeles,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Kaiser Permanente-Napa/Solano,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Kaiser Permanente-Oakland,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Kaiser Permanente-Orange Co,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Kaiser Permanente-Riverside,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Kaiser Permanente-SF,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Kaiser Permanente-Sacramento Valley,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Kaiser Permanente-San Diego,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Kaiser Permanente-San Jose,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Kaiser Permanente-Santa Clara,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Kaiser Permanente-Santa Rosa,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Kaiser Permanente-Woodland Hills,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Kaweah Delta Health Care District,pslf_eligible_501c3,ProPublica match: Kaweah Delta Health Care District Guild (501c3),946078091,Kaweah Delta Health Care District Guild,3.0,E22I,CA,ambiguous
+Keck School of Medicine of USC,no_propublica_match,no ProPublica result,,,,,CA,pslf_friendly
+Kern Med Ctr,pslf_eligible_501c3,ProPublica match: Kern Project (501c3),884050805,Kern Project,3.0,D20,CA,pslf_friendly
+La Maestra Family Clinic Inc,pslf_eligible_501c3,ProPublica match: La Maestra Family Clinic Inc (501c3),330473171,La Maestra Family Clinic Inc,3.0,E320,CA,ambiguous
+Lifelong Medical Care,pslf_eligible_501c3,ProPublica match: Lifelong Medical Care (501c3),942502308,Lifelong Medical Care,3.0,E320,CA,ambiguous
+Loma Linda Univ Med Ctr-Murrieta,pslf_eligible_501c3,ProPublica match: Loma Linda University (501c3),951816009,Loma Linda University,3.0,B430,CA,pslf_friendly
+Loma Linda University,pslf_eligible_501c3,ProPublica match: Loma Linda University (501c3),951816009,Loma Linda University,3.0,B430,CA,pslf_friendly
+Long Beach Mem Med Ctr,no_propublica_match,no ProPublica result,,,,,CA,pslf_friendly
+Los Robles Health System,pslf_eligible_501c3,ProPublica match: Los Robles Housing Association (501c3),330707525,Los Robles Housing Association,3.0,L80,CA,pslf_friendly
+Marian Regional Med Ctr,pslf_eligible_501c3,ProPublica match: Marian Regional Medical Center Foundation (501c3),953818027,Marian Regional Medical Center Foundation,3.0,E11,CA,pslf_friendly
+Mercy Med Ctr-Merced,pslf_eligible_501c3,ProPublica match: Mercy Association (501c3),452780676,Mercy Association,3.0,P28,CA,pslf_friendly
+Mercy Med Ctr-Redding,pslf_eligible_501c3,ProPublica match: Mercy Association (501c3),452780676,Mercy Association,3.0,P28,CA,pslf_friendly
+Mission Community Hosp,pslf_eligible_501c3,ProPublica match: Community Mission (501c3),823454640,Community Mission,3.0,K30,CA,ambiguous
+Natividad Med Ctr,pslf_eligible_501c3,ProPublica match: Natividad Association (501c3),843900340,Natividad Association,3.0,S80,CA,pslf_friendly
+North East Medical Services,pslf_eligible_501c3,ProPublica match: North East Medical Services (501c3),941722562,North East Medical Services,3.0,E300,CA,ambiguous
+Olive View-UCLA Med Ctr,pslf_eligible_501c3,ProPublica match: Olive View Ucla Education And Research Institute Inc (501c3),952249539,Olive View Ucla Education And Research Institute Inc,3.0,H00Z,CA,pslf_friendly
+PIH Health Hosp Downey,pslf_eligible_501c3,ProPublica match: Pih Health Downey Hosptial (501c3),951903935,Pih Health Downey Hosptial,3.0,E220,CA,ambiguous
+Pomona Valley Hosp,pslf_eligible_501c3,ProPublica match: Nami Pomona Valley (501c3),953935762,Nami Pomona Valley,3.0,F80,CA,ambiguous
+Presby Intercommunity Hosp,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Prime West Consortium,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Prime West/West Anaheim Med Ctr,no_propublica_match,no ProPublica result,,,,,CA,pslf_friendly
+Riverside Community Hospital,pslf_eligible_501c3,ProPublica match: Riverside Community (501c3),936023091,Riverside Community,3.0,S99,CA,ambiguous
+Riverside University Health Sys,no_propublica_match,no ProPublica result,,,,,CA,pslf_friendly
+SW Healthcare Med Ed Consortium,no_propublica_match,no ProPublica result,,,,,CA,pslf_friendly
+San Antonio Regional Hosp,pslf_eligible_501c3,ProPublica match: San Antonio Regional Hospital (501c3),951183919,San Antonio Regional Hospital,3.0,E220,CA,ambiguous
+San Joaquin Gen Hosp,pslf_eligible_501c3,ProPublica match: San Joaquin General Hospital Auxiliary (501c3),942772741,San Joaquin General Hospital Auxiliary,3.0,,CA,ambiguous
+San Mateo Behavioral Hlth & Recovery Svcs,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+San Ysidro Health,pslf_eligible_501c3,ProPublica match: San Ysidro Health Community Services Inc (501c3),873984396,San Ysidro Health Community Services Inc,3.0,E11,CA,ambiguous
+Santa Barbara Cottage Hosp,pslf_eligible_501c3,ProPublica match: Santa Barbara Cottage Hospital (501c3),951644629,Santa Barbara Cottage Hospital,3.0,E220,CA,ambiguous
+Santa Clara Valley Med Ctr,pslf_eligible_501c3,ProPublica match: Santa Clara Valley Bird Alliance (501c3),946081420,Santa Clara Valley Bird Alliance,3.0,C300,CA,pslf_friendly
+Scripps Clinic/Green Hospital,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Scripps Mercy Hosp-Chula Vista,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Scripps Mercy Hosp-San Diego,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Shasta Community Health Ctr,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+Sierra View Med Ctr,pslf_eligible_501c3,ProPublica match: Sierra View Homes (501c3),946088811,Sierra View Homes,3.0,,CA,pslf_friendly
+St Agnes Med Ctr,pslf_eligible_501c3,ProPublica match: St Agnes (501c3),251680487,St Agnes,3.0,,CA,pslf_friendly
+St Joseph Hospital-Eureka,pslf_eligible_501c3,ProPublica match: Pflag St Joseph (501c3),462956750,Pflag St Joseph,3.0,,CA,ambiguous
+St Josephs Med Ctr,pslf_eligible_501c3,ProPublica match: St Josephs (501c3),910882257,St Josephs,3.0,,CA,pslf_friendly
+St Mary Med Ctr-Long Beach,pslf_eligible_501c3,ProPublica match: St Mary Magdalen Catholic Parish In Sunny Isles Beach Inc (501c3),596017199,St Mary Magdalen Catholic Parish In Sunny Isles Beach Inc,3.0,,CA,pslf_friendly
+Stanford Health Care Tri-Valley,pslf_eligible_501c3,ProPublica match: Stanford Health Care Tri Valley (501c3),941429628,Stanford Health Care Tri Valley,3.0,E200,CA,pslf_friendly
+Stanford Health Care,pslf_eligible_501c3,ProPublica match: Stanford Open (501c3),842586731,Stanford Open,3.0,P12,CA,pslf_friendly
+Stanford Univ Progs,no_propublica_match,no ProPublica result,,,,,CA,pslf_friendly
+Sutter Health,pslf_eligible_501c3,ProPublica match: Sutter Health (501c3),942788907,Sutter Health,3.0,E21,CA,ambiguous
+Sutter Med Ctr of Santa Rosa,no_propublica_match,no ProPublica result,,,,,CA,pslf_friendly
+UC Davis Med Ctr,pslf_eligible_501c3,ProPublica match: Uc Davis Surgical Association (501c3),943144899,Uc Davis Surgical Association,3.0,E03,CA,pslf_friendly
+UC Irvine Med Ctr,pslf_eligible_501c3,ProPublica match: Friends Of Uc Irvine Rowing (501c3),270763131,Friends Of Uc Irvine Rowing,3.0,N12,CA,pslf_friendly
+UC Riverside SOM,no_propublica_match,no ProPublica result,,,,,CA,pslf_friendly
+UC San Diego Med Ctr,pslf_eligible_501c3,ProPublica match: Tamashasd At Uc San Diego (501c3),392650908,Tamashasd At Uc San Diego,3.0,A25,CA,pslf_friendly
+UC San Francisco,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+UC San Francisco-East Bay,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+UC San Francisco-Fresno,no_propublica_match,no ProPublica result,,,,,CA,ambiguous
+UCLA Med Ctr,pslf_eligible_501c3,ProPublica match: Ucla Asme (501c3),475420947,Ucla Asme,3.0,B80,CA,pslf_friendly
+UCLA Semel Inst for Neuroscience,no_propublica_match,no ProPublica result,,,,,CA,pslf_friendly
+VA Greater LA Hlth Sys,no_propublica_match,no ProPublica result,,,,,CA,pslf_friendly
+Valley Childrens Healthcare,pslf_eligible_501c3,ProPublica match: Valley Childrens Hospital (501c3),941294954,Valley Childrens Hospital,3.0,E240,CA,pslf_friendly
+Valley Consortium,pslf_eligible_501c3,ProPublica match: Valley Library Consortium Inc (501c3),382410513,Valley Library Consortium Inc,3.0,B70A,CA,ambiguous
+Valley Health Team,pslf_eligible_501c3,ProPublica match: Valley Health Team Inc (501c3),942217261,Valley Health Team Inc,3.0,E30Z,CA,ambiguous
+Ventura County Med Ctr,pslf_eligible_501c3,ProPublica match: Nami Ventura County (501c3),770037450,Nami Ventura County,3.0,,CA,pslf_friendly
+Common Spirit Health Mountain Region,no_propublica_match,no ProPublica result,,,,,CO,ambiguous
+Denver Community Hlth Svcs,no_propublica_match,no ProPublica result,,,,,CO,ambiguous
+Denver Health Med Ctr,pslf_eligible_501c3,ProPublica match: Healthy Denver Inc (501c3),824243123,Healthy Denver Inc,3.0,P20,CO,pslf_friendly
+HealthONE,pslf_eligible_501c3,ProPublica match: Healthcode (501c3),271310367,Healthcode,3.0,C60,CO,ambiguous
+Parkview Med Ctr,pslf_eligible_501c3,ProPublica match: Parkview Church (501c3),581910841,Parkview Church,3.0,,CO,pslf_friendly
+Penrose Hospital,pslf_eligible_501c3,ProPublica match: Penrose Foundation (501c3),752456902,Penrose Foundation,3.0,,CO,ambiguous
+Poudre Valley Hospital,pslf_eligible_501c3,ProPublica match: Poudre Valley Community Farms (501c3),933191372,Poudre Valley Community Farms,3.0,K99,CO,ambiguous
+St Anthony Hospital North,pslf_eligible_501c3,ProPublica match: St Anthonys Grammar School Old Students Association   North  (501c3),993686108,St Anthonys Grammar School Old Students Association   North Ameri,3.0,S12,CO,ambiguous
+St Joseph Hospital SCL Health,no_propublica_match,no ProPublica result,,,,,CO,ambiguous
+St Mary-Corwin Med Ctr,no_propublica_match,no ProPublica result,,,,,CO,pslf_friendly
+St Marys Med Ctr SCL Health,no_propublica_match,no ProPublica result,,,,,CO,pslf_friendly
+Still OPTI-Peak Vista FMRP,no_propublica_match,no ProPublica result,,,,,CO,ambiguous
+Bridgeport Hospital,pslf_eligible_501c3,ProPublica match: Bridgeport Hospital (501c3),60646554,Bridgeport Hospital,3.0,E220,CT,ambiguous
+Danbury Hospital,pslf_eligible_501c3,ProPublica match: Danbury Hospital (501c3),60646597,Danbury Hospital,3.0,E220,CT,ambiguous
+Greenwich Hospital,pslf_eligible_501c3,ProPublica match: Greenwich Hospital (501c3),60646659,Greenwich Hospital,3.0,E220,CT,ambiguous
+Griffin Hospital,pslf_eligible_501c3,ProPublica match: Trinity Griffin (501c3),10923840,Trinity Griffin,3.0,,CT,ambiguous
+Hartford Hospital,pslf_eligible_501c3,ProPublica match: Hartford Hospital (501c3),60646668,Hartford Hospital,3.0,E220,CT,ambiguous
+Middlesex Hospital,pslf_eligible_501c3,ProPublica match: Middlesex Church (501c3),581785757,Middlesex Church,3.0,,CT,ambiguous
+Norwalk Hospital,pslf_eligible_501c3,ProPublica match: Norwalk Stingrays (501c3),141938171,Norwalk Stingrays,3.0,N63,CT,ambiguous
+Quinnipiac Univ/Netter MD SOM,no_propublica_match,no ProPublica result,,,,,CT,pslf_friendly
+St Francis Hospital,pslf_eligible_501c3,ProPublica match: St Francis Church (501c3),930546642,St Francis Church,3.0,,CT,ambiguous
+St Marys Hospital,pslf_eligible_501c3,ProPublica match: St Marys (501c3),844724330,St Marys,3.0,P2C,CT,ambiguous
+St Vincents Med Ctr,pslf_eligible_501c3,ProPublica match: St Vincent (501c3),430653251,St Vincent,3.0,,CT,pslf_friendly
+Stamford Hospital/Columbia,pslf_unclear_other_subsec,ProPublica: subsec=8,237547041,Knights Of Columbus,8.0,,CT,pslf_friendly
+Waterbury Hospital,pslf_eligible_501c3,ProPublica match: Pflag Waterbury (501c3),815286272,Pflag Waterbury,3.0,,CT,ambiguous
+Yale-New Haven Hosp,pslf_eligible_501c3,ProPublica match: Yale New Haven Hospital (501c3),60646652,Yale New Haven Hospital,3.0,E220,CT,pslf_friendly
+Bayhealth Med Ctr,pslf_eligible_501c3,ProPublica match: Bayhealth Foundation (501c3),222559843,Bayhealth Foundation,3.0,E22I,DE,pslf_friendly
+Beebe Healthcare,pslf_eligible_501c3,ProPublica match: Bahais Of Beebe (501c3),911861372,Bahais Of Beebe,3.0,,DE,pslf_friendly
+Christiana Care,pslf_eligible_501c3,ProPublica match: Christian Care (501c3),381367326,Christian Care,3.0,E90Z,DE,ambiguous
+St Francis Hospital,pslf_eligible_501c3,ProPublica match: St Francis Church (501c3),930546642,St Francis Church,3.0,,DE,ambiguous
+Childrens National Med Ctr,pslf_eligible_501c3,ProPublica match: National Childrens Museum (501c3),237423491,National Childrens Museum,3.0,,DC,pslf_friendly
+George Washington Univ,pslf_eligible_501c3,ProPublica match: Emanuel A Beck Charitable Tr Fbo Weta Tv And George Washingt (501c3),526945807,Emanuel A Beck Charitable Tr Fbo Weta Tv And George Washington Univ,3.0,A11,DC,ambiguous
+Howard Univ Hosp,pslf_eligible_501c3,ProPublica match: Howard University (501c3),530204707,Howard University,3.0,B430,DC,pslf_friendly
+MedStar Georgetown Univ Hosp,pslf_eligible_501c3,ProPublica match: Medstar Georgetown Medical Center Inc (501c3),522218584,Medstar Georgetown Medical Center Inc,3.0,E220,DC,pslf_friendly
+MedStar National Rehab Hosp,no_propublica_match,no ProPublica result,,,,,DC,ambiguous
+MedStar Washington Hosp Ctr,no_propublica_match,no ProPublica result,,,,,DC,ambiguous
+St Elizabeths Hospital/DBH,no_propublica_match,no ProPublica result,,,,,DC,ambiguous
+Aventura Hospital,pslf_eligible_501c3,ProPublica match: Aventura Reads (501c3),332189241,Aventura Reads,3.0,B92,FL,ambiguous
+BayCare Health System,pslf_eligible_501c3,ProPublica match: Baycare Pasco Inc (501c3),832099849,Baycare Pasco Inc,3.0,E20,FL,pslf_friendly
+Bayfront Med Ctr,pslf_eligible_501c3,ProPublica match: Bayfront Nato Inc (501c3),256085619,Bayfront Nato Inc,3.0,S200,FL,pslf_friendly
+Borinquen Health Care Ctr,no_propublica_match,no ProPublica result,,,,,FL,ambiguous
+Broward Health Med Ctr,pslf_eligible_501c3,ProPublica match: Broward Behavorial Health Coalition Inc (501c3),453675836,Broward Behavorial Health Coalition Inc,3.0,F99,FL,pslf_friendly
+Centerstone,pslf_eligible_501c3,ProPublica match: Centerstone Unlimited (501c3),264790318,Centerstone Unlimited,3.0,L21,FL,ambiguous
+Citrus Health Network,pslf_eligible_501c3,ProPublica match: Citrus Health Network Inc (501c3),591865751,Citrus Health Network Inc,3.0,,FL,ambiguous
+FAU-Schmidt COM,no_propublica_match,no ProPublica result,,,,,FL,ambiguous
+HCA Florida JFK Hosp-U Miami,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,FL,pslf_hostile
+HCA Healthcare/JFK Med Center-UMiami,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,FL,pslf_hostile
+HCA Healthcare/USF Morsani GME-Blake,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,FL,pslf_hostile
+HCA Healthcare/USF Morsani GME-Brandon,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,FL,pslf_hostile
+HCA Healthcare/USF Morsani GME-Citrus,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,FL,pslf_hostile
+HCA Healthcare/USF Morsani GME-Largo,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,FL,pslf_hostile
+HCA Healthcare/USF Morsani GME-Oak Hill,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,FL,pslf_hostile
+HCA Healthcare/USF Morsani GME-Sarasota,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,FL,pslf_hostile
+HCA Healthcare/USF Morsani GME-St Pete,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,FL,pslf_hostile
+HCA Healthcare/USF Morsani GME-Trinity,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,FL,pslf_hostile
+HCA Healthcare/USF Morsani-Bayonet Pt,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,FL,pslf_hostile
+HCA Healthcare/USF Morsani-Northside,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,FL,pslf_hostile
+Halifax Med Ctr,pslf_eligible_501c3,ProPublica match: Halifax Fire Department (501c3),251764395,Halifax Fire Department,3.0,M24,FL,pslf_friendly
+Jessie Trice Comm Hlth Sys,no_propublica_match,no ProPublica result,,,,,FL,ambiguous
+Johns Hopkins All Childrens Hosp,pslf_eligible_501c3,ProPublica match: Johns Hopkins All Childrens Hospital Inc (501c3),590683252,Johns Hopkins All Childrens Hospital Inc,3.0,E240,FL,pslf_friendly
+Kendall Regional Med Ctr,no_propublica_match,no ProPublica result,,,,,FL,pslf_friendly
+Keralty Hospital,pslf_eligible_501c3,ProPublica match: Keralty Compassionate Communities Inc (501c3),881544014,Keralty Compassionate Communities Inc,3.0,E60,FL,ambiguous
+Lakeland Regional Health,pslf_eligible_501c3,ProPublica match: Lakeland Regional Health Systems Inc (501c3),592650464,Lakeland Regional Health Systems Inc,3.0,E210,FL,ambiguous
+Lakeside Med Ctr,pslf_eligible_501c3,ProPublica match: Lakeside Association (501c3),344427938,Lakeside Association,3.0,S200,FL,pslf_friendly
+Larkin Comm Hosp Palm Springs Campus,no_propublica_match,no ProPublica result,,,,,FL,ambiguous
+Larkin Community Hospital,pslf_eligible_501c3,ProPublica match: Larkin Community Center (501c3),43659562,Larkin Community Center,3.0,,FL,ambiguous
+Manatee Memorial Hosp,pslf_eligible_501c3,ProPublica match: Manatee Memorial Foundation Inc (501c3),650392921,Manatee Memorial Foundation Inc,3.0,T30,FL,pslf_friendly
+Mayo Clinic School of Grad Med Educ,no_propublica_match,no ProPublica result,,,,,FL,pslf_friendly
+Memorial Healthcare System,pslf_eligible_501c3,ProPublica match: Memorial Health System (501c3),934897020,Memorial Health System,3.0,E21,FL,pslf_friendly
+Mt Sinai Med Ctr-Miami,pslf_eligible_501c3,ProPublica match: Mt Sinai (501c3),450529118,Mt Sinai,3.0,,FL,pslf_friendly
+NCH Healthcare Sys,no_propublica_match,no ProPublica result,,,,,FL,pslf_friendly
+Nemours Childrens Hosp,pslf_eligible_501c3,ProPublica match: The Auxiliary Of Nemours Childrens Hospital Delaware (501c3),222637953,The Auxiliary Of Nemours Childrens Hospital Delaware,3.0,,FL,pslf_friendly
+Nicklaus Childrens Hospital-Miami,pslf_eligible_501c3,ProPublica match: Nicklaus Childrens Health Care Foundation Inc (501c3),571154352,Nicklaus Childrens Health Care Foundation Inc,3.0,T21,FL,pslf_friendly
+Nova Southeastern University KPCOM,no_propublica_match,no ProPublica result,,,,,FL,pslf_friendly
+Orlando Health,pslf_eligible_501c3,ProPublica match: Orlando Health Inc (501c3),591726273,Orlando Health Inc,3.0,E210,FL,ambiguous
+Palm Beach Consortium for GME,no_propublica_match,no ProPublica result,,,,,FL,ambiguous
+Palmetto General Hosp,pslf_eligible_501c3,ProPublica match: General Federation Of Womens Clubs Of South Carolina (501c3),570799510,General Federation Of Womens Clubs Of South Carolina,3.0,,FL,ambiguous
+Southern Winds Hospital,pslf_eligible_501c3,ProPublica match: Southern Illinois Symphonic Winds (501c3),612216911,Southern Illinois Symphonic Winds,3.0,A6C,FL,ambiguous
+St Vincents Med Ctr,pslf_eligible_501c3,ProPublica match: St Vincent (501c3),430653251,St Vincent,3.0,,FL,pslf_friendly
+Tallahassee Mem Healthcare,no_propublica_match,no ProPublica result,,,,,FL,pslf_friendly
+U Miami MSOM/Holy Cross,no_propublica_match,no ProPublica result,,,,,FL,pslf_friendly
+U Miami/Jackson Health System,no_propublica_match,no ProPublica result,,,,,FL,pslf_friendly
+Wellington Reg Med Ctr,no_propublica_match,no ProPublica result,,,,,FL,pslf_friendly
+West Kendall Baptist Hospital,pslf_eligible_501c3,ProPublica match: West Kendall Baptist Hospital Inc (501c3),522438452,West Kendall Baptist Hospital Inc,3.0,E20,FL,ambiguous
+AU-UGA Medical Partnership,no_propublica_match,no ProPublica result,,,,,GA,ambiguous
+AdventHealth Redmond,no_propublica_match,no ProPublica result,,,,,GA,ambiguous
+Atlanta Med Ctr,pslf_eligible_501c3,ProPublica match: Canopy Atlanta (501c3),850694979,Canopy Atlanta,3.0,B99,GA,pslf_friendly
+Atrium Health Navicent Med Ctr,no_propublica_match,no ProPublica result,,,,,GA,pslf_friendly
+Colquitt Regional Med Ctr,pslf_eligible_501c3,ProPublica match: Colquitt Regional Health Inc (501c3),581729544,Colquitt Regional Health Inc,3.0,,GA,pslf_friendly
+Emory Univ SOM,pslf_eligible_501c3,ProPublica match: Christian Medical & Dental Society (501c3),621644504,Christian Medical & Dental Society,3.0,,GA,pslf_friendly
+Floyd Med Ctr,pslf_eligible_501c3,ProPublica match: Floyd Future (501c3),465145106,Floyd Future,3.0,S9,GA,pslf_friendly
+Gateway Behavioral Hlth Comm Svc,no_propublica_match,no ProPublica result,,,,,GA,ambiguous
+Hamilton Med Ctr,pslf_eligible_501c3,ProPublica match: Hype Hamilton (501c3),821618415,Hype Hamilton,3.0,J22,GA,pslf_friendly
+Houston Healthcare,pslf_eligible_501c3,ProPublica match: Kwekabaw Buddhist Society Of Housto Houston Tx (501c3),861367955,Kwekabaw Buddhist Society Of Housto Houston Tx,3.0,X50,GA,pslf_friendly
+Memorial Health Univ Med Ctr,pslf_eligible_501c3,ProPublica match: Indiana University Health Ball Memorial Hospital Inc (501c3),350867958,Indiana University Health Ball Memorial Hospital Inc,3.0,E220,GA,pslf_friendly
+Morehouse Sch of Med,no_propublica_match,no ProPublica result,,,,,GA,ambiguous
+Northside Hospital Gwinnett,no_propublica_match,no ProPublica result,,,,,GA,ambiguous
+Phoebe Putney Mem Hosp,no_propublica_match,no ProPublica result,,,,,GA,ambiguous
+Piedmont Athens Regional,pslf_eligible_501c3,ProPublica match: Piedmont Athens Regional Auxiliary (501c3),586221037,Piedmont Athens Regional Auxiliary,3.0,E22I,GA,ambiguous
+Piedmont Columbus Regional,no_propublica_match,no ProPublica result,,,,,GA,ambiguous
+Piedmont Macon Med Ctr,pslf_eligible_501c3,ProPublica match: Piedmont Macon Hospital Inc (501c3),871006981,Piedmont Macon Hospital Inc,3.0,E20,GA,pslf_friendly
+St Francis-Emory Healthcare,no_propublica_match,no ProPublica result,,,,,GA,pslf_friendly
+WellStar Health System,pslf_eligible_501c3,ProPublica match: Wellstar Foundation Inc (501c3),581627413,Wellstar Foundation Inc,3.0,T30,GA,pslf_friendly
+Wellstar Spalding Reg Hosp,no_propublica_match,no ProPublica result,,,,,GA,ambiguous
+Hilo Medical Center,pslf_eligible_501c3,ProPublica match: Hilo Storm (501c3),921371287,Hilo Storm,3.0,N65,HI,pslf_friendly
+Tripler Army Med Ctr,pslf_eligible_gov,keyword: Army Med,,,,,HI,pslf_friendly
+Waianae Coast Comprehensive Health,no_propublica_match,no ProPublica result,,,,,HI,ambiguous
+Full Circle Health,pslf_eligible_501c3,ProPublica match: Full Circle Health Inc (501c3),205934739,Full Circle Health Inc,3.0,E20,ID,ambiguous
+Kootenai Health,pslf_eligible_501c3,ProPublica match: Kootenai Health Inc (501c3),820380784,Kootenai Health Inc,3.0,E22,ID,ambiguous
+Mountain States Institute,pslf_eligible_501c3,ProPublica match: Mountain States Tumor Institute Inc (501c3),820295026,Mountain States Tumor Institute Inc,3.0,E240,ID,pslf_friendly
+U Washington Boise,no_propublica_match,no ProPublica result,,,,,ID,pslf_friendly
+Advocate Health Care,pslf_eligible_501c3,ProPublica match: Advocare Advocates Who Care Inc (501c3),542155018,Advocare Advocates Who Care Inc,3.0,F33,IL,ambiguous
+Amita St Francis Hosp,no_propublica_match,no ProPublica result,,,,,IL,ambiguous
+Ascension Resurrection,pslf_eligible_501c3,ProPublica match: Resurrection Ascension Catholic Academy (501c3),812756467,Resurrection Ascension Catholic Academy,3.0,,IL,ambiguous
+Ascension St Alexius,no_propublica_match,no ProPublica result,,,,,IL,ambiguous
+Ascension St Francis,pslf_eligible_501c3,ProPublica match: Ascension St Francis Hospital Inc (501c3),390907740,Ascension St Francis Hospital Inc,3.0,E220,IL,ambiguous
+Ascension St Joseph,pslf_eligible_501c3,ProPublica match: Ascension Living St Josephs Place (501c3),521835288,Ascension Living St Josephs Place,3.0,,IL,ambiguous
+Ascension St Mary,pslf_eligible_501c3,ProPublica match: St Marys Health Inc Dba Ascension (501c3),350869065,St Marys Health Inc Dba Ascension,3.0,E220,IL,ambiguous
+Carle Foundation Hosp,pslf_eligible_501c3,ProPublica match: The Carle Foundation (501c3),370673465,The Carle Foundation,3.0,E210,IL,ambiguous
+Cook County Health and Hosps Sys,no_propublica_match,no ProPublica result,,,,,IL,pslf_friendly
+Franciscan Health Olympia Fields,pslf_eligible_501c3,ProPublica match: Franciscan Health Olympia Fields (501c3),362167869,Franciscan Health Olympia Fields,3.0,,IL,ambiguous
+Hinsdale Hospital,pslf_eligible_501c3,ProPublica match: Pflag Hinsdale (501c3),363837850,Pflag Hinsdale,3.0,,IL,ambiguous
+Jackson Park Hosp,pslf_eligible_501c3,ProPublica match: Jackson Park Ministries (501c3),562063938,Jackson Park Ministries,3.0,P40,IL,ambiguous
+La Grange Mem Hosp,no_propublica_match,no ProPublica result,,,,,IL,ambiguous
+Lawndale Christian Health Ctr,no_propublica_match,no ProPublica result,,,,,IL,ambiguous
+Loyola Univ Med Ctr,pslf_eligible_501c3,ProPublica match: Loyola University (501c3),720408946,Loyola University,3.0,B430,IL,pslf_friendly
+MacNeal Hospital,pslf_eligible_501c3,ProPublica match: Macneal Foundation (501c3),10557719,Macneal Foundation,3.0,T22,IL,ambiguous
+Marianjoy Rehab Hosp,no_propublica_match,no ProPublica result,,,,,IL,ambiguous
+Mercyhealth GME Consortium,no_propublica_match,no ProPublica result,,,,,IL,ambiguous
+Mt Sinai Hosp Med Ctr,pslf_eligible_501c3,ProPublica match: Mt Sinai (501c3),450529118,Mt Sinai,3.0,,IL,pslf_friendly
+Northwestern McGaw/Lurie Childrens,no_propublica_match,no ProPublica result,,,,,IL,pslf_friendly
+Northwestern McGaw/NMH/VA,no_propublica_match,no ProPublica result,,,,,IL,pslf_friendly
+Northwestern McGaw/SRAL,no_propublica_match,no ProPublica result,,,,,IL,pslf_friendly
+Quincy Fam Prac Ctr,no_propublica_match,no ProPublica result,,,,,IL,ambiguous
+RFUMS/Chicago Medical School,no_propublica_match,no ProPublica result,,,,,IL,pslf_friendly
+Riverside Medical Ctr,no_propublica_match,no ProPublica result,,,,,IL,pslf_friendly
+Rush University Med Ctr,pslf_eligible_501c3,ProPublica match: Rush University Medical Center (501c3),362174823,Rush University Medical Center,3.0,E22,IL,pslf_friendly
+Rush-Copley Mem Hosp,no_propublica_match,no ProPublica result,,,,,IL,ambiguous
+SIU Carbondale,no_propublica_match,no ProPublica result,,,,,IL,ambiguous
+SIU Decatur,no_propublica_match,no ProPublica result,,,,,IL,ambiguous
+SIU SOM & Affil Hosps,no_propublica_match,no ProPublica result,,,,,IL,pslf_friendly
+Schwab Rehab Hosp,no_propublica_match,no ProPublica result,,,,,IL,ambiguous
+Swedish Hospital,pslf_eligible_501c3,ProPublica match: Swedish Edmonds (501c3),272305304,Swedish Edmonds,3.0,E22,IL,ambiguous
+UIC/Metro Group Hospitals,no_propublica_match,no ProPublica result,,,,,IL,pslf_friendly
+UIC/Mt Sinai Hosp Med Ctr,no_propublica_match,no ProPublica result,,,,,IL,pslf_friendly
+Univ of Chicago Med Ctr,pslf_eligible_501c3,ProPublica match: University Of Chicago (501c3),362177139,University Of Chicago,3.0,B430,IL,pslf_friendly
+Weiss Memorial Hospital,pslf_eligible_501c3,ProPublica match: Weiss Memorial Foundation Tr (501c3),137061011,Weiss Memorial Foundation Tr,3.0,A50I,IL,pslf_friendly
+West Suburban Med Ctr,pslf_eligible_501c3,ProPublica match: West Suburban Stem (501c3),812321060,West Suburban Stem,3.0,U20,IL,pslf_friendly
+Ascension St Vincent Hosp,pslf_eligible_501c3,ProPublica match: Ascension Living St Vincent Pace Inc (501c3),872516723,Ascension Living St Vincent Pace Inc,3.0,,IN,ambiguous
+Community Health Network,pslf_eligible_501c3,ProPublica match: Inspiring Hearts Community Health Network (501c3),473723535,Inspiring Hearts Community Health Network,3.0,P50,IN,ambiguous
+Deaconess Hospital,pslf_eligible_501c3,ProPublica match: Massachusetts Baptist Deacons & Deaconess Association (501c3),383915674,Massachusetts Baptist Deacons & Deaconess Association,3.0,X99,IN,ambiguous
+Franciscan Health,pslf_eligible_501c3,ProPublica match: Franciscan Health System (501c3),910564491,Franciscan Health System,3.0,E200,IN,ambiguous
+Ft Wayne Med Ed Prog,no_propublica_match,no ProPublica result,,,,,IN,ambiguous
+Marion Health,pslf_eligible_501c3,ProPublica match: Marin Health Fund (501c3),942860344,Marin Health Fund,3.0,,IN,ambiguous
+Memorial Hospital,pslf_eligible_501c3,ProPublica match: Memorial Hospital (501c3),381358208,Memorial Hospital,3.0,E220,IN,pslf_friendly
+Parkview Health,pslf_eligible_501c3,ProPublica match: Parkview Health System Inc (501c3),351972384,Parkview Health System Inc,3.0,E210,IN,ambiguous
+St Josephs Reg Med Ctr,no_propublica_match,no ProPublica result,,,,,IN,pslf_friendly
+Union Hospital,pslf_eligible_501c3,ProPublica match: Congregation Union (501c3),881472954,Congregation Union,3.0,X30,IN,ambiguous
+Broadlawns Med Ctr,pslf_eligible_501c3,ProPublica match: Broadlawns Medical Center (501c3),426005830,Broadlawns Medical Center,3.0,E220,IA,pslf_friendly
+Genesis Quad Cities,no_propublica_match,no ProPublica result,,,,,IA,ambiguous
+Mercy Med Ctr-Des Moines,no_propublica_match,no ProPublica result,,,,,IA,pslf_friendly
+Siouxland Med Ed Fdn,no_propublica_match,no ProPublica result,,,,,IA,ambiguous
+UnityPoint Broadlawns,pslf_eligible_501c3,ProPublica match: Unitypoint Broadlawns Psychiatry Education Foundation (501c3),832074985,Unitypoint Broadlawns Psychiatry Education Foundation,3.0,B50,IA,ambiguous
+HCA Healthcare Kansas City,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,MO,pslf_hostile
+Appalachian OPTIC,no_propublica_match,no ProPublica result,,,,,KY,ambiguous
+Appalachian Regional Healthcare,pslf_eligible_501c3,ProPublica match: Appalachian Regional Empowermentauthority (501c3),205421916,Appalachian Regional Empowermentauthority,3.0,T50,KY,pslf_friendly
+Baptist Health Deaconess,pslf_eligible_501c3,ProPublica match: Baptist Health Deaconess Madisonville Inc (501c3),610654587,Baptist Health Deaconess Madisonville Inc,3.0,E220,KY,ambiguous
+Lake Cumberland Regional Hosp,pslf_eligible_501c3,ProPublica match: Lake Cumberland Regional Mental Health Mental Retardation Bo (501c3),610666065,Lake Cumberland Regional Mental Health Mental Retardation Board In,3.0,F300,KY,ambiguous
+Lewis County Primary Care Ctr,no_propublica_match,no ProPublica result,,,,,KY,pslf_friendly
+St Elizabeth Med Ctr,pslf_eligible_501c3,ProPublica match: St Elizbeth Parish (501c3),42182437,St Elizbeth Parish,3.0,,KY,pslf_friendly
+U Louisville SOM,pslf_eligible_501c3,ProPublica match: University Of Louisville School Of Medicine Class Of 2026 (501c3),884263444,University Of Louisville School Of Medicine Class Of 2026,3.0,B12,KY,pslf_friendly
+Baton Rouge Gen Med Ctr,pslf_eligible_501c3,ProPublica match: Baton Rouge General Medical Center (501c3),721025017,Baton Rouge General Medical Center,3.0,E220,LA,pslf_friendly
+DePaul Community Health Ctr,no_propublica_match,no ProPublica result,,,,,LA,ambiguous
+East Jefferson Gen Hosp,pslf_eligible_501c3,ProPublica match: East Jefferson General Hospital (501c3),720692834,East Jefferson General Hospital,3.0,E220,LA,ambiguous
+LSU SOM-Baton Rouge,no_propublica_match,no ProPublica result,,,,,LA,pslf_friendly
+LSU SOM-New Orleans,no_propublica_match,no ProPublica result,,,,,LA,pslf_friendly
+LSUHSC University Hosps & Clinics,no_propublica_match,no ProPublica result,,,,,LA,pslf_friendly
+LSUHSC-Lake Charles,no_propublica_match,no ProPublica result,,,,,LA,ambiguous
+LSUHSC-Shreveport,no_propublica_match,no ProPublica result,,,,,LA,ambiguous
+Leonard J Chabert Med Ctr,pslf_eligible_501c3,ProPublica match: Leonard J Chabert Medical Center Foundation (501c3),721463600,Leonard J Chabert Medical Center Foundation,3.0,E112,LA,pslf_friendly
+North Oaks Med Ctr LLC,no_propublica_match,no ProPublica result,,,,,LA,pslf_hostile
+Ochsner Clinic Foundation,pslf_eligible_501c3,ProPublica match: Ochsner Clinic Foundation (501c3),720502505,Ochsner Clinic Foundation,3.0,E220,LA,ambiguous
+Ochsner Lafayette Gen Med Ctr,no_propublica_match,no ProPublica result,,,,,LA,pslf_friendly
+Our Lady of the Lake Reg Med Ctr,no_propublica_match,no ProPublica result,,,,,LA,pslf_friendly
+Rapides Reg Med Ctr,no_propublica_match,no ProPublica result,,,,,LA,pslf_friendly
+St Francis Med Ctr,pslf_eligible_501c3,ProPublica match: St Francis Church (501c3),930546642,St Francis Church,3.0,,LA,pslf_friendly
+Tulane Univ SOM,pslf_eligible_501c3,ProPublica match: Tulane University School Of Medicine  Aoa Chapter (501c3),726034234,Tulane University School Of Medicine  Aoa Chapter,3.0,E03,LA,pslf_friendly
+Willis-Knighton Health System,pslf_eligible_501c3,ProPublica match: Willis Knighton Medical Center (501c3),720400933,Willis Knighton Medical Center,3.0,E220,LA,pslf_friendly
+Anne Arundel Med Ctr,pslf_eligible_501c3,ProPublica match: Recovery Anne Arundel (501c3),843301858,Recovery Anne Arundel,3.0,F21,MD,pslf_friendly
+Greater Baltimore Med Ctr,pslf_eligible_501c3,ProPublica match: Greater Baltimore Ahc Inc (501c3),331084573,Greater Baltimore Ahc Inc,3.0,L21,MD,pslf_friendly
+Johns Hopkins Bloomberg SPH,no_propublica_match,no ProPublica result,,,,,MD,pslf_friendly
+Johns Hopkins Hosp,pslf_eligible_501c3,ProPublica match: Johns Hopkins University (501c3),520595110,Johns Hopkins University,3.0,B430,MD,pslf_friendly
+Johns Hopkins/Bayview,pslf_eligible_501c3,ProPublica match: Johns Hopkins Bayview Medical Center Inc (501c3),521341890,Johns Hopkins Bayview Medical Center Inc,3.0,E220,MD,pslf_friendly
+Kaiser Permanente Mid-Atlantic,no_propublica_match,no ProPublica result,,,,,MD,ambiguous
+MedStar Franklin Square Med Ctr,pslf_eligible_501c3,ProPublica match: Toastmasters International (501c3),900413775,Toastmasters International,3.0,,MD,pslf_friendly
+MedStar Union Memorial Hosp,pslf_eligible_501c3,ProPublica match: Medstar Union Memorial Auxiliary (501c3),931984126,Medstar Union Memorial Auxiliary,3.0,E12,MD,pslf_friendly
+Meritus Medical Center,pslf_eligible_501c3,ProPublica match: Meritus College Fund (501c3),943257076,Meritus College Fund,3.0,,MD,pslf_friendly
+Natl Insts of Health,no_propublica_match,no ProPublica result,,,,,MD,ambiguous
+Sinai Hospital of Baltimore,pslf_eligible_501c3,ProPublica match: Sinai Hospital Of Baltimore Inc (501c3),520486540,Sinai Hospital Of Baltimore Inc,3.0,E220,MD,ambiguous
+St Agnes Hospital,pslf_eligible_501c3,ProPublica match: St Agnes (501c3),251680487,St Agnes,3.0,,MD,ambiguous
+B I Deaconess Med Ctr,no_propublica_match,no ProPublica result,,,,,MA,pslf_friendly
+Baystate Franklin Med Ctr,pslf_eligible_501c3,ProPublica match: Baystate Franklin Auxiliary (501c3),222992284,Baystate Franklin Auxiliary,3.0,,MA,pslf_friendly
+Berkshire Med Ctr,pslf_eligible_501c3,ProPublica match: Berkshire Free Library (501c3),160993212,Berkshire Free Library,3.0,,MA,pslf_friendly
+Boston Univ Med Ctr,pslf_eligible_501c3,ProPublica match: Trustees Of Boston University (501c3),42103547,Trustees Of Boston University,3.0,,MA,pslf_friendly
+Brigham & Womens Hosp,pslf_eligible_501c3,ProPublica match: Brigham City Womens Club (501c3),461405073,Brigham City Womens Club,3.0,T21,MA,pslf_friendly
+Cambridge Health Alliance,pslf_eligible_501c3,ProPublica match: Cambridge Health Alliance Foundation Inc (501c3),10676306,Cambridge Health Alliance Foundation Inc,3.0,E11,MA,ambiguous
+Childrens Hospital-Boston,pslf_eligible_501c3,ProPublica match: Childrens Fund (501c3),541946170,Childrens Fund,3.0,,MA,pslf_friendly
+Grtr Lawrence Fam Hlth Ctr,no_propublica_match,no ProPublica result,,,,,MA,ambiguous
+Harvard South Shore,no_propublica_match,no ProPublica result,,,,,MA,pslf_friendly
+Harvard Spaulding Rehab Hosp,no_propublica_match,no ProPublica result,,,,,MA,pslf_friendly
+Lahey Clinic,pslf_eligible_501c3,ProPublica match: Lahey Clinic Inc (501c3),42704683,Lahey Clinic Inc,3.0,E300,MA,ambiguous
+Lemuel Shattuck Hosp,pslf_unclear_other_subsec,ProPublica: subsec=5,46190202,American Federation Of State County & Municipal Employees,5.0,J40,MA,ambiguous
+MGB-Brigham & Womens Hosp,no_propublica_match,no ProPublica result,,,,,MA,pslf_friendly
+Mass General Brigham,pslf_eligible_501c3,ProPublica match: Mass General Brigham Incorporated (501c3),854372153,Mass General Brigham Incorporated,3.0,E21,MA,pslf_friendly
+MetroWest Med Ctr-Framingham,pslf_eligible_501c3,ProPublica match: Metrowest Pet Pantry (501c3),272422237,Metrowest Pet Pantry,3.0,D20,MA,pslf_friendly
+Mt Auburn Hospital,pslf_eligible_501c3,ProPublica match: Mt Auburn Cdc (501c3),475305902,Mt Auburn Cdc,3.0,S20,MA,ambiguous
+Newton-Wellesley Hosp,pslf_eligible_501c3,ProPublica match: Newton Wellesley Hospital Auxiliary Inc (501c3),43532678,Newton Wellesley Hospital Auxiliary Inc,3.0,E11,MA,ambiguous
+North Shore Med Ctr/Salem Hosp,no_propublica_match,no ProPublica result,,,,,MA,pslf_friendly
+St Elizabeths Med Ctr,pslf_eligible_501c3,ProPublica match: St Elizabeths School (501c3),223875755,St Elizabeths School,3.0,B20,MA,pslf_friendly
+St Vincent Hosp-Worcester,pslf_eligible_501c3,ProPublica match: St Vincent (501c3),430653251,St Vincent,3.0,,MA,ambiguous
+Steward Carney Hospital,pslf_ineligible_for_profit,for-profit chain: matches ['Steward'],,,,,MA,pslf_hostile
+Tufts Medical Center,pslf_eligible_501c3,ProPublica match: Tufts (501c3),391539404,Tufts,3.0,A50,MA,pslf_friendly
+UMass Chan - Baystate,no_propublica_match,no ProPublica result,,,,,MA,ambiguous
+UMass Chan Medical School,pslf_eligible_501c3,ProPublica match: Umass Chan Medical School Foundation Inc (501c3),43108190,Umass Chan Medical School Foundation Inc,3.0,T22,MA,pslf_friendly
+Ascension Providence/MSUCHM,no_propublica_match,no ProPublica result,,,,,MI,ambiguous
+Authority Health GME,pslf_eligible_501c3,ProPublica match: Westside Health Authority (501c3),363789879,Westside Health Authority,3.0,L20Z,MI,ambiguous
+Corewell Health Lakeland,pslf_eligible_501c3,ProPublica match: Corewell Health (501c3),382539929,Corewell Health,3.0,E21,MI,ambiguous
+Corewell Health-Grand Rapids/MSU,no_propublica_match,no ProPublica result,,,,,MI,ambiguous
+Corewell Health,pslf_eligible_501c3,ProPublica match: Corewell Health (501c3),383382353,Corewell Health,3.0,E21,MI,ambiguous
+Detroit Med Ctr/WSU,no_propublica_match,no ProPublica result,,,,,MI,pslf_friendly
+Garden City Hospital,pslf_eligible_501c3,ProPublica match: Garden City (501c3),341372115,Garden City,3.0,,MI,ambiguous
+Henry Ford Genesys Hospital,pslf_eligible_501c3,ProPublica match: Henry Ford Health Genesys Hospital (501c3),382377821,Henry Ford Health Genesys Hospital,3.0,E22,MI,ambiguous
+Henry Ford Hospital,pslf_eligible_501c3,ProPublica match: Henry Ford Estate (501c3),274877171,Henry Ford Estate,3.0,A50,MI,ambiguous
+Henry Ford Jackson Hospital,pslf_eligible_501c3,ProPublica match: Henry M Jackson Foundation For The Advancement Of Military M (501c3),521317896,Henry M Jackson Foundation For The Advancement Of Military Medicine,3.0,H120,MI,ambiguous
+Henry Ford Macomb Hospital,pslf_eligible_501c3,ProPublica match: Henry Ford Macomb Hospital Corporation (501c3),382947657,Henry Ford Macomb Hospital Corporation,3.0,E200,MI,ambiguous
+Henry Ford Providence Hosp,pslf_eligible_501c3,ProPublica match: Henry Ford Health Providence Hospital (501c3),381358212,Henry Ford Health Providence Hospital,3.0,E22,MI,ambiguous
+Henry Ford St John Hosp,pslf_eligible_501c3,ProPublica match: Henry Ford Health St John Hospital (501c3),381359063,Henry Ford Health St John Hospital,3.0,E220,MI,ambiguous
+Henry Ford Warren Hosp,no_propublica_match,no ProPublica result,,,,,MI,ambiguous
+Henry Ford Wyandotte Hospital,pslf_eligible_501c3,ProPublica match: Henry Ford Wyandotte Hospital Corporation (501c3),382791823,Henry Ford Wyandotte Hospital Corporation,3.0,E220,MI,ambiguous
+Hurley Medical Ctr,no_propublica_match,no ProPublica result,,,,,MI,pslf_friendly
+MSUCOM Statewide Campus Sys,no_propublica_match,no ProPublica result,,,,,MI,ambiguous
+Mary Free Bed Hospital,pslf_eligible_501c3,ProPublica match: Mary Free Bed Rehabilitation Hospital (501c3),381359265,Mary Free Bed Rehabilitation Hospital,3.0,E240,MI,ambiguous
+McLaren Health Care Corp,pslf_unclear_other_subsec,ProPublica: subsec=5,383347960,American Federation Of State County & Municipal Employees,5.0,,MI,ambiguous
+Munson Med Ctr,pslf_eligible_501c3,ProPublica match: Munson Healthcare (501c3),382640544,Munson Healthcare,3.0,,MI,pslf_friendly
+MyMichigan Med Ctr Midland,pslf_eligible_501c3,ProPublica match: Mymichigan Medical Center Midland (501c3),380833014,Mymichigan Medical Center Midland,3.0,E220,MI,pslf_friendly
+Oakland Integrated Healthcare Network,pslf_eligible_501c3,ProPublica match: Oakland Intergrated Healthcare Network (501c3),383844634,Oakland Intergrated Healthcare Network,3.0,E32,MI,pslf_friendly
+Oakland Physicians Med Ctr,no_propublica_match,no ProPublica result,,,,,MI,pslf_friendly
+Pine Rest Christian Mental Hlth Svcs,no_propublica_match,no ProPublica result,,,,,MI,ambiguous
+Promedica Monroe Reg Hosp,no_propublica_match,no ProPublica result,,,,,MI,ambiguous
+Sparrow Hospital,pslf_eligible_501c3,ProPublica match: Sparrow (501c3),301210825,Sparrow,3.0,X20,MI,ambiguous
+Trinity Health Ann Arbor Hosp,no_propublica_match,no ProPublica result,,,,,MI,ambiguous
+Trinity Health Grand Rapids,no_propublica_match,no ProPublica result,,,,,MI,ambiguous
+Trinity Health Livingston Hosp,no_propublica_match,no ProPublica result,,,,,MI,ambiguous
+Trinity Health Livonia Hosp,no_propublica_match,no ProPublica result,,,,,MI,ambiguous
+Trinity Health Muskegon,no_propublica_match,no ProPublica result,,,,,MI,ambiguous
+Trinity Health Oakland,pslf_unclear_other_subsec,ProPublica: subsec=6,931848282,Trinity Health Oakland Medical Staff Fund,6.0,,MI,ambiguous
+UP Health System-Marquette,pslf_eligible_501c3,ProPublica match: Up Up Up (501c3),862443132,Up Up Up,3.0,A60,MI,pslf_friendly
+Wayne State University SOM,pslf_eligible_501c3,ProPublica match: Wayne State University School Of Medicine Student Senate (501c3),753235212,Wayne State University School Of Medicine Student Senate,3.0,B90,MI,pslf_friendly
+Abbott Northwestern Hosp,pslf_eligible_501c3,ProPublica match: Abbott Northwestern Hospital Foundation (501c3),43643816,Abbott Northwestern Hospital Foundation,3.0,T30,MN,pslf_friendly
+Allina Health,pslf_eligible_501c3,ProPublica match: Allina Health System (501c3),363261413,Allina Health System,3.0,E210,MN,ambiguous
+HealthPartners Institute,pslf_eligible_501c3,ProPublica match: Healthpartners Institute (501c3),411670163,Healthpartners Institute,3.0,E110,MN,pslf_friendly
+Hennepin Co Med Ctr,pslf_unclear_other_subsec,ProPublica: subsec=5,416037827,American Federation Of State County & Municipal Employees,5.0,,MN,pslf_friendly
+Mayo Clinic School of Grad Med Educ,no_propublica_match,no ProPublica result,,,,,MN,pslf_friendly
+Baptist Mem Hosp DeSoto,no_propublica_match,no ProPublica result,,,,,MS,ambiguous
+Baptist Mem Hosp Golden Triangle,no_propublica_match,no ProPublica result,,,,,MS,ambiguous
+Baptist Mem Hosp North,no_propublica_match,no ProPublica result,,,,,MS,ambiguous
+Forrest General Hospital,pslf_eligible_501c3,ProPublica match: Forrest General Healthcarefoundation Inc (501c3),204960499,Forrest General Healthcarefoundation Inc,3.0,E11,MS,ambiguous
+Magnolia Regional Health Ctr,no_propublica_match,no ProPublica result,,,,,MS,ambiguous
+Memorial Hospital at Gulfport,no_propublica_match,no ProPublica result,,,,,MS,pslf_friendly
+Merit Health Wesley,no_propublica_match,no ProPublica result,,,,,MS,ambiguous
+University Hosps-Jackson,no_propublica_match,no ProPublica result,,,,,MS,pslf_friendly
+Barnes-Jewish Hosp,pslf_eligible_501c3,ProPublica match: Barnes Jewish Hospital (501c3),237309937,Barnes Jewish Hospital,3.0,E220,MO,ambiguous
+Childrens Mercy Hospital,pslf_eligible_501c3,ProPublica match: Childrens Mercy Hospital (501c3),440605373,Childrens Mercy Hospital,3.0,E240,MO,pslf_friendly
+CoxHealth,pslf_eligible_501c3,ProPublica match: Coxhealth (501c3),471087427,Coxhealth,3.0,E20,MO,ambiguous
+KCU-GME Consortium,no_propublica_match,no ProPublica result,,,,,MO,ambiguous
+Mercy Hospital St Louis,pslf_eligible_501c3,ProPublica match: Mercy Health Foundation St Louis (501c3),562410020,Mercy Health Foundation St Louis,3.0,E11,MO,ambiguous
+SSM Health/St Louis Univ SOM,no_propublica_match,no ProPublica result,,,,,MO,pslf_friendly
+SSM St Marys Hospital-St Louis,no_propublica_match,no ProPublica result,,,,,MO,ambiguous
+St Louis Childrens Hosp,pslf_eligible_501c3,ProPublica match: St Louis Childrens Choirs (501c3),431145808,St Louis Childrens Choirs,3.0,,MO,pslf_friendly
+St Louis Univ SOM,no_propublica_match,no ProPublica result,,,,,MO,pslf_friendly
+St Lukes Hospital-St Louis,no_propublica_match,no ProPublica result,,,,,MO,ambiguous
+Still OPTI-Northeast Reg Med Ctr,no_propublica_match,no ProPublica result,,,,,MO,pslf_friendly
+University Hosps-Columbia,no_propublica_match,no ProPublica result,,,,,MO,pslf_friendly
+Benefis Hospital,pslf_eligible_501c3,ProPublica match: Benefis Hospitals Inc (501c3),810232122,Benefis Hospitals Inc,3.0,E220,MT,ambiguous
+Billings Clinic,pslf_eligible_501c3,ProPublica match: Billings Clinic (501c3),810231784,Billings Clinic,3.0,E210,MT,ambiguous
+Clarkson Family Med Res,no_propublica_match,no ProPublica result,,,,,NE,ambiguous
+Creighton Univ Affil Hosps,no_propublica_match,no ProPublica result,,,,,AZ,pslf_friendly
+Creighton University,pslf_eligible_501c3,ProPublica match: Creighton University (501c3),470376583,Creighton University,3.0,B430,NE,pslf_friendly
+Lincoln Med Ed Partnership,no_propublica_match,no ProPublica result,,,,,NE,ambiguous
+Dignity St Rose Dominican Hosps,no_propublica_match,no ProPublica result,,,,,NV,ambiguous
+Kirk Kerkorian SOM at UNLV,no_propublica_match,no ProPublica result,,,,,NV,pslf_friendly
+Sunrise Health GME Consortium,no_propublica_match,no ProPublica result,,,,,NV,ambiguous
+Valley Health System,pslf_eligible_501c3,ProPublica match: Value Valley Nonprofit Corporation (501c3),994184768,Value Valley Nonprofit Corporation,3.0,T50,NV,pslf_friendly
+Valley Hosp Med Ctr,pslf_eligible_501c3,ProPublica match: Value Valley Nonprofit Corporation (501c3),994184768,Value Valley Nonprofit Corporation,3.0,T50,NV,pslf_friendly
+Cheshire Med Ctr/Dartmouth Health,no_propublica_match,no ProPublica result,,,,,NH,pslf_friendly
+Concord Hospital,pslf_eligible_501c3,ProPublica match: Concord Community Concert Association (501c3),20375137,Concord Community Concert Association,3.0,A680,NH,ambiguous
+Dartmouth-Hitchcock Med Ctr,pslf_eligible_501c3,ProPublica match: Dartmouth Hitchcock Clinic (501c3),222519596,Dartmouth Hitchcock Clinic,3.0,E320,NH,pslf_friendly
+Portsmouth Regional Hosp,pslf_eligible_501c3,ProPublica match: Portsmouth Catholic Regional (501c3),540556805,Portsmouth Catholic Regional,3.0,,NH,ambiguous
+AHS Morristown Med Ctr,no_propublica_match,no ProPublica result,,,,,NJ,pslf_friendly
+AHS Overlook Hospital,no_propublica_match,no ProPublica result,,,,,NJ,ambiguous
+AtlantiCare Reg Med Ctr,no_propublica_match,no ProPublica result,,,,,NJ,pslf_friendly
+Atlantic Health System,pslf_eligible_501c3,ProPublica match: Vision Atlantic Inc (501c3),920683551,Vision Atlantic Inc,3.0,L20,NJ,pslf_friendly
+CMSRU/Cooper University Hospital,no_propublica_match,no ProPublica result,,,,,NJ,pslf_friendly
+Capital Health Reg Med Ctr,no_propublica_match,no ProPublica result,,,,,NJ,pslf_friendly
+CarePoint Health,pslf_eligible_501c3,ProPublica match: Carepoint Health Foundation Inc (501c3),452486602,Carepoint Health Foundation Inc,3.0,E32,NJ,ambiguous
+Englewood Hosp,pslf_eligible_501c3,ProPublica match: Act Englewood (501c3),841197173,Act Englewood,3.0,,NJ,ambiguous
+HMH-Palisades Med Ctr,no_propublica_match,no ProPublica result,,,,,NJ,pslf_friendly
+Hackensack U Med Ctr,pslf_eligible_501c3,ProPublica match: Hackensack University Health Network Inc (501c3),222595857,Hackensack University Health Network Inc,3.0,,NJ,pslf_friendly
+Hunterdon Med Ctr,pslf_eligible_501c3,ProPublica match: North Hunterdon (501c3),912128413,North Hunterdon,3.0,,NJ,pslf_friendly
+ISMMS Valley Health System,no_propublica_match,no ProPublica result,,,,,NJ,pslf_friendly
+Inspira Health Network,pslf_eligible_501c3,ProPublica match: Inspira Health Network Inc (501c3),222508425,Inspira Health Network Inc,3.0,E21,NJ,ambiguous
+JFK Med Ctr,pslf_eligible_501c3,ProPublica match: Jfk Booster Club (501c3),364758386,Jfk Booster Club,3.0,B11,NJ,pslf_friendly
+Jersey Shore Univ Med Ctr,no_propublica_match,no ProPublica result,,,,,NJ,pslf_friendly
+Mountainside Hosp,pslf_eligible_501c3,ProPublica match: Mountainside Rescue Squad Borough Of Mountainside Nj (501c3),222895874,Mountainside Rescue Squad Borough Of Mountainside Nj,3.0,M24,NJ,ambiguous
+NYMC-St Marys and St Clares,no_propublica_match,no ProPublica result,,,,,NY,ambiguous
+NYMC-St Michaels Med Ctr,no_propublica_match,no ProPublica result,,,,,NJ,pslf_friendly
+New Bridge Med Ctr,pslf_eligible_501c3,ProPublica match: New Bridge (501c3),934171080,New Bridge,3.0,P7A,NJ,pslf_friendly
+Ocean University Med Ctr,pslf_eligible_501c3,ProPublica match: Trustees Of Princeton University (501c3),521593034,Trustees Of Princeton University,3.0,,NJ,pslf_friendly
+Rowan University SOM,no_propublica_match,no ProPublica result,,,,,NJ,pslf_friendly
+Rutgers-Community Med Ctr,pslf_eligible_501c3,ProPublica match: Rutgers Community Christian Church (501c3),222327611,Rutgers Community Christian Church,3.0,,NJ,pslf_friendly
+Rutgers-Cooperman Barnabas Med Ctr,no_propublica_match,no ProPublica result,,,,,NJ,pslf_friendly
+Rutgers-Jersey City Med Ctr,no_propublica_match,no ProPublica result,,,,,NJ,pslf_friendly
+Rutgers-Monmouth Med Ctr,pslf_eligible_501c3,ProPublica match: Rutgers The State University Of Nj (501c3),331194126,Rutgers The State University Of Nj,3.0,O52,NJ,pslf_friendly
+Rutgers-Newark Beth Israel Med Ctr,no_propublica_match,no ProPublica result,,,,,NJ,pslf_friendly
+Rutgers-R W Johnson Medical School,no_propublica_match,no ProPublica result,,,,,NJ,pslf_friendly
+Rutgers-RWJUH Somerset,no_propublica_match,no ProPublica result,,,,,NJ,pslf_friendly
+Rutgers-Trinitas Med Ctr,no_propublica_match,no ProPublica result,,,,,NJ,pslf_friendly
+St Francis Med Ctr,pslf_eligible_501c3,ProPublica match: St Francis Church (501c3),930546642,St Francis Church,3.0,,NJ,pslf_friendly
+St Josephs Univ Med Ctr,pslf_eligible_501c3,ProPublica match: St Josephs University (501c3),111733439,St Josephs University,3.0,B420,NJ,pslf_friendly
+St Lukes Warren Hospital,pslf_eligible_501c3,ProPublica match: St Lukes Warren Hospital Inc (501c3),221494454,St Lukes Warren Hospital Inc,3.0,E220,NJ,ambiguous
+St Peters University Hosp,pslf_eligible_501c3,ProPublica match: Trustees Of Purdue University (501c3),208617809,Trustees Of Purdue University,3.0,O52,NJ,pslf_friendly
+Virtua Health,pslf_eligible_501c3,ProPublica match: Virtua Health Inc (501c3),223524939,Virtua Health Inc,3.0,E220,NJ,ambiguous
+Hidalgo Medical Services,pslf_eligible_501c3,ProPublica match: Hidalgo Medical Services (501c3),850292834,Hidalgo Medical Services,3.0,,NM,ambiguous
+Memorial Med Ctr,pslf_eligible_501c3,ProPublica match: Memorial Hospital (501c3),381358208,Memorial Hospital,3.0,E220,NM,pslf_friendly
+MountainView Reg Med Ctr,no_propublica_match,no ProPublica result,,,,,NM,pslf_friendly
+Rehoboth McKinley CHCS,no_propublica_match,no ProPublica result,,,,,NM,ambiguous
+Albany Med Ctr,pslf_eligible_501c3,ProPublica match: Albany Historical Society Albany Ca (501c3),205139665,Albany Historical Society Albany Ca,3.0,A80,NY,pslf_friendly
+Arnot Ogden Med Ctr,pslf_eligible_501c3,ProPublica match: Arnot Ogden Auxiliary (501c3),510192902,Arnot Ogden Auxiliary,3.0,E22I,NY,pslf_friendly
+Bassett Med Ctr,pslf_eligible_501c3,ProPublica match: All Bassets Cherished Basset Hound Rescue (501c3),161597137,All Bassets Cherished Basset Hound Rescue,3.0,D60,NY,pslf_friendly
+BronxCare Health System,pslf_eligible_501c3,ProPublica match: Bronxcare Health System (501c3),131974191,Bronxcare Health System,3.0,E220,NY,pslf_friendly
+Brooklyn Hosp Ctr,pslf_eligible_501c3,ProPublica match: New Millennium Academy (501c3),421625836,New Millennium Academy,3.0,B20,NY,ambiguous
+Burke Rehabilitation Hosp,pslf_eligible_501c3,ProPublica match: Burke Rehabilitation Hospital (501c3),131739937,Burke Rehabilitation Hospital,3.0,E20,NY,ambiguous
+Cayuga Med Ctr,pslf_eligible_501c3,ProPublica match: Cayuga Ball League (501c3),990433926,Cayuga Ball League,3.0,N63,NY,pslf_friendly
+Community Healthcare Network,pslf_eligible_501c3,ProPublica match: Restorative Community Network (501c3),821305081,Restorative Community Network,3.0,I51,NY,pslf_friendly
+Coney Island Hospital,pslf_eligible_501c3,ProPublica match: Coney Island Usa (501c3),133215645,Coney Island Usa,3.0,A6GZ,NY,ambiguous
+Creedmoor Psych Ctr,pslf_unclear_other_subsec,ProPublica: subsec=None,116076065,Civil Service Employees Association Csea Local 0406 Creedmoor Psych Ctr,,,NY,ambiguous
+Ellis Hospital,pslf_eligible_501c3,ProPublica match: Ellise Ellie Helene Brown Foundation Inc (501c3),462180101,Ellise Ellie Helene Brown Foundation Inc,3.0,H98,NY,ambiguous
+Family Health Ctrs at NYU Langone,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Flushing Hospital Med Ctr,pslf_eligible_501c3,ProPublica match: Flushing Meditation Inc (501c3),10583188,Flushing Meditation Inc,3.0,X99,NY,pslf_friendly
+Garnet Health Med Ctr,pslf_eligible_501c3,ProPublica match: Garnet Health (501c3),61488219,Garnet Health,3.0,E80Z,NY,pslf_friendly
+Good Samaritan Hosp Med Ctr,pslf_eligible_501c3,ProPublica match: Good Samaritan (501c3),383401779,Good Samaritan,3.0,X21,NY,pslf_friendly
+Good Samaritan Univ Hosp,pslf_eligible_501c3,ProPublica match: Good Samaritan Theological University (501c3),820670901,Good Samaritan Theological University,3.0,B60,NY,pslf_friendly
+Harlem Hospital Ctr,no_propublica_match,no ProPublica result,,,,,NY,ambiguous
+Hosp For Special Surgery,no_propublica_match,no ProPublica result,,,,,NY,ambiguous
+ISMMS Mount Sinai Beth Israel,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+ISMMS Mount Sinai Hospital,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+ISMMS Mount Sinai Morningside-West,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+ISMMS Mount Sinai South Nassau,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+ISMMS NYC Health+Hospitals/Elmhurst,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+ISMMS NYC Health+Hospitals/Queens,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Institute for Family Health,pslf_eligible_501c3,ProPublica match: The Institute For Family Health (501c3),133273402,The Institute For Family Health,3.0,E320,NY,pslf_friendly
+Jacobi Med Ctr/Einstein,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Jamaica Hosp Med Ctr,pslf_eligible_501c3,ProPublica match: Professional Jamaicans For Jamaica (501c3),272951368,Professional Jamaicans For Jamaica,3.0,Q30,NY,pslf_friendly
+Lincoln Med Ctr,pslf_eligible_501c3,ProPublica match: Lincoln (501c3),941156501,Lincoln,3.0,F33Z,NY,pslf_friendly
+Long Island Community Hosp,pslf_eligible_501c3,ProPublica match: Long Island Community Library (501c3),481022217,Long Island Community Library,3.0,,NY,ambiguous
+Maimonides Med Ctr,pslf_eligible_501c3,ProPublica match: Maimonides Way (501c3),813711143,Maimonides Way,3.0,X30,NY,pslf_friendly
+Memorial Sloan-Kettering,pslf_eligible_501c3,ProPublica match: Memorial Sloan Kettering Cancer Center (501c3),131924236,Memorial Sloan Kettering Cancer Center,3.0,E120,NY,pslf_friendly
+Mohawk Valley Health Sys,no_propublica_match,no ProPublica result,,,,,NY,ambiguous
+Montefiore Med Ctr/Einstein,pslf_eligible_501c3,ProPublica match: Montefiore Einstein Inc (501c3),471582973,Montefiore Einstein Inc,3.0,E21,NY,pslf_friendly
+Montefiore St Lukes Cornwall,no_propublica_match,no ProPublica result,,,,,NY,ambiguous
+Montefiore-New Rochelle/Einstein,no_propublica_match,no ProPublica result,,,,,NY,ambiguous
+NYCOMEC,pslf_eligible_501c3,ProPublica match: Nycomec Corp (501c3),113302750,Nycomec Corp,3.0,B90Z,NY,ambiguous
+NYMC-Metropolitan Hosp Ctr,no_propublica_match,no ProPublica result,,,,,NY,ambiguous
+NYMC-St Josephs Med Ctr,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+NYMC-Westchester/Metropolitan,no_propublica_match,no ProPublica result,,,,,NY,ambiguous
+NYP Brooklyn Methodist Hosp,no_propublica_match,no ProPublica result,,,,,NY,ambiguous
+NYP Hosp-Columbia & Cornell,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+NYP Hosp-Columbia Univ Med Ctr,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+NYP Hosp-Weill Cornell Med Ctr,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+NYU Grossman Long Island SOM,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+NYU Grossman School Of Medicine,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Nassau Univ Med Ctr,pslf_eligible_501c3,ProPublica match: South Nassau University Health System Inc (501c3),66427908,South Nassau University Health System Inc,3.0,E99Z,NY,pslf_friendly
+Niagara Falls Mem Med Ctr,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Nuvance Health Consortium,no_propublica_match,no ProPublica result,,,,,NY,ambiguous
+Nuvance Health,pslf_eligible_501c3,ProPublica match: Nuvance Health (501c3),834214573,Nuvance Health,3.0,E11,NY,ambiguous
+OBH Brookdale Univ Hosp Med Ctr,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+OBH Interfaith Med Ctr,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+OBH Kingsbrook Jewish Med Ctr,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Our Lady Of Lourdes,pslf_eligible_501c3,ProPublica match: Our Lady Of Lourdes (501c3),752806959,Our Lady Of Lourdes,3.0,,NY,ambiguous
+Richmond Univ Med Ctr,pslf_eligible_501c3,ProPublica match: University Of Richmond (501c3),540505965,University Of Richmond,3.0,B430,NY,pslf_friendly
+Rochester Gen Hosp,pslf_eligible_501c3,ProPublica match: Rochester General Hospital (501c3),160743134,Rochester General Hospital,3.0,E220,NY,ambiguous
+Rochester Regional Health/Unity Hosp,no_propublica_match,no ProPublica result,,,,,NY,ambiguous
+SUNY HSC Brooklyn,no_propublica_match,no ProPublica result,,,,,NY,ambiguous
+Samaritan Med Ctr,pslf_eligible_501c3,ProPublica match: Samaritans (501c3),640900404,Samaritans,3.0,,NY,pslf_friendly
+South Brooklyn Health.,pslf_eligible_501c3,ProPublica match: South Brooklyn Health Auxlliary Inc (501c3),111704587,South Brooklyn Health Auxlliary Inc,3.0,E22I,NY,ambiguous
+St Barnabas Hosp,pslf_eligible_501c3,ProPublica match: St Barnabas (501c3),521322628,St Barnabas,3.0,,NY,ambiguous
+St Elizabeth Med Ctr,pslf_eligible_501c3,ProPublica match: St Elizbeth Parish (501c3),42182437,St Elizbeth Parish,3.0,,NY,pslf_friendly
+St Johns Riverside Hospital,pslf_eligible_501c3,ProPublica match: St Johns Riverside Hospital (501c3),131740126,St Johns Riverside Hospital,3.0,E220,NY,ambiguous
+St Josephs Health,pslf_eligible_501c3,ProPublica match: St Josephs Health Fund (501c3),133833645,St Josephs Health Fund,3.0,Z99,NY,ambiguous
+Stony Brook Teach Hosps,no_propublica_match,no ProPublica result,,,,,NY,ambiguous
+Syracuse Community Health,pslf_eligible_501c3,ProPublica match: Syracuse Community Health Center Inc (501c3),161080039,Syracuse Community Health Center Inc,3.0,,NY,ambiguous
+U Rochester/Strong Memorial,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+UHS-Wilson Med Ctr,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+UVM Health Network CVPH,no_propublica_match,no ProPublica result,,,,,NY,ambiguous
+University at Buffalo SOM,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Westchester Medical Ctr,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Woodhull Med Ctr,pslf_eligible_501c3,ProPublica match: Woodhill (501c3),900667554,Woodhill,3.0,K20,NY,pslf_friendly
+Wyckoff Heights Med Ctr,pslf_eligible_501c3,ProPublica match: Wyckoff Heights Medical Center (501c3),111631837,Wyckoff Heights Medical Center,3.0,E21,NY,pslf_friendly
+Zucker SOM Northern Westchester Med Ctr,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Zucker SOM-Northwell Cohen Childrens,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Zucker SOM-Northwell Forest Hills Hosp,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Zucker SOM-Northwell Glen Cove Hosp,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Zucker SOM-Northwell Huntington Hosp,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Zucker SOM-Northwell Lenox Hill Hosp,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Zucker SOM-Northwell Mather Hosp,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Zucker SOM-Northwell NS/LIJ,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Zucker SOM-Northwell Peconic Bay,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Zucker SOM-Northwell Phelps Hosp,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Zucker SOM-Northwell Plainview Hosp,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Zucker SOM-Northwell South Shore,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Zucker SOM-Northwell Staten Island Univ,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Zucker SOM-Northwell Zucker Hillside,no_propublica_match,no ProPublica result,,,,,NY,pslf_friendly
+Atrium Health Cabarrus,no_propublica_match,no ProPublica result,,,,,NC,ambiguous
+Campbell University,pslf_eligible_501c3,ProPublica match: Campbell University (501c3),560529940,Campbell University,3.0,B430,NC,pslf_friendly
+Cape Fear Valley Health,pslf_eligible_501c3,ProPublica match: Methodist University Cape Fear Valley Health School Of Medic (501c3),993705462,Methodist University Cape Fear Valley Health School Of Medicine I,3.0,B11,NC,ambiguous
+Carolinas Med Ctr,pslf_eligible_501c3,ProPublica match: Conference Carolinas (501c3),561947422,Conference Carolinas,3.0,N70,NC,pslf_friendly
+Cone Health,pslf_eligible_501c3,ProPublica match: Cone Health Philanthropic Foundation (501c3),581681560,Cone Health Philanthropic Foundation,3.0,,NC,ambiguous
+Duke Univ Med Ctr,pslf_eligible_501c3,ProPublica match: Duke University (501c3),560532129,Duke University,3.0,B430,NC,pslf_friendly
+ECU Health Med Ctr,pslf_eligible_501c3,ProPublica match: Ecu Health Care Inc (501c3),223298358,Ecu Health Care Inc,3.0,E00L,NC,pslf_friendly
+Iredell Health System,pslf_eligible_501c3,ProPublica match: Iredell Isd Pto (501c3),920651961,Iredell Isd Pto,3.0,B94,NC,pslf_friendly
+Mountain AHEC,no_propublica_match,no ProPublica result,,,,,NC,ambiguous
+New Hanover Reg Med Ctr,pslf_unclear_other_subsec,ProPublica: subsec=5,237084045,New Jersey Education Association,5.0,,NC,pslf_friendly
+Novant Health,pslf_eligible_501c3,ProPublica match: Novant Health Inc (501c3),561376950,Novant Health Inc,3.0,E22,NC,ambiguous
+Southern Regional AHEC,no_propublica_match,no ProPublica result,,,,,NC,ambiguous
+UNC Health Blue Ridge,no_propublica_match,no ProPublica result,,,,,NC,ambiguous
+Wake Forest Baptist Med Ctr,pslf_eligible_501c3,ProPublica match: Wake Forest Baptist Church (501c3),566015011,Wake Forest Baptist Church,3.0,X20,NC,pslf_friendly
+WakeMed Health and Hospitals,no_propublica_match,no ProPublica result,,,,,NC,pslf_friendly
+Womack Army Med Ctr,pslf_eligible_gov,keyword: Army Med,,,,,NC,pslf_friendly
+Altru Health System,pslf_eligible_501c3,ProPublica match: Altru Alliance (501c3),237389089,Altru Alliance,3.0,E22I,ND,pslf_friendly
+Adena Health System,pslf_eligible_501c3,ProPublica match: Adena Historical Society (501c3),882973634,Adena Historical Society,3.0,A80,OH,pslf_friendly
+Akron Children's,pslf_eligible_501c3,ProPublica match: Akron Childrens Museum (501c3),463118462,Akron Childrens Museum,3.0,,OH,pslf_friendly
+Akron General Med Ctr,pslf_eligible_501c3,ProPublica match: Akron General Foundation (501c3),341127047,Akron General Foundation,3.0,E30J,OH,pslf_friendly
+Aultman Hospital/NEOMED,no_propublica_match,no ProPublica result,,,,,OH,ambiguous
+Bethesda Hospital,pslf_eligible_gov,keyword: Bethesda,,,,,OH,pslf_friendly
+Canton Med Ed Fdn/NEOMED,no_propublica_match,no ProPublica result,,,,,OH,ambiguous
+Case Western/Univ Hosps Cleveland Med Ctr,no_propublica_match,no ProPublica result,,,,,OH,pslf_friendly
+Christ Hospital,pslf_eligible_501c3,ProPublica match: Christ Life Church Corpus Christi (501c3),923025782,Christ Life Church Corpus Christi,3.0,X20,OH,ambiguous
+Cincinnati Childrens Hosp Med Ctr,pslf_eligible_501c3,ProPublica match: Childrens Theatre Of Cincinnati (501c3),316026285,Childrens Theatre Of Cincinnati,3.0,A65Z,OH,pslf_friendly
+Cleveland Clinic Fdn,no_propublica_match,no ProPublica result,,,,,OH,pslf_friendly
+East Liverpool City Hosp,pslf_eligible_501c3,ProPublica match: East Liverpool City Hospital Auxiliary Incorporated (501c3),341682108,East Liverpool City Hospital Auxiliary Incorporated,3.0,,OH,ambiguous
+Fairfield Med Ctr,pslf_eligible_501c3,ProPublica match: Fairfield (501c3),912128658,Fairfield,3.0,,OH,pslf_friendly
+Firelands Regional Med Ctr,pslf_eligible_501c3,ProPublica match: Firelands Regional Medical Center (501c3),344428218,Firelands Regional Medical Center,3.0,E220,OH,pslf_friendly
+Good Samaritan Hosp-Cinn,pslf_eligible_501c3,ProPublica match: Good Samaritan (501c3),383401779,Good Samaritan,3.0,X21,OH,ambiguous
+Jewish Hospital,pslf_eligible_501c3,ProPublica match: Jewish Home (501c3),940545320,Jewish Home,3.0,P750,OH,ambiguous
+Kettering Health Network,pslf_eligible_501c3,ProPublica match: Kettering Adventist Healthcare (501c3),311051688,Kettering Adventist Healthcare,3.0,,OH,ambiguous
+Memorial Health System,pslf_eligible_501c3,ProPublica match: Memorial Hospital (501c3),381358208,Memorial Hospital,3.0,E220,OH,pslf_friendly
+Mercy Health-Anderson Hosp,no_propublica_match,no ProPublica result,,,,,OH,ambiguous
+Mercy Health-St Ritas Med Ctr,pslf_eligible_501c3,ProPublica match: Mount St Rita Health Centre (501c3),50342330,Mount St Rita Health Centre,3.0,,OH,pslf_friendly
+Mercy St Vincent Med Ctr,pslf_eligible_501c3,ProPublica match: St Vincent Mercy Hospital Foundation Inc (501c3),311066871,St Vincent Mercy Hospital Foundation Inc,3.0,E22I,OH,pslf_friendly
+Mount Carmel Health System,pslf_eligible_501c3,ProPublica match: Mount Carmel (501c3),371012545,Mount Carmel,3.0,,OH,pslf_friendly
+Nationwide Childrens Hosp,pslf_eligible_501c3,ProPublica match: Nationwide Childrens Hospital Inc (501c3),314379441,Nationwide Childrens Hospital Inc,3.0,E240,OH,pslf_friendly
+St Elizabeth Health Ctr-Boardman,no_propublica_match,no ProPublica result,,,,,OH,ambiguous
+St Elizabeth Youngstown Hosp,pslf_unclear_other_subsec,ProPublica: subsec=6,850704832,St Elizabeth Youngstown Medical Staff,6.0,E03,OH,ambiguous
+St Lukes Hospital,pslf_eligible_501c3,ProPublica match: St Lukes (501c3),810413591,St Lukes,3.0,,OH,ambiguous
+St Vincent Charity Med Ctr,pslf_eligible_501c3,ProPublica match: St Vincent Charity Development Foundation (501c3),271602445,St Vincent Charity Development Foundation,3.0,,OH,pslf_friendly
+Summa Health/NEOMED,no_propublica_match,no ProPublica result,,,,,OH,ambiguous
+The MetroHealth Sys/Case Western,no_propublica_match,no ProPublica result,,,,,OH,ambiguous
+Trinity Health System,pslf_eligible_501c3,ProPublica match: Trinity Ppal (501c3),208297469,Trinity Ppal,3.0,N65,OH,pslf_friendly
+U Cincinnati Med Ctr,pslf_eligible_501c3,ProPublica match: Cincinnati Christian University (501c3),310643552,Cincinnati Christian University,3.0,B58Z,OH,pslf_friendly
+U Cincinnati West Chester Hosp,no_propublica_match,no ProPublica result,,,,,OH,ambiguous
+Univ Hosps Community Consortium,no_propublica_match,no ProPublica result,,,,,OH,pslf_friendly
+University of Toledo,pslf_eligible_501c3,ProPublica match: The University Of Toledo Foundation (501c3),346555110,The University Of Toledo Foundation,3.0,B110,OH,pslf_friendly
+Western Reserve Health Ed/NEOMED,no_propublica_match,no ProPublica result,,,,,OH,ambiguous
+Western Reserve Hosp,pslf_eligible_501c3,ProPublica match: Western Reserve Academy (501c3),340714390,Western Reserve Academy,3.0,B250,OH,ambiguous
+Wright State Univ Boonshoft SOM,no_propublica_match,no ProPublica result,,,,,OH,pslf_friendly
+Griffin Memorial Hospital,pslf_eligible_501c3,ProPublica match: Daniel J Griffin Memorial (501c3),10691315,Daniel J Griffin Memorial,3.0,B82,OK,pslf_friendly
+In His Image Family Med,no_propublica_match,no ProPublica result,,,,,OK,ambiguous
+Integris Health,pslf_eligible_501c3,ProPublica match: Integris Health Inc (501c3),731192764,Integris Health Inc,3.0,E210,OK,ambiguous
+OMECO,pslf_eligible_501c3,ProPublica match: Omeko Experience Foundation (501c3),824154026,Omeko Experience Foundation,3.0,P20,OK,ambiguous
+St Anthony Hospital,pslf_eligible_501c3,ProPublica match: Church Of St Anthony   St Anthony Parish (501c3),881112330,Church Of St Anthony   St Anthony Parish,3.0,,OK,ambiguous
+Legacy Emanuel/Good Samaritan,no_propublica_match,no ProPublica result,,,,,OR,ambiguous
+Providence Health,pslf_eligible_501c3,ProPublica match: Providence Health Foundation (501c3),521275583,Providence Health Foundation,3.0,E22I,OR,ambiguous
+Roseburg Family Medicine,no_propublica_match,no ProPublica result,,,,,OR,ambiguous
+Samaritan Health Services-Corvallis,no_propublica_match,no ProPublica result,,,,,OR,pslf_friendly
+Abington Mem Hosp,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+Albert Einstein Healthcare Network,pslf_eligible_501c3,ProPublica match: Albert Einstein Healthcare Network (501c3),231396794,Albert Einstein Healthcare Network,3.0,E120,PA,pslf_friendly
+Albert Einstein Med Ctr,pslf_eligible_501c3,ProPublica match: Albert Einstein Academies (501c3),870759939,Albert Einstein Academies,3.0,,PA,pslf_friendly
+Allegheny Gen Hosp,pslf_eligible_501c3,ProPublica match: Allegheny General Hospital Auxillary (501c3),232993372,Allegheny General Hospital Auxillary,3.0,T30,PA,ambiguous
+Allegheny Health Network St Vincent HC,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+Bryn Mawr Hospital,pslf_eligible_501c3,ProPublica match: Bryn Mawr College (501c3),231352621,Bryn Mawr College,3.0,B420,PA,ambiguous
+Butler Memorial Hospital,pslf_eligible_501c3,ProPublica match: Huddleston Butler Memorial Foundation (501c3),841348444,Huddleston Butler Memorial Foundation,3.0,T22Z,PA,pslf_friendly
+Childrens Hosp-Philadelphia,pslf_eligible_501c3,ProPublica match: Childrens Fund (501c3),541946170,Childrens Fund,3.0,,PA,pslf_friendly
+Clarion Hospital,pslf_eligible_501c3,ProPublica match: Clarion Hospital (501c3),251010039,Clarion Hospital,3.0,E220,PA,ambiguous
+Conemaugh Memorial Med Ctr,no_propublica_match,no ProPublica result,,,,,PA,pslf_friendly
+Cornerstone Care THC,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+Crozer-Chester Med Ctr,pslf_eligible_501c3,ProPublica match: Crozer Chester Medical Center (501c3),231637191,Crozer Chester Medical Center,3.0,E20,PA,pslf_friendly
+Delaware Valley Community Health,pslf_eligible_501c3,ProPublica match: Delaware Valley Community Health Inc (501c3),232077750,Delaware Valley Community Health Inc,3.0,,PA,ambiguous
+Doylestown Hospital,pslf_eligible_501c3,ProPublica match: Doylestown Cares (501c3),822699215,Doylestown Cares,3.0,P82,PA,ambiguous
+Excela Health Latrobe Hosp,pslf_eligible_501c3,ProPublica match: Excela Health (501c3),250965414,Excela Health,3.0,E220,PA,ambiguous
+Forbes Family Medicine,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+Geisinger Health System,pslf_eligible_501c3,ProPublica match: Geisinger Clinic (501c3),236291113,Geisinger Clinic,3.0,E30,PA,pslf_friendly
+Guthrie/Robert Packer Hosp,pslf_eligible_501c3,ProPublica match: Donald & Emily Guthrie Fdn Fbo The Robert Packer Hospital (501c3),236632633,Donald & Emily Guthrie Fdn Fbo The Robert Packer Hospital,3.0,,PA,ambiguous
+Heritage Valley Beaver,pslf_eligible_501c3,ProPublica match: Heritage Valley Beaver Foundation (501c3),251441516,Heritage Valley Beaver Foundation,3.0,,PA,ambiguous
+JHME-Jefferson Einstein Montgomery,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+JHME-Jefferson Einstein Philadelphia,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+Jefferson Health-Northeast,pslf_eligible_501c3,ProPublica match: Jefferson Health Northeast (501c3),230596940,Jefferson Health Northeast,3.0,E220,PA,ambiguous
+LECOM Health,pslf_eligible_501c3,ProPublica match: Lecom Health Risk Retention Group (501c3),854350386,Lecom Health Risk Retention Group,3.0,E11,PA,ambiguous
+Lancaster Gen Hosp,pslf_eligible_501c3,ProPublica match: Lancaster General Hospital (501c3),231365353,Lancaster General Hospital,3.0,E220,PA,ambiguous
+Lankenau Med Ctr,pslf_eligible_501c3,ProPublica match: Lankenau Medical Center Foundation (501c3),232176723,Lankenau Medical Center Foundation,3.0,E112,PA,pslf_friendly
+Lehigh Valley Hosp,pslf_eligible_501c3,ProPublica match: Lehigh Valley (501c3),311477752,Lehigh Valley,3.0,F70,PA,ambiguous
+Lower Bucks Hosp,pslf_eligible_501c3,ProPublica match: Lower Bucks Outlaws (501c3),833263413,Lower Bucks Outlaws,3.0,N60,PA,ambiguous
+Meadville Med Ctr,pslf_eligible_501c3,ProPublica match: Meadville Ymca (501c3),250969495,Meadville Ymca,3.0,P27,PA,pslf_friendly
+Mercy Catholic Med Ctr,pslf_eligible_501c3,ProPublica match: Divine Mercy Catholic Community (501c3),465017959,Divine Mercy Catholic Community,3.0,X22,PA,pslf_friendly
+Nazareth Hospital,pslf_eligible_501c3,ProPublica match: Nazareth (501c3),341248645,Nazareth,3.0,,PA,ambiguous
+Penn Highlands Healthcare,pslf_eligible_501c3,ProPublica match: Penn Highlands Healthcare (501c3),320345810,Penn Highlands Healthcare,3.0,E12,PA,pslf_friendly
+Penn State Hershey Med Ctr,no_propublica_match,no ProPublica result,,,,,PA,pslf_friendly
+Philadelphia Coll of Osteo Med,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+St Clair Health,pslf_eligible_501c3,ProPublica match: St Clair Health Corporation (501c3),251522445,St Clair Health Corporation,3.0,E21,PA,ambiguous
+St Lukes Hosp-Anderson,pslf_eligible_501c3,ProPublica match: St Lukes (501c3),810413591,St Lukes,3.0,,PA,ambiguous
+St Lukes Hosp-Bethlehem,pslf_eligible_501c3,ProPublica match: St Lukes (501c3),810413591,St Lukes,3.0,,PA,ambiguous
+St Mary Med Ctr-Langhorne,pslf_eligible_501c3,ProPublica match: St Mary (501c3),391900628,St Mary,3.0,,PA,pslf_friendly
+Suburban Community Hosp,pslf_eligible_501c3,ProPublica match: South Suburban Community Services (501c3),384137760,South Suburban Community Services,3.0,B80,PA,ambiguous
+TJU/Nemours Childrens Health,no_propublica_match,no ProPublica result,,,,,PA,pslf_friendly
+Temple Univ Hosp,pslf_eligible_501c3,ProPublica match: Tennessee Temple University (501c3),620548919,Tennessee Temple University,3.0,,PA,pslf_friendly
+Temple Univ/Chestnut Hill Hosp,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+Temple Univ/Fox Chase Cancer Ctr,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+Thomas Jefferson Univ,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+Tower Health/Brandywine Hosp,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+Tower Health/Chestnut Hill Hosp,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+Tower Health/Drexel Univ COM,no_propublica_match,no ProPublica result,,,,,PA,pslf_friendly
+Tower Health/Phoenixville Hosp,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+Tower Health/Reading Hospital,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+Tower Health/St Christophers Hosp,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+UPMC Altoona Hospital,pslf_eligible_501c3,ProPublica match: Upmc (501c3),231352155,Upmc,3.0,E220,PA,ambiguous
+UPMC Hamot Med Ctr,pslf_eligible_501c3,ProPublica match: Upmc Hamot Aid Society (501c3),256039041,Upmc Hamot Aid Society,3.0,,PA,pslf_friendly
+UPMC Harrisburg,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+UPMC Lititz,pslf_eligible_501c3,ProPublica match: Upmc (501c3),820844453,Upmc,3.0,E220,PA,ambiguous
+UPMC McKeesport,pslf_eligible_501c3,ProPublica match: Upmc Mckeesport Medical Staff Fund (501c3),274836619,Upmc Mckeesport Medical Staff Fund,3.0,E99,PA,ambiguous
+UPMC Medical Education,pslf_eligible_501c3,ProPublica match: Upmc (501c3),256073026,Upmc,3.0,,PA,ambiguous
+UPMC Mercy Hospital,pslf_eligible_501c3,ProPublica match: Raymond Frodey Tw Fbo Upmc Health Upmc Mercy (501c3),256234622,Raymond Frodey Tw Fbo Upmc Health Upmc Mercy,3.0,T20,PA,ambiguous
+UPMC Presbyterian Shadyside,pslf_eligible_501c3,ProPublica match: Upmc (501c3),250965480,Upmc,3.0,,PA,ambiguous
+UPMC St Margaret,pslf_eligible_501c3,ProPublica match: Upmc (501c3),232875070,Upmc,3.0,,PA,ambiguous
+UPMC Washington Hospital,pslf_eligible_501c3,ProPublica match: Upmc Washington (501c3),250965600,Upmc Washington,3.0,E220,PA,ambiguous
+UPMC Williamsport,pslf_eligible_501c3,ProPublica match: Upmc (501c3),240795508,Upmc,3.0,E220,PA,ambiguous
+Wellspan Health Chambersburg Hosp,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+Wellspan Health Good Sam Hosp,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+Wellspan Health York Hosp,no_propublica_match,no ProPublica result,,,,,PA,ambiguous
+Wright Center for GME,pslf_eligible_501c3,ProPublica match: The Wright Center For Graduate Medical Education (501c3),232007832,The Wright Center For Graduate Medical Education,3.0,G95Z,PA,ambiguous
+Centro Medico Menonita Cayey,no_propublica_match,no ProPublica result,,,,,PR,ambiguous
+Damas Hospital,pslf_eligible_501c3,ProPublica match: Las Damas (501c3),330014114,Las Damas,3.0,A20,PR,ambiguous
+Hosp Episcopal San Lucas,no_propublica_match,no ProPublica result,,,,,PR,ambiguous
+Hospital de la Concepcion,pslf_eligible_501c3,ProPublica match: Hospital De La Concepcion Inc (501c3),660227304,Hospital De La Concepcion Inc,3.0,,PR,ambiguous
+Ponce Health Sciences Univ SOM,no_propublica_match,no ProPublica result,,,,,PR,pslf_friendly
+San Juan VA Med Ctr,pslf_eligible_gov,keyword: VA Med,,,,,PR,pslf_friendly
+Univ Central del Caribe SOM,no_propublica_match,no ProPublica result,,,,,PR,pslf_friendly
+Brown Univ/Butler Hospital,no_propublica_match,no ProPublica result,,,,,RI,ambiguous
+Kent Hospital,pslf_eligible_501c3,ProPublica match: Kent Downtown (501c3),911573465,Kent Downtown,3.0,S99,RI,ambiguous
+NYMC-Landmark Med Ctr,no_propublica_match,no ProPublica result,,,,,RI,pslf_friendly
+Roger Williams Med Ctr,pslf_eligible_501c3,ProPublica match: Roger Williams University (501c3),50277222,Roger Williams University,3.0,B430,RI,pslf_friendly
+Aiken Regional Med Ctrs,no_propublica_match,no ProPublica result,,,,,SC,pslf_friendly
+AnMed Health,pslf_eligible_501c3,ProPublica match: Anmed Health (501c3),570359174,Anmed Health,3.0,E220,SC,ambiguous
+Grand Strand Reg Med Ctr,no_propublica_match,no ProPublica result,,,,,SC,pslf_friendly
+Lexington Med Ctr,pslf_eligible_501c3,ProPublica match: Mission Lexington (501c3),570813856,Mission Lexington,3.0,P20,SC,pslf_friendly
+McLeod Reg Med Ctr,no_propublica_match,no ProPublica result,,,,,SC,pslf_friendly
+Self Regional Healthcare,pslf_eligible_501c3,ProPublica match: Self Regional Healthcare (501c3),570331865,Self Regional Healthcare,3.0,E20,SC,pslf_friendly
+Spartanburg Medical Center,pslf_eligible_501c3,ProPublica match: Spartanburg Philharmonic (501c3),570485556,Spartanburg Philharmonic,3.0,,SC,pslf_friendly
+Summerville Med Ctr,pslf_eligible_501c3,ProPublica match: Summerville Orchestra (501c3),550850796,Summerville Orchestra,3.0,A69,SC,pslf_friendly
+Tidelands Health,pslf_eligible_501c3,ProPublica match: Tidelands Health Holdings (501c3),850532826,Tidelands Health Holdings,3.0,E21,SC,ambiguous
+Tri-County Commission ADA,no_propublica_match,no ProPublica result,,,,,SC,pslf_friendly
+Trident Medical Center,pslf_eligible_501c3,ProPublica match: Trident Lacrosse (501c3),472841131,Trident Lacrosse,3.0,N60,SC,pslf_friendly
+Center for Family Medicine,pslf_eligible_501c3,ProPublica match: Center For Family Medicine (501c3),460318482,Center For Family Medicine,3.0,B54Z,SD,ambiguous
+Rapid City Hospital,pslf_eligible_501c3,ProPublica match: Rapid City Bmx (501c3),455092607,Rapid City Bmx,3.0,N32,SD,ambiguous
+Baptist Mem Med Education,no_propublica_match,no ProPublica result,,,,,TN,ambiguous
+HCA Healthcare/TriStar Nashville,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,TN,pslf_hostile
+HCA Healthcare/TriStar Southern Hills,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,TN,pslf_hostile
+Health Education Services,pslf_eligible_501c3,ProPublica match: Health Education Services (501c3),822389981,Health Education Services,3.0,G01,TN,ambiguous
+Meharry Medical College,pslf_eligible_501c3,ProPublica match: Meharry Medical College (501c3),620488046,Meharry Medical College,3.0,B500,TN,ambiguous
+Methodist Healthcare Memphis Hosps,no_propublica_match,no ProPublica result,,,,,TN,pslf_friendly
+Methodist Med Ctr of Oak Ridge,no_propublica_match,no ProPublica result,,,,,TN,pslf_friendly
+UT Ascension St Thomas,no_propublica_match,no ProPublica result,,,,,TN,ambiguous
+Vanderbilt Univ Med Ctr,pslf_eligible_501c3,ProPublica match: Vanderbilt University (501c3),620476822,Vanderbilt University,3.0,B43,TN,pslf_friendly
+Baylor Coll Med-Houston,no_propublica_match,no ProPublica result,,,,,TX,pslf_friendly
+Baylor S&W All Saints Med Ctr,no_propublica_match,no ProPublica result,,,,,TX,pslf_friendly
+Baylor S&W Med Ctr-Round Rock,no_propublica_match,no ProPublica result,,,,,TX,pslf_friendly
+Baylor S&W-Baylor COM Temple,no_propublica_match,no ProPublica result,,,,,TX,pslf_friendly
+Baylor Scott & White Med Ctr,pslf_eligible_501c3,ProPublica match: Baylor Scott & White Health (501c3),463131350,Baylor Scott & White Health,3.0,E21,TX,pslf_friendly
+Baylor Univ Med Ctr-Dallas,pslf_eligible_501c3,ProPublica match: Baylor University (501c3),741159753,Baylor University,3.0,B430,TX,pslf_friendly
+CHRISTUS Health,pslf_eligible_501c3,ProPublica match: Christus Health (501c3),760590551,Christus Health,3.0,E210,TX,ambiguous
+Conroe Reg Med Ctr,no_propublica_match,no ProPublica result,,,,,TX,pslf_friendly
+DeTar Healthcare System,no_propublica_match,no ProPublica result,,,,,TX,pslf_friendly
+Doctors Hospital at Renaissance,no_propublica_match,no ProPublica result,,,,,TX,ambiguous
+Driscoll Childrens Hosp,pslf_eligible_501c3,ProPublica match: Driscoll Childrens Hospital (501c3),742577746,Driscoll Childrens Hospital,3.0,E240,TX,pslf_friendly
+HCA Corpus Christi Med Ctr,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,TX,pslf_hostile
+HCA Houston Healthcare/U Houston,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,TX,pslf_hostile
+HCA Las Palmas del Sol Healthcare,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,TX,pslf_hostile
+HCA Medical City Healthcare,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,TX,pslf_hostile
+John Peter Smith Hosp,pslf_eligible_501c3,ProPublica match: John Peter Smith Hospital Family Medicine Alumni Foundation (501c3),752508345,John Peter Smith Hospital Family Medicine Alumni Foundation,3.0,G03,TX,ambiguous
+Lake Granbury Med Ctr,pslf_eligible_501c3,ProPublica match: Lake Granbury Art Association (501c3),752671465,Lake Granbury Art Association,3.0,A51,TX,pslf_friendly
+Memorial Hermann Hosp,pslf_eligible_501c3,ProPublica match: Memorial Hermann Foundation (501c3),741653640,Memorial Hermann Foundation,3.0,E110,TX,pslf_friendly
+Methodist Health System Dallas,pslf_eligible_501c3,ProPublica match: Methodist Hospitals Of Dallas (501c3),750800661,Methodist Hospitals Of Dallas,3.0,E200,TX,pslf_friendly
+Methodist Healthcare Sys-San Antonio,no_propublica_match,no ProPublica result,,,,,TX,pslf_friendly
+Methodist Hospital-Houston,pslf_eligible_501c3,ProPublica match: Walker Methodist (501c3),411916102,Walker Methodist,3.0,E91,TX,ambiguous
+Presbyterian Hosp-Dallas,pslf_eligible_501c3,ProPublica match: Presbyterian Hospital (501c3),560554230,Presbyterian Hospital,3.0,E220,TX,ambiguous
+Prime South Consortium,no_propublica_match,no ProPublica result,,,,,TX,ambiguous
+Project Vida Health Ctr,no_propublica_match,no ProPublica result,,,,,TX,ambiguous
+Sam Houston State Univ COM,no_propublica_match,no ProPublica result,,,,,TX,pslf_friendly
+Shannon Medical Center,pslf_eligible_501c3,ProPublica match: Shannon Baptist Church (501c3),362855866,Shannon Baptist Church,3.0,,TX,pslf_friendly
+St Davids Healthcare GME,pslf_eligible_501c3,ProPublica match: St Davids (501c3),411429208,St Davids,3.0,O50,TX,pslf_friendly
+TIGMER,pslf_eligible_501c3,ProPublica match: Tiger Sanctuaries Inc (501c3),454998901,Tiger Sanctuaries Inc,3.0,D30,TX,ambiguous
+Texoma Med Ctr,pslf_eligible_501c3,ProPublica match: Texoma Ballet (501c3),862305246,Texoma Ballet,3.0,A60,TX,pslf_friendly
+Valley Baptist Med Ctr,pslf_eligible_501c3,ProPublica match: Valley Baptist Holdings (501c3),205394369,Valley Baptist Holdings,3.0,,TX,pslf_friendly
+Waco Family Medicine Institute,no_propublica_match,no ProPublica result,,,,,TX,pslf_friendly
+William Beaumont Army Med Ctr,pslf_eligible_gov,keyword: Army Med,,,,,TX,pslf_friendly
+Intermountain Med Ctr,pslf_eligible_501c3,ProPublica match: Intermountain Foundation (501c3),311655066,Intermountain Foundation,3.0,F113,UT,pslf_friendly
+McKay-Dee Hospital Ctr,no_propublica_match,no ProPublica result,,,,,UT,ambiguous
+Augusta Health,pslf_eligible_501c3,ProPublica match: Augusta Health Care Inc (501c3),541453954,Augusta Health Care Inc,3.0,E220,VA,ambiguous
+Bon Secours Health System,pslf_eligible_501c3,ProPublica match: Bon Secours Inc (501c3),521301091,Bon Secours Inc,3.0,,VA,pslf_friendly
+EVMS Old Dominion University,no_propublica_match,no ProPublica result,,,,,VA,pslf_friendly
+HCA Chippenham & Johnston-Willis Hosps,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,VA,pslf_hostile
+HCA Healthcare LGH-Montgomery/VCOM,pslf_ineligible_for_profit,for-profit chain: matches ['HCA '],,,,,VA,pslf_hostile
+Inova Fairfax Hospital,pslf_eligible_501c3,ProPublica match: Inova Health System Foundation (501c3),541071867,Inova Health System Foundation,3.0,E110,VA,pslf_friendly
+Johnston Memorial Hosp,pslf_eligible_501c3,ProPublica match: Johnson Memorial Foundation (501c3),411678372,Johnson Memorial Foundation,3.0,J99Z,VA,pslf_friendly
+LewisGale Med Ctr,pslf_eligible_501c3,ProPublica match: Pta Maryland Congress Of Parent & Teachers Inc (501c3),832163443,Pta Maryland Congress Of Parent & Teachers Inc,3.0,,VA,pslf_friendly
+Liberty Univ COM,no_propublica_match,no ProPublica result,,,,,VA,pslf_friendly
+Lynchburg Fam Med Res,no_propublica_match,no ProPublica result,,,,,VA,ambiguous
+Mary Washington Healthcare,pslf_eligible_501c3,ProPublica match: Mary Washington Healthcare (501c3),262546097,Mary Washington Healthcare,3.0,E22,VA,pslf_friendly
+Norton Community Hosp,pslf_eligible_501c3,ProPublica match: Norton Community Club (501c3),881540553,Norton Community Club,3.0,Y50,VA,ambiguous
+Riverside Reg Med Ctr,no_propublica_match,no ProPublica result,,,,,VA,pslf_friendly
+Sovah Health-Danville,no_propublica_match,no ProPublica result,,,,,VA,ambiguous
+VCU-Shenandoah Valley,no_propublica_match,no ProPublica result,,,,,VA,ambiguous
+Wellmont Health System,pslf_eligible_501c3,ProPublica match: Wellmont Health System (501c3),621636465,Wellmont Health System,3.0,E210,VA,pslf_friendly
+Community Health Care,pslf_eligible_501c3,ProPublica match: Community2 Community (501c3),113843879,Community2 Community,3.0,Q33,WA,ambiguous
+Elson S Floyd COM WSU,no_propublica_match,no ProPublica result,,,,,WA,ambiguous
+Harrison Med Ctr,pslf_eligible_501c3,ProPublica match: Crc Harrison (501c3),334501441,Crc Harrison,3.0,A23,WA,pslf_friendly
+HealthPoint,pslf_eligible_501c3,ProPublica match: Healthpoint (501c3),910884412,Healthpoint,3.0,E32Z,WA,ambiguous
+Kadlec Regional Med Ctr,pslf_eligible_501c3,ProPublica match: Kadlec Regional Medical Center (501c3),910655392,Kadlec Regional Medical Center,3.0,E220,WA,pslf_friendly
+Legacy Salmon Creek Med Ctr,pslf_eligible_501c3,ProPublica match: Legacy Salmon Creek Hospital (501c3),331065485,Legacy Salmon Creek Hospital,3.0,E22,WA,pslf_friendly
+MultiCare Health System,pslf_eligible_501c3,ProPublica match: Multicare Foundations (501c3),911514257,Multicare Foundations,3.0,E120,WA,pslf_friendly
+PeaceHealth Southwest Med Ctr,pslf_eligible_501c3,ProPublica match: Peacehealth Southwest Medical Center Foundation (501c3),911231436,Peacehealth Southwest Medical Center Foundation,3.0,E110,WA,pslf_friendly
+Providence Sacred Heart Med Ctr,pslf_eligible_501c3,ProPublica match: Sacred Heart East Providence (501c3),50258942,Sacred Heart East Providence,3.0,,WA,pslf_friendly
+Providence St Peter Hospital,no_propublica_match,no ProPublica result,,,,,WA,ambiguous
+Puyallup Tribal Health Authority,pslf_eligible_501c3,ProPublica match: Puyallup Tribal Health Authority (501c3),911116355,Puyallup Tribal Health Authority,3.0,E320,WA,ambiguous
+Sea Mar Community Health Ctrs,no_propublica_match,no ProPublica result,,,,,WA,ambiguous
+Skagit Regional Health,no_propublica_match,no ProPublica result,,,,,WA,ambiguous
+Spokane Teaching Health Ctr,no_propublica_match,no ProPublica result,,,,,WA,ambiguous
+St Josephs Hospital,pslf_eligible_501c3,ProPublica match: St Josephs (501c3),910882257,St Josephs,3.0,,WA,ambiguous
+Swedish Med Ctr,pslf_eligible_501c3,ProPublica match: Swedish Edmonds (501c3),272305304,Swedish Edmonds,3.0,E22,WA,pslf_friendly
+Tacoma Family Med,no_propublica_match,no ProPublica result,,,,,WA,ambiguous
+Trios Health,no_propublica_match,no ProPublica result,,,,,WA,ambiguous
+Valley Med Ctr,pslf_eligible_501c3,ProPublica match: Value Valley Nonprofit Corporation (501c3),994184768,Value Valley Nonprofit Corporation,3.0,T50,WA,pslf_friendly
+Virginia Mason Franciscan Health,pslf_eligible_501c3,ProPublica match: Virginia Mason Franciscan Health (501c3),861332353,Virginia Mason Franciscan Health,3.0,E21,WA,ambiguous
+Yakima Valley Farm Workers Clinic,pslf_eligible_501c3,ProPublica match: Yakima Valley Farm Workers Clinic (501c3),911019392,Yakima Valley Farm Workers Clinic,3.0,E320,WA,ambiguous
+AccessHealth,pslf_eligible_501c3,ProPublica match: Accesshealth Horry Inc (501c3),542075560,Accesshealth Horry Inc,3.0,E80,WV,ambiguous
+Charleston Area Med Ctr,pslf_eligible_501c3,ProPublica match: Charleston Area Charitable Foundation (501c3),371172293,Charleston Area Charitable Foundation,3.0,,WV,pslf_friendly
+Greenbrier Valley Med Ctr,pslf_eligible_501c3,ProPublica match: Greenbrier Valley (501c3),550614255,Greenbrier Valley,3.0,,WV,pslf_friendly
+Marshall Community Health,pslf_eligible_501c3,ProPublica match: Marshall Foundation For Community Health (501c3),237419011,Marshall Foundation For Community Health,3.0,E11,WV,ambiguous
+Marshall University SOM,no_propublica_match,no ProPublica result,,,,,WV,pslf_friendly
+Mountain State OPTI,no_propublica_match,no ProPublica result,,,,,WV,ambiguous
+United Hospital Ctr,pslf_eligible_501c3,ProPublica match: Rollin Ctr United Methodist Church (501c3),900319512,Rollin Ctr United Methodist Church,3.0,,WV,ambiguous
+Wheeling Hospital,pslf_eligible_501c3,ProPublica match: Bahais Of Wheeling (501c3),911885021,Bahais Of Wheeling,3.0,,WV,ambiguous
+Aurora Health Care/ASMC,no_propublica_match,no ProPublica result,,,,,WI,ambiguous
+Aurora St Lukes Medical Ctr,no_propublica_match,no ProPublica result,,,,,WI,pslf_friendly
+Gundersen Lutheran Med Fdn,no_propublica_match,no ProPublica result,,,,,WI,ambiguous
+Marshfield Clinic,pslf_eligible_501c3,ProPublica match: Marshfield Clinic Inc (501c3),390452970,Marshfield Clinic Inc,3.0,E300,WI,ambiguous
+Mercy Health System,pslf_eligible_501c3,ProPublica match: Mercy Association (501c3),452780676,Mercy Association,3.0,P28,WI,pslf_friendly
+ProHealth Waukesha Mem Hosp,no_propublica_match,no ProPublica result,,,,,WI,ambiguous
+Still OPTI-MCW/Prevea FMRP,no_propublica_match,no ProPublica result,,,,,WI,ambiguous
+WiNC GME Consortium,pslf_eligible_501c3,ProPublica match: Wind Willow Consortium (501c3),384108666,Wind Willow Consortium,3.0,B03,WI,ambiguous

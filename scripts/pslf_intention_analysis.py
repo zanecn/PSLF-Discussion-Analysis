@@ -168,6 +168,10 @@ def load_zeroshot_with_meta():
         # Round-7 fullcorpus run: all remaining Reddit PSLF posts not
         # previously scored (~2,240 posts; 100 errors = 4.5% error rate)
         ("zeroshot_reddit_fullcorpus.csv", "reddit_fullcorpus"),
+        # Round-8: Arctic Shift event-window fill (~2,281 posts; targeted at
+        # under-served (event x profession) cells - mostly r/PSLF, r/StudentLoans,
+        # r/personalfinance for events 2021-2025)
+        ("zeroshot_reddit_arctic_shift_fill.csv", "reddit_arctic_shift_fill"),
     ]
     zs_frames = []
     for f, label in candidates:
@@ -192,7 +196,9 @@ def load_zeroshot_with_meta():
     reddit_frames = []
     for f in ["reddit_professions_pslf.csv",
               "comprehensive_medical_pslf_discussions.csv",
-              "comprehensive_teacher_pslf_discussions.csv"]:
+              "comprehensive_teacher_pslf_discussions.csv",
+              "reddit_new_subs_pslf.csv",          # round-7 PA/NP additions
+              "reddit_arctic_shift_pslf.csv"]:    # round-8 Arctic Shift historical pull
         if os.path.exists(f):
             d = pd.read_csv(f)
             d = d.rename(columns={"id": "post_id"})

@@ -1,0 +1,98 @@
+================================================================================
+Time-to-recovery: per-event × per-cohort
+Generated: 2026-05-10T11:45:59
+================================================================================
+
+PURPOSE
+--------------------------------------------------------------------------------
+For each (event, cohort), measures how many days after the event the
+cohort's 14-day rolling polarity returns to within 0.5 SD of
+the pre-event baseline. Right-censored at 180 days.
+
+Recovery_day = -1 means the cohort did NOT return to baseline within
+the observation window (right-censored).
+
+PER-EVENT COMPARISON
+--------------------------------------------------------------------------------
+
+Limited PSLF Waiver:
+  cohort                      baseline   shift   recovery  n_post
+  Reddit Finance               +0.0922 +0.0175   censored     173
+  Reddit r/PSLF                +0.0811 -0.0113         2d    2523
+  SDN (Medical)                +0.0750 +0.0518         8d     551
+  Reddit r/StudentLoans        +0.1037 -0.0423        13d     371
+
+IDR Account Adjustment:
+  cohort                      baseline   shift   recovery  n_post
+  Reddit Finance               +0.0744 +0.0286   censored     127
+  Reddit r/PSLF                +0.0745 -0.0002         2d    5619
+  Reddit r/StudentLoans        +0.0717 +0.0095         2d     820
+  SDN (Medical)                +0.1755 -0.0568        16d     408
+
+Biden Mass Forgiveness:
+  cohort                      baseline   shift   recovery  n_post
+  Reddit Finance               +0.0894 -0.0156   censored     113
+  Reddit Medical               +0.0471 +0.0363   censored      42
+  Reddit r/PSLF                +0.0706 +0.0062         2d    6656
+  Reddit r/StudentLoans        +0.0662 +0.0241         2d    1112
+  SDN (Medical)                +0.1521 -0.0567         4d     138
+
+Biden v. Nebraska SCOTUS:
+  cohort                      baseline   shift   recovery  n_post
+  Reddit r/PSLF                +0.0704 -0.0009         2d    5482
+  Reddit r/StudentLoans        +0.0740 +0.0157         2d    6553
+  Reddit Finance               +0.0776 -0.0042         2d     369
+  SDN (Medical)                +0.1354 -0.0535        43d     243
+
+Payments Restart:
+  cohort                      baseline   shift   recovery  n_post
+  Reddit Medical               +0.0580 -0.0298   censored      54
+  Reddit r/PSLF                +0.0719 -0.0184         2d    3862
+  Reddit r/StudentLoans        +0.0728 -0.0204         2d    4847
+  Reddit Finance               +0.0944 +0.0229        13d     293
+  SDN (Medical)                +0.0913 +0.1546        96d     415
+
+SAVE Admin Forbearance:
+  cohort                      baseline   shift   recovery  n_post
+  Reddit Finance               +0.0805 -0.0286   censored     150
+  Reddit Medical               +0.0529 -0.0160   censored      70
+  Reddit r/PSLF                +0.0468 -0.0002         2d    2715
+  Reddit r/StudentLoans        +0.0533 -0.0224         2d    3508
+  SDN (Medical)                +0.0420    +nan        94d     105
+
+Trump PSLF EO:
+  cohort                      baseline   shift   recovery  n_post
+  SDN (Medical)                +0.1382 -0.0447         2d     561
+  Reddit r/PSLF                +0.0616 -0.0089         2d    3132
+  Reddit r/StudentLoans        +0.0485 -0.0076         2d    4218
+  Reddit Finance               +0.0711 -0.0166        36d     172
+  Reddit Medical               +0.0615 +0.0189        77d     229
+
+Final Trump PSLF Rule:
+  cohort                      baseline   shift   recovery  n_post
+  Reddit r/PSLF                +0.0585 +0.0223         2d    1237
+  Reddit r/StudentLoans        +0.0620 +0.0034         2d    1283
+  Reddit Finance               +0.0746 +0.0606        35d     100
+  SDN (Medical)                +0.0720 +0.0502        45d     423
+
+
+SUMMARY: Median recovery day per cohort (across events with non-censored recovery)
+--------------------------------------------------------------------------------
+  SDN (Medical)             : median 29d, range 2-96d, 8/8 events recovered
+  Reddit r/PSLF             : median 2d, range 2-2d, 8/8 events recovered
+  Reddit r/StudentLoans     : median 2d, range 2-13d, 8/8 events recovered
+  Reddit Finance            : median 24d, range 2-36d, 4/8 events recovered
+  Reddit Medical            : median 77d, range 77-77d, 1/4 events recovered
+
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+- Shorter recovery time = sentiment shock dissipates faster
+- Longer recovery time / censored = persistent attention to event
+- If SDN-Medical recovery times > Reddit-general: stake-driven persistence
+- If SDN-Medical recovery times < Reddit-general: analytical-quick-update
+- 'censored' = sentiment never returned to baseline in 180-day window
+
+================================================================================
+END OF ARTIFACT
+================================================================================

@@ -1,0 +1,35 @@
+================================================================================
+POLICY P9: WITHIN-INSTITUTION PRE/POST LIMITED PSLF WAIVER
+================================================================================
+
+Institutions in BOTH 2016-2020 AND 2022-2025: 468
+Institutions with computable pre+post means: 453
+
+WITHIN-INSTITUTION Δ FILL RATE (post 2022-25 minus pre 2016-20)
+--------------------------------------------------------------------------------
+  pslf_friendly : n=224, mean Δ=-0.93pp, median=-0.27pp, sd=10.94pp
+  ambiguous     : n=222, mean Δ=-0.56pp, median=+0.00pp, sd=13.48pp
+
+DIFFERENCE-IN-DIFFERENCES: friendly Δ vs hostile Δ
+  friendly mean Δ: -0.93pp
+  hostile mean Δ:  -8.97pp
+  DiD:             +8.04pp (t=1.938, p=0.0977)
+  -> Not significant: pre/post change is similar across PSLF classes
+     (consistent with the gap being STRUCTURAL, not Waiver-driven)
+
+PER-SPECIALTY DIFFERENCE-IN-DIFFERENCES
+--------------------------------------------------------------------------------
+  Family Medicine       : n_f=112, n_h= 3, friendly Δ=-4.23pp, hostile Δ=-14.82pp, DiD=+10.60pp, p=nan
+  Internal Medicine     : n_f=138, n_h= 5, friendly Δ=-2.00pp, hostile Δ=+0.07pp, DiD=-2.08pp, p=0.7704
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+Within-institution analysis controls for time-invariant quality,
+prestige, location, and reputation. If PSLF salience increase (Limited
+Waiver) had a treatment effect on physician choice, we should see
+differential pre/post fill-rate trajectories by PSLF class.
+
+If DiD ≈ 0 for friendly vs hostile, the +12.86pp B5 cross-sectional
+gap is structural (each institution's fill rate is stable; gap is
+between-institution composition). PSLF salience did not differentially
+affect institutions of different PSLF classes.

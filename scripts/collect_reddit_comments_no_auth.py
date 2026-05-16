@@ -78,8 +78,15 @@ HEADERS = {
 }
 
 
-def load_post_ids() -> list[dict]:
-    """Load PSLF-filtered post IDs from all source CSVs (with strict filter)."""
+def load_post_ids(min_num_comments: int = 0) -> list[dict]:
+    """Load PSLF-filtered post IDs from all source CSVs (with strict filter).
+
+    Args:
+        min_num_comments: If > 0, drop posts with num_comments < min_num_comments.
+            Useful when targeting Arctic Shift's 72K posts (median num_comments=5)
+            and you want to focus on posts likely to have substantial comment trees
+            without the full ~50h walltime.
+    """
     import pandas as pd
     posts = []
     seen = set()
@@ -95,6 +102,14 @@ def load_post_ids() -> list[dict]:
                 tm = filter_pslf_relevant(df[text_col].fillna(""))
                 tt = filter_pslf_relevant(df[title_col].fillna(""))
                 df = df[tm | tt].copy()
+            # Optional num_comments filter (only applies if column exists; legacy
+            # CSVs without num_comments are unaffected)
+            n_pre_nc = len(df)
+            if min_num_comments > 0 and "num_comments" in df.columns:
+                df = df[df["num_comments"].fillna(0) >= min_num_comments].copy()
+                if len(df) < n_pre_nc:
+                    print(f"  [{os.path.basename(fpath)}] num_comments>={min_num_comments} "
+                          f"filter: {n_pre_nc:,} -> {len(df):,}")
             n_added = 0
             for _, row in df.iterrows():
                 pid = str(row.get("id", "")).strip()
@@ -208,6 +223,10 @@ def main():
                         help="Skip posts already collected")
     parser.add_argument("--max-posts", type=int, default=None,
                         help="Max posts to process (for testing)")
+    parser.add_argument("--min-num-comments", type=int, default=0,
+                        help="Drop posts with num_comments < N (default 0 = no filter). "
+                             "Use --min-num-comments 5 to focus on engaged discussions "
+                             "(cuts Arctic Shift universe ~50%% from 72K to 37K).")
     args = parser.parse_args()
 
     sess = requests.Session()
@@ -223,8 +242,10 @@ def main():
 
     # Load posts
     print("\nLoading PSLF-filtered post IDs...")
-    posts = load_post_ids()
+    posts = load_post_ids(min_num_comments=args.min_num_comments)
     print(f"\n→ {len(posts):,} unique PSLF-filtered posts to process")
+    if args.min_num_comments > 0:
+        print(f"  (with --min-num-comments {args.min_num_comments} filter applied)")
 
     if args.max_posts:
         posts = posts[: args.max_posts]

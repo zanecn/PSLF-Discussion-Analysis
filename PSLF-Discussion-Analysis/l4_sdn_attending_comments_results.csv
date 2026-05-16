@@ -1,0 +1,9 @@
+career_stage,subset,n,mean_polarity,sd_polarity,median_polarity,pct_negative,pct_very_negative,pct_positive
+resident,medical_subs_only,389,0.1053,0.1784,0.0925,9.2545,1.0283,61.6967
+attending,medical_subs_only,158,0.0913,0.1492,0.0750,11.3924,1.2658,58.8608
+fellow,medical_subs_only,179,0.1236,0.1583,0.1000,7.8212,0.0000,67.0391
+medical_student,medical_subs_only,159,0.0828,0.1606,0.0429,12.5786,0.6289,47.1698
+resident,all_reddit,814,0.1036,0.1770,0.0947,9.2138,1.8428,63.7592
+attending,all_reddit,334,0.1112,0.1468,0.1026,8.9820,0.5988,64.9701
+fellow,all_reddit,935,0.1256,0.1967,0.1025,9.8396,0.8556,63.3155
+medical_student,all_reddit,302,0.0884,0.1473,0.0625,11.5894,0.3311,53.3113

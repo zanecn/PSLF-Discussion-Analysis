@@ -1,0 +1,11 @@
+institution,state,fy,normalized_query,parent_query,matched_org_name,total_award_amount,n_projects,match_strategy
+AHS Morristown Med Ctr,NJ,2023,AHS MORRISTOWN MEDICAL CENTER,AHS MORRISTOWN,,0.0,0,no_match
+AHS Overlook Hospital,NJ,2023,AHS OVERLOOK HOSPITAL,AHS OVERLOOK,,0.0,0,no_match
+AU-UGA Medical Partnership,GA,2023,AU-UGA MEDICAL PARTNERSHIP,,,0.0,0,no_match
+Abbott Northwestern Hosp,MN,2023,ABBOTT NORTHWESTERN HOSP,,,0.0,0,no_match
+Abington Mem Hosp,PA,2023,ABINGTON MEMORIAL HOSPITAL,ABINGTON,,0.0,0,no_match
+Abrazo Health Network,AZ,2023,ABRAZO HEALTH NETWORK,ABRAZO,,0.0,0,no_match
+AccessHealth,WV,2023,ACCESSHEALTH,,,0.0,0,no_match
+Adena Health System,OH,2023,ADENA HEALTH SYSTEM,ADENA,,0.0,0,no_match
+AdventHealth Redmond,GA,2023,ADVENTHEALTH REDMOND,,,0.0,0,no_match
+Adventist Health Glendale,CA,2023,ADVENTIST HEALTH GLENDALE,,,0.0,0,no_match

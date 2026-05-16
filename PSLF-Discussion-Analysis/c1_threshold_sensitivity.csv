@@ -1,0 +1,6 @@
+cohort,pre_mean,post30_mean,recover_thr_0.005,recover_thr_0.01,recover_thr_0.02,recover_thr_0.05,recover_thr_0.1
+Reddit r/PSLF,0.0645,0.0537,9,3,2,2,2
+Reddit r/StudentLoans,0.0636,0.0544,5,2,2,2,2
+Reddit Finance,0.1367,0.1144,-1,-1,-1,33,33
+Reddit Medical,0.0682,0.0362,53,52,2,2,2
+Reddit PA,0.1574,0.1056,-1,-1,-1,74,26

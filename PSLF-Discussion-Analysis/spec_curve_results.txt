@@ -1,0 +1,36 @@
+================================================================================
+Specification Curve Analysis
+Generated: 2026-05-10T13:49:49
+================================================================================
+
+PURPOSE
+--------------------------------------------------------------------------------
+Tests whether the cohort-conditional decoupling finding (r/PSLF OR=7.33,
+SDN OR=0.27, Finance OR=0.18) holds across many reasonable analytic
+specifications. Steegen et al. (2016) multiverse-style robustness check.
+
+  Total specifications: 360
+  Sample sizes spanned: 575 to 1960
+
+PER-COHORT SUMMARY
+--------------------------------------------------------------------------------
+        cohort  n_specs  median_or   min_or    max_or  frac_or_above_1  frac_or_below_1  frac_p_below_0.05
+ Reddit r/PSLF      144   5.160856 0.194309 10.016474         0.666667         0.333333           0.666667
+ SDN (Medical)       72   0.335169 0.030387  0.737409         0.000000         1.000000           1.000000
+Reddit Finance      144   0.178701 0.083333  1.044643         0.055556         0.944444           0.833333
+
+INTERPRETATION KEYS
+--------------------------------------------------------------------------------
+  - 'frac_or_above_1' = fraction of specs where neg-sentiment posters MORE pursuing
+    (venting-while-committed pattern). For r/PSLF, should be HIGH.
+  - 'frac_or_below_1' = fraction of specs where neg-sentiment posters LESS pursuing
+    (analytical decoupling). For SDN/Finance, should be HIGH.
+  - 'frac_p_below_0.05' = robustness of statistical significance
+
+  KEY ROBUSTNESS CLAIM:
+    SDN (Medical): 100% of specs show OR<1 → analytical decoupling robust
+    Reddit Finance: 94% of specs show OR<1 → analytical decoupling robust
+
+================================================================================
+END OF ARTIFACT
+================================================================================

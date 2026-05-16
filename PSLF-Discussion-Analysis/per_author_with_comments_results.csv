@@ -1,0 +1,9 @@
+event,n_pre_post_only,n_post_post_only,overlap_post_only,pct_overlap_post_only,n_pre_with_cmt,n_post_with_cmt,overlap_with_cmt,pct_overlap_with_cmt,returning_with_stance,returning_present_either,n_returning,feasible,rejecting_pre,rejecting_post,delta_rejecting_pp,mcnemar_p,to_rejecting,from_rejecting,stable
+Limited PSLF Waiver,810,1505,91,4.0917,1978,3476,455,9.1018,3,367,3,False,,,,,0,0,0
+IDR Account Adjustment,1728,2085,302,8.6015,4112,4669,1057,13.6846,4,806,4,False,,,,,0,0,0
+Biden Mass Forgiveness,2530,3980,613,10.3951,5450,9631,1850,13.9823,3,1346,3,False,,,,,0,0,0
+Biden v. Nebraska SCOTUS,2260,6126,429,5.3915,6926,14530,2073,10.6949,4,1692,4,False,,,,,0,0,0
+Payments Restart,6189,4486,717,7.2002,13841,10843,2722,12.3941,8,2006,8,False,12.5000,0.0000,-12.5000,1.0000,0,1,7
+SAVE Admin Forbearance,3390,3020,383,6.3547,10013,9908,2298,13.0398,4,1895,4,False,,,,,0,0,0
+Trump PSLF EO,3633,2885,420,6.8875,12458,10645,2835,13.9876,13,2380,13,True,7.6923,23.0769,15.3846,0.6250,3,1,9
+Final Trump PSLF Rule,2361,1890,187,4.6014,6641,5817,1079,9.4824,4,868,4,False,,,,,0,0,0

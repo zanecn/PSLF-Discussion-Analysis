@@ -1,0 +1,116 @@
+================================================================================
+Critical Fixes — Round-9 audit response
+Generated: 2026-05-10T10:27:16
+================================================================================
+
+FIX 1: Bootstrap CI on three-rater alpha at n=9,242 (stratified by source)
+--------------------------------------------------------------------------------
+  N (3-scorer-complete):              9,242
+  Stratified by source, n_strata =    24
+  Canonical alpha:                    -0.0174
+  95% CI canonical (B=2000):  [-0.0306, -0.0049]
+  Charitable upper bound mean:        +0.1955
+  95% CI charitable (B=2000): [+0.1832, +0.2084]
+  Both CIs sit well below the 0.667 floor for tentative reliability.
+
+FIX 2: Cluster bootstrap comments TB x VADER alpha by post_id (=thread proxy)
+--------------------------------------------------------------------------------
+  N comments:                         340,965
+  N posts (clusters):                 15,469
+  Alpha point estimate:               +0.2983
+  Cluster-bootstrap 95% CI:           [+0.2945, +0.3021] (width 0.0076)
+  Naive (per-row) 95% CI:             [+0.2954, +0.3010] (width 0.0056)
+  Design effect (cluster_w/naive_w):  1.36
+  -> If design effect > 1, comments within posts are not independent;
+     reported CI is the cluster-bootstrap one (more honest).
+
+FIX 3: OP vs Reply cluster bootstrap (each post = one cluster after aggregation)
+--------------------------------------------------------------------------------
+  N posts (clusters):                 15,550
+  Polarity diff (OP - mean reply):    -0.0167
+    Naive SE:                         0.00120
+    Cluster bootstrap 95% CI:         [-0.0190, -0.0144]
+    Bootstrap 2-sided p:              0
+  VADER diff (OP - mean reply):       +0.2203
+    Naive SE:                         0.00462
+    Cluster bootstrap 95% CI:         [+0.2116, +0.2295]
+    Bootstrap 2-sided p:              0
+  After per-post aggregation, each post is one cluster, so paired-t and cluster-bootstrap CIs are comparable. The opposite-direction TB vs VADER finding holds at cluster level.
+
+FIX 4: Trump EO joint Hotelling's T^2 + per-scorer block-permutation
+--------------------------------------------------------------------------------
+  n_pre=771, n_post=559
+  Per-scorer:
+    textblob   g=-0.325  p_boot=0.006993
+    vader      g=+0.161  p_boot=0.1738
+    claude     g=+0.335  p_boot=0.004995
+  Joint Hotelling T^2 = 92.996
+  F approximation:      F=30.952, p=1.11e-16
+  Joint permutation p:  p=0
+  delta vector (TB, VA, CL): [-0.04316760347394416, 0.09778781198592074, 0.3045414152101329]
+  Interpretation: F-approx tests joint shift not zero; permutation test
+  is the autocorrelation-aware analogue. If both p<0.05, there IS a
+  joint shift even though individual scorers disagree on direction.
+
+FIX 5: Cohort heterogeneity ANOVA on (event x cohort) cells
+--------------------------------------------------------------------------------
+  N cells: 38, n_events: 8, n_cohorts: 5
+  Variance attributed to event:   0.147 (F=0.70, p=0.6684)
+  Variance attributed to cohort:  0.075 (F=0.63, p=0.6455)
+  Residual variance:              0.777
+  Interpretation: a significant cohort F means the cohort identity
+  systematically modifies g across events (cohort heterogeneity
+  is not random noise).
+
+FIX 6: Sentiment-stance decoupling odds-ratio against marginal independence
+--------------------------------------------------------------------------------
+  N total (with sentiment+stance):    6,946
+  N negative-sentiment posts:         1,811
+  Marginal pursuing/considering rate: 86.63%
+  Pursuing among negative-sentiment:  81.61%
+  Pursuing among non-negative:        88.39%
+  Delta vs marginal (negative cohort): -5.01pp
+  Odds ratio (neg vs non-neg):        0.583
+  OR 95% CI:                          [0.503, 0.675]
+  Chi-square independence:            chi2=52.55, p=4.19e-13
+  Pursuing rate among negative-sentiment posts is 81.6% vs marginal 86.6% — lower (decoupling) by 5.0pp. Odds ratio = 0.583 (95% CI [0.503, 0.675]).
+
+FIX 7: Multiple-comparisons family declaration + BH FDR vs Bonferroni
+--------------------------------------------------------------------------------
+  Family: F2_cohort_event_g
+    N tests:                       76
+    Bonferroni threshold (alpha/n): 0.00066
+    Bonferroni n passing:           0
+    BH FDR threshold (q=0.05):      0.003
+    BH n passing:                   11
+  Recommendation: report BH alongside Bonferroni; declare 4 explicit
+  families in methods paper (per-event pooled g, cohort-event g,
+  alpha components, topic chi-sq) rather than one omnibus alpha/8.
+
+FIX 8: Payments Restart sign-reversal diagnostic (collection-method confound)
+--------------------------------------------------------------------------------
+  Cells (n + mean polarity by window x source):
+    post   Arctic_Shift   n= 5078  mean=+0.0544  sd=0.1346
+    post   JSON_API       n=   59  mean=+0.0828  sd=0.1485
+    pre    Arctic_Shift   n= 7395  mean=+0.0732  sd=0.1310
+    pre    JSON_API       n=   84  mean=+0.0780  sd=0.0983
+
+  Within-window method comparison (does collection method predict polarity?):
+    pre    JSON=+0.0780 (n=84)  AS=+0.0732 (n=7395)  delta=-0.0048  p=0.6606
+    post   JSON=+0.0828 (n=59)  AS=+0.0544 (n=5078)  delta=-0.0285  p=0.1483
+
+  Within-method window comparison (does pre/post matter within a single source?):
+    JSON_API       pre=+0.0780 (n=84)  post=+0.0828 (n=59)  g=+0.0398  p=0.8264
+    Arctic_Shift   pre=+0.0732 (n=7395)  post=+0.0544 (n=5078)  g=-0.1420  p=9.693e-15
+
+  Interpretation:
+  - If WITHIN-METHOD g's are small but POOLED g is large, the sign
+    reversal is a method-mix artifact. Specifically: Arctic Shift
+    contributes mostly POST-window historical posts; if their mean
+    polarity differs from JSON-API's, the pooled mean shifts by
+    Simpson's-paradox mechanism.
+
+
+================================================================================
+END OF CRITICAL FIXES ARTIFACT
+================================================================================

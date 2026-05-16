@@ -1,0 +1,57 @@
+================================================================================
+POLICY P11: IMPROVED CMS-NRMP MATCHING via CITY+STATE AGGREGATION
+================================================================================
+
+NRMP rows: 30,713
+NRMP rows matched to CMS city: 29,550 (96.2%)
+Analysis sample (with CMS quality): 29,461
+
+CITY-LEVEL CMS QUALITY BY NRMP HEURISTIC PSLF CLASS
+--------------------------------------------------------------------------------
+  pslf_friendly: n=17,104, city mean star=3.030, city %for-profit=20.2%
+  ambiguous: n=11,872, city mean star=2.990, city %for-profit=20.2%
+  pslf_hostile: n=485, city mean star=2.294, city %for-profit=77.0%
+
+NESTED REGRESSION MODELS
+--------------------------------------------------------------------------------
+
+Model 1 (PSLF only): N=29,461, R²=0.0148
+  pslf_friendly: +1.14pp (p=4.08e-06)
+  pslf_hostile:  -18.76pp (p=1.094e-84)
+
+Model 2 (+ city quality): N=29,461, R²=0.0174
+  pslf_friendly: +1.09pp (p=1.032e-05)
+  pslf_hostile:  -17.90pp (p=1.018e-76)
+  mean_star:     +1.24pp/star (p=7.114e-19)
+
+Model 3 (+ state FE): N=29,461, R²=0.0292
+  pslf_friendly: +0.58pp (p=0.04282)
+  pslf_hostile:  -19.00pp (p=7.999e-74)
+
+Model 4 (+ specialty FE): N=29,461, R²=0.1161
+  pslf_friendly: -0.15pp (p=0.5796)
+  pslf_hostile:  -18.56pp (p=3.628e-76)
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+PSLF-hostile coefficient trajectory across model specifications:
+  Model 1 (PSLF only): hostile = -18.76pp (p=1.094e-84)
+  Model 2 (+ city quality): hostile = -17.90pp (p=1.018e-76)
+  Model 3 (+ state FE): hostile = -19.00pp (p=7.999e-74)
+  Model 4 (+ specialty FE): hostile = -18.56pp (p=3.628e-76)
+
+Shrinkage from M1 to M4: -0.20pp
+
+PSLF-hostile coefficient SURVIVES city quality + state FE + specialty FE.
+This SUPPORTS the B5 substantive finding that PSLF eligibility
+matters for residency competition even after controlling for the
+structural factors that travel with academic-vs-for-profit hospital types.
+
+POLICY USES
+--------------------------------------------------------------------------------
+- Resolves the P8 32% match-rate concern by using city-level aggregation
+- Provides cleaner test of PSLF-mechanism vs quality-confound
+- City-aggregate quality control is conservative (some NRMP institutions
+  in a city may not host residencies at the lowest-quality CMS hospital)
+- For paper: report Model 1 (raw gap) AND Model 4 (full controls) for
+  honest interpretation of the PSLF-mechanism contribution

@@ -1,0 +1,21 @@
+discovered_topic_id,n_docs,top_words,dominant_prompt_topic,dominant_prompt_topic_pct,source_mix
+0,68,"interest, private, federal, student, repayment, plus, school, aid",financial_planning,55.6,"reddit_post:9%, sdn_post:91%"
+1,379,"school, students, schools, programs, program, research, education, student",policy_uncertainty,36.4,"reddit_post:29%, sdn_post:71%"
+2,20,"decision, harvard, yes, einstein, agree, choose, students, academic",policy_uncertainty,100.0,sdn_post:100%
+3,254,"plan, repayment, save, ibr, income, student, application, federal",financial_planning,33.6,"reddit_post:52%, sdn_post:48%"
+4,56,"financial, debt, income, retirement, investment, tax, doctors, student",financial_planning,43.8,sdn_post:100%
+5,10,"trump, tariffs, military, public, week, erosion, institutions, goods",no_claude_label,0.0,"reddit_post:10%, sdn_post:90%"
+6,31,"military, navy, hpsp, mtf, army, operational, work, care",career_impact,100.0,sdn_post:100%
+7,13,"vet, med, shutdown, yes, food, alot, volunteering, picture",no_claude_label,0.0,sdn_post:100%
+8,7,"suggest, law, cycles, reserves, yet, dod, take, havent",no_claude_label,0.0,sdn_post:100%
+9,24,"money, higher, collections, psych, california, something, practice, better",no_claude_label,0.0,"reddit_post:4%, sdn_post:96%"
+10,18,"gpa, stats, genetics, shadowing, friendly, saw, science, program",general_question,100.0,sdn_post:100%
+11,117,"program, school, nursing, debt, student, tuition, programs, anyone",general_question,61.5,"reddit_post:42%, sdn_post:58%"
+12,3,"willing, blame, fallen, government, benefits, industry, able, private",no_claude_label,0.0,sdn_post:100%
+13,7,"interviews, knew, cnu, matched, match, ranking, considered, secondaries",no_claude_label,0.0,sdn_post:100%
+14,58,"service, public, federal, department, student, program, borrowers, education",policy_uncertainty,60.9,"reddit_post:31%, sdn_post:69%"
+15,25,"email, person, university, interview, virtual, weeks, phone, invite",no_claude_label,0.0,"reddit_post:4%, sdn_post:96%"
+16,787,"work, job, one, care, good, patients, practice, many",career_impact,60.0,"reddit_post:15%, sdn_post:85%"
+17,31,"associate, win, interest, dpm, owner, lose, higher, first",financial_planning,100.0,"reddit_post:3%, sdn_post:97%"
+18,31,"cons, pros, heard, close, home, match, city, getting",no_claude_label,0.0,sdn_post:100%
+19,1061,"money, student, debt, school, one, work, job, plan",financial_planning,46.6,"reddit_post:32%, sdn_post:68%"

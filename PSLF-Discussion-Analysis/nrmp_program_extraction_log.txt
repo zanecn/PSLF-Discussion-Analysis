@@ -1,0 +1,17 @@
+Generated: 2026-05-10T14:13:46
+
+PDF has 206 pages
+  page 25: 2451 rows so far, 109 institutions
+  page 50: 6204 rows so far, 209 institutions
+  page 75: 10152 rows so far, 305 institutions
+  page 100: 14286 rows so far, 396 institutions
+  page 125: 18004 rows so far, 503 institutions
+  page 150: 22237 rows so far, 595 institutions
+  page 175: 26140 rows so far, 701 institutions
+  page 200: 29972 rows so far, 780 institutions
+Total: 30763 program-year rows from 797 institutions
+
+Classification breakdown:
+  pslf_friendly: 387 institutions
+  ambiguous: 387 institutions
+  pslf_hostile: 23 institutions

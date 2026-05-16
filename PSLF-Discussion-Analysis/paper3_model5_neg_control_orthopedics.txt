@@ -1,0 +1,18 @@
+NEGATIVE CONTROL: ORTHOPEDIC SURGERY
+n=1065
+R²=0.0315
+
+  PSLF[pslf_friendly]                                     β=  +0.43 pp [SE=0.64, CI (  -0.82,   +1.69)], p=4.976e-01 
+  PSLF[pslf_hostile]                                      β=  +0.71 pp [SE=0.64, CI (  -0.53,   +1.96)], p=2.624e-01 
+  cms_mean_star                                           β=  +0.01 pp [SE=0.19, CI (  -0.37,   +0.39)], p=9.650e-01 
+  cms_for_profit_share                                    β=  +0.24 pp [SE=0.38, CI (  -0.50,   +0.97)], p=5.307e-01 
+  Univ.affil[True]                                        β=  -0.54 pp [SE=0.70, CI (  -1.92,   +0.83)], p=4.375e-01 
+  Acad.MC[True]                                           β=  +0.24 pp [SE=0.26, CI (  -0.28,   +0.75)], p=3.682e-01 
+  n_specialties                                           β=  -0.10 pp [SE=0.08, CI (  -0.26,   +0.07)], p=2.445e-01 
+  log_residents                                           β=  +1.09 pp [SE=0.88, CI (  -0.63,   +2.81)], p=2.130e-01 
+  log_nih_funding                                         β=  +0.03 pp [SE=0.02, CI (  -0.02,   +0.07)], p=2.348e-01 
+
+Interpretation: if PSLF-hostile β is much smaller in orthopedic surgery
+than in primary care, this is consistent with PSLF financial-incentive theory
+(higher attending compensation in orthopedics makes PSLF less material).
+If PSLF-hostile β is similar to primary care, this is a CONFOUND warning.

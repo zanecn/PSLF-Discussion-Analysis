@@ -1,0 +1,43 @@
+======================================================================
+PARAPHRASE ROBUSTNESS RESULTS (Round 16 Strengthener 2; Round 17 Fix C2)
+======================================================================
+
+Design: re-score n=200 SDN posts with Claude Sonnet 4 at temperature=0
+        using THREE different system prompts (semantically identical, 
+        worded differently). Tests robustness to LEXICAL-FORMAT paraphrase
+        (NOT semantic-restructuring or task-redefinition; see Paper 1 L0b).
+
+Sample: n=200 posts (3-way merge across baseline + 2 paraphrases)
+
+INTERPRETATION:
+  - If α > 0.85: Claude classifications are robust to lexical-format prompt phrasing.
+  - If α < 0.85: Classifications depend on prompt phrasing.
+
+RESULTS — SENTIMENT TASK (5-level ordinal):
+  3-prompt Krippendorff α: +0.9011
+  Bootstrap 95% CI [B=2000]: [+0.8571, +0.9380]
+
+  Pairwise sentiment exact-match:
+    Baseline vs Paraphrase 1            exact_match=0.8950  Pearson r=+0.9199  κ_quad=+0.9129
+    Baseline vs Paraphrase 2            exact_match=0.8600  Pearson r=+0.8976  κ_quad=+0.8889
+    Paraphrase 1 vs 2                   exact_match=0.9350  Pearson r=+0.9462  κ_quad=+0.9448
+
+RESULTS — STANCE TASK (5-class nominal):
+  Baseline vs Paraphrase 1            exact_match=0.9474  κ=+0.9123
+  Baseline vs Paraphrase 2            exact_match=0.9561  κ=+0.9279
+  Paraphrase 1 vs 2                   exact_match=0.9298  κ=+0.8846
+  Stance pairwise exact-match range: 0.9298 – 0.9561
+  Valid pairs (both stances classifiable): n=114
+
+RESULTS — TOPIC TASK (7-class nominal):
+  Baseline vs Paraphrase 1            exact_match=0.9500  κ=+0.9319
+  Baseline vs Paraphrase 2            exact_match=0.9300  κ=+0.9053
+  Paraphrase 1 vs 2                   exact_match=0.9500  κ=+0.9320
+  Topic pairwise exact-match range: 0.9300 – 0.9500
+  Valid pairs (both topics classifiable): n=200
+
+VERDICT:
+  Paraphrase-robustness CONFIRMED for sentiment task (α=+0.9011 > 0.85 threshold).
+  Paper 1 L0b updated: 'test-retest reliability under LEXICAL-FORMAT prompt variation = α=+0.9011'.
+  CAVEAT: this tests robustness to lexical/format rewording, NOT to semantic restructuring,
+  task redefinition, or category reordering. Stronger prompt-design robustness remains untested.

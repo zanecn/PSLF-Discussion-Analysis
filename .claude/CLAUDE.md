@@ -1,18 +1,88 @@
 # PSLF Online Discourse Analysis Project
 
-## Overview (Round 7 reframing — 2026-05-08)
+## ⚠️ CURRENT STATE (Round 17++ — 2026-05-11)
 
-This project began as a multi-source sentiment analysis of online PSLF discussion. After Path C event-window Claude scoring (n=4,787 posts with all three scorers) and a Round-7 comprehensive audit, **the substantive headline has been replaced by a methodological one**:
+**This file's body below describes Rounds 7-9 historical state. For current state, see PROJECT_INDEX.md and MASTER_LOCKED_NUMBERS.md (R17++ canonical).**
 
-**Primary finding (methodological):** Three commonly-used sentiment instruments — TextBlob (lexical affect), VADER (expressive arousal, Hutto & Gilbert 2014), and Claude Sonnet 4 zero-shot (stance toward PSLF, per the prompt) — operationalize **substantially different latent constructs** on policy-discourse text. Three-rater Krippendorff's α=−0.027 (canonical fixed thresholds, 95% CI [−0.041, −0.012]) / +0.17 (charitable upper bound with percentile-matched marginals) on **n=6,975 posts with all three scorers** (round-7 fullcorpus Reddit run added +2,140 non-event-window posts; α essentially unchanged from the n=4,838 estimate, demonstrating the finding is robustly sample-stable across a 44% increase in n). Both estimates are robustly far below the 0.667 floor for tentative reliability claims (Krippendorff 1980). Pearson r: TB×VADER +0.30, TB×Claude +0.02 (ns), VADER×Claude +0.12. The construct distinction is theoretically grounded in stance vs sentiment (Mohammad et al. 2016, SemEval-2016 Task 6) but its empirical magnitude on policy discourse has not been previously quantified at this scale.
+R17++ summary of changes since the R9 framing below:
+- Project split into **3 papers** (Path B): P1 Methods (EPJ DS), P2 Substantive (JCSS), P3 Policy (JGME)
+- **5-instrument intersection n=1,001** (3 LLMs from 3 organizations: Claude/Llama/DeepSeek + TextBlob + VADER)
+- **3-LLM convergence finding (NEW HEADLINE for P1)**: combined α=+0.7590 [+0.7241, +0.7868] above 0.667 floor; cohort-heterogeneous (Reddit-only α=+0.69 boundary, SDN-only α=+0.83 above 0.80 floor)
+- TB×VADER comments-scale α=+0.2892 [+0.287, +0.292] on n=519,401 — REPLICATES post-level
+- Paraphrase robustness 3-prompt α=+0.9011 [+0.857, +0.938] (lexical-format, not semantic-restructuring)
+- Test-retest at temp=0 vs temp=0: 100% exact-match (PERFECT determinism, closes LLM-stochasticity objection)
+- **Trump-EO causal interpretation RETRACTED** — trend regression `is_2026` indicator p=0.46 NS; 2026 narrowing continues 5-year pre-existing trend
+- **Paper 3 6-year sample** (2021-2026; n=37,450 raw / 35,193 OLS-fit) added; 5-year n=29,349 remains as headline cross-sectional baseline
+- CMS-merge dedup bug fixed across 8 scripts (Round 17 critical fix)
+- State-filtered NIH RePORTER integrated (M5+NIH locked β=−18.07 pp p=2.1×10⁻²⁸)
+- Multiple citation misattributions corrected (Round 17++): 9 hard misattributions + 4 fabricated/unverifiable citations removed/replaced (see MASTER_REFERENCE_LIST.md "Round 17++ audit" notes)
+- Paper 2 scoped to **post-level** cohort heterogeneity; comments-scale moved to supplement (Round 17 Option A — but see Agent 5 audit which found this scope statement INVERTS the evidence on 7/8 events; needs further revision)
 
-**Disagreement is NOT LLM stochasticity** (Round-7 critical fix #5 result, 2026-05-08). Test-retest reliability: re-scoring n=605 SDN posts at `temperature=0` (deterministic) vs the original `temperature=1.0` (sampled) gives **Krippendorff's α = +0.958** (95% CI [+0.938, +0.975]); exact-match rate 95.2%. Independent corroboration from the 197 reddit_cross↔eventstrat post_id collisions (two separate temp=1 Reddit scoring passes) shows exact-match 94.4% (186/197). Each scorer is internally reliable; the cross-instrument α near zero is therefore substantive instrument divergence, not measurement noise. **This closes the obvious reviewer objection** ("how do you know it's not just LLM noise?").
+For full audit history (Rounds 1-17++) and current canonical numbers, read `PROJECT_INDEX.md` then `MASTER_LOCKED_NUMBERS.md`.
 
-**Lead exemplar:** The 2025 Trump PSLF Executive Order produces directionally opposite Hedges' g across the three instruments on the same n=1,047 posts: TextBlob g=−0.39 (more negative-valence vocabulary), VADER g=+0.21 (more affective intensity), Claude g=+0.41 (more stance-positive engagement, "still pursuing PSLF"). This is *not* measurement noise — it is consistent construct dissociation visible across all 8 PSLF policy events.
+---
 
-**Companion methodological finding:** Reddit's 1000-result API cap creates a quantifiable volume-growth artifact when measured against CFPB Consumer Complaints (no cap) as ground truth. R/C ratio grew ~74× from 2017 to 2026 (Q1-May, partial year); CFPB grew ~6.5× — implying ~6-7× real growth + ~10× recency-bias artifact.
+## Overview (Round 9 update — 2026-05-10) [HISTORICAL]
 
-**Substantive single-event findings (formerly headline, now demoted):** Pre/post tests show Trump PSLF EO bootstrap-Bonferroni-significant on TextBlob alone (g=−0.39, p_boot=0.006). After Path C: NO event simultaneously survives bootstrap-Bonferroni AND has three-scorer direction concordance. Biden Mass Forgiveness and Biden v. Nebraska SCOTUS are triple-concordant negative but bootstrap-NS or window-confounded.
+Round 9 (2026-05-10) added 4 new analyses, 8 of 9 critical statistical fixes (Fix 9 awaits API key), and per-profession breakdowns that **substantially restructure the substantive headlines**. Comments collector grew the comment corpus to 340,965 rows (15,469 unique post-clusters) — Arctic Shift comments still streaming in.
+
+**Round-9 NEW headline (substantive paper)**: Sentiment-stance decoupling has **DIRECTIONALLY OPPOSITE cohort heterogeneity**. The pooled OR=0.58 was averaging across cohorts with literally opposite-direction relationships:
+- **Reddit r/PSLF** (n=1,469): negativity → MORE pursuing (OR=7.33, 95% CI [4.20, 12.78], p=6×10⁻¹⁶) — "venting while committed" amplified
+- **SDN (Medical)** (n=1,960): negativity → DISengagement (OR=0.27, 95% CI [0.22, 0.34], p=3×10⁻³¹) — strong real decoupling
+- **Reddit Finance** (n=999): negativity → DISengagement (OR=0.18, 95% CI [0.11, 0.30], p=2×10⁻¹³) — strongest real decoupling
+- **Reddit r/StudentLoans, Medical, Teaching**: null relationship
+
+**The relationship between negative sentiment and behavioral commitment is COHORT-CONDITIONAL AND DIRECTIONALLY OPPOSITE.** "Online sentiment about PSLF" cannot be interpreted without knowing what community it's from. The same negative-sentiment post means different things in different communities.
+
+**Round-9 NEW headline (methods paper)**: OP vs Reply construct mismatch within identical posts — TextBlob and VADER point in OPPOSITE directions on the same OP-vs-reply comparison:
+- TB Δ (OP − reply) = −0.017 (95% CI [−0.019, −0.014], cluster boot p=0)
+- VADER Δ (OP − reply) = +0.220 (95% CI [+0.212, +0.230], cluster boot p=0)
+- **Cohort-invariant**: same direction in 8/8 cohorts. VADER significant in 8/8; TB significant in 6/8.
+- **No published precedent found** in 2-hour deep literature search. Strongest single methods exemplar.
+
+**Round-9 LOCKED methods numbers**:
+- Three-rater K-α canonical at n=9,242: **−0.0174 (95% CI [−0.031, −0.005])** — stratified bootstrap by source
+- Three-rater K-α charitable: **+0.196 (95% CI [+0.183, +0.208])**
+- TB×VADER comments α at n=340,965 (15,469 post-clusters): **+0.298 (cluster CI [+0.295, +0.302])** — design effect 1.36
+- Trump EO joint Hotelling T² (n=1,330): **F=30.95, p=1.11×10⁻¹⁶** — joint shift decisively non-zero with directionally split components
+- Test-retest α at temp=0 vs temp=1: +0.958 (still awaits proper temp=1 vs temp=1 design, Fix 9)
+
+**Round-9 KEY citations to add** (currently NOT in this file):
+- **Bestvater & Monroe (2023, Political Analysis 31(2):235-256)** — closest precedent (sentiment ≠ stance r=0.03 on Kavanaugh)
+- **arXiv 2410.14626 (2024)** "You Shall Know a Tool by the Traces it Leaves" — closest comparable analysis at scale
+- **Freelon et al. (2024, ANNALS Vol 712)** — qualitative R/C precedent
+
+## Overview (Round 8 background — superseded by Round 9 above)
+
+Round 8 (2026-05-09) brought a step-change in data: Arctic Shift (Pushshift successor) recovered **72,262 NEW PSLF posts** the Reddit JSON-API 1000-cap had been suppressing (Reddit corpus expanded ~6.4× to 85,560 PSLF-filtered posts). VADER scored on the new data, plus a 2,281-post stratified Claude scoring sample (~$13) for the new-cell event-window fill. Three substantive findings emerge or strengthen, and the headline reframings stand:
+
+**Primary finding (methodological, sample-stable across rounds 6 → 8):** Three commonly-used sentiment instruments — TextBlob (lexical affect), VADER (expressive arousal, Hutto & Gilbert 2014), and Claude Sonnet 4 zero-shot (stance toward PSLF, per the prompt) — operationalize **substantially different latent constructs** on policy-discourse text. Three-rater Krippendorff's α=−0.018 (canonical fixed thresholds) / +0.196 (charitable upper bound with percentile-matched marginals) on **n=9,242 posts with all three scorers** (round-8 +2,281 from Arctic Shift event-window fill). Both estimates well below the 0.667 floor for tentative reliability claims (Krippendorff 1980). The finding is now sample-stable across THREE corpus expansions: n=4,838 (round-7) → n=6,975 (round-7 fullcorpus) → n=9,242 (round-8 Arctic Shift fill). The construct distinction is theoretically grounded in stance vs sentiment (Mohammad et al. 2016, SemEval-2016 Task 6; **Bestvater & Monroe 2023, Political Analysis 31(2):235-256** — sentiment vs stance r=0.03 on Kavanaugh; **arXiv 2410.14626 2024** — 9 sentiment tools at scale, F1=0.89 for tool identification) but its empirical magnitude on policy discourse with a third LLM-stance dimension has not been previously quantified at this scale.
+
+**Disagreement is NOT LLM stochasticity** (Round-7 critical fix #5; held through round-8). Test-retest α=+0.958 (95% CI [+0.938, +0.975]) on n=605 SDN posts at temperature=0 vs temperature=1; exact-match 95.2%. The cross-instrument α near zero is substantive instrument divergence, not measurement noise.
+
+**Sensitivity check (Round-8 confirmation):** SDN-Medical-excluded canonical α=−0.009 vs full-sample α=−0.018 (delta +0.009, both well below 0.667 floor). The methods finding is robust to SDN-Medical removal at n=6,111 non-SDN posts.
+
+**Lead exemplar (holds at round-8):** The 2025 Trump PSLF Executive Order still produces directionally opposite Hedges' g across the three instruments at n=1,330 posts (Trump EO event-window): TextBlob g=−0.32, VADER g=+0.16, Claude g=+0.33. The TB-vs-Claude direction split is most pronounced in SDN-Medical (g_TB=−0.45, g_Claude positive); in non-SDN cohorts (Reddit r/PSLF g_TB=−0.14) the dissociation is muted. **The construct dissociation is now characterized as cohort-conditional**, not population-uniform — itself a substantive contribution.
+
+**Companion methodological finding (Round-8 quantified):** Reddit's 1000-result API cap creates a year-varying volume-undercount artifact. Arctic Shift baseline (uncapped) shows JSON-API undercounts PSLF Reddit volume by **12× (early years) to 74× (peak 2023)**. Total: 72,262 Arctic Shift PSLF posts vs 3,806 JSON-API PSLF posts on the same 21 subreddits = **19× total undercount**. Previously published "~10× recency bias" was directionally correct but specifically the gap GROWS with annual volume; the cap binds harder when activity is higher. Arctic Shift is the only viable source for longitudinal Reddit research on PSLF. (Cite **Freelon et al. 2024, ANNALS Vol 712** "The Post-API Age of Social Media Data Access" — qualitative framing this paper provides empirical complement to.)
+
+**Round-8 substantive headline (NEW — cohort heterogeneity):** Per-event × per-profession analysis on the post-Arctic-Shift corpus (n=76,074 PSLF-filtered) reveals **SDN-Medical and Reddit-general respond in opposite directions on 5 of 8 events**:
+  - **Limited PSLF Waiver**: SDN g=+0.42 *(p=0.02)* vs Reddit r/StudentLoans g=−0.29 *(p=0.07)*. Opposite signs.
+  - **Payments Restart**: SDN g=+0.59 *(p=0.03)* vs Reddit r/PSLF g=−0.12 *(p<0.001)*. Both significant, opposite signs.
+  - **SAVE Admin Forbearance**: SDN g=+1.69 *(p<0.001, n=97/23)* — the largest single effect in the dataset — vs Reddit r/PSLF g=+0.01 NS. SDN saw "good news, we're protected"; Reddit-general didn't.
+  - **Trump PSLF EO**: SDN g=−0.45 *(p=0.003)* vs Reddit r/PSLF g=−0.14 *(p=0.002)*. Same direction, SDN ~3× larger.
+  - **Final Trump PSLF Rule**: SDN g=+0.66 *(p=0.04)* vs Reddit r/PSLF g=+0.14 *(p=0.03)*. Same direction, SDN ~5× larger.
+
+Pooled analyses obscure this entirely because the much-larger general-Reddit audience (n_Reddit ≈ 65K vs n_SDN ≈ 4K) averages out the SDN signal. **This is the substantive paper's new lead finding.**
+
+**Pre/post pooled findings (collapsed at round-8 with proper sample size):** Several previously-published pooled headline effects evaporated when Arctic Shift restored the suppressed pre-event sample:
+  - SAVE Forbearance: g=+0.51 → g=−0.04 NS (was small + driven by SDN; pooled now NULL)
+  - Biden v. Nebraska SCOTUS: g=−0.43 → g=−0.015 NS (was JSON-API artifact)
+  - Biden Mass Forgiveness: g=−0.25 → g=−0.004 NS
+  - Trump PSLF EO: g=−0.40 → g=−0.137, p_boot=0.0005 (SURVIVES Bonferroni at much larger sample)
+  - Payments Restart: g=+0.33 → g=−0.133, p_boot=0.0005 (REVERSED sign + Bonferroni-significant)
+
+**Substantive single-event direction concordance (held through round-8):** At well-powered Claude triangulation (n_event=313–771), still 2/8 events triple-concordant: Biden Mass Forgiveness (all negative) and Biden v. Nebraska SCOTUS (all negative). Trump EO remains TB-negative / VADER+Claude-positive (the lead methods exemplar).
 
 **Scope clarification (round-4):** This project studies **online PSLF discourse**, not the PSLF-borrower population. Reddit + SDN users skew young, white, male, more educated than the ~1M+ borrower population, and Bogleheads + allnurses are Cloudflare-blocked. Findings should be interpreted as discourse construct measurement, not behavior.
 
@@ -22,8 +92,19 @@ This project began as a multi-source sentiment analysis of online PSLF discussio
 - PR #1: https://github.com/margaretcdeleon/PSLF-Discussion-Analysis/pull/1
 - Branch: `playwright-sdn-scraper`
 
-## Data (as of 2026-05-08)
-- **9,681 PSLF-relevant posts** strict-anchored filter (round-7 expansion: +52 from r/PAstudent, r/prephysicianassistant, r/CRNA appended); **~8,840** of those are sentiment-eligible (MIN_WORDS≥20); **~7,970** in the legislative-timeline analysis (after the 2009-01-01 to 2026-04-01 date trim).
+## Data (as of 2026-05-09)
+- **81,995 PSLF-relevant posts** strict-anchored filter (round-8 Arctic Shift expansion +72,262 to existing ~9,681); **76,074** sentiment-eligible (wc≥20) after dedup + 2009–2026 date trim. Reddit corpus expanded ~6.4×; pre-2018 era (~4,310 posts) recovered from previous near-zero coverage.
+
+### Round-8 corpus composition (post-Arctic-Shift)
+  - Reddit r/PSLF: 35,614 (was ~951; **37× growth from JSON-API to Arctic Shift**)
+  - Reddit r/StudentLoans: 29,173 (was ~762; **38× growth**)
+  - Reddit Finance subs (r/personalfinance + r/financialindependence + general_finance): 5,028 (was ~656)
+  - SDN (Medical): 4,053 (unchanged — separate forum, not affected by JSON-API cap)
+  - Reddit Medical: 1,195 (was 605)
+  - Reddit Teaching: 765 (was 521)
+  - Reddit PA: 342 (was 257)
+  - Reddit Nursing: 159 (was 127)
+  - Other (Law, Pharmacy, OT, SLP, social_work, federal): ~600 combined
   - Reddit medical/teacher (legacy CSVs): 605 + 521 = 1,126
   - Reddit professions: 11,845 raw → 3,806 PSLF-filtered (+ length-residualised)
   - SDN Forum: 45,334 raw → 4,749 PSLF-filtered
@@ -219,15 +300,33 @@ The substantive contribution has changed. Drafting around this frame:
 - Trump PSLF EO is a clean exemplar of the dissociation: TB g=−0.39, VA g=+0.21, CL g=+0.41 on identical n=1,047
 - R/C volume artifact: Reddit's 1000-result API cap creates ~10× recency bias when measured against CFPB ground truth
 
-## Not Yet Done
-- Claude API zero-shot classification: **complete** — `zeroshot_reddit_n1000.csv` (n=721), `zeroshot_sdn_n1000.csv` (n=615), `zeroshot_reddit_eventstrat.csv` (n=715, ~50 pre + ~50 post per event).
-- Krippendorff's α + per-event Claude pre/post triangulation + Figure 7: **complete** — see `triangulation_results.txt` and `triangulation_figure7.png`.
-- Reddit API comments (needs client_id/client_secret)
-- Bogleheads + allnurses (Cloudflare blocks even Playwright stealth)
-- Topic modeling (LDA/BERTopic) — required for policy-venue submission
+## Round-8 status: what's complete vs pending (2026-05-09)
+
+**Complete this round:**
+- Arctic Shift Reddit historical pull (72,262 PSLF posts, 100% strict-filtered)
+- VADER scoring on all Arctic Shift posts (free, ~5 min)
+- R/C volume artifact diagnostic with proper longitudinal baseline (`gen_volume_artifact_arctic_shift.py`)
+- 2,281-post stratified Claude scoring of Arctic Shift event-window cells (~$13)
+- Sensitivity analysis excluding SDN-Medical (`sensitivity_excl_sdn_medical.py`) — α robust at n=6,111 non-SDN posts
+- Placebo test against topical-near baseline (`placebo_test_topical_near.py`) — 10/16 ADEQUATE_NULL, 5/16 CONFOUNDED
+- Per-event × per-profession analysis (`analyze_per_profession_per_event.py`) — cohort heterogeneity headline
+- BERTopic full-corpus run (78,143 docs → 364 topics; 5+ servicer_issues sub-clusters surfaced; 5+ missed categories like trophies, FEIE, capitalization, REPAYE subsidy, portal bugs)
+- Master timeline figures (`pslf_master_timeline.png`, `pslf_master_timeline_3scorer.png`)
+- Event-time timecourse plots (`pslf_event_timecourses_*.png`)
+- Claude dimensions multi-panel figure (`pslf_claude_dimensions.png`)
+- Pre/post 3-dim heatmap by cohort (`pslf_claude_dimensions_by_event.png`)
+- Reddit comments collector partial (~14K comments out of ~80-150K expected)
+
+**Comments triangulation (round-8 partial):** TB×VADER α=+0.29 (95% CI [+0.274, +0.305]) on n=12,601 partial comments vs +0.34 on posts. Disagreement REPLICATES at 50× scale. Will tighten when comments collector finishes (~2-3h remaining as of 2026-05-09).
+
+**Per-author longitudinal panel (Round-8 still infeasible):** Even with Arctic Shift expansion (~6.4× Reddit posts), only 1/8 events meets n>=10 returning-with-stance threshold (Trump EO went from n=12 → n=13 returning authors). Other events: 3-8 returning. The expanded corpus did NOT unlock per-author within-person inference for the substantive paper. **Composition-shift framing remains correct.** Comments collector may add ~5-10× more per-author observations and shift this judgment when it finishes.
+
+**Still pending:**
+- Comments collector for Arctic Shift posts (~50h wall-time at 2.5s/post for 70K new posts, ~$0 cost). Decide based on whether per-author panel becomes feasible after current data lands.
+- Bogleheads + allnurses + physicianassistantforum.com (Cloudflare-blocked)
 - Interrupted time series (ARIMA + control series) — required for causal claims
-- Per-author longitudinal panels (within-subject design for adjacent-event identification)
-- OSF/AsPredicted pre-registration of event family (CONSORT-style flow)
+- OSF deposit + Transparency Statement section (writing task; replaces "pre-registration retrofit" as I previously misnamed it)
+- Cross-domain replication of methods finding (COVID-vaccine, climate) — would unlock PNAS Nexus / Political Analysis venue tier
 
 ## Publication Status (round-4 audit verdict)
 - **Pre-print (arXiv cs.SI / SSRN)**: ready now

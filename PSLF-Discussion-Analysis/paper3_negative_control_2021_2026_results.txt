@@ -1,0 +1,19 @@
+==========================================================================================
+PAPER 3 NEGATIVE-CONTROL ORTHOPEDIC SURGERY — 2021-2026 (Round 17 update)
+==========================================================================================
+
+Comparison: prior 2021-2025-only result (β=+0.76, SE=0.66, n=1,079) vs
+current 2021-2026 result (with one additional Match year added).
+
+  2021-2025: n=1,007, n_hostile_rows=11, n_hostile_inst=3, β=+0.67 pp, SE=0.68, 95% CI [-0.66, +2.00], p=0.326
+  2021-2026: n=1,204, n_hostile_rows=16, n_hostile_inst=4, β=+0.54 pp, SE=0.54, 95% CI [-0.53, +1.60], p=0.322
+
+2026 ortho descriptive: n=223, n_hostile_rows=5
+
+POWER FLOOR (95% CI half-width = uniform-confound rule-out threshold):
+  2021-2025: rules out uniform-recruitment confounds > 1.33 pp
+  2021-2026: rules out uniform-recruitment confounds > 1.06 pp
+
+INTERPRETATION:
+  Adding 2026 data modestly improves negative-control precision.
+  Headline finding (PSLF-hostile β NS in orthopedic surgery) is CONSISTENT with prior 2021-2025-only result.
