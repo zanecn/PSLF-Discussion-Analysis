@@ -163,7 +163,7 @@ The lexical-instrument construct mismatch is not an artifact of the post-level n
 |---|---|---|
 | 1 | Complete proper test-retest design (temp=0 vs temp=0) | ✅ DONE 2026-05-10 — 100% exact-match across all 3 tasks |
 | 2 | Adopt psychometric terminology ("convergent validity failure") | ✅ done in outline |
-| 3 | Cite and distinguish Calderon et al. 2025 | ✅ done in outline |
+| 3 | Cite and distinguish closest LLM-validation competitor (originally tagged as "Calderon et al. 2025"; R17++ audit corrected to **Bojić et al. 2025** *Sci Reports* 15:11477 — the DOI 10.1038/s41598-025-96508-3 had a hallucinated author list) | ✅ done in outline (with corrected attribution) |
 
 **Round 17 audit fixes (C-series):**
 | # | Fix | Status |
