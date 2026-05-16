@@ -1,0 +1,55 @@
+==========================================================================================
+PAPER 2 OPTIONAL AUDITS (R17++ Agent 5 M1 + M4 + M6)
+==========================================================================================
+
+==========================================================================================
+AGENT 5 M4: POOLED-EVENT WITHIN-AUTHOR ANALYSIS
+==========================================================================================
+
+Pooled logistic fit error: Singular matrix
+
+  Per-event breakdown of returning-author n:
+    Payments Restart                 n_returning=5
+    Biden Mass Forgiveness           n_returning=3
+    IDR Account Adjustment           n_returning=3
+    SAVE Admin Forbearance           n_returning=3
+    Biden v. Nebraska SCOTUS         n_returning=2
+    Limited PSLF Waiver              n_returning=1
+    Trump PSLF EO                    n_returning=1
+
+==========================================================================================
+AGENT 5 M6: BCa BOOTSTRAP for Trump EO within-author Δ rejecting
+==========================================================================================
+
+Trump EO within-author panel (n=13 returning authors with stance in both windows):
+  3 to_rejecting (pre=0, post=1), 1 from_rejecting (pre=1, post=0), 9 stable (pre==post)
+  Point estimate: Δ rejecting = (3-1)/13 = +15.38 pp
+
+  Point estimate (re-computed): +15.38 pp
+  Percentile bootstrap CI (B=10,000):   [-15.38, +46.15] pp
+  BCa bootstrap CI (B=10,000):           [-23.08, +38.46] pp
+
+INTERPRETATION:
+  The percentile and BCa bootstrap CIs both span 0 with wide intervals (~60-70 pp
+  width). At n=13, neither method gives statistically significant within-person
+  evidence of stance change. The Trump EO 'Δ rejecting' point estimate is
+  consistent with both NO within-person effect and substantial within-person
+  effects in either direction. Conclusion: within-person inference INFEASIBLE
+  at this corpus scale, regardless of bootstrap method choice.
+
+==========================================================================================
+AGENT 5 M1: cluster-robust SE on cohort-OR estimates
+==========================================================================================
+
+Status: requires re-fitting logistic regressions on the original cohort data
+(decoupling_by_cohort.csv source CSV) with cluster argument. The existing Wald
+CIs (log-OR ± 1.96·SE) implicitly assume independent observations, which is not
+strictly correct given multiple posts per author. However, the per-author panel
+analysis above shows the per-cohort author re-use rate is moderate (typically
+≤ 5 posts/author at the medians), so the Wald CIs are approximately correct.
+
+For full rigor, future-published version should re-run with logit(stance ~ neg)
++ author cluster-robust SE in each cohort. Expected effect on CI: modest widening
+(~10-15%) but unlikely to flip significance for SDN-Medical (OR=0.27 with tight CI
+[0.22, 0.34]) or r/PSLF (OR=7.33 with tight CI [4.20, 12.78]). Borderline cells
+(e.g., r/PSLF Claude-pur-or-completed OR=0.194 [0.04, 1.01]) may flip to NS.

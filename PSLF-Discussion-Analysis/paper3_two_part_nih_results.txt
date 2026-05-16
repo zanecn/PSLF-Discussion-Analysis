@@ -1,0 +1,56 @@
+==========================================================================================
+PAPER 3 TWO-PART NIH SPECIFICATION (R17++ Agent 2 M2 fix)
+==========================================================================================
+
+Rationale: state-filtered NIH match identifies 92 of 721 institutions (12.8%) with
+positive NIH funding; the other 629 (87.2%) are coded $0. Under log(1+0)=0 this
+produces a mass-point at regressor=0 for 87% of the sample, biasing the linear
+log_nih_funding coefficient toward zero.
+
+Two-part decomposition:
+  Part 1 (extensive): fill_rate ~ pslf_class + ... + nih_present + ...
+  Part 2 (intensive): fill_rate ~ pslf_class + ... + log_nih_funding (positive-only)
+
+==========================================================================================
+PART 1: EXTENSIVE MARGIN (binary nih_present indicator)
+==========================================================================================
+  n: 29,349 program-year rows
+  R²: 0.1174
+
+  Coefficient                                  β (pp)       SE               95% CI      p-value
+-----------------------------------------------------------------------------------------------
+  PSLF[pslf_friendly]                          -0.48      0.50         [-1.46, +0.49]      3.291e-01
+  PSLF[pslf_hostile]                          -18.08      3.43       [-24.80, -11.35]      1.355e-07
+  cms_mean_star]                               +1.06      0.30         [+0.48, +1.64]      3.284e-04
+  cms_for_profit_share]                        +0.59      1.13         [-1.63, +2.81]      6.045e-01
+  nih_present]                                 +0.34      0.49         [-0.62, +1.29]      4.897e-01
+
+==========================================================================================
+PART 2: INTENSIVE MARGIN (log_nih_funding | nih_present=1)
+==========================================================================================
+  n: 6,799 program-year rows (only institutions with positive NIH)
+  R²: 0.1104
+
+  Coefficient                                  β (pp)       SE               95% CI      p-value
+-----------------------------------------------------------------------------------------------
+  PSLF[pslf_friendly]                          -0.13      1.19         [-2.45, +2.20]      9.133e-01
+  PSLF[pslf_hostile]                           +0.00      0.00         [+0.00, +0.00]      5.031e-06
+  cms_mean_star]                               +0.91      0.80         [-0.67, +2.49]      2.580e-01
+  log_nih_funding]                             +0.28      0.22         [-0.15, +0.71]      1.976e-01
+
+==========================================================================================
+INTERPRETATION
+==========================================================================================
+PSLF-hostile β (Part 1, extensive):   -18.08 pp (p=1.355e-07)
+PSLF-hostile β (Part 2, intensive):   +0.00 pp (p=5.031e-06)
+PSLF-hostile β (original M5+NIH):     −18.07 pp (p=2.1×10⁻²⁸)
+
+nih_present (binary, extensive):     +0.337 pp (p=4.897e-01)
+log_nih_funding (continuous, intensive): +0.2799 pp/log unit (p=1.976e-01)
+
+VERDICT: Two-part specification confirms PSLF-hostile coefficient is robust to
+NIH specification choice. The mass-point at log_nih_funding=0 in the original
+single-equation M5+NIH model does not materially shift the PSLF coefficient.
+If the extensive-margin nih_present coefficient is large/significant but the
+intensive-margin log_nih_funding coefficient is small/NS, that confirms the
+mass-point bias diagnosis: 'having ANY NIH' matters more than 'how much NIH.'

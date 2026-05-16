@@ -327,8 +327,25 @@ The following citations were in the prior R12 Notion content but **could NOT be 
 
 ## Workforce / HPSA / NHSC
 
-**Pathman, D. E. & Konrad, T. R. (multiple years).** NHSC and HPSA workforce literature. (specific citations TBD)
-- **Used in:** P3 §1.2 (background)
+**Pathman, D. E. & Konrad, T. R. (2004).** Retention of primary care physicians in rural health professional shortage areas. *American Journal of Public Health*. PMID 15451741. https://pubmed.ncbi.nlm.nih.gov/15451741/
+- **Used in:** P3 §1.2 (background — rural HPSA primary-care retention is similar to non-HPSAs; "principal dynamic is too few physicians recruited")
+
+**Pathman, D. E., Konrad, T. R., et al. (2006).** National Health Service Corps Staffing and the Growth of the Local Rural Non-NHSC Primary Care Physician Workforce. *Journal of Rural Health*. doi:10.1111/j.1748-0361.2006.00048.x
+- **Used in:** P3 §1.2 (NHSC growth context for primary-care workforce)
+- **Why (Round 17++ added 2026-05-11)**: Replaces prior placeholder "Pathman & Konrad (multiple years) — specific citations TBD." Two specific peer-reviewed papers identified via WebSearch. Authors verified as real (Cecil G. Sheps Center for Health Services Research at UNC Chapel Hill).
+
+**Collier, D., Fitzpatrick, D., Fann, C., Engram, F., Bruzzano, C., & Keyes, M. (2024).** The Public Service Loan Forgiveness Program and the Purpose of Higher Education. *Critical Education*. https://ices.library.ubc.ca/index.php/criticaled/article/view/187226
+- **Used in:** P2 §2.5 (qualitative PSLF interview-based literature)
+- **Why (Round 17++ verified 2026-05-11)**: Real paper at *Critical Education* (UBC library). Companion SSRN-only papers by same authors: "Pause and Effect" (abstract_id 4812825; n=104 borrowers, semi-structured interviews July-Sept 2023) and "Dub Thee, The Forgiven" (abstract_id 4812638; n=35 forgiven borrowers).
+
+**[ASU EPAA Author(s)] (2024).** Experiences of Higher Education Staff Navigating Public Service Loan Forgiveness. *Education Policy Analysis Archives*. https://epaa.asu.edu/index.php/epaa/article/download/9346/3641/45718
+- **Used in:** P2 §2.5 (qualitative PSLF literature; higher-ed staff experience)
+- **Why (Round 17++ verified 2026-05-11)**: Paper exists at EPAA (ASU); URL confirmed. Pin author list from journal page before final draft.
+
+**[REPLACED — Round 17++ audit, 2026-05-11]** A prior placeholder "Pew Research Center (2024). Public attitudes on student loan forgiveness." CANNOT be matched to a specific 2024 Pew publication on PSLF/loan-forgiveness attitudes. Pew DID publish "5 facts about student loans" (Sep 18, 2024, https://www.pewresearch.org/short-reads/2024/09/18/facts-about-student-loans/) but it's about student-loan demographics, not forgiveness attitudes. The closest substantive match is the **UChicago Harris/AP-NORC Poll (May 16–21, 2024; n=1,309 adults)** which directly measures public support for loan forgiveness: 65% favor forgiveness in at least one circumstance; 58% Dem / 44% indep / 15% Rep find it important. Use UChicago Harris/AP-NORC if the cite was supporting "public attitudes on loan forgiveness"; use Pew 2024 "5 facts about student loans" if supporting "student-loan demographics."
+
+**UChicago Harris/AP-NORC Poll (2024).** Public Attitudes on Student Loan Forgiveness Survey (fielded May 16–21, 2024; n=1,309 adults). https://harris.uchicago.edu/news-events/news/uchicago-harrisap-norc-poll-public-finds-it-more-important-federal-government ; https://apnorc.org/projects/views-toward-student-loan-relief-are-tied-to-partisanship-and-experience-with-debt/
+- **Used in:** P2 §2.5 (background — substitute for unverified Pew Research Center 2024 PSLF cite)
 
 **HRSA.** Health Professional Shortage Areas (HPSA) data. https://data.hrsa.gov/
 - **Used in:** P3 §3.4 (geographic confounder)
