@@ -1,21 +1,22 @@
-# Dataset Deposit Plan — PSLF-eligibility classification
+# Dataset Deposit Plan — PSLF-eligibility classification (Dryad/Zenodo)
 
-**Created:** 2026-05-17 (replaces reverted `PAPER_4_DRAFT_READY.md` "Scientific Data" paper framing — see PROJECT_INDEX.md audit history R17++ #3 + R17++ #3 revert)
-**Status:** Supplementary infrastructure for **Paper 3 (JGME)** submission package
-**Target repository:** Dryad (`datadryad.org`) primary / Zenodo (`zenodo.org`) backup
-**Effort:** ~1 day of metadata + README polishing (vs ~3 weeks for a standalone Scientific Data paper)
+**Created:** 2026-05-17 (replaces reverted `PAPER_4_DRAFT_READY.md` framing 2026-05-17 a.m.)
+**Updated:** 2026-05-17 (P4 *Scientific Data* paper reinstated p.m. after medical-student context clarification; this doc now describes the **Dryad/Zenodo deposit that P4 CITES** rather than a substitute-for-paper)
+**Status:** Implementation detail of **Paper 4 (*Scientific Data*) submission** + supplementary citation for **Paper 3 (JGME)** + **Paper 5 (NS Neurosurgery short report)**
+**Target repository:** Dryad (`datadryad.org`) primary / Zenodo (`zenodo.org`) mirror
+**Effort:** ~1 day of metadata + README polishing (deposit is the artifact; Paper 4 is the descriptor that points readers to the deposit DOI)
 
 ---
 
-## Why this is a DEPOSIT, not a paper
+## How the deposit relates to Paper 4 (*Scientific Data*)
 
-The PSLF-eligibility classification of 872 US residency-training institutions × 2021–2026 with three sensitivity specifications is a useful research artifact. It is **not** an interesting research finding. After honest assessment:
-- Realistic 5-year citation count: **10-25** (universe of active PSLF-residency researchers ≈ 5-10; most will trust their own classifications more than ours)
-- Substantive field impact: ~zero (the dataset is infrastructure; P3 is the finding)
-- Publishing as a Scientific Data paper would buy a CV line + Nature title but ~zero research-impact yield over a Dryad/Zenodo deposit
-- The deposit captures the citable-DOI benefit at ~zero additional opportunity cost vs the standalone paper's 3 weeks of writing
+The deposit is the **artifact**: actual CSV files + README + scripts at Dryad/Zenodo with a citable DOI. Paper 4 is the **descriptor**: a peer-reviewed Scientific Data paper that points readers to the deposit and explains methodology + validation + intended use.
 
-**The right structure:** deposit the dataset, get a DOI, cite that DOI from P3, move on.
+For a medical student aiming at NS match, both have value:
+- The **deposit** is the citable infrastructure that P3 and P5 cite in their Methods sections
+- The **Paper 4 *Scientific Data*** publication is a CV line on ERAS
+
+(The earlier 2026-05-17 a.m. framing that "deposit instead of paper" was advice optimized for tenure-track research impact. For a med-student NS application optimizing for publication count, "deposit AND paper" is the right call. See `PROJECT_INDEX.md` audit history for the back-and-forth.)
 
 ---
 

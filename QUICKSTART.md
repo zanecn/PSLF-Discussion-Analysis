@@ -4,17 +4,21 @@
 
 ## What is this project?
 
-Three peer-review papers on Public Service Loan Forgiveness (PSLF) discourse + residency-match outcomes, targeting Tier-2 venues, plus a supplementary dataset deposit (Dryad/Zenodo with citable DOI; **not** a separate paper):
+**Five outputs targeting both substantive impact and publication count for medical-student NS-match application** (MS3 ending → research year next → ERAS Sept 2027; neurosurgery match averages ~18 ERAS research items, top quartile 30-50):
 
 | Paper | Venue | Status | Headline |
 |---|---|---|---|
-| **P1 Methods** | EPJ Data Science | Ready to draft | 3-LLM Krippendorff α = +0.7590 on n=1,001 above 0.667 floor; LLM-class vs lexical-class construct boundary |
-| **P2 Substantive** | JCSS | Ready to draft (post-level scope per R17 Option A) | Cohort-conditional sentiment-stance coupling; SDN-Medical OR=0.27, r/PSLF OR=7.33, Finance OR=0.18 |
-| **P3 Policy** | JGME | Ready to draft NOW (shortest path) | PSLF-hostile cross-sectional fill-rate differential −18.07 pp (S1) at n=29,349; Trump-EO causal interpretation RETRACTED |
+| **P1 Methods** | EPJ Data Science | Ready to draft | 3-LLM Krippendorff α = +0.7590 on n=1,001 above 0.667 floor; paraphrase α=+0.9011 replicated at n=399 (R17++ #3) |
+| **P2 Substantive** | JCSS (primary) / **PLOS One** (backup if speed needed) | Ready to draft (post-level scope per R17 Option A) | Cohort-conditional sentiment-stance coupling; SDN-Medical OR=0.27, r/PSLF OR=7.33, Reddit Finance OR=0.18 cross-scorer sign-flip |
+| **P3 Policy** | JGME | Ready to draft NOW (shortest path; ~3-4 weeks) | PSLF-hostile cross-sectional fill-rate differential −18.07 pp (S1) at n=29,349; Trump-EO causal interpretation RETRACTED |
+| **P4 Data** | *Scientific Data* (Nature) | Ready to draft (artifact locked; ~3 weeks) | 872-institution PSLF-eligibility classification 2021–2026, ProPublica IRS-verified, S1/S2/S3 HCA-academic sensitivity specs; CV line + Nature-family title; cites the Dryad/Zenodo deposit DOI |
+| **P5 NS spin-off** | *Neurosurgery* (Wolters Kluwer) / *JAMA Surgery* / *World Neurosurgery* | Ready to draft (~2-3 weeks; data feasibility verified 2026-05-17) | 124 of 125 (99.2%) US neurosurgery residency programs are PSLF-eligible/ambiguous 2021–2026; sole hostile (HCA Kansas City) at 100% fill; specialty-relevant publication for NS match |
 
-**Recommended drafting order: P3 → P1 → P2.** P3 is the shortest path (3-4 weeks of focused writing) and most-ready substantive paper. P1 (EPJ DS) and P2 (JCSS) follow.
+**Recommended drafting order: P3 → P4 → P5 → P1 → P2** (P3 first because shortest + highest substantive impact; P4 second to mint the Dryad/Zenodo DOI that P3 cites; P5 third because NS-specialty-relevant and short; P1 + P2 last with longer review cycles).
 
-**Supplementary infrastructure (NOT a paper):** PSLF-eligibility classification dataset (872 institutions × 2021–2026 × S1/S2/S3 sensitivity specs) deposited at Dryad or Zenodo with a citable DOI as part of P3's submission package. See `DATASET_DEPOSIT_PLAN.md` for the deposit checklist. The earlier "P4 *Scientific Data* paper" framing (2026-05-17) was reverted after an honest assessment: the dataset has narrow utility (5-10 active researchers), realistic citation count 10-25 over 5 years, and the separate paper would be procedurally easy but substantively low-impact. The deposit captures the citable-infrastructure benefit at ~zero additional writing cost vs the standalone paper's ~3 weeks.
+**Conference abstracts pipeline:** 5 concrete abstract submissions planned per `CONFERENCE_ABSTRACTS_PLAN.md` targeting AANS Annual Meeting (Apr/May 2027; **abstract deadline ~Oct 2026 — CRITICAL PATH**), CSNS Annual Meeting, AAMC Health Workforce Research Conference, AcademyHealth ARM, AAMC RIME. Realistic yield: 2-4 conference presentations on ERAS (50-70% typical abstract accept rates) = 2-4 additional research items.
+
+**Supplementary infrastructure:** PSLF-eligibility classification dataset deposited at Dryad (primary) / Zenodo (mirror) with citable DOI, cited from P3, P4, and P5 Methods sections. See `DATASET_DEPOSIT_PLAN.md` for deposit checklist. (The earlier 2026-05-17 a.m. revert of P4 was made under wrong assumption that user was tenure-track academic optimizing for research impact; med-student NS-match context changes the calculus.)
 
 ## 5-minute resume-where-you-left-off
 
