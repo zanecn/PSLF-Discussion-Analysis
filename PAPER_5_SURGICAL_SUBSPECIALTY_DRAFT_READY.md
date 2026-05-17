@@ -56,6 +56,17 @@ The **surgical-subspecialty comparison framing** (R17++ #5 reframe) is substanti
 
 5. **Methodological transparency (R17++ #6 review addition)**: The "all-HCA" finding is conditional on the surgical-subspecialty slice. The full PSLF-hostile pool of 23 institutions across all 28 NRMP specialties (Paper 3) includes 2 non-HCA institutions (North Oaks Med Ctr LLC, Steward Carney Hospital) that happen not to host surgical-subspecialty programs. This caveat is included to prevent selection-on-outcome critique.
 
+6. **GEOGRAPHIC + WORKFORCE-POLICY FINDING (R17++ #6 RIGOROUS REVIEW geographic boost — `paper5_geographic_workforce_context.csv` + `paper5_geographic_workforce_summary.txt`):** Of the 8 unique HCA-affiliated PSLF-hostile surgical-subspecialty institutions:
+   - **Florida: 4 institutions (50%)** — non-Medicaid-expansion state
+   - **Texas: 2 institutions (25%)** — non-Medicaid-expansion state
+   - **Missouri: 1 institution (12.5%)** — HCA Kansas City; Medicaid expanded 2021 (voter-approved)
+   - **Virginia: 1 institution (12.5%)** — HCA Chippenham; Medicaid expanded 2019
+   - **75% (6 of 8) are in Medicaid non-expansion states** (FL+TX) — compare to baseline US distribution of 10/50 non-expansion states = 20%. **The HCA-affiliated PSLF-hostile institutional concentration is approximately 3.75× the baseline expectation.**
+   - **88% (7 of 8) are in metropolitan-area core** (USDA RUCA=1); 1 institution (HCA Bayonet Pt, Pasco County FL) is RUCA=2 (high-commuting metro fringe).
+   - **62% (5 of 8) are in counties with partial HPSA designation** (typically low-income population subset, not whole-county geographic) — for-profit-chain surgical training is partially serving underserved population subsets within otherwise urban metropolitan areas.
+
+**State-policy implication for post-Trump-EO:** Residents trained at HCA-affiliated PSLF-hostile programs face **compound policy headwinds**: (a) PSLF ineligibility for resident debt; (b) state-level reduced Medicaid expansion may affect post-residency practice options for residents who want to serve PSLF-qualifying employer types (community health centers, public hospitals).
+
 ## The data-verified headline (2026-05-17 surgical-subspecialty feasibility script)
 
 | Surgical subspecialty | n program-years | n institutions | PSLF-hostile rate | n hostile institutions | Hostile-program fill rate |

@@ -30,46 +30,39 @@ if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
         pass
 
 PROJECT = Path("C:/Users/zanen/PSLF_2026/PSLF-Discussion-Analysis")
-B = 2000  # number of permutations; can increase to 5000-10000 for publication
+import os
+B = int(os.environ.get("RAND_B", "500"))  # default B=500 for proof-of-concept; user can set RAND_B=5000 for publication
 SEED = 42
 RNG = np.random.default_rng(SEED)
+print(f"Using B={B} permutations", flush=True)
 
 # Load NRMP data
 print("Loading NRMP program-level data...")
 nrmp = pd.read_csv(PROJECT / "nrmp_program_level_2021_2026.csv")
 nrmp = nrmp[nrmp["year"].isin([2021, 2022, 2023, 2024, 2025])]  # 5-year baseline
 
-# Filter to specs that match Model 5 (S1)
-S1_HOSTILE_INSTITUTIONS = {
-    "HCA Chippenham & Johnston-Willis Hosps", "HCA Florida JFK Hosp-U Miami",
-    "HCA Florida Largo Hosp", "HCA Florida Brandon Hosp", "HCA Florida Bayonet Pt Hosp",
-    "HCA Florida Trinity Hosp", "HCA Florida Oak Hill Hosp", "HCA Florida Citrus Hosp",
-    "HCA Florida Citrus Pet Hosp", "HCA Healthcare Kansas City",
-    "HCA Healthcare/USF Morsani GME-Largo", "HCA Healthcare/USF Morsani GME-Brandon",
-    "HCA Healthcare/USF Morsani-Bayonet Pt", "HCA Houston Healthcare/U Houston",
-    "HCA Medical City Healthcare", "HCA Healthcare/Edward Via College",
-    "HCA Healthcare/Univ. of Miami", "HCA Healthcare TriStar Nashville",
-    "HCA Healthcare TriStar Southern Hills", "HCA Healthcare Las Palmas",
-    "HCA Healthcare Corpus Christi", "North Oaks Med Ctr LLC", "Steward Carney Hospital",
-}
+# Use NRMP's actual pslf_class column (R17++ #6 review fix; prior script had institution-name-list bug).
+# S1 = all pslf_hostile rows
+# S2 = pslf_hostile rows MINUS HCA-academic partnerships (USF Morsani, U Miami, U Houston, VCOM, Edward Via)
+HCA_ACADEMIC_PATTERNS = ["USF Morsani", "Morsani", "U Miami", "UMiami", "Univ. of Miami",
+                          "U Houston", "University of Houston", "VCOM", "Edward Via"]
 
-# S2: HCA-academic partnerships reclassified as ambiguous
-S2_AMBIGUOUS = {
-    "HCA Florida JFK Hosp-U Miami", "HCA Florida Largo Hosp", "HCA Florida Brandon Hosp",
-    "HCA Florida Bayonet Pt Hosp", "HCA Florida Trinity Hosp", "HCA Florida Oak Hill Hosp",
-    "HCA Florida Citrus Hosp", "HCA Florida Citrus Pet Hosp",
-    "HCA Healthcare/USF Morsani GME-Largo", "HCA Healthcare/USF Morsani GME-Brandon",
-    "HCA Healthcare/USF Morsani-Bayonet Pt", "HCA Houston Healthcare/U Houston",
-    "HCA Healthcare/Edward Via College", "HCA Healthcare/Univ. of Miami",
-}
+nrmp["is_academic_partnership"] = nrmp["institution"].str.contains(
+    "|".join(HCA_ACADEMIC_PATTERNS), case=False, na=False, regex=True
+)
 
-# Build hostile indicator under S2 (most conservative for the smallest-G case)
-nrmp["is_hostile_s2"] = (
-    nrmp["institution"].isin(S1_HOSTILE_INSTITUTIONS - S2_AMBIGUOUS)
-).astype(int)
+nrmp["is_hostile_s1"] = (nrmp["pslf_class"] == "pslf_hostile").astype(int)
+nrmp["is_hostile_s2"] = ((nrmp["pslf_class"] == "pslf_hostile") & (~nrmp["is_academic_partnership"])).astype(int)
+
+n_hostile_s1 = nrmp["is_hostile_s1"].sum()
 n_hostile_s2 = nrmp["is_hostile_s2"].sum()
-print(f"S2 PSLF-hostile rows: {n_hostile_s2}")
-print(f"S2 unique hostile institutions: {nrmp[nrmp['is_hostile_s2']==1]['institution'].nunique()}")
+n_hostile_s1_inst = nrmp[nrmp["is_hostile_s1"]==1]["institution"].nunique()
+n_hostile_s2_inst = nrmp[nrmp["is_hostile_s2"]==1]["institution"].nunique()
+print(f"S1 PSLF-hostile rows: {n_hostile_s1} ({n_hostile_s1_inst} unique institutions)")
+print(f"S2 PSLF-hostile rows: {n_hostile_s2} ({n_hostile_s2_inst} unique institutions)")
+print(f"S2 should be ~9 institutions; if differs from 9, check HCA-academic name patterns above")
+print(f"S1 hostile institutions: {sorted(nrmp[nrmp['is_hostile_s1']==1]['institution'].unique())}")
+print(f"S2 hostile institutions: {sorted(nrmp[nrmp['is_hostile_s2']==1]['institution'].unique())}")
 
 # Use simple OLS for the permutation (model: fill_rate ~ is_hostile + state + specialty + year)
 # Note: for full Model 5 we'd include CMS quality + NIH funding, but the institution-level
@@ -118,8 +111,8 @@ for b in range(B):
         # If all labels in stratum are the same, permutation is a no-op
         permuted[mask] = RNG.permutation(labels_in_stratum)
     perm_betas[b] = fit_beta_hostile(permuted)
-    if (b + 1) % 200 == 0:
-        print(f"  {b+1}/{B}")
+    if (b + 1) % 50 == 0:
+        print(f"  {b+1}/{B}", flush=True)
 
 # Permutation p-value: fraction as extreme as observed (two-sided)
 two_sided_p = (np.abs(perm_betas) >= np.abs(beta_observed)).mean()
