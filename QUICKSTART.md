@@ -4,13 +4,16 @@
 
 ## What is this project?
 
-Three peer-review papers on Public Service Loan Forgiveness (PSLF) discourse + residency-match outcomes, targeting Tier-2 venues:
+Four peer-review outputs on Public Service Loan Forgiveness (PSLF) discourse + residency-match outcomes — three substantive papers (Tier-2 venues) plus one data-artifact paper (Nature data title):
 
 | Paper | Venue | Status | Headline |
 |---|---|---|---|
 | **P1 Methods** | EPJ Data Science | Ready to draft | 3-LLM Krippendorff α = +0.7590 on n=1,001 above 0.667 floor; LLM-class vs lexical-class construct boundary |
 | **P2 Substantive** | JCSS | Ready to draft (post-level scope per R17 Option A) | Cohort-conditional sentiment-stance coupling; SDN-Medical OR=0.27, r/PSLF OR=7.33, Finance OR=0.18 |
 | **P3 Policy** | JGME | Ready to draft NOW (shortest path) | PSLF-hostile cross-sectional fill-rate differential −18.07 pp (S1) at n=29,349; Trump-EO causal interpretation RETRACTED |
+| **P4 Data** (added 2026-05-17) | *Scientific Data* (Nature) | Ready to draft (artifact locked) | 872-institution PSLF-eligibility classification 2021–2026, ProPublica IRS-verified, S1/S2/S3 HCA-academic sensitivity specs; supports P3 + provides evergreen citable infrastructure for future PSLF-residency research |
+
+**Recommended drafting order: P4 → P3 → P1 → P2.** P4 is the shortest path (3 weeks, structured *Scientific Data* format) and produces a citable DOI that P3 then references internally, compressing P3's classification-methodology section. P3 follows as the highest-leverage substantive paper. P1 + P2 then drafted in parallel.
 
 ## 5-minute resume-where-you-left-off
 

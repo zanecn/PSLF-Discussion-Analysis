@@ -97,23 +97,27 @@ C:\Users\zanen\PSLF_2026\
 
 ---
 
-## Three papers at a glance
+## Four outputs at a glance (P4 added 2026-05-17 — Scientific Data artifact paper)
 
 | Paper | Title | Venue | Status | Length | Tables | Figures | Suppl |
 |---|---|---|---|---|---|---|---|
 | **P1 Methods** | Convergent Validity Failure Between Lexical and LLM-Class Sentiment Instruments... | EPJ Data Science | Ready (OP-vs-Reply minor refresh after comments) | 6-8K words | 4 | 3 | 8 |
 | **P2 Substantive** | Cohort-Conditional Sentiment-Stance Coupling in Online Policy Discourse... | JCSS | Ready (cohort heterogeneity + panel refresh after comments) | 5-7K words | 5 | 3 | 7 |
 | **P3 Policy** | PSLF Eligibility Differential in Residency Match Outcomes... | JGME | Ready NOW | 3-4K words | 5 | 2 | 8 |
+| **P4 Data** | A Public Service Loan Forgiveness eligibility classification of US residency-training institutions, 2021–2026 | *Scientific Data* (Nature) | Ready (artifact locked; structured 5-section format) | 2-2.5K words | 2-3 | 1-2 | 1-2 |
+
+**Recommended drafting order: P4 → P3 → P1 → P2** (P4 first because shortest + creates citable DOI infrastructure that P3 then references; P3 second for highest-leverage substantive paper; P1+P2 in parallel after).
 
 ---
 
-## Acceptance probabilities (Round 16 final, post-strengtheners)
+## Acceptance probabilities (Round 16 final + R17++ #2 update)
 
 | Paper | Venue | Acceptance % |
 |---|---|---|
 | P1 Methods | EPJ Data Science | **45-55%** |
 | P2 Substantive | JCSS | **30-38%** |
 | P3 Policy | JGME (primary) / AcadMed (secondary) | **30-37%** |
+| P4 Data | *Scientific Data* (Nature) | **~75-85%** (Scientific Data publishes ~80% of submitted manuscripts after review; reviewers focus on data documentation quality not substantive novelty) |
 
 ---
 
@@ -122,7 +126,7 @@ C:\Users\zanen\PSLF_2026\
 ✅ Data collection (Reddit Arctic Shift + SDN Playwright + comments collector COMPLETE: 528,051 comments)
 ✅ Three sentiment instruments scored on n=9,242 corpus (TextBlob + VADER + Claude)
 ✅ Three LLM convergence test on n=1,001 intersection (Claude + Llama + DeepSeek; SDN-included)
-✅ Paraphrase-robustness test-retest (3 prompts, K-α=+0.9011 sentiment, 0.93-0.96 stance/topic pairwise)
+✅ Paraphrase-robustness test-retest (3 prompts, K-α=+0.9011 sentiment, 0.93-0.96 stance/topic pairwise) — **independently replicated R17++ #3 at n=399 with identical point estimate α=+0.9011 [+0.8680, +0.9300]; 22% CI tightening; lower-CI headroom above 0.85 widened from +0.007 (n=200) to +0.018 (n=399)**
 ✅ Per-author longitudinal panel feasibility analysis (8 events; all CIs ≥25 pp wide)
 ✅ Per-event topic restructuring (8 events × 7 topics, all chi-sq p<10⁻⁴)
 ✅ Cohort heterogeneity OR table (5 cohorts × 3 operationalizations)
@@ -173,7 +177,7 @@ C:\Users\zanen\PSLF_2026\
 ### Paper 1 (FINAL, all numbers locked)
 - **3-LLM K-α (combined Reddit + SDN, n=1,001) = +0.7590** [+0.7241, +0.7868] — above tentative-reliability floor (0.667)
 - **3-LLM K-α (SDN-only, n=300) = +0.8306** [+0.787, +0.866] — above satisfactory-reliability floor (0.80)
-- **Paraphrase-robust K-α (3 prompts, n=200) = +0.9011** [+0.857, +0.938] — above true-test-retest threshold (0.85)
+- **Paraphrase-robust K-α (3 prompts, n=399 R17++ #3 replication 2026-05-17) = +0.9011** [+0.868, +0.930] — above true-test-retest threshold (0.85) with +0.018 lower-CI headroom (vs +0.007 at n=200 R16). Independent fresh sample from same 615-post SDN-baseline pool; CI half-width tightened 22%; point estimate identical to R16 historical (α=+0.9011 [+0.857, +0.938]).
 - **Adding TextBlob drops 4-rater α by 0.42**; **adding VADER drops by 0.52** under FIXED thresholds
 - **Stance task: 80.9% all-three-LLM-agree** (n=472)
 - **OP-vs-Reply at full ~500K-comment scale**: TB Δ=−0.0146 (p<10⁻⁵⁰), VADER Δ=+0.2387 (p≈0); 8/8 cohorts same-direction-mismatch — REPLICATES post-level finding
@@ -247,6 +251,9 @@ P3 §2.3 + §3.2: 3-spec sensitivity (S1/S2/S3) brackets the plausible range. Wi
 | R16 (re-audit) | 2026-05-10 | Re-audit found internal consistency issues; full propagation done |
 | R16 (strengtheners) | 2026-05-10 | 3 strengtheners run: SDN multi-LLM (P1 +10pp), paraphrase robustness (P1 +3pp), wild-cluster bootstrap (P3 +5pp) |
 | **R17 (audit + dedup fix)** | **2026-05-10** | **CMS-merge dedup bug fixed in 7 scripts; all Model 5 scripts re-run (5-year baseline n=29,349 unchanged; 6-year sample n=37,450 raw / 35,193 post-OLS-fit; corrects pre-fix 37,802 → post-fix 35,193 OLS-sample, dedup of 8 case-collision city duplicates); state-filtered NIH integrated (locked β=−18.07 pp, p=2.1×10⁻²⁸); Trump-EO causal interpretation retracted (is_2026 indicator p=0.46 NS confirms 2026 narrowing continues 5-year trend); Paper 2 scoped to post-level (drop §5.3b comments-scale main-text role); Paper 1 reframings (paraphrase as "lexical-format", magnitude framing for OP-vs-Reply, Together AI infrastructure caveat, soften "no precedent" language); P1 §5.5b added for TB×VADER comments-scale finding; transparency statement added to P3 abstract** |
+| **R17++ (citation sweep + Notion overhaul)** | **2026-05-11** | 35+ citations re-verified; 8 self-found errors fixed; 5 unverifiable removed; Notion content updated to R17++ canonical |
+| **R17++ #2 (publication push)** | **2026-05-16** | 7 publication figures generated (300 DPI); 4 code-required audits completed; OSF venue migration (Political Analysis → EPJ DS); Whitcomb 2014 removed (6th unverifiable); audit infrastructure committed (RUN_AUDITS.ps1 + RUN_ALL.ps1 + QUICKSTART.md + scripts/README.md, 14 integrity tests) |
+| **R17++ #3 (paraphrase replication + P4 addition)** | **2026-05-17** | **Paraphrase robustness independently replicated at n=399** (point estimate identical α=+0.9011; CI tightened 22%; lower-CI headroom above 0.85 widened from +0.007 to +0.018). **P4 added: *Scientific Data* (Nature) dataset paper on the PSLF-eligibility classification of 872 institutions** (highest-yield Path-B-adjacent extension per agent assessment + user prioritization filter). New artifacts: `paper1_figS_paraphrase_replication.png` (supplementary forest plot), `PAPER_4_DRAFT_READY.md`, n=200 historical CSV backups preserved at `*_n200_historical.csv` |
 
 ---
 

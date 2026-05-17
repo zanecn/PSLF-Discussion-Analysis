@@ -5,11 +5,11 @@
 **This file's body below describes Rounds 7-9 historical state. For current state, see PROJECT_INDEX.md and MASTER_LOCKED_NUMBERS.md (R17++ canonical).**
 
 R17++ summary of changes since the R9 framing below:
-- Project split into **3 papers** (Path B): P1 Methods (EPJ DS), P2 Substantive (JCSS), P3 Policy (JGME)
+- Project split into **4 outputs** (Path B): P1 Methods (EPJ DS), P2 Substantive (JCSS), P3 Policy (JGME), **P4 Data (Scientific Data / Nature)** — added R17++ #3 2026-05-17 as the standalone PSLF-eligibility classification dataset paper (highest-yield Path-B-adjacent extension)
 - **5-instrument intersection n=1,001** (3 LLMs from 3 organizations: Claude/Llama/DeepSeek + TextBlob + VADER)
 - **3-LLM convergence finding (NEW HEADLINE for P1)**: combined α=+0.7590 [+0.7241, +0.7868] above 0.667 floor; cohort-heterogeneous (Reddit-only α=+0.69 boundary, SDN-only α=+0.83 above 0.80 floor)
 - TB×VADER comments-scale α=+0.2892 [+0.287, +0.292] on n=519,401 — REPLICATES post-level
-- Paraphrase robustness 3-prompt α=+0.9011 [+0.857, +0.938] (lexical-format, not semantic-restructuring)
+- Paraphrase robustness 3-prompt α=+0.9011 [+0.868, +0.930] at n=399 (R17++ #3 replication 2026-05-17); identical point estimate to n=200 R16 historical; CI half-width tightened 22%; lower-CI headroom above 0.85 widened from +0.007 to +0.018. Lexical-format robust, NOT semantic-restructuring.
 - Test-retest at temp=0 vs temp=0: 100% exact-match (PERFECT determinism, closes LLM-stochasticity objection)
 - **Trump-EO causal interpretation RETRACTED** — trend regression `is_2026` indicator p=0.46 NS; 2026 narrowing continues 5-year pre-existing trend
 - **Paper 3 6-year sample** (2021-2026; n=37,450 raw / 35,193 OLS-fit) added; 5-year n=29,349 remains as headline cross-sectional baseline

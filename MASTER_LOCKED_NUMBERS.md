@@ -88,12 +88,15 @@ This document is the canonical numerical reference for drafting. **If a number a
 
 | Quantity | Value | Source |
 |---|---|---|
-| Sentiment 3-prompt K-α (paraphrase-robust) | **+0.9011** [+0.8571, +0.9380] | `paper1_paraphrase_robustness_results.txt` |
-| Sentiment baseline-vs-paraphrase-1 exact-match | 89.5% | same |
-| Sentiment baseline-vs-paraphrase-2 exact-match | 86.0% | same |
-| Sentiment paraphrase-1-vs-2 exact-match | 93.5% | same |
-| Stance 3-prompt pairwise exact-match | 92.98%–95.61% | same |
-| Topic 3-prompt pairwise exact-match | 93.00%–95.00% | same |
+| **Sentiment 3-prompt K-α (CURRENT, n=399 R17++ #3 replication)** | **+0.9011** [+0.8680, +0.9300] | `paper1_paraphrase_robustness_results.txt` |
+| Sentiment 3-prompt K-α (n=200 R16 historical, locked) | +0.9011 [+0.8571, +0.9380] | `zeroshot_sdn_paraphrase_v1_n200_historical.csv` + `..._v2_n200_historical.csv` |
+| Sentiment baseline-vs-paraphrase-1 exact-match (n=399) | 89.22% (was 89.5% at n=200) | same |
+| Sentiment baseline-vs-paraphrase-2 exact-match (n=399) | 85.46% (was 86.0% at n=200) | same |
+| Sentiment paraphrase-1-vs-2 exact-match (n=399) | 94.24% (was 93.5% at n=200) | same |
+| Stance 3-prompt pairwise exact-match (n=231 valid) | 93.07%–96.10% (was 92.98%–95.61% at n=114 R16) | same |
+| Topic 3-prompt pairwise exact-match (n=399 valid) | 92.23%–94.24% (was 93.00%–95.00% at n=200 R16) | same |
+| Lower-CI headroom above 0.85 threshold | n=200: +0.007 · **n=399: +0.018** (2.5× more headroom) | same |
+| CI half-width tightening ratio (n=399 vs n=200) | 0.766 (Bessel-expected 0.71 at 2× sample) | same |
 | API determinism (temp=0 vs temp=0, same prompt) | 100.00% | `test_retest_FINAL_results.txt` |
 | Round 7 noise check (temp=0 vs temp=1) | α=+0.958 [+0.938, +0.975] | (legacy) |
 

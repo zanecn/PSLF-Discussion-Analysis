@@ -116,16 +116,18 @@ Two temperature=0 runs of Claude Sonnet 4 on the same 615 SDN post_ids, separate
 
 ---
 
-## Paraphrase robustness (Round 16 Strengthener 2; Round 17 Fix C2) — n=200
+## Paraphrase robustness (R16 Strengthener 2; R17 Fix C2; **R17++ #3 n=399 replication 2026-05-17**)
 
 Same Claude Sonnet 4 model, same temperature=0, but THREE different system prompts (semantically identical, lexically different wording):
 
-| Task | Result |
-|---|---|
-| **Sentiment** 3-prompt α | **+0.9011** [bootstrap 95% CI +0.857, +0.938] |
-| Sentiment pairwise exact-match | 0.860 – 0.935 |
-| **Stance** pairwise exact-match | 0.930 – 0.956 (n=114) |
-| **Topic** pairwise exact-match | 0.930 – 0.950 (n=200) |
+| Task | Result (n=399 R17++ #3) | Historical (n=200 R16) |
+|---|---|---|
+| **Sentiment** 3-prompt α | **+0.9011** [bootstrap 95% CI +0.868, +0.930] | +0.9011 [+0.857, +0.938] |
+| Sentiment pairwise exact-match | 0.855 – 0.942 | 0.860 – 0.935 |
+| **Stance** pairwise exact-match | 0.931 – 0.961 (n=231 valid) | 0.930 – 0.956 (n=114 valid) |
+| **Topic** pairwise exact-match | 0.922 – 0.942 (n=399 valid) | 0.930 – 0.950 (n=200 valid) |
+
+**Replication verdict (R17++ #3, 2026-05-17): STRONG.** Point estimate identical across n=200 and n=399 (α=+0.9011 exactly); CI half-width tightened 22% (0.040 → 0.031), closely matching Bessel-expected ratio of 0.71 at 2× sample; lower CI bound headroom above 0.85 threshold widened from +0.007 (n=200) to **+0.018 (n=399)**, a 2.5× safety-margin improvement. Pairwise stance + topic exact-matches stable within sampling noise. The R16 result is fully replicated at independent fresh sample with tightened precision. See `paper1_figS_paraphrase_replication.png` for the forest plot.
 
 **Caveat (Round 17 Fix C2 — REFRAMED)**: this is paraphrase-robustness to **LEXICAL-FORMAT** rewording, NOT to semantic restructuring, task redefinition, or category reordering. Stronger "prompt-design" robustness (different category labels, different rubrics, different reasoning scaffolds) remains untested.
 

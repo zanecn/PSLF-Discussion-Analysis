@@ -153,18 +153,24 @@ def main():
             kappa = cohen_kappa_score(sub[c1], sub[c2])
             print(f"  {name:35} exact_match={em:.4f}  κ={kappa:+.4f}")
 
+    # ===== n=200 HISTORICAL COMPARISON (locked baseline; see ..._n200_historical.csv backups) =====
+    N200_ALPHA = 0.9011
+    N200_LO, N200_HI = 0.8571, 0.9380
+    THRESHOLD = 0.85
+
     # ===== SAVE =====
     out_lines = [
         "=" * 70,
-        "PARAPHRASE ROBUSTNESS RESULTS (Round 16 Strengthener 2; Round 17 Fix C2)",
+        "PARAPHRASE ROBUSTNESS RESULTS (R16 Strengthener 2; R17 Fix C2; R17++ #3 n=400 replication 2026-05-17)",
         "=" * 70,
         "",
-        "Design: re-score n=200 SDN posts with Claude Sonnet 4 at temperature=0",
+        f"Design: re-score n={n} SDN posts with Claude Sonnet 4 at temperature=0",
         "        using THREE different system prompts (semantically identical, ",
         "        worded differently). Tests robustness to LEXICAL-FORMAT paraphrase",
         "        (NOT semantic-restructuring or task-redefinition; see Paper 1 L0b).",
         "",
         f"Sample: n={n} posts (3-way merge across baseline + 2 paraphrases)",
+        f"Pool: 615 SDN posts in zeroshot_sdn_temp0_retest.csv; deterministic sample with random_state=42",
         "",
         "INTERPRETATION:",
         "  - If α > 0.85: Claude classifications are robust to lexical-format prompt phrasing.",
@@ -218,17 +224,38 @@ def main():
         out_lines.append(f"  Topic pairwise exact-match range: {min(em_vals_t):.4f} – {max(em_vals_t):.4f}")
         out_lines.append(f"  Valid pairs (both topics classifiable): n={n_t}")
 
+    # Comparison to n=200 historical baseline (R16 Strengthener 2)
+    out_lines.append("")
+    out_lines.append("=" * 70)
+    out_lines.append("REPLICATION COMPARISON — n=200 historical vs current run")
+    out_lines.append("=" * 70)
+    out_lines.append(f"  n=200 (R16, locked):  α={N200_ALPHA:+.4f}  CI [{N200_LO:+.4f}, {N200_HI:+.4f}]  half-width={(N200_HI-N200_LO)/2:.4f}")
+    if has_kripp and alpha is not None and boots:
+        cur_hw = (hi - lo) / 2
+        delta_alpha = alpha - N200_ALPHA
+        delta_lo = lo - N200_LO
+        out_lines.append(f"  n={n:<3} (current):       α={alpha:+.4f}  CI [{lo:+.4f}, {hi:+.4f}]  half-width={cur_hw:.4f}")
+        out_lines.append(f"  Δα (current − historical):     {delta_alpha:+.4f}")
+        out_lines.append(f"  Δ lower-CI bound:              {delta_lo:+.4f}  (positive = more headroom above {THRESHOLD} threshold)")
+        out_lines.append(f"  CI half-width ratio (cur/n200): {cur_hw/((N200_HI-N200_LO)/2):.3f}  (expect ~0.71 if Bessel scaling at 2× sample)")
+        out_lines.append(f"  Lower-CI headroom above {THRESHOLD}: n=200 = +{N200_LO-THRESHOLD:.4f}  ·  n={n} = {lo-THRESHOLD:+.4f}")
+
     out_lines.append("")
     out_lines.append("VERDICT:")
     if has_kripp and alpha is not None:
         if alpha > 0.85:
             out_lines.append(f"  Paraphrase-robustness CONFIRMED for sentiment task (α={alpha:+.4f} > 0.85 threshold).")
             out_lines.append(f"  Paper 1 L0b updated: 'test-retest reliability under LEXICAL-FORMAT prompt variation = α={alpha:+.4f}'.")
+            if boots and lo > 0.85:
+                out_lines.append(f"  Lower CI bound also above 0.85 ({lo:+.4f} > 0.85): strong replication.")
+            elif boots:
+                out_lines.append(f"  Lower CI bound straddles 0.85 ({lo:+.4f}): point-estimate confirms but bound is close.")
             out_lines.append(f"  CAVEAT: this tests robustness to lexical/format rewording, NOT to semantic restructuring,")
             out_lines.append(f"  task redefinition, or category reordering. Stronger prompt-design robustness remains untested.")
         else:
             out_lines.append(f"  Paraphrase-robustness NOT confirmed (α={alpha:+.4f} < 0.85).")
-            out_lines.append(f"  Paper 1 L0b should remain: 'API determinism only; prompt-sensitivity remains.'")
+            out_lines.append(f"  Paper 1 L0b should be revised: 'API determinism only; prompt-sensitivity present at n={n}.'")
+            out_lines.append(f"  This is a falsification of the R16 result; investigate sample composition vs n=200 historical.")
 
     out_path = PROJECT / "paper1_paraphrase_robustness_results.txt"
     out_path.write_text("\n".join(out_lines), encoding="utf-8")
