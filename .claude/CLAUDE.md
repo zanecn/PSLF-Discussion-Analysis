@@ -5,7 +5,7 @@
 **This file's body below describes Rounds 7-9 historical state. For current state, see PROJECT_INDEX.md and MASTER_LOCKED_NUMBERS.md (R17++ canonical).**
 
 R17++ summary of changes since the R9 framing below:
-- Project split into **4 outputs** (Path B): P1 Methods (EPJ DS), P2 Substantive (JCSS), P3 Policy (JGME), **P4 Data (Scientific Data / Nature)** — added R17++ #3 2026-05-17 as the standalone PSLF-eligibility classification dataset paper (highest-yield Path-B-adjacent extension)
+- Project split into **3 papers** (Path B): P1 Methods (EPJ DS), P2 Substantive (JCSS), P3 Policy (JGME). PSLF-eligibility classification dataset deposited as **Dryad/Zenodo supplement to P3** (NOT a separate paper — earlier "P4 Scientific Data paper" framing reverted 2026-05-17 after honest impact assessment: ~10-25 citations over 5 years, low substantive yield, deposit captures the citable-infrastructure benefit at ~zero opportunity cost vs standalone paper's 3-week writing investment). See `DATASET_DEPOSIT_PLAN.md` for deposit checklist.
 - **5-instrument intersection n=1,001** (3 LLMs from 3 organizations: Claude/Llama/DeepSeek + TextBlob + VADER)
 - **3-LLM convergence finding (NEW HEADLINE for P1)**: combined α=+0.7590 [+0.7241, +0.7868] above 0.667 floor; cohort-heterogeneous (Reddit-only α=+0.69 boundary, SDN-only α=+0.83 above 0.80 floor)
 - TB×VADER comments-scale α=+0.2892 [+0.287, +0.292] on n=519,401 — REPLICATES post-level

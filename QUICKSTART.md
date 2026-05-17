@@ -4,16 +4,17 @@
 
 ## What is this project?
 
-Four peer-review outputs on Public Service Loan Forgiveness (PSLF) discourse + residency-match outcomes — three substantive papers (Tier-2 venues) plus one data-artifact paper (Nature data title):
+Three peer-review papers on Public Service Loan Forgiveness (PSLF) discourse + residency-match outcomes, targeting Tier-2 venues, plus a supplementary dataset deposit (Dryad/Zenodo with citable DOI; **not** a separate paper):
 
 | Paper | Venue | Status | Headline |
 |---|---|---|---|
 | **P1 Methods** | EPJ Data Science | Ready to draft | 3-LLM Krippendorff α = +0.7590 on n=1,001 above 0.667 floor; LLM-class vs lexical-class construct boundary |
 | **P2 Substantive** | JCSS | Ready to draft (post-level scope per R17 Option A) | Cohort-conditional sentiment-stance coupling; SDN-Medical OR=0.27, r/PSLF OR=7.33, Finance OR=0.18 |
 | **P3 Policy** | JGME | Ready to draft NOW (shortest path) | PSLF-hostile cross-sectional fill-rate differential −18.07 pp (S1) at n=29,349; Trump-EO causal interpretation RETRACTED |
-| **P4 Data** (added 2026-05-17) | *Scientific Data* (Nature) | Ready to draft (artifact locked) | 872-institution PSLF-eligibility classification 2021–2026, ProPublica IRS-verified, S1/S2/S3 HCA-academic sensitivity specs; supports P3 + provides evergreen citable infrastructure for future PSLF-residency research |
 
-**Recommended drafting order: P4 → P3 → P1 → P2.** P4 is the shortest path (3 weeks, structured *Scientific Data* format) and produces a citable DOI that P3 then references internally, compressing P3's classification-methodology section. P3 follows as the highest-leverage substantive paper. P1 + P2 then drafted in parallel.
+**Recommended drafting order: P3 → P1 → P2.** P3 is the shortest path (3-4 weeks of focused writing) and most-ready substantive paper. P1 (EPJ DS) and P2 (JCSS) follow.
+
+**Supplementary infrastructure (NOT a paper):** PSLF-eligibility classification dataset (872 institutions × 2021–2026 × S1/S2/S3 sensitivity specs) deposited at Dryad or Zenodo with a citable DOI as part of P3's submission package. See `DATASET_DEPOSIT_PLAN.md` for the deposit checklist. The earlier "P4 *Scientific Data* paper" framing (2026-05-17) was reverted after an honest assessment: the dataset has narrow utility (5-10 active researchers), realistic citation count 10-25 over 5 years, and the separate paper would be procedurally easy but substantively low-impact. The deposit captures the citable-infrastructure benefit at ~zero additional writing cost vs the standalone paper's ~3 weeks.
 
 ## 5-minute resume-where-you-left-off
 
