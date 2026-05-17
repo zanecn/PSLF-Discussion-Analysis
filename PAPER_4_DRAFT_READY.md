@@ -1,9 +1,36 @@
-# Paper 4 Draft-Ready Template — *Scientific Data* (Nature)
+# Paper 4 Draft-Ready Template — BROADENED R17++ #6 (comprehensive residency-program characterization)
 
-**Status:** Ready to draft (artifact locked; structured Scientific Data format)
-**Target:** *Scientific Data* (Nature Publishing Group; primary) / *Data in Brief* (Elsevier; secondary)
+**Status:** Ready to draft; **R17++ #6 boost: BROADEN to comprehensive residency-program characterization dataset for stronger Scientific Data fit**
+**Target (R17++ #6 revised):** *Scientific Data* (Nature) primary WITH broadened framing / **Data in Brief** (Elsevier) firm immediate-fallback (~75-80% acceptance)
+**Length:** 2,500-3,000 words + structured Data Records section
+**Working title (REFRAMED):** *A Comprehensive Characterization Dataset of US Residency Training Institutions, 2021–2026: PSLF Eligibility, ACGME Accreditation, CMS Hospital Quality, NIH Funding, and VA Affiliation*
+
+## R17++ #6 BOOST STRATEGY (added 2026-05-17 final)
+
+**Why broaden:** Original R17++ #5 plan was "PSLF eligibility classification" only — niche utility, low chance of clearing *Scientific Data*'s "broad utility" editorial bar. Reviewer would likely say "this is too narrow for our scope." Boost strategy: combine PSLF eligibility with ACGME accreditation + CMS quality + NIH funding + VA affiliation into a comprehensive residency-program characterization dataset. Now serves health-services researchers, workforce researchers, AND PSLF-specific researchers — broader utility passes Scientific Data bar.
+
+**New data to integrate (per `DATA_ACQUISITION_PLAN_R17pp6.md` — all TIER 1 free public):**
+
+1. **ACGME Annual Data Reports** (2018-2025) — accreditation status, program age, complement size, fellowship status. Public PDFs + spreadsheets at https://www.acgme.org/about/publications-and-resources/annual-data-reports/. ~1 week to extract + harmonize.
+2. **NIH RePORTER multi-year** (FY2018-2024) — currently only FY2023. Public API at https://reporter.nih.gov/. ~2-3 days.
+3. **VA Facility Directory** — flag VA-affiliated training programs. Public at https://www.va.gov/directory/guide/home.asp. ~1-2 days.
+4. **AAMC Institutional Characteristics** — undergraduate enrollment, medical-school faculty count. ~2-3 days.
+5. **CMS Hospital Compare multi-year** (2018-2024) — currently 2023 only. Free at https://data.cms.gov/. ~1 week.
+
+**Total boost effort:** ~2-3 weeks of data engineering; $0 cost.
+
+**Cited from:** P3 (workforce analysis), P5 (geographic + workforce-policy), P6 (cross-policy event analysis) — single dataset serves multiple papers.
+
+**Realistic acceptance:** *Scientific Data* ~30-40% with broadened framing (up from ~20-35% with PSLF-only); Data in Brief ~75-80% as immediate fallback. Combined "in print by ERAS" probability ~85%.
+
+---
+
+# Original outline below — to be expanded per R17++ #6 broadening during drafting
+
+**Status (LEGACY R17++ #5):** Ready to draft (artifact locked; structured Scientific Data format)
+**Target (LEGACY R17++ #5):** *Scientific Data* (Nature Publishing Group; primary) / *Data in Brief* (Elsevier; secondary)
 **Length:** 2,000-2,500 words + structured Data Records section
-**Working title:** *A Public Service Loan Forgiveness eligibility classification of US residency-training institutions, 2021–2026*
+**Working title (LEGACY):** *A Public Service Loan Forgiveness eligibility classification of US residency-training institutions, 2021–2026*
 
 **Added:** 2026-05-17 (R17++ #4 — **reinstated** after medical-student context clarification; original R17++ #3 P4 framing reverted same-day; this re-add comes from understanding the user is MS3 ending → NS-match-targeted research year, where publication count matters more than per-paper substantive impact)
 

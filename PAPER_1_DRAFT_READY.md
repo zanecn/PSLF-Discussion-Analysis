@@ -1,9 +1,32 @@
-# Paper 1 Draft-Ready Template (Path B, EPJ DS target)
+# Paper 1 Draft-Ready Template — REFRAMED R17++ #6
 
-**Status:** READY TO DRAFT NOW (multi-LLM + paraphrase numbers locked from Round 16 strengtheners; OP-vs-Reply numbers will refresh post-comments-collector but current numbers are usable)
-**Target:** EPJ Data Science (primary) / Behavior Research Methods (secondary)
+**Status:** READY TO DRAFT NOW; **R17++ #6 boost: REFRAME headline to OP-vs-Reply directional split**
+**Target (R17++ #6 revised):** ***ICWSM '26*** OR ***CSCW '26*** primary / ***Information, Communication & Society*** secondary / *Behavior Research Methods* tertiary / EPJ DS as reach
+**Length:** 6,000–8,000 words + supplements (or ~3-4K words for ICWSM/CSCW short-paper format)
+**Working title (REFRAMED):** *Directional Disagreement Between Lexical Sentiment Instruments on Original-Posts versus Replies in PSLF Online Discourse: An 8-Cohort Conversation-Dynamics Finding*
+
+## R17++ #6 BOOST STRATEGY (added 2026-05-17 final)
+
+**Why reframe:** Original 3-LLM convergence headline (α=+0.7590 on n=1,001) was incremental in an over-crowded LLM-as-coder space (Gilardi 2023, Bisbee 2024, Burnham 2025, Halterman 2025, Heseltine 2024, Bojić 2025, Ziems 2024). The OP-vs-Reply directional split (TextBlob Δ negative, VADER Δ positive in 8/8 cohorts; magnitude split 20.5×; cluster-bootstrap CIs from R17++ #2) is genuinely novel — own lit search confirmed no precedent.
+
+**New headline:** Directional disagreement between TextBlob and VADER on identical OP-vs-Reply contrasts in 8 of 8 PSLF cohorts on 21,453 posts + 506,639 comments. This is a conversation-dynamics finding wrapped inside a methods paper — better fit at ICWSM/CSCW/IC&S than at EPJ DS.
+
+**Demoted to supporting evidence (still in paper):** 3-LLM convergence at α=+0.76; construct-boundary 4-rater α collapse; paraphrase α=+0.9011 at n=399 (R17++ #3 replication).
+
+**Boost effort:** ~1 week of reframing (rewrite §1 Introduction + §5 Results focus; demote §5.4 paraphrase to subsection; promote OP-vs-Reply to §5.1). **No new data needed** — analysis exists from R17++ #2 work.
+
+**Optional supplements** (per `DATA_ACQUISITION_PLAN_R17pp6.md`): thread-structure metadata for within-thread sentiment evolution (Reddit Arctic Shift JSON already contains `parent_id`; ~1-2 days extension). Skip unless reviewers request.
+
+**Realistic acceptance:** ICWSM '26 ~25-30%; CSCW '26 ~25%; *Information, Communication & Society* ~25-30%; *Behavior Research Methods* ~50% (fallback).
+
+---
+
+# Original outline below — to be reorganized per R17++ #6 reframe during drafting
+
+**Status (LEGACY R17++ #5):** READY TO DRAFT NOW (multi-LLM + paraphrase numbers locked from Round 16 strengtheners; OP-vs-Reply numbers refreshed at 519K-comment scale)
+**Target (LEGACY R17++ #5):** EPJ Data Science (primary) / Behavior Research Methods (secondary)
 **Length:** 6,000–8,000 words + supplements
-**Working title:** *Convergent Validity Failure Between Lexical and LLM-Class Sentiment Instruments on Public Service Loan Forgiveness Discourse: A Three-LLM Cross-Validation*
+**Working title (LEGACY):** *Convergent Validity Failure Between Lexical and LLM-Class Sentiment Instruments on Public Service Loan Forgiveness Discourse: A Three-LLM Cross-Validation*
 
 ---
 

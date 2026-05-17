@@ -1,11 +1,45 @@
-# Paper 6 Draft-Ready Template — Post-Trump-EO PSLF discourse sentiment shift
+# Paper 6 Draft-Ready Template — REFRAMED R17++ #6 (multi-policy comparison; PLOS One primary)
 
-**Status:** Ready to scaffold (data exists; analysis script needs writing; ~2 weeks effort)
-**Target venue (primary):** *JMIR Formative Research*
-**Target venue (secondary):** *JAMIA Open*
-**Target venue (tertiary):** *PLOS One* / *Cureus*
+**Status:** Ready to scaffold; **R17++ #6 boost: MULTI-POLICY COMPARISON** (expand from PSLF-only to multiple student-loan policy events) + revised venue target
+**Target venue (R17++ #6 revised primary):** ***PLOS One*** (broad scope, ~50% acceptance, fast cycle)
+**Target venue (R17++ #6 secondary):** ***Cureus*** (high-accept open-access backup; ~70-80%)
+**Target venue (R17++ #6 alternative):** *JMIR Formative Research* (only if reframed as digital-health-formative work)
+**Length:** 2,000-2,500 words (slightly longer to accommodate multi-policy comparison)
+**Working title (REFRAMED):** *Online Discourse as a Real-Time Policy Thermometer: A Multi-Event Pre-Post Analysis of Reddit and SDN Student-Loan Discourse Sentiment, 2023–2026*
+
+## R17++ #6 BOOST STRATEGY (added 2026-05-17 final)
+
+**Why revise:** R17++ #5 targeted *JMIR Formative Research* which was a scope mismatch (JMIR Formative publishes digital-health-intervention formative work, not policy-discourse analysis). Boost strategy: switch primary to PLOS One (better-fit broad-scope venue) + add multi-policy comparison to strengthen the "discourse-as-policy-thermometer" claim.
+
+**Boost: ADD MULTI-POLICY COMPARISON (~2 weeks; per `DATA_ACQUISITION_PLAN_R17pp6.md`):**
+
+Add 3-4 additional student-loan policy events beyond Trump EO 14235 + ED Final Rule:
+1. **Biden v. Nebraska SCOTUS** (argument Feb 2023; ruling June 2023)
+2. **SAVE plan introduction** (July 2023) + **SAVE plan litigation** (2024)
+3. **Payments restart** (Oct 2023 effective date)
+4. **PSLF reform announcements** (2022 limited waiver expansion + 2023 IDR adjustment)
+
+**New data needed:**
+- **Additional Reddit r/StudentLoans Arctic Shift corpus** — Arctic Shift API pull for r/StudentLoans posts spanning 2023-2026; ~1 week of API pulls + scoring with TextBlob/VADER/Claude. Free.
+- **Event-window dictionary** — compile dates + descriptions for each event; ~0.5 day.
+- **Optional: CFPB Complaints Database** — public download with complaint counts by date/issue type; correlate sentiment shifts with complaint volume changes. ~2-3 days. Strengthens behavior connection.
+
+**Total boost effort:** ~2 weeks of data + analysis + writing.
+
+**New framing:** "Online discourse as real-time policy thermometer" — compares discourse response to FIVE policy events of different magnitudes (SCOTUS ruling > new federal program > regulatory rule > administrative change). Shows that discourse sentiment shifts scale with policy magnitude in predictable ways. Much stronger claim than "sentiment shifted around the Trump EO."
+
+**Realistic acceptance:** *PLOS One* ~50% with multi-policy framing; *Cureus* ~75% backup (high accept but lower prestige); *JMIR Formative* ~20-35% if framed differently. Combined "in print by ERAS" probability ~80-85%.
+
+---
+
+# Original outline below — to be expanded per R17++ #6 multi-policy boost during drafting
+
+**Status (LEGACY R17++ #5):** Ready to scaffold (data exists; analysis script needs writing; ~2 weeks effort)
+**Target venue (LEGACY R17++ #5 primary):** *JMIR Formative Research*
+**Target venue (LEGACY R17++ #5 secondary):** *JAMIA Open*
+**Target venue (LEGACY R17++ #5 tertiary):** *PLOS One* / *Cureus*
 **Length:** 1,500-2,000 words (short report)
-**Working title:** *Public Service Loan Forgiveness Discourse Sentiment Around the Trump Executive Order: A Pre-Post Analysis of Reddit and SDN PSLF-Related Posts, 2024–2026*
+**Working title (LEGACY):** *Public Service Loan Forgiveness Discourse Sentiment Around the Trump Executive Order: A Pre-Post Analysis of Reddit and SDN PSLF-Related Posts, 2024–2026*
 
 **Added:** 2026-05-17 (R17++ #5) — small additional short report identified during rigorous validity review as a clean, independent venue contribution that uses existing data without creating salami-slicing concerns with P1/P2.
 

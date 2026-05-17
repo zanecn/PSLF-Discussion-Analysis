@@ -1,9 +1,32 @@
-# Paper 2 Draft-Ready Template (Path B, JCSS target)
+# Paper 2 Draft-Ready Template — REFRAMED R17++ #6
 
-**Status:** READY TO DRAFT (post-scale numbers locked; comments-scale numbers refresh after Step 2 of post-comments chain)
-**Target:** Journal of Computational Social Science (JCSS, primary) / PLOS One (secondary)
+**Status:** READY TO DRAFT; **R17++ #6 boost: STRIP to Reddit Finance cross-scorer sign-flip as construct-misalignment exemplar**
+**Target (R17++ #6 revised):** ***Political Analysis*** primary / ***Sociological Methods & Research*** secondary / JCSS / PLOS One as backup
+**Length:** 4,000–6,000 words (down from 5-7K — sharper focus)
+**Working title (REFRAMED):** *Cohort-Conditional Construct Misalignment in Online Policy Discourse: Cross-Scorer Sign-Flip in Reddit Finance r/PSLF Discussion*
+
+## R17++ #6 BOOST STRATEGY (added 2026-05-17 final)
+
+**Why strip:** Original outline bundled 4 separate findings (cohort heterogeneity OR table, Reddit Finance sign-flip, per-event topic restructuring, per-author longitudinal infeasibility). Reviewer asks "what is this paper about?" The Reddit Finance same-scorer OR=0.18 → cross-scorer OR=1.10-1.42 sign-flip is the single most novel finding in the entire project — a sharp empirical demonstration of measurement instability in cohort-stratified online discourse research.
+
+**New focused headline:** Reddit Finance cross-scorer OR sign-flip (n=999) as a construct-misalignment exemplar. Other 4 cohorts (SDN-Medical, Reddit r/PSLF, Reddit r/StudentLoans, Reddit Medical) demoted to supporting context table — they confirm the finding is cohort-conditional, not universal.
+
+**Demoted to supplements (still in paper but in supplements, not main text):** Per-event topic restructuring (8 events × 5 cohorts); per-author longitudinal infeasibility methodology finding.
+
+**Boost effort:** ~1 week of reframing (rewrite Abstract + §1 Introduction + §5 Results to focus on Reddit Finance finding; move multi-cohort table to §3 Supporting Evidence; move per-event + per-author to supplements). **No new data needed.**
+
+**Optional supplements** (per `DATA_ACQUISITION_PLAN_R17pp6.md`): cross-scorer combinations beyond TextBlob/VADER/Claude (e.g., Llama × VADER, DeepSeek × TextBlob) — ~1 day of additional analysis on already-scored CSVs. Skip unless reviewers request.
+
+**Realistic acceptance:** *Political Analysis* ~15-20%; *Sociological Methods & Research* ~15-25%; JCSS ~30-38% (backup); PLOS One ~50% (fallback). The venue prestige delta (PA vs JCSS) is enormous — if PA accepts, this is a CSS-methods career-defining citation.
+
+---
+
+# Original outline below — to be focused per R17++ #6 strip during drafting
+
+**Status (LEGACY R17++ #5):** READY TO DRAFT (post-scale numbers locked; comments-scale numbers refresh after Step 2 of post-comments chain)
+**Target (LEGACY R17++ #5):** Journal of Computational Social Science (JCSS, primary) / PLOS One (secondary)
 **Length:** 5,000–7,000 words + supplements
-**Working title:** *Cohort-Conditional Sentiment-Stance Coupling in Online Policy Discourse: Evidence from Public Service Loan Forgiveness Communities, with Construct-Validity Diagnostics*
+**Working title (LEGACY):** *Cohort-Conditional Sentiment-Stance Coupling in Online Policy Discourse: Evidence from Public Service Loan Forgiveness Communities, with Construct-Validity Diagnostics*
 
 ---
 

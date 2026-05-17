@@ -1,10 +1,38 @@
-# Paper 5 Draft-Ready Template — Surgical-subspecialty PSLF comparison (R17++ #5 reframe)
+# Paper 5 Draft-Ready Template — Surgical-subspecialty PSLF comparison (R17++ #6 revised venue + geographic boost)
 
-**Status:** Ready to draft (data feasibility verified 2026-05-17 for both NS-only and surgical-subspecialty comparison framings; **reframed from NS-only descriptive to surgical-subspecialty comparison after rigorous validity review** — see PROJECT_INDEX.md R17++ #5 audit history row)
-**Target venue (primary):** *JAMA Surgery* (cross-surgical-subspecialty scope fits the venue)
-**Target venue (secondary):** *Annals of Surgery* (broader surgical audience)
-**Target venue (tertiary):** *Neurosurgery* (Wolters Kluwer; if framed with NS as primary subspecialty)
-**Target venue (backup):** *World Neurosurgery* / *Journal of Surgical Education*
+**Status:** Ready to draft; **R17++ #6 boost: ADD GEOGRAPHIC + WORKFORCE-POLICY CONTEXT (HRSA HPSA + USDA RUCA + state Medicaid)** + revised venue target
+**Target venue (R17++ #6 revised primary):** ***Neurosurgery* (Wolters Kluwer)** — flagship NS journal; has Health Policy section; realistic ~30-40% acceptance with NS as lead subspecialty
+**Target venue (R17++ #6 secondary):** ***World Neurosurgery*** (~40-50% acceptance backup)
+**Target venue (R17++ #6 reach):** *JAMA Surgery* (~15-25% if attempted as primary — too ambitious as primary but acceptable as reach for one attempt)
+**Length:** 2,000-2,500 words (short report)
+**Working title:** *Public Service Loan Forgiveness Eligibility Across US Surgical Subspecialty Residency Programs, 2021–2026: Institutional Concentration of Hostile Programs at HCA Healthcare-Affiliated Facilities* (with subtitle "Geographic and Workforce-Policy Context" added if Option C boost is applied)
+
+## R17++ #6 BOOST STRATEGY (added 2026-05-17 final)
+
+**Why revise:** R17++ #5 targeted *JAMA Surgery* primary which was too ambitious for a non-causal descriptive paper. *JAMA Surgery* desk-rejects 60-70% of submissions; without a strong clinical implication, the HCA-concentration finding is interesting but not enough. Boost strategy: (a) downgrade primary to *Neurosurgery* (Wolters Kluwer) for realistic acceptance + NS-match strategic visibility; (b) add geographic + workforce-policy analysis to strengthen the policy framing.
+
+**Boost: ADD GEOGRAPHIC ANALYSIS (~3-5 days; all free TIER 1 data per `DATA_ACQUISITION_PLAN_R17pp6.md`):**
+
+1. **HRSA Health Professional Shortage Area (HPSA) designation** — by county/state. Free CSV at https://data.hrsa.gov/topics/health-workforce/shortage-areas. ~1 day merge with institution geocoordinates. Are HCA-affiliated PSLF-hostile surgical programs concentrated in HPSAs or non-HPSAs?
+2. **USDA Rural-Urban Commuting Area (RUCA) codes** — county-level urbanicity. Free at https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/. ~1 day. Where geographically are the HCA-Kansas-City-style multi-subspecialty concentrations?
+3. **KFF Medicaid Expansion Status tracker** — state-level health-policy variable. Free at https://www.kff.org/medicaid/. ~0.5 day. Are PSLF-hostile programs concentrated in non-Medicaid-expansion states?
+4. **U.S. Census Bureau county demographics** — socioeconomic context. Free Census API. ~1 day.
+
+**Total boost effort:** 3-5 days of data engineering + ~3 weeks of paper writing.
+
+**New section in paper:** §5.2 "Geographic and Workforce-Policy Context of PSLF-Hostile Surgical-Subspecialty Training" — maps HCA-Healthcare-affiliated institutions against HPSA, RUCA, and Medicaid-expansion-state variables. Strengthens the "for-profit chain consolidation of surgical training has workforce-policy implications" framing.
+
+**Realistic acceptance:** *Neurosurgery* (WK) primary ~30-40%; *World Neurosurgery* secondary ~40-50%; *JAMA Surgery* ~15-25% if attempted as reach. Combined "in print by ERAS" probability ~70-75%.
+
+---
+
+# Original outline below — to be expanded per R17++ #6 geographic boost during drafting
+
+**Status (LEGACY R17++ #5):** Ready to draft (data feasibility verified 2026-05-17 for both NS-only and surgical-subspecialty comparison framings; **reframed from NS-only descriptive to surgical-subspecialty comparison after rigorous validity review** — see PROJECT_INDEX.md R17++ #5 audit history row)
+**Target venue (LEGACY R17++ #5 primary):** *JAMA Surgery* (cross-surgical-subspecialty scope fits the venue)
+**Target venue (LEGACY R17++ #5 secondary):** *Annals of Surgery* (broader surgical audience)
+**Target venue (LEGACY R17++ #5 tertiary):** *Neurosurgery* (Wolters Kluwer; if framed with NS as primary subspecialty)
+**Target venue (LEGACY R17++ #5 backup):** *World Neurosurgery* / *Journal of Surgical Education*
 **Length:** 2,000-2,500 words (short report)
 **Working title:** *Public Service Loan Forgiveness Eligibility Across US Surgical Subspecialty Residency Programs, 2021–2026: Institutional Concentration of Hostile Programs at HCA Healthcare-Affiliated Facilities*
 

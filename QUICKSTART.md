@@ -4,24 +4,31 @@
 
 ## What is this project?
 
-**Six outputs + conference abstracts + NSLDS DUA pipeline — R17++ #5 restructure adapted to medical-student NS-match context** (MS3 ending → research year next → ERAS Sept 2027; neurosurgery match averages ~18 ERAS research items, top quartile 30-50):
+**Six outputs + conference abstracts + NSLDS DUA pipeline — R17++ #6 boost strategy with revised venue targets + new-data acquisition plan** (MS3 ending → research year next → ERAS Sept 2027; neurosurgery match averages ~18 ERAS research items, top quartile 30-50):
 
-| Paper | Venue | Status | Headline |
+| Paper | Venue (R17++ #6 revised) | Boost strategy | Status |
 |---|---|---|---|
-| **P1 Methods** | EPJ Data Science | Ready to draft | 3-LLM Krippendorff α = +0.7590 on n=1,001 above 0.667 floor; paraphrase α=+0.9011 replicated at n=399 (R17++ #3) |
-| **P2 Substantive** | JCSS (primary) / PLOS One (speed backup) | Ready to draft (post-level scope) | Cohort-conditional sentiment-stance coupling; Reddit Finance OR=0.18 cross-scorer sign-flip |
-| **P3 Policy** | JGME | Ready to draft NOW (shortest path; ~3-4 weeks) | PSLF-hostile cross-sectional fill-rate differential −18.07 pp (S1) at n=29,349; Trump-EO causal interpretation RETRACTED |
-| **P4 Data** | *Scientific Data* (Nature) | Ready to draft (~3 weeks) | 872-institution PSLF-eligibility classification 2021–2026; CV line + Nature-family title |
-| **P5 Surgical-subspecialty (R17++ #5 REFRAMED)** | *JAMA Surgery* primary / *Annals of Surg* / *Neurosurgery* / *World Neurosurgery* | Ready to draft (~3 weeks; feasibility verified) | **All 14 PSLF-hostile surgical-subspecialty programs are HCA Healthcare-affiliated**; HCA Kansas City hosts 5 different surgical residencies (NS+Plastics+ENT+Ortho+Surgery-General), all 100% fill — institutional concentration finding |
-| **P6 Post-EO sentiment (R17++ #5 NEW)** | *JMIR Formative Research* / *JAMIA Open* | Ready to scaffold (~3-4 weeks; OSF pre-reg first) | Interrupted time series of Reddit + SDN PSLF discourse sentiment around Trump EO 14235 + ED Final Rule; clean event-study design |
+| **P1 Methods** | **ICWSM '26 / CSCW '26 / *Information, Communication & Society*** primary; *Behavior Research Methods* secondary; EPJ DS as reach | **REFRAME headline to OP-vs-Reply directional split** (8/8 cohort directional disagreement; no precedent in lit search) — promoted from construct-boundary supporting evidence | Boost = ~1 week reframe; existing data sufficient |
+| **P2 Substantive** | ***Political Analysis*** primary; *Sociological Methods & Research* secondary; JCSS / PLOS One backup | **STRIP to Reddit Finance cross-scorer sign-flip** (OR=0.18 same-scorer → 1.10-1.42 cross-scorer) as construct-misalignment exemplar; demote other 4 cohorts to supporting evidence | Boost = ~1 week reframe; no new data |
+| **P3 Policy** | ***Health Affairs Scholar*** primary; *Academic Medicine* secondary; JGME backup | **METHODS TRANSLATION + WORKFORCE-DOWNSTREAM ADDITION**: link PSLF-hostile training programs to current practice locations via CMS NPPES (free) | Boost = ~3-4 weeks; NEW DATA: CMS NPPES NPI pull + matching pipeline |
+| **P4 Data** | *Scientific Data* (Nature) primary with broadened framing; **Data in Brief** firm fallback (~75% accept) | **BROADEN to "Comprehensive Residency Program Characterization Dataset 2021-2026"** combining PSLF + CMS + NIH + ACGME + VA + AAMC | Boost = ~2-3 weeks; NEW DATA: ACGME multi-year + NIH multi-year + VA designation |
+| **P5 Surgical-subspecialty** | ***Neurosurgery* (Wolters Kluwer)** primary; *World Neurosurgery* secondary; *JAMA Surgery* as reach | **ADD GEOGRAPHIC + WORKFORCE-POLICY ANALYSIS**: HRSA HPSA + USDA RUCA + state Medicaid expansion | Boost = ~3-5 days; NEW DATA: HRSA HPSA, USDA RUCA, KFF Medicaid tracker (all free) |
+| **P6 Post-EO sentiment** | ***PLOS One*** primary; *Cureus* high-accept backup; *JMIR Formative* as alternative | **MULTI-POLICY COMPARISON**: expand beyond PSLF-only to Biden v. Nebraska, SAVE litigation, payments restart for "discourse-as-policy-thermometer" framing | Boost = ~2 weeks; NEW DATA: additional Reddit r/StudentLoans Arctic Shift pull; CFPB Complaints DB optional |
 
-**Recommended drafting order: P3 → P4 → P5 → P6 → P1 → P2** (P3 shortest + highest substantive impact; P4 mints citable DOI; P5 strongest specialty-relevant comparison; P6 fast cycle independent venue; P1/P2 last with longer review cycles).
+**Recommended drafting order: P3 → P4 → P5 → P6 → P1 → P2** (unchanged). Boosts add ~6-8 weeks of marginal effort beyond baseline writing — fits within research year if PSLF time is 25-30% (after 70-75% on primary NS research).
 
-**Conference abstracts pipeline:** 5 concrete abstract submissions per `CONFERENCE_ABSTRACTS_PLAN.md` — AANS Annual Meeting **abstract deadline ~Oct 2026 = CRITICAL PATH**, CNS, CSNS, AAMC Health Workforce, AcademyHealth ARM. Realistic yield: **2-4 conference presentations on ERAS**.
+**Critical-path new data acquisition (full detail in `DATA_ACQUISITION_PLAN_R17pp6.md`):**
+- **CMS NPPES NPI pull + matching pipeline** (P3 workforce downstream) — longest single task, ~2 weeks; start early Sept 2026
+- **ACGME multi-year + NIH RePORTER multi-year + VA designation** (P4 broadening) — ~2-3 weeks
+- **HRSA HPSA + USDA RUCA + KFF Medicaid** (P5 geographic) — ~3-5 days
+- **Additional Reddit r/StudentLoans corpus** (P6 multi-policy) — ~1 week Arctic Shift pull
+- All TIER 1 acquisitions are free, public data. Total cost ~$0.
 
-**Long-horizon enabler:** `NSLDS_DUA_APPLICATION_CHECKLIST.md` — start the Data User Agreement application NOW (6-12 month review). Enables PGY-1 follow-up paper with borrower-level federal student loan data (target *Health Affairs* / *JAMA* / *NEJM Catalyst*; ~50-200 citations over 5 years; supports post-match academic-medicine career).
+**Conference abstracts pipeline:** 5 concrete abstract submissions per `CONFERENCE_ABSTRACTS_PLAN.md` — AANS Annual Meeting **abstract deadline ~Oct 2026 = CRITICAL PATH**, CNS, CSNS, AAMC Health Workforce, AcademyHealth ARM.
 
-**Honest realistic ERAS yield (R17++ #5 corrected):** ~2-2.5 papers in print + ~3 conference presentations = **~5-6 research items from this project**. NS match average is ~18; this project contributes ~28-33%. The rest comes from research-year primary NS work + clerkship-era case reports + other side projects.
+**Long-horizon enabler:** `NSLDS_DUA_APPLICATION_CHECKLIST.md` — start Data User Agreement application NOW (6-12 month review). Enables PGY-1 follow-up paper with borrower-level federal student loan data (target *Health Affairs* / *JAMA* / *NEJM Catalyst*).
+
+**Honest realistic ERAS yield (R17++ #6 revised with boost strategy):** **~3.8-4.5 papers in print + ~4 conference presentations = ~8-9 ERAS research items from this project** (up from R17++ #5's ~5-6). NS match average ~18 → project contributes ~45-50%. Boost strategy boosts via better-fit venues (rather than reach venues) + addition of new data sources.
 
 **Supplementary infrastructure:** PSLF-eligibility classification dataset deposited at Dryad/Zenodo with citable DOI, cited from P3 + P4 + P5 + P6 Methods. See `DATASET_DEPOSIT_PLAN.md`.
 

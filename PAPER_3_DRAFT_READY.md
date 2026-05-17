@@ -1,9 +1,32 @@
-# Paper 3 Draft-Ready Template (Path B, JGME target) — UPDATED 2026-05-10 (post-2026-NRMP)
+# Paper 3 Draft-Ready Template — REFRAMED R17++ #6 (Health Affairs Scholar target)
 
-**Status:** READY TO DRAFT NOW. Includes 2026 NRMP data (released March 2026). Per Round 16 audit (2026-05-10), the post-Trump-EO causal interpretation is NOT supported; reframed as multi-year trend documentation.
-**Target:** Journal of Graduate Medical Education (primary) / Academic Medicine (secondary)
+**Status:** READY TO DRAFT; **R17++ #6 boost: METHODS TRANSLATION + WORKFORCE-DOWNSTREAM ADDITION via CMS NPPES**
+**Target (R17++ #6 revised):** ***Health Affairs Scholar*** primary / ***Academic Medicine*** secondary / Journal of Graduate Medical Education (JGME) backup
+**Length:** 3,500–4,500 words + supplements (slightly longer to accommodate workforce-downstream section)
+**Working title (REFRAMED):** *Public Service Loan Forgiveness Eligibility, Residency Match Outcomes, and Downstream Physician Practice Patterns: A 2021–2026 Multi-Source Analysis of For-Profit Chain Residency Training in the United States*
+
+## R17++ #6 BOOST STRATEGY (added 2026-05-17 final)
+
+**Why elevate:** Original R17++ #5 plan targeted JGME with cross-sectional descriptive only. R17++ #5 rigorous review surfaced that JGME may struggle with the methods-heavy 28-specialty wild-cluster bootstrap, AND the descriptive nature limits policy-stakes claim. Boost strategy: translate methods for non-econometrician audience + ADD workforce-downstream analysis to convert from "institutional-level descriptive" to "institutional-level differential WITH downstream workforce implications" — better fit at *Health Affairs Scholar*.
+
+**Two-part boost:**
+
+1. **Methods translation (1 week)** — translate wild-cluster bootstrap + cluster-robust SE into JGME/HAS-readable language; add intuitive event-study-style figures; tone down methodological jargon. Doesn't change findings. Reduces reviewer methods barrier.
+
+2. **Workforce downstream addition (~2-3 weeks; new data acquisition)** — link PSLF-hostile training programs to physician practice locations via CMS NPPES. "Where do residents from for-profit chain residency programs practice after graduation?" Strengthens policy claim significantly. **New data: CMS NPPES NPI pull (free public API at https://npiregistry.cms.hhs.gov/api-page) + fuzzy matching pipeline to NRMP institutions + specialty + estimated graduation year.**
+
+**Per `DATA_ACQUISITION_PLAN_R17pp6.md`:** CMS NPPES is TIER 2 (free public data; significant data-engineering work). Total ~2 weeks of pipeline development + matching + analysis. **Fallback if matching proves too hard:** Drop the workforce-downstream boost; rely on methods translation alone for P3. Keeps JGME primary at current acceptance.
+
+**Realistic acceptance:** *Health Affairs Scholar* ~15-25%; *Academic Medicine* ~25-30%; JGME ~30-37% (backup with methods translation).
+
+---
+
+# Original outline below — to be expanded per R17++ #6 boost during drafting
+
+**Status (LEGACY R17++ #5):** READY TO DRAFT NOW. Includes 2026 NRMP data (released March 2026). Per Round 16 audit (2026-05-10), the post-Trump-EO causal interpretation is NOT supported; reframed as multi-year trend documentation.
+**Target (LEGACY R17++ #5):** Journal of Graduate Medical Education (primary) / Academic Medicine (secondary)
 **Length:** 3,000–4,000 words + supplements
-**Working title:** *Public Service Loan Forgiveness Eligibility Differential in Residency Match Outcomes: A Six-Year (2021–2026) Observational Study of NRMP Program-Level Data*
+**Working title (LEGACY):** *Public Service Loan Forgiveness Eligibility Differential in Residency Match Outcomes: A Six-Year (2021–2026) Observational Study of NRMP Program-Level Data*
 
 ---
 
