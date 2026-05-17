@@ -136,11 +136,12 @@ Same Claude Sonnet 4 model, same temperature=0, but THREE different system promp
 ## OP-vs-Reply directional mismatch (Round 17+ corrected)
 
 On the full ~500K-comment scale (n=21,453 OPs; 506,639 comments aggregated; mean 23.6 comments/post):
-- TextBlob Δ (OP − reply) = **−0.0146** (1-sample t-test on per-post mean differences; t=−15.10, p=2.8×10⁻⁵¹)
-- VADER Δ (OP − reply) = **+0.2387** (1-sample t-test on per-post mean differences; t=+60.40, p≈0)
+- TextBlob Δ (OP − reply) = **−0.0146** [cluster-bootstrap 95% CI **[−0.0164, −0.0127]**, B=2,000, boot p=0] (1-sample t-test on per-post mean differences also: t=−15.10, p=2.8×10⁻⁵¹)
+- VADER Δ (OP − reply) = **+0.2387** [cluster-bootstrap 95% CI **[+0.2306, +0.2460]**, B=2,000, boot p=0] (1-sample t-test: t=+60.40, p≈0)
+- **Cluster bootstrap re-run R17++ #6 RIGOROUS REVIEW 2026-05-17** with aligned 4-source OP loader on raw comments file with on-the-fly VADER computation: exactly matches t-test sample (n=21,453 OPs / 506,639 comments); REPLACES prior R17++ #2 CIs from a different n=14,153 `_with_vader` subset.
 - **Same direction in 8 of 8 cohorts** (TB always negative, VADER always positive)
 - VADER significant in 8/8 cohorts; TextBlob significant in 6/8 cohorts (per-cohort tests in `op_reply_per_event_results.txt`)
-- **Magnitude framing**: VADER's |Δ|=0.2387 is ~16× TextBlob's |Δ|=0.0146. The directional split is the headline; the magnitude split is a corollary.
+- **Magnitude framing**: VADER's |Δ|=0.2387 is **16.4× TextBlob's |Δ|=0.0146** (cluster-bootstrap-verified at n=21,453; R17++ #6 review corrected prior wrong 20.5× ratio from n=14,153 subset). The directional split is the headline; the magnitude split is a corollary.
 
 **Inferential caveat (Round 17+ audit):** the headline numbers above use a 1-sample t-test on per-post mean differences (one observation per post, after aggregating comment polarities to a per-post mean). This treats each post as iid. A more conservative cluster-bootstrap on (post, comment) pairs would be desirable for headline inference and is on the to-do list for the published version. The per-event analysis in `op_reply_per_event_results.txt` does use B=1000 cluster bootstrap; the headline overall-corpus number does not. **CIs were previously reported in this document as "[−0.019, −0.014]" and "[+0.212, +0.230]" with "cluster-bootstrap p≈0" labelling — those CIs and the cluster-bootstrap label were Round 17+ audit-flagged as non-canonical** (no script in the project produces them); they have been replaced above with the actual t-statistic + parametric p from the producing script `analyze_op_vs_reply.py:159-161`.
 
@@ -152,7 +153,7 @@ This is the cleanest within-construct mismatch: a single measurement target (Δ 
 
 The TextBlob × VADER disagreement REPLICATES at 50× scale on Reddit comments:
 - TB×VADER α (posts, n=9,242) = +0.34
-- TB×VADER α (comments, n=519,401 with valid scoring; 528,051 collected) = **+0.2892** [cluster-bootstrap 95% CI +0.287, +0.292]
+- TB×VADER α (comments, n=519,342 with valid scoring; 528,051 collected) = **+0.2892** [cluster-bootstrap 95% CI +0.287, +0.292]
 - Design effect ≈ 1.36 (cluster-adjusted)
 
 The lexical-instrument construct mismatch is not an artifact of the post-level n; it holds at half-million-row scale within the same project ecosystem.

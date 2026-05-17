@@ -60,7 +60,7 @@ git pull && git status
 
 4. **5-instrument intersection n=1,001** (Reddit 701 + SDN 300) is the P1 canonical sample. Claude Sonnet 4 + Llama 3.3 70B Instruct Turbo (via Together AI) + DeepSeek V3.1 (via Together AI) + TextBlob + VADER. Together AI infrastructure caveat: 2/3 LLMs share serving.
 
-5. **OP-vs-Reply cluster-bootstrap CIs are computed** (`paper1_op_vs_reply_cluster_bootstrap_results.txt`) — REPLACES the fabricated CIs in earlier drafts. TB: [−0.013, −0.008] boot p=0; VADER: [+0.205, +0.224] boot p=0; magnitude ratio 20.5×.
+5. **OP-vs-Reply cluster-bootstrap CIs are computed** (`paper1_op_vs_reply_cluster_bootstrap_results.txt`) — REPLACES the fabricated CIs in earlier drafts. TB: [−0.0164, −0.0127] boot p=0; VADER: [+0.2306, +0.2460] boot p=0; magnitude ratio 16.4× (R17++ #6 RIGOROUS REVIEW corrected: prior n=14,153 was wrong sample; new n=21,453 matches t-test exactly).
 
 6. **Paper 2 scope = POST-LEVEL only** (R17 Option A). Comments-scale (n=519K) used only for P1 cross-citation (TB×VADER convergent-validity replication) + Supplement S5 descriptive.
 

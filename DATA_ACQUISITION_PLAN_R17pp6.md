@@ -29,7 +29,7 @@
 
 ### P1 — OP-vs-Reply reframe (TIER 1; ~1-2 days)
 
-**Current data state:** OP-vs-Reply directional finding is locked at the 519K-comment scale (TextBlob Δ negative, VADER Δ positive in 8/8 cohorts; magnitude split 20.5×). The cluster-bootstrap CIs were computed in R17++ #2 commit `b3d38da`.
+**Current data state:** OP-vs-Reply directional finding is locked at the 519K-comment scale (TextBlob Δ=−0.0146 [−0.0164, −0.0127], VADER Δ=+0.2387 [+0.2306, +0.2460] in 8/8 cohorts; magnitude split 16.4×; n=21,453 OPs with both polarity and ≥1 comment). The cluster-bootstrap CIs were re-run in R17++ #6 RIGOROUS REVIEW (with aligned 4-source loader to match t-test sample exactly); prior R17++ #2 CIs used a different n=14,153 subset and have been superseded.
 
 **Optional supplements to strengthen for ICWSM/CSCW '26:**
 

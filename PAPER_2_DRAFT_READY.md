@@ -78,7 +78,7 @@ The closest precedent for distinguishing sentiment and stance in policy discours
 
 [INSERT BLOCK J from MASTER_DRAFTING_KIT.md (construct-misalignment framing replacing CMV)] (~120 words)
 
-We document one community (Reddit Finance) where construct-misalignment effects produce a sign disagreement: same-scorer says decoupling; cross-scorer estimates are noisy with CIs spanning 1.0. One community (SDN-Medical) shows fully cross-instrument-concordant decoupling. One community (Reddit r/PSLF) shows coupling under 4 of 5 operationalizations.
+We document one community (Reddit Finance) where construct-misalignment effects produce a sign disagreement: 3 of 5 specs return OR<1 (decoupling), but the 2 cross-scorer LEXICAL specs (TB×Claude OR=1.10 [0.33, 3.66]; VADER×Claude OR=1.42 [0.72, 2.82]) flip to OR>1 with CIs spanning 1.0. One community (SDN-Medical) shows fully cross-instrument-concordant decoupling (5/5 specs OR<1, all CIs below 1.0). One community (Reddit r/PSLF) shows coupling under 4 of 5 operationalizations; the fifth spec (Claude-neg × Claude-pur-or-completed) returns OR=0.194 with CI [0.04, **1.01**] — direction-discordant but underpowered to discriminate at α=0.05.
 
 ## 1.3 Per-author longitudinal panel infeasibility
 
@@ -244,7 +244,9 @@ For events meeting the n≥10 threshold: compute Δ rejecting-rate within-person
 | Reddit r/PSLF | 1,469 | 87.1% | 97.1% | **+10.0 pp** (coupling) |
 | SDN-Medical | 1,960 | 78.9% | 62.4% | **−16.5 pp** (decoupling) |
 | Reddit Finance | 999 | 91.4% | 73.8% | **−17.6 pp** (decoupling, same-scorer only) |
-| Reddit Medical | 565 | 91.2% | 89.7% | −1.4 pp (null) |
+| Reddit Medical | 566 | 91.2% | 89.7% | −1.4 pp (null) |
+
+*Note (R17++ #6 review): Reddit Medical n varies across analysis tables (n=566 in the cohort heterogeneity OR table; n=398 in `l5_cohort_robustness_results.txt`). The discrepancy reflects the L5 robustness script's additional filter on `pslf_stance != "unknown"` which removes 168 posts where Claude's stance classification returned "unknown". Both n values are correct for their respective analyses; the cohort OR uses the larger sample (no stance-unknown filter); the L5 robustness uses the smaller sample (which is required for the cross-scorer comparison that hinges on Claude stance).*
 | Reddit Teaching | 270 | 86.7% | 89.5% | +2.8 pp (null) |
 | Other | 1,681 | 90.9% | 89.0% | −1.9 pp (null) |
 
@@ -257,8 +259,8 @@ For events meeting the n≥10 threshold: compute Δ rejecting-rate within-person
 | Cohort | n | Same-scorer (Claude×Claude) | TB-neg×Claude-pur | VADER-neg×Claude-pur | Concordant direction across all 5? |
 |---|---|---|---|---|---|
 | **SDN-Medical** | 1,960 | OR=0.272 | OR=0.147 | OR=0.334 | **YES (5/5 specs OR<1) — fully cross-instrument concordant decoupling** |
-| Reddit r/PSLF | 1,469 | OR=7.329 | OR=1.655 | OR=2.526 | **NO (4/5 OR>1, 1/5 spec [pur-or-completed] flips to OR=0.194)** |
-| Reddit Finance | 999 | OR=0.182 | OR=1.103 | OR=1.423 | **NO (cross-scorer CIs span 1.0; construct-misalignment exemplar)** |
+| Reddit r/PSLF | 1,469 | OR=7.329 | OR=1.655 | OR=2.526 | **NO (4/5 OR>1, 1/5 spec [pur-or-completed] flips to OR=0.194 — CI [0.04, 1.01] is underpowered to discriminate)** |
+| Reddit Finance | 999 | OR=0.182 | OR=1.103 | OR=1.423 | **NO (3/5 OR<1, 2/5 cross-scorer LEXICAL specs flip with CIs spanning 1.0; construct-misalignment exemplar)** |
 | Reddit r/StudentLoans | 969 | OR=1.411 | OR=2.495 | OR=0.990 | NO (3 OR>1, 2 OR<1) |
 | Reddit Medical | 566 | OR=0.726 | OR=1.191 | OR=0.841 | NO (2 OR>1, 3 OR<1) |
 
@@ -285,7 +287,7 @@ The Reddit Finance OR shows the cleanest cross-instrument sign disagreement in o
 
 **Round 17+ audit correction: a prior version of this section ("Option A") incorrectly claimed comments-scale evidence was uninformative because the Trump-EO event failed to replicate cohort heterogeneity. The Trump-EO failure is real, but it is the EXCEPTION at comments scale, not the pattern. The other 7 events DO show cross-cohort direction split at comments scale — i.e., the post-level cohort heterogeneity headline largely REPLICATES.** This section is revised accordingly.
 
-The cohort heterogeneity headline (post-level §5.1, §5.2) replicates at comments scale on **7 of 8 events**, with the Trump PSLF EO as the documented exception. The comments corpus (n=528,051 collected; 519,401 with valid TB+VADER scoring; 14,378 with stratified Claude stance scoring) supports the following:
+The cohort heterogeneity headline (post-level §5.1, §5.2) replicates at comments scale on **7 of 8 events**, with the Trump PSLF EO as the documented exception. The comments corpus (n=528,051 collected; 519,342 with valid TB+VADER scoring; 14,378 with stratified Claude stance scoring) supports the following:
 
 | Event | Comments-scale cross-cohort pattern | Concordant with post-scale heterogeneity? |
 |---|---|---|
@@ -344,7 +346,7 @@ Five communities, three patterns:
 - **Coupling-under-most pattern** (Reddit r/PSLF): negative sentiment co-occurs with continued pursuing in 4 of 5 specifications
 - **Decoupling-fully-concordant pattern** (SDN-Medical): negative sentiment co-occurs with rejecting across all 5 specifications
 - **Null pattern** (StudentLoans, Medical, Teaching): sentiment and stance are essentially independent
-- **Construct-misalignment pattern** (Reddit Finance): same-scorer says decoupling, cross-scorer estimates noisy with CIs spanning 1.0
+- **Construct-misalignment pattern** (Reddit Finance): 3 of 5 specs return decoupling (OR<1), 2 of 5 cross-scorer LEXICAL specs (TB×Claude, VADER×Claude) flip to OR>1 with CIs spanning 1.0 — diagnostic of construct misalignment between LLM-class and lexical-class sentiment instruments at cohort level
 
 ## 6.2 Cohort heterogeneity matters for "online sentiment as policy signal"
 

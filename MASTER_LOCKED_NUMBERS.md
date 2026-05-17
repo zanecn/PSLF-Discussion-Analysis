@@ -106,8 +106,9 @@ Full-scale analysis: n=21,453 OPs, 506,639 comments aggregated, mean 23.6 commen
 
 | Quantity | Value |
 |---|---|
-| **TextBlob Δ (OP − reply) overall** | **−0.0146** (t=−15.10, p=2.8×10⁻⁵¹) |
-| **VADER Δ (OP − reply) overall** | **+0.2387** (t=60.40, p≈0) |
+| **TextBlob Δ (OP − reply) overall** | **−0.0146** (n=21,453; t=−15.10, p=2.8×10⁻⁵¹; **cluster-bootstrap CI [−0.0164, −0.0127], B=2,000, boot p=0; R17++ #6 RIGOROUS REVIEW re-run 2026-05-17 with aligned 4-source loader for exact t-test parity**) |
+| **VADER Δ (OP − reply) overall** | **+0.2387** (n=21,453; t=60.40, p≈0; **cluster-bootstrap CI [+0.2306, +0.2460], B=2,000, boot p=0**) |
+| **Magnitude ratio |VADER|/|TB|** | **16.4×** (R17++ #6 correction; prior wrong value 20.5× was from a different n=14,153 `_with_vader` subset) |
 | Mean OP polarity | +0.0751 |
 | Mean reply polarity | +0.0897 |
 | Mean OP VADER | +0.5206 |

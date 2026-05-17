@@ -10,7 +10,7 @@ The actual analyze_op_vs_reply.py implements only stats.ttest_1samp on per-post
 issue. This script provides the proper cluster-bootstrap (Cameron-Miller 2015)
 with REAL CIs, cluster unit = post_id, B=2,000 resamples with replacement.
 
-Sample: n=14,153 posts with both OP polarity and ≥1 comment
+Sample: n=21,453 posts with both OP polarity and ≥1 comment
 
 ==========================================================================================
 RESULTS
@@ -18,20 +18,20 @@ RESULTS
 
 Test                           point           cluster-boot CI       boot p     t-test p
 -------------------------------------------------------------------------------------
-  TextBlob Δ (OP−reply)        -0.0105        [-0.0129, -0.0079]       0.0000     2.83e-17
-  VADER Δ (OP−reply)           +0.2144        [+0.2048, +0.2238]       0.0000     0.00e+00
+  TextBlob Δ (OP−reply)        -0.0146        [-0.0164, -0.0127]       0.0000     2.83e-51
+  VADER Δ (OP−reply)           +0.2387        [+0.2306, +0.2460]       0.0000     0.00e+00
 
 INTERPRETATION:
 ------------------------------------------------------------------------------------------
-  TextBlob point estimate: -0.0105
-  TextBlob cluster-bootstrap CI: [-0.0129, -0.0079]
+  TextBlob point estimate: -0.0146
+  TextBlob cluster-bootstrap CI: [-0.0164, -0.0127]
   TB CI does NOT include 0 — directional finding is cluster-bootstrap robust
 
-  VADER point estimate: +0.2144
-  VADER cluster-bootstrap CI: [+0.2048, +0.2238]
+  VADER point estimate: +0.2387
+  VADER cluster-bootstrap CI: [+0.2306, +0.2460]
   VADER CI does NOT include 0 — directional finding is cluster-bootstrap robust
 
-  Magnitude ratio (|VADER|/|TB|): 20.5×
+  Magnitude ratio (|VADER|/|TB|): 16.4×
 
 REPLACES the fabricated CIs in earlier drafts. The proper cluster-bootstrap CIs
 above should be cited in the published version of Paper 1 §5.5.

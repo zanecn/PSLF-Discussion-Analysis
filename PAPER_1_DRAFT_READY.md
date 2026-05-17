@@ -7,7 +7,7 @@
 
 ## R17++ #6 BOOST STRATEGY (added 2026-05-17 final)
 
-**Why reframe:** Original 3-LLM convergence headline (α=+0.7590 on n=1,001) was incremental in an over-crowded LLM-as-coder space (Gilardi 2023, Bisbee 2024, Burnham 2025, Halterman 2025, Heseltine 2024, Bojić 2025, Ziems 2024). The OP-vs-Reply directional split (TextBlob Δ negative, VADER Δ positive in 8/8 cohorts; magnitude split 20.5×; cluster-bootstrap CIs from R17++ #2) is genuinely novel — own lit search confirmed no precedent.
+**Why reframe:** Original 3-LLM convergence headline (α=+0.7590 on n=1,001) was incremental in an over-crowded LLM-as-coder space (Gilardi 2023, Bisbee 2024, Burnham 2025, Halterman 2025, Heseltine 2024, Bojić 2025, Ziems 2024). The OP-vs-Reply directional split (TextBlob Δ=−0.0146 [−0.0164, −0.0127], VADER Δ=+0.2387 [+0.2306, +0.2460] in 8/8 cohorts on n=21,453 OPs/506,639 comments; cluster bootstrap B=2,000; magnitude split 16.4×; **R17++ #6 RIGOROUS REVIEW** re-ran cluster bootstrap with aligned 4-source loader to exactly match t-test sample) is genuinely novel — own lit search confirmed no precedent.
 
 **New headline:** Directional disagreement between TextBlob and VADER on identical OP-vs-Reply contrasts in 8 of 8 PSLF cohorts on 21,453 posts + 506,639 comments. This is a conversation-dynamics finding wrapped inside a methods paper — better fit at ICWSM/CSCW/IC&S than at EPJ DS.
 
@@ -258,7 +258,7 @@ The TB×VADER convergent-validity failure replicates at half-million-row scale o
 | Posts (5-instrument intersection) | 1,001 | +0.112 (table 1, FIXED) | — |
 | Posts (5-instrument intersection, qcut) | 1,001 | +0.234 (table 1, qcut) | — |
 | Posts (full PSLF post-level corpus) | 9,242 | +0.34 | (Round 8 baseline) |
-| **Comments (Arctic Shift collector, fully scored)** | **519,401** | **+0.2892** | **[+0.287, +0.292]** (cluster bootstrap, design effect 1.36) |
+| **Comments (Arctic Shift collector, fully scored)** | **519,342** | **+0.2892** | **[+0.287, +0.292]** (cluster bootstrap, design effect 1.36) |
 
 **Interpretation (~80 words):** The two-instrument lexical-class agreement is α≈0.29-0.34 across orders of magnitude in n (1K → 9K → 519K). The TB×VADER convergent-validity failure is structural to the construct measured by these two lexicons, not a small-sample artifact. The 519K-comment scale is also large enough to give cluster-bootstrap CI half-widths < 0.005 around the point estimate, which is far below any plausible reliability threshold (0.667 / 0.80) we would care about.
 

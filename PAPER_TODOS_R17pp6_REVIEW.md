@@ -27,7 +27,7 @@
 
 ## P0 BLOCKERS (must fix before any submission)
 
-1. **[P0]** **Resolve OP-vs-Reply sample-size discrepancy.** The outline pairs n=21,453 t-test point estimates (TB=−0.0146 / VADER=+0.2387) with CIs from a DIFFERENT n=14,153 cluster-bootstrap sample. Fix: modify `scripts/run_op_vs_reply_cluster_bootstrap.py` to load the same multi-source OP set as `scripts/analyze_op_vs_reply.py` (currently loads only Arctic Shift + Reddit comments; should load Arctic Shift + reddit_professions_pslf + comprehensive_medical/teacher_pslf_discussions for n=21,453 match). Re-run; update locked doc + outline §5.5 + abstract. Effort: 30 min code + 10 min run.
+1. **[P0]** **✅ RESOLVED 2026-05-17 (R17++ #6 RIGOROUS REVIEW)**. Cluster bootstrap re-run with aligned 4-source OP loader + raw comments file + on-the-fly VADER. **NEW EXACT MATCH n=21,453**: TB Δ=−0.0146 cluster-bootstrap CI [−0.0164, −0.0127] boot p=0 (matches t-test t=−15.10 p=2.83e−51 exactly); VADER Δ=+0.2387 CI [+0.2306, +0.2460] boot p=0; magnitude ratio 16.4× (vs prior wrong 20.5× from n=14,153 subset). All P1/locked/data-acquisition docs updated.
 2. **[P0]** **Verify Park & Conway 2017 JMIR citation** is real. Memory note says it was excised in R17++ audit; outline still cites it at §1.4 and §250. WebSearch DOI 10.2196/jmir.6826 to confirm. Remove if fabricated. Effort: 15 min.
 3. **[P0]** **Reconcile n=519,401 vs n=519,342** for comments TB×VADER analysis across MASTER_LOCKED_NUMBERS.md (line 105: 519,342) vs outline §5.5b (519,401). Pick one canonical, propagate. Effort: 30 min.
 

@@ -41,48 +41,89 @@ PROJECT = Path("C:/Users/zanen/PSLF_2026/PSLF-Discussion-Analysis")
 
 
 def load_op_and_comments():
-    """Load OP polarity (per post) + comment polarity (per comment), aligned."""
-    # OPs (posts with sentiment + post_id) from the master Arctic Shift + SDN combo
-    # Use the same logic as analyze_op_vs_reply.py
-    # We need: post_id, polarity, vader_compound for OPs
-    # And: post_id, polarity, vader_compound for comments (one row per comment)
+    """Load OP polarity + comment polarity, aligned.
 
-    # OPs source: combine reddit_arctic_shift_pslf with VADER + TextBlob
-    # If the VADER-enriched file exists, use it. Otherwise fall back.
-    op_files = [
-        "reddit_arctic_shift_pslf.csv",
-        "reddit_arctic_shift_pslf_with_vader.csv",
-    ]
-    # We want the version with both polarity (TextBlob) and vader_compound
-    for f in op_files:
+    R17++ #6 REVIEW FIX (2026-05-17): align with `analyze_op_vs_reply.py`
+    which uses 4 OP sources: reddit_professions_pslf.csv +
+    comprehensive_medical_pslf_discussions.csv + comprehensive_teacher_pslf_discussions.csv +
+    reddit_arctic_shift_pslf.csv. Previously this script loaded only
+    reddit_arctic_shift_pslf.csv, producing n=14,153 vs the n=21,453 that
+    the t-test analysis uses — same-finding-different-sample integrity
+    issue flagged by R17++ #6 review agent.
+    """
+    import numpy as np
+    op_frames = []
+    for f in ["reddit_professions_pslf.csv",
+              "comprehensive_medical_pslf_discussions.csv",
+              "comprehensive_teacher_pslf_discussions.csv",
+              "reddit_arctic_shift_pslf.csv"]:
         path = PROJECT / f
-        if path.exists():
-            df = pd.read_csv(path, low_memory=False)
-            # Arctic Shift CSV uses "id" not "post_id"
-            id_col = "post_id" if "post_id" in df.columns else "id"
-            if id_col in df.columns and "polarity" in df.columns and ("vader_compound" in df.columns or "vader" in df.columns):
-                if "vader" in df.columns and "vader_compound" not in df.columns:
-                    df = df.rename(columns={"vader": "vader_compound"})
-                ops = df[[id_col, "polarity", "vader_compound"]].dropna(subset=[id_col]).copy()
-                if id_col != "post_id":
-                    ops = ops.rename(columns={id_col: "post_id"})
-                print(f"Loaded OPs from {f}: {len(ops):,}")
-                break
-    else:
-        # Fallback: read TextBlob + VADER separately
-        print("Trying fallback OP load...")
+        if not path.exists():
+            print(f"  Skipping (not found): {f}")
+            continue
+        d = pd.read_csv(path, low_memory=False)
+        id_col = "post_id" if "post_id" in d.columns else "id"
+        if id_col not in d.columns:
+            print(f"  Skipping (no id col): {f}")
+            continue
+        if id_col != "post_id":
+            d = d.rename(columns={id_col: "post_id"})
+        # Need polarity (TextBlob) and vader_compound
+        if "polarity" not in d.columns:
+            print(f"  Skipping (no polarity): {f}")
+            continue
+        if "vader_compound" not in d.columns:
+            if "vader" in d.columns:
+                d = d.rename(columns={"vader": "vader_compound"})
+            else:
+                d["vader_compound"] = np.nan
+        if "word_count" not in d.columns:
+            d["word_count"] = 100  # default to non-filter
+        op_frames.append(d[["post_id", "polarity", "vader_compound", "word_count"]])
+        print(f"  Loaded {f}: {len(d):,} rows")
+
+    if not op_frames:
         return None, None
 
-    # Comments source
-    cm_path = PROJECT / "reddit_comments_pslf_with_vader.csv"
+    ops = pd.concat(op_frames, ignore_index=True).drop_duplicates("post_id")
+    ops["post_id"] = ops["post_id"].astype(str)
+    ops = ops.dropna(subset=["polarity"])
+    # Apply same wc>=20 filter as analyze_op_vs_reply.py
+    ops = ops[ops["word_count"].fillna(0) >= 20]
+    ops = ops[["post_id", "polarity", "vader_compound"]].reset_index(drop=True)
+    print(f"  Total unique OPs (wc>=20): {len(ops):,}")
+
+    # R17++ #6 REVIEW FIX: load the RAW comments file (not _with_vader subset) to
+    # match the analyze_op_vs_reply.py t-test which uses reddit_comments_pslf.csv
+    # then applies polarity-non-NA + word_count >= 5 filters and computes VADER on-the-fly.
+    cm_path = PROJECT / "reddit_comments_pslf.csv"
     if not cm_path.exists():
-        print("Comments CSV not found; cannot run cluster bootstrap.")
-        return ops, None
-    print(f"Loading comments from {cm_path.name} (~170 MB)...")
+        # fall back
+        cm_path = PROJECT / "reddit_comments_pslf_with_vader.csv"
+    print(f"Loading comments from {cm_path.name}...")
     cm = pd.read_csv(cm_path, low_memory=False)
-    # We need: post_id, polarity, vader_compound (one row per comment)
+    cm["post_id"] = cm["post_id"].astype(str)
+    # Apply same filters as analyze_op_vs_reply.py
+    cm = cm[cm["polarity"].notna()]
+    cm = cm[cm["word_count"].fillna(0) >= 5]
+    print(f"  Comments after polarity/wc>=5 filter: {len(cm):,}")
+    # Compute VADER if missing
+    if "vader_compound" not in cm.columns or cm["vader_compound"].isna().all():
+        print("  vader_compound missing — computing VADER on comments (~10 min for ~500K rows)...")
+        from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+        sia = SentimentIntensityAnalyzer()
+        bodies = cm["body"].fillna("").astype(str).tolist()
+        cv = np.empty(len(bodies), dtype=float)
+        for i, b in enumerate(bodies):
+            try:
+                cv[i] = sia.polarity_scores(b[:5000])["compound"] if b else np.nan
+            except Exception:
+                cv[i] = np.nan
+            if (i + 1) % 50000 == 0:
+                print(f"    {i+1:,}/{len(bodies):,}")
+        cm["vader_compound"] = cv
     cm = cm[["post_id", "polarity", "vader_compound"]].dropna(subset=["post_id"]).copy()
-    print(f"Loaded comments: {len(cm):,}")
+    print(f"  Loaded comments: {len(cm):,}")
     return ops, cm
 
 

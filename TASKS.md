@@ -1,38 +1,48 @@
 # PSLF Project Tasks
 
-**Last updated:** 2026-05-17 (R17++ #6 RIGOROUS REVIEW)
+**Last updated:** 2026-05-17 (R17++ #6 RIGOROUS REVIEW + AUTONOMOUS RESOLUTION PASS)
 **See:** `PAPER_TODOS_R17pp6_REVIEW.md` for detailed per-paper TODO list with priorities + effort estimates.
 
 ---
 
-## Active — P0 BLOCKERS (must fix before any submission)
+## ✅ RESOLVED IN AUTONOMOUS PASS (2026-05-17)
 
-Mechanical edits (~6 hours total) — do these FIRST:
+Mechanical + integrity P0 BLOCKERS now resolved:
 
-- [ ] **P1**: Resolve OP-vs-Reply sample discrepancy (n=21,453 t-test vs n=14,153 cluster bootstrap pair mismatch). File: `scripts/run_op_vs_reply_cluster_bootstrap.py`. 30 min code + 10 min run.
-- [ ] **P1**: Verify Park & Conway 2017 JMIR citation is real (WebSearch DOI 10.2196/jmir.6826). 15 min.
-- [ ] **P1**: Reconcile n=519,401 vs n=519,342 for comments TB×VADER across docs. 30 min.
-- [ ] **P2**: Investigate + document Reddit Medical n=566 vs n=398 discrepancy. 1 hour.
-- [ ] **P2**: Correct "4/5 coupling" → "4/5 coupling, 1/5 underpowered" for r/PSLF. 15 min.
-- [ ] **P2**: Reframe Reddit Finance "sign-flip" as "2 of 5 specs (cross-scorer LEXICAL) flip with wide CIs." 30 min.
-- [ ] **P4**: Re-run `verify_nrmp_pslf_eligibility.py` for 2026 institution list (close 83-institution gap). 2-4 hours.
-- [ ] **P5**: Correct "14 unique institutions" → "14 program-rows, 8 unique HCA institutions" throughout. 15 min.
-- [ ] **P5**: Correct "979 unique institutions" → "358 unique" in Methods. 5 min.
-- [ ] **P5**: Add Methods caveat that all-HCA result is conditional on surgical-subspec slice (2 non-HCA hostiles exist outside this slice). 30 min.
-- [ ] **P5**: REPLACE §3 implication #3 with honest Mann-Whitney p=0.84 NS result. 1 hour.
-- [ ] **P6**: Update outline timeline (2 weeks → 8-10 weeks). 5 min.
-- [ ] **P6**: Reframe headline from "discourse-as-thermometer" to defensible alternative. 1 hour.
+- [x] **P1**: ✅ OP-vs-Reply cluster bootstrap RE-RUN with aligned 4-source loader → exact n=21,453 t-test match; new CIs: TB Δ=−0.0146 [−0.0164, −0.0127], VADER Δ=+0.2387 [+0.2306, +0.2460]; magnitude ratio 16.4× (corrected from prior wrong 20.5×). Propagated to PAPER_1_DRAFT_READY, PAPER_1_LOCKED_RESULTS_FINAL, MASTER_LOCKED_NUMBERS, DATA_ACQUISITION_PLAN, QUICKSTART, Notion P1 sub-page.
+- [x] **P1**: ✅ Park & Conway 2017 JMIR 19(3):e71 VERIFIED via WebSearch (real paper, doi 10.2196/jmir.6826).
+- [x] **P1**: ✅ n=519,401 RECONCILED to canonical 519,342 across PAPER_1, PAPER_2, locked results, QUICKSTART (CLAUDE.md edit blocked by API-key classifier; deferred).
+- [x] **P2**: ✅ Reddit Medical n=566 vs n=398 INVESTIGATED + footnote added (n=398 = additional `pslf_stance != "unknown"` filter for cross-scorer specs).
+- [x] **P2**: ✅ "4/5 coupling" CORRECTED to "4/5 OR>1, 1/5 underpowered to discriminate (CI 0.04-1.01)".
+- [x] **P2**: ✅ Reddit Finance "sign-flip" REFRAMED to "3/5 OR<1, 2/5 cross-scorer LEXICAL specs flip with wide CIs spanning 1.0".
+- [x] **P5**: ✅ "14 unique institutions" CORRECTED to "14 program-rows from 8 unique HCA-affiliated institutions" throughout outline.
+- [x] **P5**: ✅ "979 unique institutions" CORRECTED to "358 unique (979 = sum-across-subspecs double-counts)" in Methods.
+- [x] **P5**: ✅ Methods caveat ADDED about non-HCA hostiles (North Oaks, Steward Carney) outside surgical-subspec slice.
+- [x] **P5**: ✅ §3 implication #3 REPLACED with honest Mann-Whitney result (p=0.84 NS at both program-year and institution levels; `scripts/run_p5_mann_whitney_surgery_general.py` + results saved).
+- [x] **P6**: ✅ Outline timeline corrected (2 weeks → 8-10 weeks).
+- [x] **P6**: ✅ Headline REFRAMED from "discourse-as-thermometer" (at risk of falsification) to "cohort-conditional sentiment dynamics around PSLF policy events".
+- [x] **P3**: ✅ Methods translation ADDED — plain-English wild-cluster bootstrap explanation + plain-English Trump-EO retraction summary inserted in §2.5 and §3.3.
+- [x] **P3**: ✅ Randomization inference SCRIPT WRITTEN (`scripts/run_randomization_inference_p3.py`) — permutation test for S2 small-cluster gray zone (G_treated=9). Script runs slowly (~50 min for B=2,000); first execution attempt running but no progress prints. **Re-run with `B=500` for faster proof-of-concept.**
+- [x] **P4**: ✅ HCA audit trail CSV created (`hca_academic_partnership_audit_trail.csv`, 14 institutions with primary-source URLs).
+- [x] **P4**: ✅ Field dictionary drafted (`nrmp_field_dictionary.md`, column-level documentation).
+- [x] **P4**: ✅ Dataset README drafted (`DATASET_README.md`, intended use + limitations + versioning).
+- [x] **P4**: ✅ CHANGELOG drafted (`CHANGELOG.md`, v1.0 release notes + R-cycle history).
+- [x] **P4**: ✅ SHA-256 checksums generated (`CHECKSUMS_SHA256.txt`, 14 files).
+- [x] **P6**: ✅ OSF pre-registration DRAFTED (`OSF_PREREGISTRATION_p6_post_eo.md`, 12 sections, 4 hypotheses, full pre-specified methodology). Ready for user filing at OSF.
+- [x] **Notion**: ✅ 3 NEW sub-pages created (P4 Data, P5 Surgical-subspecialty, P6 Post-EO sentiment) + 3 EXISTING sub-pages updated (P1, P2, P3) with R17++ #6 venues + per-paper TODOs.
 
-## Active — P0 LARGER BLOCKERS
+---
 
-- [ ] **P3 (HAS path)**: Pilot CMS NPPES match on 3-4 HCA institutions (1 week). Decide HAS vs JGME based on match rate.
-- [ ] **P3**: Add randomization inference for S2/S3 small-cluster gray zone (1 day).
-- [ ] **P3**: Translate methods to JGME/HAS-readable language + plain-English Trump-EO retraction paragraph (1 day).
-- [ ] **P4 (Sci Data path)**: Create `hca_academic_partnership_audit_trail.csv` with primary-source URLs (1 day).
-- [ ] **P4**: Draft `nrmp_field_dictionary.md` (0.5 day).
-- [ ] **P4**: Compute inter-source agreement rates (`[TO COMPUTE]` placeholder in outline; 2-3 days).
-- [ ] **P4**: Mint Dryad or Zenodo DOI + README + CHANGELOG + checksums (1 day).
-- [ ] **P6**: File OSF pre-registration BEFORE touching post-Final-Rule analytical data (1 week). Adapt `OSF_PREREGISTRATION_cross_domain.md`.
+## Remaining — defer to user execution
+
+These require external access (DUA application, API quota, OSF account, ProPublica API):
+
+- [ ] **P3**: Pilot CMS NPPES match on 3-4 HCA institutions (1 week). Decide HAS vs JGME based on match rate.
+- [ ] **P4**: Re-run `scripts/verify_nrmp_pslf_eligibility.py` against 2026 institution list (close 83-institution gap; needs ProPublica API access; 2-4 hours).
+- [ ] **P4**: Compute inter-source agreement rates (requires broadening data: ACGME multi-year + NIH multi-year). 2-3 days.
+- [ ] **P4**: Mint Dryad or Zenodo DOI (requires user external account; Zenodo recommended — free, fast).
+- [ ] **P6**: FILE OSF pre-registration at https://osf.io/registries/osf/new (use `OSF_PREREGISTRATION_p6_post_eo.md` as upload). **GATING BLOCK for any P6 analysis touch of post-Final-Rule data.**
+- [ ] **P3**: Re-run `scripts/run_randomization_inference_p3.py` with smaller B (e.g., B=500) for faster execution; current B=2,000 + 1500+ strata is slow.
 
 ## Active — P1 HIGH PRIORITY
 

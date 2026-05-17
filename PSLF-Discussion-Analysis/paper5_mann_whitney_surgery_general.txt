@@ -1,0 +1,50 @@
+======================================================================
+Paper 5 R17++ #6 RIGOROUS REVIEW: Mann-Whitney + numerical verification
+======================================================================
+
+Run: 2026-05-17 (R17++ #6 review fix)
+
+=== Surgery-General fill rate comparison ===
+PSLF-hostile rows: n=110 from 7 unique institutions
+PSLF-eligible rows: n=2087
+PSLF-ambiguous rows: n=1410
+Non-hostile (combined) rows: n=3497
+
+Hostile fill: mean=0.8058, median=1.0000, range=[0.0000, 1.0000]
+Eligible fill: mean=0.8139, median=1.0000
+Ambiguous fill: mean=0.8395, median=1.0000
+Non-hostile pooled fill: mean=0.8242, median=1.0000
+
+Mann-Whitney U (hostile vs PSLF-eligible, two-sided): U=117137.5, p=0.6414
+Mann-Whitney U (hostile vs ambiguous, two-sided): U=76836.5, p=0.8296
+Mann-Whitney U (hostile vs non-hostile pooled, two-sided): U=193974.0, p=0.8426
+Mann-Whitney U (hostile vs non-hostile, one-sided hostile<non-hostile): U=193974.0, p=0.5787
+Welch's t (hostile vs non-hostile pooled): t=-0.510, p=0.6111
+
+=== Institution-level test (each institution = 1 observation = mean fill across years) ===
+Hostile institutions n=7, mean=0.8321, median=0.8889
+Non-hostile institutions n=315, mean=0.8408, median=0.8571
+Mann-Whitney U (institution-level, two-sided): U=1054.5, p=0.8427
+Mann-Whitney U (institution-level, one-sided hostile<non-hostile): U=1054.5, p=0.4213
+Welch's t (institution-level): t=-0.139, p=0.8940
+
+=== VERDICT ===
+At program-year level, hostile vs non-hostile fill rate difference is NOT statistically significant (p=0.8426).
+Hostile mean (0.8058) is essentially identical to non-hostile mean (0.8242).
+The outline claim that 'PSLF eligibility may meaningfully affect Surgery-General recruitment' is UNSUPPORTED.
+Reframe: Surgery-General hostile programs show greater fill-rate variability than ultra-competitive subspecialties,
+but the central tendency does not differ from non-hostile Surgery-General programs.
+
+=== Numerical claim verification ===
+Outline claim 'all 14 PSLF-hostile surgical-subspecialty institutions': ACTUAL = 14 program-institution pairs from 8 unique institutions
+Outline claim '979 unique institutions across 7 subspecialties': ACTUAL = 358 unique (979 = sum across subspecialties, which double-counts)
+
+Unique hostile surgical-subspec institutions:
+  HCA Chippenham & Johnston-Willis Hosps: 1 subspec(s) = ['Surgery-General']
+  HCA Florida JFK Hosp-U Miami: 2 subspec(s) = ['Orthopaedic Surgery', 'Surgery-General']
+  HCA Healthcare Kansas City: 5 subspec(s) = ['Neurological Surgery', 'Orthopaedic Surgery', 'Otolaryngology', 'Plastic Surgery (Integrated)', 'Surgery-General']
+  HCA Healthcare/USF Morsani GME-Brandon: 1 subspec(s) = ['Surgery-General']
+  HCA Healthcare/USF Morsani GME-Largo: 1 subspec(s) = ['Orthopaedic Surgery']
+  HCA Healthcare/USF Morsani-Bayonet Pt: 1 subspec(s) = ['Surgery-General']
+  HCA Houston Healthcare/U Houston: 1 subspec(s) = ['Surgery-General']
+  HCA Medical City Healthcare: 2 subspec(s) = ['Orthopaedic Surgery', 'Surgery-General']

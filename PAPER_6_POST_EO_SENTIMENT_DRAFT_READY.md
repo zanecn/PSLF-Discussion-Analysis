@@ -11,7 +11,7 @@
 
 **Why revise:** R17++ #5 targeted *JMIR Formative Research* which was a scope mismatch (JMIR Formative publishes digital-health-intervention formative work, not policy-discourse analysis). Boost strategy: switch primary to PLOS One (better-fit broad-scope venue) + add multi-policy comparison to strengthen the "discourse-as-policy-thermometer" claim.
 
-**Boost: ADD MULTI-POLICY COMPARISON (~2 weeks; per `DATA_ACQUISITION_PLAN_R17pp6.md`):**
+**Boost: ADD MULTI-POLICY COMPARISON (~3-4 weeks of analysis + ~3-4 weeks of writing; total realistic timeline 8-10 weeks per R17++ #6 review — NOT 2 weeks as earlier outline iterations stated. Per agent review: ITS with autocorrelation correction, overlapping-events sensitivity, placebo test, OSF pre-registration are all non-trivial additions to the 2-week estimate. See `DATA_ACQUISITION_PLAN_R17pp6.md` for data acquisition + `PAPER_TODOS_R17pp6_REVIEW.md` for full P6 critical-path TODO list):**
 
 Add 3-4 additional student-loan policy events beyond Trump EO 14235 + ED Final Rule:
 1. **Biden v. Nebraska SCOTUS** (argument Feb 2023; ruling June 2023)
@@ -24,9 +24,9 @@ Add 3-4 additional student-loan policy events beyond Trump EO 14235 + ED Final R
 - **Event-window dictionary** — compile dates + descriptions for each event; ~0.5 day.
 - **Optional: CFPB Complaints Database** — public download with complaint counts by date/issue type; correlate sentiment shifts with complaint volume changes. ~2-3 days. Strengthens behavior connection.
 
-**Total boost effort:** ~2 weeks of data + analysis + writing.
+**Total boost effort:** 8-10 weeks of focused work (per R17++ #6 review correction; earlier "2 weeks" estimate was unrealistic by 4-5×). Breakdown: 1 week OSF pre-registration + 3-4 weeks analysis script + 3-4 weeks writing + revision cycle.
 
-**New framing:** "Online discourse as real-time policy thermometer" — compares discourse response to FIVE policy events of different magnitudes (SCOTUS ruling > new federal program > regulatory rule > administrative change). Shows that discourse sentiment shifts scale with policy magnitude in predictable ways. Much stronger claim than "sentiment shifted around the Trump EO."
+**Framing (R17++ #6 REVIEW REFRAME — earlier "thermometer" framing was at risk of falsification by existing data):** The R17++ #5 outline proposed "discourse-as-policy-thermometer" framing claiming discourse magnitude scales with policy magnitude. **Existing cohort heterogeneity comments data already suggests this framing is at risk of being falsified**: Trump EO produced larger discourse effects (max |g|=0.65 for Nursing) than Biden v. Nebraska SCOTUS ruling (max |g|=0.09), opposite of what magnitude-scaling story predicts. **R17++ #6 honest reframe**: "**Cohort-conditional sentiment dynamics around PSLF policy events**" or "**A pre-registered event-study analysis of five federal student-loan policy interventions in online PSLF discourse, 2023–2026**." The five events are CHARACTERIZED, not assumed to scale predictably. Discourse magnitude vs policy magnitude is the HYPOTHESIS the analysis tests, not the headline assertion.
 
 **Realistic acceptance:** *PLOS One* ~50% with multi-policy framing; *Cureus* ~75% backup (high accept but lower prestige); *JMIR Formative* ~20-35% if framed differently. Combined "in print by ERAS" probability ~80-85%.
 
@@ -34,7 +34,7 @@ Add 3-4 additional student-loan policy events beyond Trump EO 14235 + ED Final R
 
 # Original outline below — to be expanded per R17++ #6 multi-policy boost during drafting
 
-**Status (LEGACY R17++ #5):** Ready to scaffold (data exists; analysis script needs writing; ~2 weeks effort)
+**Status (LEGACY R17++ #5):** Ready to scaffold (data exists; analysis script needs writing; ~2 weeks effort — **REVISED in R17++ #6 REVIEW to 8-10 weeks** after agent identified hidden methodological complexity: autocorrelation correction, overlapping-events sensitivity, multiple-breakpoint identification, placebo test, OSF pre-registration filing before any analysis touch)
 **Target venue (LEGACY R17++ #5 primary):** *JMIR Formative Research*
 **Target venue (LEGACY R17++ #5 secondary):** *JAMIA Open*
 **Target venue (LEGACY R17++ #5 tertiary):** *PLOS One* / *Cureus*
