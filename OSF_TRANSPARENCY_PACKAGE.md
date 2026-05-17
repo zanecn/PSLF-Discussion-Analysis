@@ -3,9 +3,9 @@
 **Project:** "Cohort-Conditional Construct Mismatch in Sentiment-Instrument
 Validation: A 9,242-Post PSLF Discourse Study"
 **Lead author:** [User]
-**Target venue:** Political Analysis (with arXiv pre-print)
+**Target venue:** EPJ Data Science (with arXiv pre-print) — R17++ canonical (corrected from R12-era Political Analysis assignment)
 **OSF deposit URL:** [to be created at https://osf.io/registries/osf/new]
-**Date prepared:** 2026-05-10
+**Date prepared:** 2026-05-10 (venue reassignment 2026-05-16)
 
 ---
 
@@ -24,9 +24,10 @@ serves three purposes:
    (COVID-vaccine corpus per `cross_domain_replication_design.md`) is
    genuinely pre-registered for future work
 
-**Why this framing is honest:** Political Analysis and SMR both accept
-post-hoc transparency packages provided the analytic-choice rationale is
-documented. We do not claim true pre-registration of the existing analyses.
+**Why this framing is honest:** EPJ Data Science and JCSS (our R17++ canonical
+targets for P1 Methods and P2 Substantive) both accept post-hoc transparency
+packages provided the analytic-choice rationale is documented. We do not claim
+true pre-registration of the existing analyses.
 
 ---
 
@@ -382,9 +383,9 @@ editing
 > demonstrating the value of explicit specification-curve and robustness-
 > check methods in observational data analysis.
 
-This wording is **honest** and **defensible** for Political Analysis editors.
-It does NOT claim true pre-registration but documents the full transparency
-package.
+This wording is **honest** and **defensible** for EPJ Data Science editors
+(R17++ canonical target). It does NOT claim true pre-registration but documents
+the full transparency package.
 
 ---
 
