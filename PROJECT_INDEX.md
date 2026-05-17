@@ -97,33 +97,39 @@ C:\Users\zanen\PSLF_2026\
 
 ---
 
-## Five outputs at a glance (R17++ #4 restructure 2026-05-17 — adapted to medical-student NS-match context)
+## Six outputs at a glance (R17++ #5 restructure 2026-05-17 — rigorous validity review + P5 reframe + P6 add)
 
 | Paper | Title | Venue | Status | Length | Tables | Figures | Suppl |
 |---|---|---|---|---|---|---|---|
-| **P1 Methods** | Convergent Validity Failure Between Lexical and LLM-Class Sentiment Instruments... | EPJ Data Science | Ready (OP-vs-Reply minor refresh after comments) | 6-8K words | 4 | 3 + 1 figS | 8 |
-| **P2 Substantive** | Cohort-Conditional Sentiment-Stance Coupling in Online Policy Discourse... | JCSS (primary) / PLOS One (speed backup) | Ready (cohort heterogeneity + panel refresh after comments) | 5-7K words | 5 | 3 | 7 |
+| **P1 Methods** | Convergent Validity Failure Between Lexical and LLM-Class Sentiment Instruments... | EPJ Data Science | Ready | 6-8K words | 4 | 3 + 1 figS | 8 |
+| **P2 Substantive** | Cohort-Conditional Sentiment-Stance Coupling... | JCSS (primary) / PLOS One (speed backup) | Ready | 5-7K words | 5 | 3 | 7 |
 | **P3 Policy** | PSLF Eligibility Differential in Residency Match Outcomes... | JGME | Ready NOW | 3-4K words | 5 | 2 | 8 |
-| **P4 Data** | A Public Service Loan Forgiveness eligibility classification of US residency-training institutions, 2021–2026 | *Scientific Data* (Nature) | Ready (artifact locked; structured 5-section format) | 2-2.5K words | 2-3 | 1-2 | 1-2 |
-| **P5 NS spin-off** | Public Service Loan Forgiveness Eligibility of US Neurosurgery Residency Programs, 2021–2026: 124 of 125 Programs Are Structurally PSLF-Eligible | *Neurosurgery* (Wolters Kluwer) primary / *JAMA Surgery* secondary / *World Neurosurgery* backup | Ready (data feasibility verified 2026-05-17) | 1.5-2.5K words | 2 | 2 | 0-1 |
+| **P4 Data** | A PSLF eligibility classification of US residency-training institutions, 2021–2026 | *Scientific Data* (Nature) | Ready (artifact locked) | 2-2.5K words | 2-3 | 1-2 | 1-2 |
+| **P5 Surgical-subspecialty** (R17++ #5 REFRAMED) | PSLF Eligibility Across US Surgical Subspecialty Residency Programs, 2021–2026: Institutional Concentration of Hostile Programs at HCA Healthcare-Affiliated Facilities | *JAMA Surgery* primary / *Annals of Surg* / *Neurosurgery* / *World Neurosurgery* | Ready (cross-subspecialty feasibility verified 2026-05-17) | 2-2.5K words | 2 | 2 | 0-1 |
+| **P6 Post-EO sentiment** (R17++ #5 NEW) | PSLF Discourse Sentiment Around the Trump Executive Order: A Pre-Post Analysis | *JMIR Formative Research* primary / *JAMIA Open* / *PLOS One* | Ready to scaffold (~3-4 weeks; OSF pre-reg first) | 1.5-2K words | 1 | 2 | 0-1 |
 
-**Recommended drafting order: P3 → P4 → P5 → P1 → P2** (P3 shortest + highest impact; P4 mints citable DOI that P3 + P5 reference; P5 NS-relevance critical for match; P1 + P2 last with longer review cycles).
+**Recommended drafting order: P3 → P4 → P5 → P6 → P1 → P2** (P3 shortest + highest impact; P4 mints citable DOI; P5 strongest specialty-relevant comparison; P6 fast cycle independent venue; P1+P2 last with longer review cycles).
 
-**Conference abstract pipeline:** 5 abstracts planned per `CONFERENCE_ABSTRACTS_PLAN.md` (AANS Annual Meeting **abstract deadline ~Oct 2026 — CRITICAL PATH**, CSNS, AAMC Health Workforce, AcademyHealth ARM, AAMC RIME). Realistic yield: 2-4 conference presentations on ERAS (50-70% typical abstract accept rates).
+**Conference abstracts pipeline:** 5 drafts per `CONFERENCE_ABSTRACTS_PLAN.md` (AANS Annual Meeting **Oct 2026 deadline = CRITICAL PATH**, CNS, CSNS, AAMC Health Workforce, AcademyHealth ARM). Realistic yield: 2-4 presentations on ERAS.
 
-**Supplementary infrastructure:** PSLF-eligibility classification dataset deposited at Dryad/Zenodo with citable DOI, cited from P3 + P4 + P5 Methods sections. See `DATASET_DEPOSIT_PLAN.md`.
+**Long-horizon enabler:** `NSLDS_DUA_APPLICATION_CHECKLIST.md` — Data User Agreement application starts NOW (6-12 month review); enables PGY-1 follow-up paper using borrower-level federal student loan data; target *Health Affairs* / *JAMA* / *NEJM Catalyst*.
+
+**Supplementary infrastructure:** PSLF-eligibility classification dataset deposited at Dryad/Zenodo with citable DOI, cited from P3 + P4 + P5 + P6 Methods. See `DATASET_DEPOSIT_PLAN.md`.
 
 ---
 
-## Acceptance probabilities (R17++ #4 update — adapted for medical-student NS-match optimization)
+## Acceptance probabilities (R17++ #5 update — HONEST revised after rigorous validity review)
 
-| Paper | Venue | Acceptance % |
+| Paper | Venue | Acceptance % (R17++ #5 revised) |
 |---|---|---|
-| P1 Methods | EPJ Data Science | **45-55%** |
-| P2 Substantive | JCSS (primary) | **30-38%** / PLOS One backup **~50%** |
-| P3 Policy | JGME (primary) / AcadMed (secondary) | **30-37%** |
-| P4 Data | *Scientific Data* (Nature) | **~50-65%** (data documentation quality is the bar; reviewers focus on validation not novelty) |
-| P5 NS spin-off | *Neurosurgery* (Wolters Kluwer) primary | **~25-35%** / *JAMA Surgery* **~15-25%** / *World Neurosurgery* backup **~40-50%** |
+| P1 Methods | EPJ Data Science | **45-55%** (unchanged) |
+| P2 Substantive | JCSS (primary) | **30-38%** / PLOS One backup **~50%** (unchanged) |
+| P3 Policy | JGME (primary) / AcadMed (secondary) | **30-37%** (unchanged) |
+| P4 Data | *Scientific Data* (Nature) | **~40-55%** (revised DOWN from R17++ #4's overstated 50-65% — niche policy/regional dataset utility, narrower than biomed genomics targets that *Scientific Data* reviewers see) |
+| P5 Surgical-subspecialty | *JAMA Surgery* primary | **25-35%** / *Annals of Surg* **20-30%** / *Neurosurgery* WK **30-40%** / *World Neurosurgery* backup **40-50%** (reframe to cross-subspecialty HCA concentration finding ~doubles acceptance vs NS-only descriptive) |
+| P6 Post-EO sentiment | *JMIR Formative Research* primary | **~40-50%** / *JAMIA Open* **~30-40%** / *PLOS One* **~50%** / *Cureus* backup **~70-80%** |
+
+**Realistic expected papers in print by ERAS Sept 2027 (independence assumption):** ~2-2.5 papers + ~3 conference presentations = **~5-6 research items from this project**. NS match average ~18; this contributes ~28-33%.
 
 ---
 
@@ -262,6 +268,7 @@ P3 §2.3 + §3.2: 3-spec sensitivity (S1/S2/S3) brackets the plausible range. Wi
 | **R17++ #3 (paraphrase replication)** | **2026-05-17** | **Paraphrase robustness independently replicated at n=399** (point estimate identical α=+0.9011; CI tightened 22%; lower-CI headroom above 0.85 widened from +0.007 to +0.018; Bessel-expected CI ratio 0.71 matched at observed 0.77 — well-conditioned replication). New artifacts: `paper1_figS_paraphrase_replication.png` (supplementary forest plot), patched `compute_paraphrase_robustness.py` with replication-comparison section, n=200 historical CSV backups preserved at `*_n200_historical.csv` |
 | **R17++ #3 revert (P4 honest reassessment)** | **2026-05-17 a.m.** | After direct user questioning ("is 4 an actual interesting paper" / "is it truly publishable and impactful?"), the *Scientific Data* (Nature) "Paper 4" proposed earlier in R17++ #3 was reverted. Honest impact assessment: ~10-25 realistic citations over 5 years (narrow utility — only 5-10 active PSLF-residency researchers); substantive impact ~zero (descriptor, not finding); the original "50-100 citations / highest yield" framing was overstated. Reverted across QUICKSTART + PROJECT_INDEX + .claude/CLAUDE.md + Notion + memory; `PAPER_4_DRAFT_READY.md` deleted (preserved in git history at `3fceaf8`); replaced with `DATASET_DEPOSIT_PLAN.md` — same dataset deposited at Dryad/Zenodo with a citable DOI cited from P3, ~1 day of metadata work vs ~3 weeks of standalone-paper writing, captures the citable-infrastructure benefit at ~zero opportunity cost. Drafting order reverts to **P3 → P1 → P2** |
 | **R17++ #4 (NS-match restructure)** | **2026-05-17 p.m.** | After user disclosure ("im a medical student" → "MS3 ending and then research year next; hopefully competitive (neurosurg)"), the project was restructured to optimize for **medical-student neurosurgery match application by ERAS Sept 2027** rather than tenure-track research impact. NS match averages ~18 research items on ERAS for matched US-MD applicants; restructure prioritizes publication count alongside substantive impact. Concrete actions: (1) **P4 *Scientific Data* paper reinstated** — for a medical-student CV, a Nature-family title outweighs the modest ~10-25 future-citation count argument; (2) **P5 Neurosurgery PSLF-eligibility spin-off added** — descriptive paper documenting 124 of 125 (99.2%) US NS programs are PSLF-eligible/ambiguous (data feasibility verified via `explore_neurosurgery_ns_feasibility.py`); HCA Healthcare Kansas City is the sole hostile NS institution, 100% fill every year; targets *Neurosurgery* (Wolters Kluwer) primary / *JAMA Surgery* / *World Neurosurgery* backup; (3) `CONFERENCE_ABSTRACTS_PLAN.md` created with 5 abstract drafts for AANS Annual Meeting (Oct 2026 deadline — CRITICAL PATH), CNS, CSNS, AAMC Health Workforce, AcademyHealth ARM; (4) `DATASET_DEPOSIT_PLAN.md` reframed from "deposit instead of P4" to "deposit cited BY P4 + P3 + P5"; (5) recommended drafting order changed to **P3 → P4 → P5 → P1 → P2** with optional P2 venue downgrade JCSS → PLOS One if speed becomes critical. New artifacts: `PAPER_4_DRAFT_READY.md` (rewritten leaner), `PAPER_5_NEUROSURGERY_DRAFT_READY.md`, `CONFERENCE_ABSTRACTS_PLAN.md`, `scripts/explore_neurosurgery_ns_feasibility.py`, `PSLF-Discussion-Analysis/paper5_neurosurgery_feasibility_results.txt`. **Honest acknowledgment**: I had given two consecutive rounds of wrong-axis advice (R17++ #3 sales-pitched P4 → R17++ #3 revert under-counted CV value → R17++ #4 restoring the right scope for med-student context); the audit trail preserves the full back-and-forth for transparency. |
+| **R17++ #5 (rigorous validity review)** | **2026-05-17 late p.m.** | User asked for rigorous validity + likelihood review. Honest review surfaced overstated acceptance probabilities + substantively-trivial P5 NS-only headline. **P5 REFRAMED** from NS-only descriptive ("99.2% NS programs PSLF-eligible" — trivial to NS audiences) to **surgical-subspecialty comparison with novel HCA-concentration finding**: all 14 PSLF-hostile surgical-subspecialty programs are HCA Healthcare-affiliated; HCA Kansas City hosts 5 different surgical residencies (NS+Plastics+ENT+Ortho+Surgery-General). Cross-subspecialty feasibility verified `explore_surgical_subspecialty_feasibility.py`. Acceptance probability roughly doubles at premier venues (*JAMA Surgery* primary now plausible vs only NS-niche before). `git mv PAPER_5_NEUROSURGERY_DRAFT_READY.md PAPER_5_SURGICAL_SUBSPECIALTY_DRAFT_READY.md` + full rewrite. **P6 ADDED** — post-Trump-EO PSLF discourse sentiment short report (interrupted time series of Reddit + SDN posts around Trump EO 14235 + ED Final Rule events); target *JMIR Formative Research* primary / *JAMIA Open* / *PLOS One*; ~40-50% acceptance; fast cycle (3-month review); OSF pre-reg first; independent venue no salami-slicing concern. **NSLDS_DUA_APPLICATION_CHECKLIST.md ADDED** — long-horizon enabler for PGY-1 follow-up paper using borrower-level federal student loan data; target *Health Affairs* / *JAMA* / *NEJM Catalyst*; application starts NOW (6-12 month review cycle). **Acceptance probabilities revised down honestly**: P4 ~40-55% (was 50-65%); P5 cross-subspecialty 25-40% (reframe roughly doubles); P6 new ~40-50%. **Realistic ERAS yield calculation added**: ~2-2.5 papers + ~3 abstracts = ~5-6 research items (NS match avg ~18; project contributes ~28-33%). New drafting order: **P3 → P4 → P5 → P6 → P1 → P2**. New artifacts: `PAPER_5_SURGICAL_SUBSPECIALTY_DRAFT_READY.md` (renamed + rewritten), `PAPER_6_POST_EO_SENTIMENT_DRAFT_READY.md`, `NSLDS_DUA_APPLICATION_CHECKLIST.md`, `scripts/explore_surgical_subspecialty_feasibility.py`, `paper5_surgical_subspecialty_feasibility_results.txt`. **Honest acknowledgment**: This is the third consecutive correction to my advice (R17++ #4 was right framing but with inflated probabilities); rigorous review iteratively improves the plan as I get more context. |
 
 ---
 
