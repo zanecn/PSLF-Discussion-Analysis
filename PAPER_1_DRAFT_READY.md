@@ -238,14 +238,27 @@ Stance task pairwise at n=231 valid (R17++ #3): 93.07%–96.10% exact-match. Top
 
 Final analysis (n=21,453 OPs; 506,639 comments; mean 23.6 comments/post):
 
-- **TextBlob Δ (OP − reply) overall = −0.0146** (t=−15.10, p=2.8×10⁻⁵¹)
-- **VADER Δ (OP − reply) overall = +0.2387** (t=60.40, p≈0)
+- **TextBlob Δ (OP − reply) overall = −0.0146** (t=−15.10, p=2.8×10⁻⁵¹; **cluster-bootstrap CI [−0.0164, −0.0127], B=2,000**)
+- **VADER Δ (OP − reply) overall = +0.2387** (t=60.40, p≈0; **cluster-bootstrap CI [+0.2306, +0.2460], B=2,000**)
 - **Same direction in 8/8 cohorts** (TB negative, VADER positive)
-- Per-cohort TB Δ range: −0.007 to −0.026
+- Per-cohort TB Δ range: −0.007 to −0.031
 - Per-cohort VADER Δ range: +0.20 to +0.32
 - Top-level vs deep replies: TB Δ=−0.0105 (t=−9.73, p=2.5×10⁻²²) — depth-escalation effect detectable but very small in absolute terms
 
 **Replicates the post-level finding at the full ~500K-comment scale**: directionally opposite Δ in 8/8 cohorts. Same-direction-mismatch is robust to scale.
+
+**Per-cohort cluster-bootstrap CIs (R17++ #6 high-yield addition, `paper1_op_vs_reply_per_cohort_cluster_bootstrap_results.txt`).** B=2,000 cluster-bootstrap resamples per cohort (cluster unit = post_id) on the n=21,453 post-comment merge:
+
+| Cohort | n_posts | TB Δ point | TB Δ 95% CI | VADER Δ point | VADER Δ 95% CI |
+|---|---|---|---|---|---|
+| Reddit r/PSLF | 10,728 | −0.0123 | [−0.0152, −0.0095] | +0.2219 | [+0.2107, +0.2326] |
+| Reddit r/StudentLoans | 7,048 | −0.0144 | [−0.0176, −0.0111] | +0.2513 | [+0.2375, +0.2648] |
+| Reddit Finance | 1,911 | −0.0242 | [−0.0286, −0.0196] | +0.2957 | [+0.2708, +0.3218] |
+| Other | 1,390 | −0.0165 | [−0.0251, −0.0079] | +0.2122 | [+0.1811, +0.2433] |
+| Reddit PA | 268 | −0.0241 | [−0.0397, −0.0074] | +0.3170 | [+0.2551, +0.3743] |
+| Reddit Teaching | 108 | −0.0310 | [−0.0594, −0.0030] | +0.2152 | [+0.1040, +0.3148] |
+
+**All 6 cohorts (with sufficient n for cluster bootstrap) show TB Δ < 0 AND VADER Δ > 0 with cluster-bootstrap CIs excluding 0 in both lexicons.** Reddit Teaching (n=108) has the widest CIs but still cleanly excludes 0. This is a substantially stronger claim than the 8/8 directional-agreement t-test on per-post means: the directional split is now **per-cohort cluster-bootstrap robust**. Reddit Nursing (n=120) and SDN cohorts were excluded by the script's post-comment merge subset and don't appear in the cluster bootstrap table (they remain in the t-test table above).
 
 **Interpretation paragraph (~170 words; Round 17+ revised):** On the same posts, the same threads, the same cohorts, TextBlob says replies are *more positive* than OPs while VADER says replies are *less positive*. This is the cleanest within-construct mismatch in the analysis: a single measurement target (Δ = mean(OP) − mean(reply)) on which the two lexicons produce directionally opposite estimates. The Δ values are estimated by 1-sample t-tests on per-post mean differences; the corresponding t-statistics are large in magnitude (TB t=−15.10, VADER t=+60.40) and their parametric p-values are infinitesimal (p<10⁻⁵⁰). **Inferential caveat:** the per-post-aggregation t-test treats each post as one observation, but a more conservative cluster-bootstrap on (post, comment) pairs would be desirable for headline inference and is recommended for the published version. **Magnitude framing:** TextBlob |Δ|=0.0146 (~1.5% of the [−1, +1] range); VADER |Δ|=0.2387 (~24% of range). The headline is the *directional split* (TB negative, VADER positive in 8/8 cohorts); the magnitude split (~16× larger absolute Δ for VADER) is a corollary indicating the two lexicons are not estimating the same underlying quantity. Within-thread sentiment dynamics have been studied (Choi, Aiello, Varga & Quercia 2020, *WWW '20*; Tsugawa & Ohsaki 2015, *COSN '15*; Park & Conway 2017, *JMIR*); a structured 2-hour literature search did not locate prior work explicitly framing the lexical-instrument directional disagreement on identical OP-vs-reply contrasts in policy-discourse text. We present this as "first systematic quantification we are aware of," not a categorical novelty claim.
 

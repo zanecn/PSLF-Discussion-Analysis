@@ -1,0 +1,28 @@
+==========================================================================================
+PAPER 1 PER-COHORT OP-VS-REPLY CLUSTER BOOTSTRAP
+(R17++ #6 RIGOROUS REVIEW response — agent flagged that per-cohort
+cluster bootstrap was missing; reviewers at ICWSM/CSCW will ask)
+==========================================================================================
+
+B = 2000 cluster-bootstrap resamples per cohort
+Cluster unit = post_id
+
+cohort                               n        TB Δ                           TB CI     VADER Δ                        VADER CI
+----------------------------------------------------------------------------------------------------------------------------------
+Reddit r/PSLF                   10,728     -0.0123              [-0.0152, -0.0095]     +0.2219              [+0.2107, +0.2326]
+Reddit r/StudentLoans            7,048     -0.0144              [-0.0176, -0.0111]     +0.2513              [+0.2375, +0.2648]
+Reddit Finance                   1,911     -0.0242              [-0.0286, -0.0196]     +0.2957              [+0.2708, +0.3218]
+Other                            1,390     -0.0165              [-0.0251, -0.0079]     +0.2122              [+0.1811, +0.2433]
+Reddit PA                          268     -0.0241              [-0.0397, -0.0074]     +0.3170              [+0.2551, +0.3743]
+Reddit Teaching                    108     -0.0310              [-0.0594, -0.0030]     +0.2152              [+0.1040, +0.3148]
+
+INTERPRETATION:
+------------------------------------------------------------------------------------------
+  Cohorts analyzed: 6
+  TextBlob Δ < 0 (replies more positive): 6/6 cohorts
+  TextBlob cluster-bootstrap CI excludes 0: 6/6 cohorts
+  VADER Δ > 0 (OPs more positive): 6/6 cohorts
+  VADER cluster-bootstrap CI excludes 0: 6/6 cohorts
+
+  HEADLINE: 6/6 cohorts show TB Δ < 0 AND VADER Δ > 0 — the directional split is cohort-robust.
+  All cluster-bootstrap CIs exclude 0 — directional finding is per-cohort cluster-bootstrap robust.
