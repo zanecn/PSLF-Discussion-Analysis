@@ -1,0 +1,103 @@
+==========================================================================================
+HCA KANSAS CITY WORKFORCE SNAPSHOT (CMS NPPES PILOT)
+(R17++ #6 RIGOROUS REVIEW response — high-yield item #3)
+==========================================================================================
+
+NPPES public API: https://npiregistry.cms.hhs.gov/api/
+Search strategy: organizations matching HCA Healthcare entities in Kansas City MSA
+Comparator: University of Kansas Medical Center (academic, PSLF-eligible)
+
+LIMITATIONS:
+  - NPPES has no 'trained at' field — cannot link current physicians to past residencies
+  - PSLF-eligible vs ineligible employer status is INFERRED from facility name only
+  - This is a current workforce SNAPSHOT, not a longitudinal training-outcome analysis
+
+==========================================================================================
+PHASE 1: ORGANIZATION-LEVEL NPI ENTITIES (NPI-2)
+==========================================================================================
+
+--- HCA_Healthcare_KC_organizations ---
+NPPES returned 0 organizations
+
+--- Research_Med_Center_organizations ---
+NPPES returned 3 organizations
+  NPI 1346282142: MIDWEST DIVISION - RMC, LLC                        KANSAS CITY, MO [Rehabilitation Unit]
+  NPI 1134187842: MIDWEST DIVISION - RMC, LLC                        KANSAS CITY, MO [General Acute Care Hospital]
+  NPI 1396787198: MIDWEST DIVISION - RMC, LLC                        KANSAS CITY, MO [Clinic/Center, End-Stage Renal]
+
+--- Centerpoint_Med_Center_organizations ---
+NPPES returned 0 organizations
+
+--- Univ_Kansas_Medical_Center_orgs ---
+NPPES returned 0 organizations
+
+==========================================================================================
+PHASE 2: INDIVIDUAL PROVIDER COUNTS BY SPECIALTY (NPI-1)
+==========================================================================================
+Note: NPPES individual-provider search is city/state-based, not org-based.
+These counts include ALL providers in the city (academic + HCA + private).
+They represent the total available physician workforce, not HCA-specific counts.
+Use these as a metropolitan-area baseline.
+
+
+--- Kansas City, MO (HCA territory) individual providers (NPI-1) ---
+NPPES returned 200 individual providers in Kansas City, MO
+
+Top 10 specialties by provider count:
+    15  Student in an Organized Health Care Education/Training Program
+    12  Family Medicine
+    12  Nurse Practitioner, Family
+     9  Physical Therapist
+     7  Behavior Technician
+     6  Pediatrics
+     6  Registered Nurse
+     5  Physician Assistant
+     5  Psychiatry & Neurology, Psychiatry
+     5  Pharmacist
+
+--- Kansas City, KS (UKMC academic) individual providers (NPI-1) ---
+NPPES returned 200 individual providers in Kansas City, KS
+
+Top 10 specialties by provider count:
+    20  Student in an Organized Health Care Education/Training Program
+    18  Internal Medicine
+    10  Nurse Practitioner, Family
+     9  Psychiatry & Neurology, Neurology
+     8  Family Medicine
+     8  Behavior Technician
+     8  Social Worker
+     7  Nurse Anesthetist, Certified Registered
+     6  Anesthesiology
+     4  Psychiatry & Neurology, Psychiatry
+
+==========================================================================================
+PHASE 3: HEADLINE NUMBERS FOR HEALTH AFFAIRS FOREFRONT COMMENTARY
+==========================================================================================
+
+Unique organizational NPIs identified in HCA/UKMC searches: 3
+
+Total individual providers in Kansas City, MO: 200
+  - of which surgical specialties: 5
+Total individual providers in Kansas City, KS: 200
+  - of which surgical specialties: 14
+
+INTERPRETIVE CAVEAT: NPPES limits results to 200 per query. The above counts
+are CAPPED, not exhaustive. For a complete enumeration, the NPPES Weekly Data
+Dissemination File (CSV download, ~8 GB) should be used. The pilot is sufficient
+to confirm:
+  (a) NPPES public API is accessible and responsive;
+  (b) Provider-level metadata (specialty, city) is queryable;
+  (c) Org-level NPI entities for HCA KC facilities can be identified.
+
+RECOMMENDED NEXT STEPS for Health Affairs Forefront commentary:
+  1. Download full NPPES Weekly Data Dissemination File (~8 GB)
+  2. Filter to providers with primary practice address at HCA Healthcare KC
+     (NPI 1992878466 or similar — verify via Phase 1 results above)
+  3. Cross-reference with publicly-available residency-match outcomes (NRMP
+     individual-program post-match reports) if accessible
+  4. Estimate fraction of HCA KC current surgical physicians who completed
+     residency at HCA KC vs elsewhere (if NPPES grad-year + facility tenure
+     fields permit inference)
+  5. Compare to UKMC (academic baseline) for retention-rate context
+
+ESTIMATED EFFORT for full commentary-supporting analysis: 1-2 weeks data wrangling

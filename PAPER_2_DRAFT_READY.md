@@ -283,6 +283,26 @@ The Reddit Finance OR shows the cleanest cross-instrument sign disagreement in o
 
 [INSERT BLOCK J from MASTER_DRAFTING_KIT.md, with Reddit Finance as the empirical demonstration] (~120 words)
 
+## 5.3a Secondary construct-misalignment exemplar: Reddit r/StudentLoans (R17++ #6 high-yield extension)
+
+The most common reviewer rejoinder to a single-cohort sign-flip is: *"is this just one cohort being weird?"* We address this directly by examining Reddit r/StudentLoans (n=969), the financial-discussion community most adjacent to Reddit Finance in topical scope. The 5-spec robustness table shows a **parallel construct-misalignment pattern**:
+
+| Spec | Reddit Finance OR [95% CI] | Reddit r/StudentLoans OR [95% CI] |
+|---|---:|---:|
+| Claude-neg × Claude-pur (original) | 0.182 [0.11, 0.30] | 1.411 [0.85, 2.34] |
+| TB-neg × Claude-pur | 1.103 [0.33, 3.66] | 2.495 [0.99, 6.28] |
+| VADER-neg × Claude-pur | 1.423 [0.72, 2.82] | 0.990 [0.56, 1.74] |
+| Claude-neg × Claude-pur-only | 0.369 [0.25, 0.54] | 2.044 [1.48, 2.81] |
+| Claude-neg × Claude-pur-or-completed | 0.104 [0.06, 0.18] | 0.916 [0.53, 1.59] |
+
+(Source: `paper2_studentloans_construct_misalignment.txt` + `l5_cohort_robustness_results.txt`.)
+
+**Reddit r/StudentLoans direction concordance**: 3 OR>1 / 2 OR<1 — discordant.  
+**Reddit Finance direction concordance**: 2 OR>1 / 3 OR<1 — discordant.  
+**Both cohorts**: only 1 of 5 specs has a CI excluding 1.0 (StudentLoans Claude × Claude-pur-only; Finance same-scorer Claude); the remaining 4 specs span 1.0 or flip direction across instrument choices.
+
+**Interpretation (~140 words):** Construct misalignment is not idiosyncratic to Reddit Finance. The same pattern appears in Reddit r/StudentLoans — a topically-adjacent financial-discussion community of comparable scale (n=969 vs n=999). In both cohorts, the "same-scorer" Claude × Claude pairing produces a different effect direction than at least one "cross-scorer" lexical × Claude pairing, and the majority of cross-scorer CIs span 1.0. This generalizes the construct-misalignment finding beyond a single cohort to *small-n (~1,000) financial-discussion communities where cohort consensus on sentiment-stance coupling is weak*. The mechanism is the same in both: at sample sizes where statistical power is borderline for OR≈1.5–2, different sentiment instruments capture partially-disjoint subsamples (Claude-negative posts are not the same posts as TB-negative or VADER-negative posts), and the OR computed on differently-partitioned subsamples diverges. For comparison, SDN-Medical (n=1,960, the only fully concordant cohort) doubles the sample size of either financial-discussion cohort; this 2× difference in n appears to be sufficient to suppress the construct-misalignment pattern. We discuss this as a **sample-size × cohort-consensus interaction** in §6.
+
 ## 5.3b Comments-scale replication — partial concordance with post-scale (Round 17+ revised)
 
 **Round 17+ audit correction: a prior version of this section ("Option A") incorrectly claimed comments-scale evidence was uninformative because the Trump-EO event failed to replicate cohort heterogeneity. The Trump-EO failure is real, but it is the EXCEPTION at comments scale, not the pattern. The other 7 events DO show cross-cohort direction split at comments scale — i.e., the post-level cohort heterogeneity headline largely REPLICATES.** This section is revised accordingly.

@@ -262,6 +262,29 @@ The TB×VADER convergent-validity failure replicates at half-million-row scale o
 
 **Interpretation (~80 words):** The two-instrument lexical-class agreement is α≈0.29-0.34 across orders of magnitude in n (1K → 9K → 519K). The TB×VADER convergent-validity failure is structural to the construct measured by these two lexicons, not a small-sample artifact. The 519K-comment scale is also large enough to give cluster-bootstrap CI half-widths < 0.005 around the point estimate, which is far below any plausible reliability threshold (0.667 / 0.80) we would care about.
 
+## 5.5c OP-vs-Reply mechanism analysis: surface features don't explain the directional split (R17++ #6 high-yield extension)
+
+Could the TB-negative / VADER-positive OP-vs-Reply directional disagreement be a punctuation, all-caps, or first-person-pronoun artifact? We tested this directly by computing 8 surface linguistic features per OP and per comment (exclamation marks/100 words, question marks/100 words, all-caps words/100 words, first-person pronouns/100 words, negation words/100 words, intensifier words/100 words, URLs/100 words, n_words), then regressing per-post sentiment Δs on per-post feature Δs (z-standardized).
+
+**Sample: n=13,837 posts with all 8 feature Δs computable. Source: `paper1_op_vs_reply_feature_mechanism_results.txt`.**
+
+| Predictor (z-scored) | β (TB Δ) | β (VADER Δ) |
+|---|---:|---:|
+| intercept | −0.0141 | +0.2220 |
+| delta_excl_per100 | +0.0160 | +0.0174 |
+| delta_quest_per100 | −0.0039 | −0.0335 |
+| delta_allcaps_per100 | −0.0023 | +0.0086 |
+| delta_firstperson_per100 | −0.0108 | −0.0554 |
+| delta_negation_per100 | −0.0083 | **−0.0932** |
+| delta_intensifier_per100 | +0.0036 | −0.0124 |
+| delta_urls_per100 | −0.0018 | −0.0172 |
+| delta_n_words | −0.0032 | +0.0611 |
+| **R²** | **0.022** | **0.051** |
+
+**Interpretation (~150 words):** Surface linguistic features explain ~2% of per-post variance in the TextBlob OP-vs-reply Δ and ~5% in the VADER Δ. The largest per-post coefficient is VADER's response to negation density (β = −0.093 per σ): OPs that contain more negation than their replies produce a smaller (less positive) VADER Δ. This is consistent with VADER's design (negation modifiers explicitly inverse-weight the surrounding sentiment-bearing tokens), but it does not explain the headline phenomenon — even after conditioning on all 8 surface features, the intercept term ("residual VADER Δ at zero feature differences") is +0.2220, virtually identical to the unconditional VADER Δ = +0.2387. The directional split is **not** a surface-features artifact: TextBlob and VADER systematically disagree on identical OP-vs-reply contrasts because they are measuring different latent constructs at the lexical-semantic level, not because OPs differ from replies on punctuation, caps, or pronoun density. This rules out the most common reviewer alternative ("VADER just amplifies exclamation marks").
+
+**At the cross-cohort level**, the same features show strong correlations with the TB Δ (intensifier r=−0.87; first-person r=−0.72; URLs r=+0.63; all-caps r=+0.58), suggesting that cohort-level *averages* of surface features do co-vary with sentiment Δs — but the per-post regression makes clear that within-cohort variation in surface features cannot explain the per-post sentiment-Δ variation. The directional split is a cohort-aggregate phenomenon, not a per-post phenomenon explainable by surface features.
+
 ## 5.6 Stance task companion (Section 5.6)
 
 [FROM MASTER_LOCKED_NUMBERS.md Paper 1 section, stance task sub-table]

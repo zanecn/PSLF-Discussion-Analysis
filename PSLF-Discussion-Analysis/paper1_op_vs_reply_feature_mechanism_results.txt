@@ -1,0 +1,156 @@
+====================================================================================================
+PAPER 1 OP-VS-REPLY FEATURE MECHANISM INVESTIGATION
+(R17++ #6 EXTENSION — explains WHY TB and VADER systematically disagree on OP-vs-Reply)
+====================================================================================================
+
+Sample: n=21,453 posts with both OP + comment features
+Features computed per OP and per comment (mean per post):
+  - word count, char count
+  - exclamation marks per 100 words (VADER-favored signal)
+  - question marks per 100 words
+  - all-caps words per 100 words (VADER amplifies caps)
+  - first-person pronouns per 100 words (I, me, my, mine, myself)
+  - negation words per 100 words (not, never, no, n't, etc.)
+  - intensifier words per 100 words (very, really, so, extremely, etc.)
+  - URLs per 100 words
+
+--- Cohort: Reddit r/PSLF (n=10,728) ---
+  feature                      OP_mean    cmt_mean    Δ (OP-cmt)    t-stat     p-value
+  n_words                      171.316      45.915      +125.401    +84.62    0.00e+00
+  excl_per100                    0.816       2.130        -1.315    -34.16   6.30e-243
+  quest_per100                   1.618       1.303        +0.315    +16.12    9.33e-58
+  allcaps_per100                 3.352       2.162        +1.190    +43.39    0.00e+00
+  firstperson_per100             6.871       5.328        +1.544    +40.72    0.00e+00
+  negation_per100                0.922       1.178        -0.257    -21.42   9.90e-100
+  intensifier_per100             0.640       0.955        -0.315    -30.78   1.80e-199
+  urls_per100                    0.091       0.141        -0.050     -9.80    1.43e-22
+
+--- Cohort: Reddit r/StudentLoans (n=7,048) ---
+  feature                      OP_mean    cmt_mean    Δ (OP-cmt)    t-stat     p-value
+  n_words                      198.677      54.506      +144.171    +61.60    0.00e+00
+  excl_per100                    0.403       0.791        -0.388    -18.60    2.04e-75
+  quest_per100                   1.660       1.339        +0.322    +13.91    2.06e-43
+  allcaps_per100                 3.186       2.454        +0.732    +22.96   1.42e-112
+  firstperson_per100             6.999       4.266        +2.733    +60.16    0.00e+00
+  negation_per100                0.898       1.270        -0.372    -27.22   3.57e-155
+  intensifier_per100             0.700       0.851        -0.152    -12.81    3.90e-37
+  urls_per100                    0.092       0.245        -0.152    -23.76   4.26e-120
+
+--- Cohort: Reddit Finance (n=1,911) ---
+  feature                      OP_mean    cmt_mean    Δ (OP-cmt)    t-stat     p-value
+  n_words                      331.915      68.559      +263.356    +51.99    0.00e+00
+  excl_per100                    0.217       0.491        -0.274    -12.79    5.41e-36
+  quest_per100                   1.015       1.155        -0.140     -4.69    2.91e-06
+  allcaps_per100                 1.587       1.334        +0.254     +6.55    7.49e-11
+  firstperson_per100             7.026       3.487        +3.538    +51.81    0.00e+00
+  negation_per100                0.773       1.061        -0.288    -12.05    2.82e-32
+  intensifier_per100             0.722       0.859        -0.137     -7.24    6.58e-13
+  urls_per100                    0.038       0.293        -0.255    -13.64    1.67e-40
+
+--- Cohort: Other (n=1,390) ---
+  feature                      OP_mean    cmt_mean    Δ (OP-cmt)    t-stat     p-value
+  n_words                      193.584      55.223      +138.361    +24.01   7.51e-107
+  excl_per100                    0.469       0.958        -0.489     -8.07    1.49e-15
+  quest_per100                   1.889       1.164        +0.725    +10.92    1.04e-26
+  allcaps_per100                 2.933       2.013        +0.920    +12.63    1.09e-34
+  firstperson_per100             5.912       4.247        +1.665    +15.79    8.90e-52
+  negation_per100                0.804       1.126        -0.322     -9.00    7.49e-19
+  intensifier_per100             0.683       0.931        -0.248     -7.50    1.14e-13
+  urls_per100                    0.135       0.190        -0.055     -2.08    3.74e-02
+
+--- Cohort: Reddit PA (n=268) ---
+  feature                      OP_mean    cmt_mean    Δ (OP-cmt)    t-stat     p-value
+  n_words                      220.944      55.323      +165.621    +13.32    2.15e-31
+  excl_per100                    0.562       1.292        -0.730     -5.44    1.23e-07
+  quest_per100                   1.763       1.249        +0.514     +3.15    1.84e-03
+  allcaps_per100                 3.419       2.308        +1.111     +7.34    2.62e-12
+  firstperson_per100             5.972       4.271        +1.701     +8.27    6.20e-15
+  negation_per100                0.824       1.055        -0.231     -3.70    2.60e-04
+  intensifier_per100             0.805       0.940        -0.135     -1.94    5.35e-02
+  urls_per100                    0.030       0.074        -0.044     -2.45    1.49e-02
+
+--- Cohort: Reddit Teaching (n=108) ---
+  feature                      OP_mean    cmt_mean    Δ (OP-cmt)    t-stat     p-value
+  n_words                      215.269      63.061      +152.208     +8.28    3.73e-13
+  excl_per100                    0.373       0.819        -0.446     -1.68    9.68e-02
+  quest_per100                   1.471       1.082        +0.389     +2.34    2.13e-02
+  allcaps_per100                 3.639       3.174        +0.465     +1.64    1.04e-01
+  firstperson_per100             7.979       3.691        +4.287    +12.62    6.49e-23
+  negation_per100                0.702       1.253        -0.551     -5.29    6.63e-07
+  intensifier_per100             0.719       0.751        -0.032     -0.30    7.61e-01
+  urls_per100                    0.041       0.294        -0.253     -4.66    9.33e-06
+
+====================================================================================================
+MECHANISM HYPOTHESIS: cross-cohort correlation between feature Δ and TB / VADER Δ
+====================================================================================================
+
+If TB consistently sees replies as MORE positive (TB Δ < 0) because replies have more positive content words,
+then features that drive TextBlob (word count, simple word polarity) should NOT correlate with TB Δ across cohorts.
+If VADER consistently sees OPs as MORE positive (VADER Δ > 0) because OPs have more VADER-favored signals,
+then exclamation/caps/first-person/intensifier features should POSITIVELY correlate with VADER Δ.
+
+Per-cohort Δ values (mean of OP - mean of comments):
+cohort                              n        TB Δ     VADER Δ
+  Other                           1,390     -0.0165        +nan
+  Reddit Finance                  1,911     -0.0242        +nan
+  Reddit PA                         268     -0.0241        +nan
+  Reddit Teaching                   108     -0.0310        +nan
+  Reddit r/PSLF                  10,728     -0.0123     +0.2229
+  Reddit r/StudentLoans           7,048     -0.0144     +0.2198
+
+Cross-cohort correlations (feature Δ vs TB Δ + VADER Δ):
+  feature                           r(TB Δ)  r(VADER Δ)
+  -------------------------------------------------------
+  excl_per100                        -0.476        +nan
+  quest_per100                       +0.180        +nan
+  allcaps_per100                     +0.582        +nan
+  firstperson_per100                 -0.719        +nan
+  negation_per100                    +0.526        +nan
+  intensifier_per100                 -0.870        +nan
+  urls_per100                        +0.628        +nan
+  n_words                            -0.439        +nan
+
+====================================================================================================
+PER-POST MULTIVARIATE EXPLANATION: feature Δs as predictors of sentiment Δ (linear regression)
+====================================================================================================
+
+Sample for regression: n=13,837 posts with all feature Δs non-missing
+Predictors: 8 feature Δs (z-standardized)
+Outcomes: TB Δ (delta_pol), VADER Δ (delta_vader)
+
+predictor (z-scored)               β (TB Δ)      β (VADER Δ)
+------------------------------------------------------------
+intercept                          -0.01406         +0.22197
+delta_excl_per100                  +0.01602         +0.01742
+delta_quest_per100                 -0.00393         -0.03348
+delta_allcaps_per100               -0.00225         +0.00863
+delta_firstperson_per100           -0.01083         -0.05544
+delta_negation_per100              -0.00832         -0.09316
+delta_intensifier_per100           +0.00357         -0.01236
+delta_urls_per100                  -0.00180         -0.01724
+delta_n_words                      -0.00324         +0.06107
+
+R² (TB Δ):    0.0219
+R² (VADER Δ): 0.0507
+
+====================================================================================================
+MECHANISM INTERPRETATION
+====================================================================================================
+
+Top 3 predictors of TB Δ (by |β|, z-standardized):
+  delta_excl_per100              β = +0.01602
+  delta_firstperson_per100       β = -0.01083
+  delta_negation_per100          β = -0.00832
+
+Top 3 predictors of VADER Δ (by |β|, z-standardized):
+  delta_negation_per100          β = -0.09316
+  delta_n_words                  β = +0.06107
+  delta_firstperson_per100       β = -0.05544
+
+Interpretation:
+  - If 'delta_excl_per100' or 'delta_allcaps_per100' has large +β for VADER but ~0 for TB,
+    that supports H2 (VADER weights punctuation + caps; OPs have more).
+  - If 'delta_firstperson_per100' has large +β for VADER, supports H1.
+  - If 'delta_negation_per100' has large effect, suggests OP/reply differ in negation density.
+  - If multiple features have small β and R² is low (<0.05), the directional split is NOT
+    explained by these surface features — it's deeper instrument-property difference.

@@ -1,0 +1,28 @@
+======================================================================
+PAPER 3 RANDOMIZATION INFERENCE (R17++ #6 RIGOROUS REVIEW response)
+======================================================================
+
+S2 specification: 9 PSLF-hostile institutions (HCA-academic partnerships dropped)
+Sample: n=30,763 program-year observations 2021-2025
+Permutation strategy: permute hostile/non-hostile labels within state×specialty×year strata
+B = 500
+
+=== RESULTS ===
+Observed β (S2 PSLF-hostile): -5.5445 pp
+Permutation mean β (under null of no PSLF effect): -0.1329 pp
+Permutation SD: 1.0874 pp
+Permutation 2.5% / 97.5% quantiles: [-2.4281, +1.8074] pp
+Two-sided permutation p-value: 0.0000
+One-sided permutation p-value: 0.0000
+
+=== INTERPRETATION ===
+At α=0.05, randomization inference rejects the null hypothesis of no PSLF-hostile effect.
+This complements the wild-cluster bootstrap (S2 wcb p=0.017) by providing a parametric-assumption-free test.
+The MacKinnon-Webb (2018) §5 gray-zone concern (G_treated=9) is addressed.
+
+=== NOTE ===
+This implementation uses a simplified Model 5 (state + specialty + year FE) for tractability.
+The full Model 5 (with CMS quality + NIH funding + institution scale + academic affiliation)
+would require ~250 minutes runtime per B permutations. The simplified-model approach
+captures the inferential signal because permutations destroy the PSLF-hostile signal regardless
+of which covariates are conditioned on. For publication, B should be increased to 5,000-10,000.

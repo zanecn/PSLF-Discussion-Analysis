@@ -67,6 +67,12 @@ The **surgical-subspecialty comparison framing** (R17++ #5 reframe) is substanti
 
 **State-policy implication for post-Trump-EO:** Residents trained at HCA-affiliated PSLF-hostile programs face **compound policy headwinds**: (a) PSLF ineligibility for resident debt; (b) state-level reduced Medicaid expansion may affect post-residency practice options for residents who want to serve PSLF-qualifying employer types (community health centers, public hospitals).
 
+7. **CMS NPPES WORKFORCE FEASIBILITY PILOT (R17++ #6 high-yield item #3 — `paper5_hca_kc_nppes_pilot_results.txt`):** A pilot query of the CMS NPPES (National Plan & Provider Enumeration System) public API confirmed:
+   - **HCA Kansas City flagship facility's organizational NPI is identified** (NPI 1134187842, "MIDWEST DIVISION - RMC, LLC", Research Medical Center, Kansas City MO, General Acute Care Hospital classification).
+   - The NPPES public API (https://npiregistry.cms.hhs.gov/api/) is freely accessible and returns provider-level metadata (specialty, location, NPI) without authentication.
+   - **CRITICAL LIMITATION**: NPPES has no "trained at" field — current providers cannot be linked to past residency programs via NPPES alone. A full workforce-downstream analysis (e.g., "what fraction of HCA Kansas City's current surgeons completed residency at HCA Kansas City vs elsewhere?") would require cross-referencing the NPPES Weekly Data Dissemination File (~8 GB CSV) with separately-acquired residency-completion data (likely AMA Masterfile or NRMP individual-program post-match reports), neither of which is freely available.
+   - **Scope-realistic next step**: a *Health Affairs Forefront* commentary leveraging the HCA Kansas City concentration finding (5 surgical residencies at 1 facility) plus the Missouri-Medicaid-expansion context can be drafted with currently-available data; no NPPES bulk download required for a 1,500-word commentary. **Workforce-downstream analysis** is deferred to a Path-D paper requiring NSLDS DUA + AMA Masterfile data (12-18 month timeline once a PGY-1 academic affiliation is established).
+
 ## The data-verified headline (2026-05-17 surgical-subspecialty feasibility script)
 
 | Surgical subspecialty | n program-years | n institutions | PSLF-hostile rate | n hostile institutions | Hostile-program fill rate |
