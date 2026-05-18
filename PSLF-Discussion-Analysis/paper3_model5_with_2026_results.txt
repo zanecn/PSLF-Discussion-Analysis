@@ -1,0 +1,70 @@
+================================================================================
+PAPER 3 MODEL 5 + 2026 — DESCRIPTIVE 6-YEAR EXTENSION (Round 17 reframe)
+================================================================================
+*** ROUND 17 AUDIT REFRAME (2026-05-10) ***
+
+This file's previous header described a "quasi-experimental DiD-style test of the
+Trump EO effect." That framing has been RETRACTED. Reasons:
+
+  (1) The 2026 narrowing of the PSLF-hostile differential continues a multi-year
+      pre-existing trend, not an EO discontinuity. See paper3_trend_regression_results.txt:
+        - Linear trend: year_centered = +1.60 pp/year (p=0.105)
+        - is_2026 indicator BEYOND the linear trend = +2.98 pp (p=0.462, NS)
+      The Δ β interpretation below is mechanically correct as a year-2026 vs years-2021-2025
+      comparison, but it does NOT identify a causal EO effect.
+
+  (2) ROL deadline issue: 2025 NRMP rank-order lists were locked Feb 24, 2025, BEFORE
+      the EO was signed Mar 7, 2025. So 2025 ROLs are pre-EO. But the 2024-2025 trend
+      already shows hostile fill rates rising (multi-year trend), so the 2026 jump is
+      consistent with that trajectory rather than a discontinuous post-EO shift.
+
+  (3) 2026-only n_hostile ≈ 171 program-year observations from ≤23 institutions.
+      Power to distinguish a small EO effect from continuation of trend is limited.
+
+INTERPRET AS: descriptive 6-year extension showing that the PSLF-hostile fill-rate
+differential continues to narrow under the same trend observed 2021-2025. Causal
+attribution to the Trump EO is NOT supported by this design.
+
+================================================================================
+DESCRIPTIVE NUMBERS BELOW (dedup-corrected, Round 17 fix)
+================================================================================
+
+Sample: 2021-2026 NRMP program-year observations
+Years included: [2021, 2022, 2023, 2024, 2025, 2026]
+Year breakdown: {2021: 5830, 2022: 5992, 2023: 6165, 2024: 6279, 2025: 6497, 2026: 6687}
+
+CONTEXT:
+  - Trump PSLF Executive Order signed March 7, 2025
+  - 2025 NRMP ROL deadline was Feb 24, 2025 (BEFORE EO)
+  - 2025 Match Day was March 21, 2025 (after EO but ROLs locked)
+  - 2026 Match Day was March 20, 2026 — FIRST post-EO Match cycle
+    (applicants had 12 months to respond when forming preferences)
+
+DESCRIPTIVE: 2025 vs 2026 mean fill rates by PSLF class
+--------------------------------------------------------------------------------
+Class                    n_2025   fill_2025   n_2026   fill_2026     Δ (pp)
+  pslf_friendly           3,677      0.9404    3,887      0.9348     -0.56
+  ambiguous               2,653      0.9253    2,629      0.9139     -1.14
+  pslf_hostile              167      0.8356      171      0.8645     +2.89
+
+  Descriptive DiD (hostile Δ minus friendly Δ): +3.44 pp
+
+REGRESSION: Pre-EO β + Post-EO Δ β (cluster-robust SE on institution)
+--------------------------------------------------------------------------------
+Spec                                                   Pre-EO β      Post-EO Δ    Δ p-value
+  S1: Status quo (all 23 hostile)                     -17.80 pp        +8.46 pp     2.984e-03
+      Pre-EO 95% CI: [-24.57, -11.02]; Post-EO Δ 95% CI: [+2.88, +14.04]
+  S2: HCA-academic reclassified as ambiguous          -16.17 pp       +16.73 pp     1.123e-07
+      Pre-EO 95% CI: [-21.48, -10.85]; Post-EO Δ 95% CI: [+10.55, +22.91]
+  S3: Drop HCA-academic partnerships                  -17.02 pp       +16.92 pp     8.449e-08
+      Pre-EO 95% CI: [-22.27, -11.76]; Post-EO Δ 95% CI: [+10.73, +23.12]
+
+INTERPRETATION:
+  Pre-EO β: PSLF-hostile coefficient for years 2021-2025 (vs ambiguous reference)
+  Post-EO Δ β: additional change in PSLF-hostile coefficient in year 2026
+  Positive Δ β = PSLF-hostile differential NARROWED in first post-EO Match cycle
+  This is the quasi-experimental DiD-style test of the Trump EO effect
+
+CAUTION:
+  Only n_hostile_2026 = ~171 program-years from ~9 unique institutions in S2/S3
+  (or ~23 in S1). Power to detect small interactions is limited.

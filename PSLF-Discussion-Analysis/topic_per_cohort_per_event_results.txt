@@ -1,0 +1,142 @@
+================================================================================
+Per-cohort × per-event TOPIC restructuring
+Generated: 2026-05-10T11:43:55
+================================================================================
+
+PURPOSE
+--------------------------------------------------------------------------------
+Tests whether different cohorts shift to different TOPICS around the same
+PSLF policy event. Extends cohort-heterogeneity from sentiment-only to
+multi-dimensional cohort × event × topic interaction.
+
+PER-EVENT × PER-COHORT TOPIC SHIFTS (cells with n_pre AND n_post >= 20)
+--------------------------------------------------------------------------------
+
+Limited PSLF Waiver:
+  cohort                      n_pre n_post     V         p  Top topic shifts
+  SDN (Medical)                 287    354 0.438 1.248e-25  success_story: -35.5pp | financial_planning: +14.5pp | policy_uncertainty: +12.3pp
+  Reddit Finance                 32     53 0.257    0.3467  financial_planning: -9.6pp | policy_uncertainty: +7.5pp | success_story: +3.8pp
+  Reddit r/StudentLoans          30     57 0.250    0.2462  servicer_issues: +10.9pp | career_impact: -8.2pp | policy_uncertainty: -4.7pp
+
+IDR Account Adjustment:
+  cohort                      n_pre n_post     V         p  Top topic shifts
+  SDN (Medical)                 191    255 0.722 1.961e-47  financial_planning: +61.5pp | general_question: -35.2pp | success_story: -17.8pp
+  Reddit Medical                 23     32 0.314    0.2473  policy_uncertainty: +12.5pp | servicer_issues: -9.9pp | financial_planning: -9.6pp
+  Reddit Finance                 60     53 0.246    0.3359  financial_planning: +13.8pp | general_question: -9.9pp | career_impact: -6.2pp
+  Reddit r/PSLF                  37     75 0.169    0.6678  success_story: -7.0pp | general_question: +4.8pp | frustration_venting: -2.7pp
+  Reddit r/StudentLoans          38     46 0.136    0.9071  financial_planning: +5.4pp | servicer_issues: -2.7pp | career_impact: -2.6pp
+
+Biden Mass Forgiveness:
+  cohort                      n_pre n_post     V         p  Top topic shifts
+  SDN (Medical)                 106     65 0.690 4.096e-16  career_impact: -53.2pp | general_question: +32.8pp | servicer_issues: +13.8pp
+  Reddit Medical                 29     20 0.289    0.3945  general_question: -14.5pp | servicer_issues: +10.0pp | policy_uncertainty: +6.2pp
+  Reddit r/StudentLoans          37     73 0.255    0.1276  servicer_issues: +19.4pp | policy_uncertainty: -9.3pp | financial_planning: -6.5pp
+  Other                          24     23 0.254    0.6939  policy_uncertainty: +9.1pp | career_impact: -7.1pp | financial_planning: +4.9pp
+  Reddit Finance                 62     54 0.207    0.5475  financial_planning: -10.3pp | general_question: +7.2pp | career_impact: +3.9pp
+  Reddit r/PSLF                  66     56 0.205    0.2728  servicer_issues: +16.7pp | general_question: -11.8pp | policy_uncertainty: -4.3pp
+
+Biden v. Nebraska SCOTUS:
+  cohort                      n_pre n_post     V         p  Top topic shifts
+  SDN (Medical)                 189    178 0.656 4.108e-33  financial_planning: -36.7pp | policy_uncertainty: +33.2pp | career_impact: -27.8pp
+  Reddit r/PSLF                  46    103 0.280   0.03976  success_story: -14.2pp | general_question: +11.0pp | financial_planning: +11.0pp
+  Reddit Medical                 26     45 0.252    0.4807  financial_planning: -10.4pp | general_question: +8.5pp | servicer_issues: +7.3pp
+  Reddit Finance                 26    126 0.125    0.6678  financial_planning: +6.3pp | career_impact: -3.1pp | success_story: -2.3pp
+
+Payments Restart:
+  cohort                      n_pre n_post     V         p  Top topic shifts
+  SDN (Medical)                 173     63 0.483 3.147e-11  policy_uncertainty: -35.3pp | financial_planning: +29.8pp | career_impact: +15.6pp
+  Reddit r/PSLF                 104     38 0.421  0.000126  servicer_issues: +32.2pp | financial_planning: -18.1pp | general_question: -14.5pp
+  Reddit Finance                121     41 0.328  0.003751  financial_planning: -23.2pp | career_impact: +8.9pp | general_question: +6.2pp
+  Other                          38     34 0.279    0.3446  career_impact: +13.2pp | financial_planning: -11.0pp | success_story: -5.3pp
+  Reddit Medical                 44     24 0.276    0.1598  servicer_issues: +22.0pp | financial_planning: -14.4pp | general_question: -8.3pp
+  Reddit r/StudentLoans         131     36 0.153    0.5632  financial_planning: -16.6pp | servicer_issues: +11.2pp | general_question: +5.2pp
+
+SAVE Admin Forbearance:
+  cohort                      n_pre n_post     V         p  Top topic shifts
+  SDN (Medical)                  96     23 0.926 5.832e-22  career_impact: +96.9pp | financial_planning: -67.7pp | general_question: -28.1pp
+  Reddit r/StudentLoans          61     36 0.283     0.256  policy_uncertainty: +13.5pp | general_question: -12.8pp | servicer_issues: +9.9pp
+  Reddit r/PSLF                  42     51 0.280    0.2958  servicer_issues: -13.9pp | success_story: +11.3pp | career_impact: +3.9pp
+  Reddit Medical                 27     23 0.196    0.7521  policy_uncertainty: +11.9pp | servicer_issues: -9.2pp | career_impact: +5.6pp
+  Reddit Finance                 72     60 0.165     0.607  career_impact: -3.9pp | financial_planning: +3.9pp | servicer_issues: -2.8pp
+  Other                          36     31 0.055    0.9953  general_question: -4.3pp | financial_planning: +2.7pp | policy_uncertainty: +0.9pp
+
+Trump PSLF EO:
+  cohort                      n_pre n_post     V         p  Top topic shifts
+  SDN (Medical)                 494    317 0.408  1.76e-27  policy_uncertainty: -27.3pp | career_impact: +18.1pp | financial_planning: +16.4pp
+  Reddit Finance                 53     54 0.315   0.03112  financial_planning: -14.3pp | policy_uncertainty: +11.1pp | general_question: +7.1pp
+  Reddit r/StudentLoans          48     46 0.277     0.205  general_question: +15.6pp | policy_uncertainty: -12.0pp | financial_planning: -7.7pp
+  Other                          45     50 0.244    0.3405  career_impact: -16.2pp | policy_uncertainty: +9.8pp | financial_planning: +9.6pp
+  Reddit r/PSLF                  68     31 0.191    0.6053  general_question: -11.2pp | policy_uncertainty: +9.3pp | servicer_issues: +7.5pp
+  Reddit Medical                 32     31 0.179    0.7338  policy_uncertainty: -14.4pp | general_question: +6.6pp | financial_planning: +4.1pp
+
+Final Trump PSLF Rule:
+  cohort                      n_pre n_post     V         p  Top topic shifts
+  Reddit Finance                 38     44 0.366   0.02668  financial_planning: +22.5pp | general_question: -21.4pp | career_impact: -2.6pp
+  SDN (Medical)                  77    197 0.327  1.88e-06  policy_uncertainty: +27.9pp | career_impact: -13.0pp | general_question: -10.3pp
+  Reddit r/PSLF                  33     65 0.296    0.1272  success_story: +15.5pp | financial_planning: -11.7pp | servicer_issues: -11.7pp
+  Reddit r/StudentLoans          43     54 0.156    0.6695  general_question: -7.1pp | servicer_issues: +5.0pp | policy_uncertainty: +4.6pp
+
+
+LARGEST COHORT-DISAGREEMENT ON TOPIC SHIFT (per event × topic)
+--------------------------------------------------------------------------------
+Tests headline hypothesis: do cohorts shift to different topics on same event?
+Higher 'range across cohorts' = cohorts shift to OPPOSITE topic directions.
+
+event                        topic                   range max_cohort                   max_Δ min_cohort                   min_Δ
+SAVE Admin Forbearance       career_impact           100.8 SDN (Medical)                +96.9 Reddit Finance                -3.9
+SAVE Admin Forbearance       financial_planning       71.6 Reddit Finance                +3.9 SDN (Medical)                -67.7
+IDR Account Adjustment       financial_planning       71.2 SDN (Medical)                +61.5 Reddit Medical                -9.6
+Biden Mass Forgiveness       career_impact            57.1 Reddit Finance                +3.9 SDN (Medical)                -53.2
+Payments Restart             financial_planning       53.1 SDN (Medical)                +29.8 Reddit Finance               -23.2
+Biden v. Nebraska SCOTUS     financial_planning       47.6 Reddit r/PSLF                +11.0 SDN (Medical)                -36.7
+Biden Mass Forgiveness       general_question         47.3 SDN (Medical)                +32.8 Reddit Medical               -14.5
+Payments Restart             policy_uncertainty       40.1 Reddit Finance                +4.9 SDN (Medical)                -35.3
+IDR Account Adjustment       general_question         40.0 Reddit r/PSLF                 +4.8 SDN (Medical)                -35.2
+Limited PSLF Waiver          success_story            39.2 Reddit Finance                +3.8 SDN (Medical)                -35.5
+Trump PSLF EO                policy_uncertainty       38.4 Reddit Finance               +11.1 SDN (Medical)                -27.3
+Trump PSLF EO                career_impact            34.3 SDN (Medical)                +18.1 Other                        -16.2
+Final Trump PSLF Rule        financial_planning       34.2 Reddit Finance               +22.5 Reddit r/PSLF                -11.7
+Final Trump PSLF Rule        policy_uncertainty       32.3 SDN (Medical)                +27.9 Reddit r/PSLF                 -4.4
+Final Trump PSLF Rule        general_question         32.2 Reddit r/PSLF                +10.8 Reddit Finance               -21.4
+Biden v. Nebraska SCOTUS     policy_uncertainty       31.0 SDN (Medical)                +33.2 Reddit Medical                +2.2
+Trump PSLF EO                financial_planning       30.8 SDN (Medical)                +16.4 Reddit Finance               -14.3
+Payments Restart             servicer_issues          29.8 Reddit r/PSLF                +32.2 Reddit Finance                +2.4
+SAVE Admin Forbearance       general_question         28.7 Reddit Finance                +0.6 SDN (Medical)                -28.1
+Trump PSLF EO                general_question         26.8 Reddit r/StudentLoans        +15.6 Reddit r/PSLF                -11.2
+Biden v. Nebraska SCOTUS     career_impact            25.7 Reddit r/PSLF                 -2.2 SDN (Medical)                -27.8
+Limited PSLF Waiver          financial_planning       24.0 SDN (Medical)                +14.5 Reddit Finance                -9.6
+SAVE Admin Forbearance       servicer_issues          23.7 Reddit r/StudentLoans         +9.9 Reddit r/PSLF                -13.9
+Biden v. Nebraska SCOTUS     success_story            23.2 SDN (Medical)                 +9.0 Reddit r/PSLF                -14.2
+Biden v. Nebraska SCOTUS     general_question         21.8 SDN (Medical)                +22.3 Reddit Finance                +0.5
+Payments Restart             general_question         20.8 Reddit Finance                +6.2 Reddit r/PSLF                -14.5
+Biden Mass Forgiveness       policy_uncertainty       18.4 Other                         +9.1 Reddit r/StudentLoans         -9.3
+IDR Account Adjustment       success_story            18.0 Reddit Finance                +0.2 SDN (Medical)                -17.8
+Biden Mass Forgiveness       financial_planning       18.0 SDN (Medical)                 +7.7 Reddit Finance               -10.3
+Biden Mass Forgiveness       servicer_issues          17.5 Reddit r/StudentLoans        +19.4 Reddit Finance                +1.9
+
+
+COHORT-OPPOSITE-DIRECTION TOPIC SHIFTS (max > +5pp AND min < -5pp on same event×topic)
+--------------------------------------------------------------------------------
+  IDR Account Adjustment       financial_planning    : SDN (Medical) +61.5pp vs Reddit Medical -9.6pp
+  Payments Restart             financial_planning    : SDN (Medical) +29.8pp vs Reddit Finance -23.2pp
+  Biden v. Nebraska SCOTUS     financial_planning    : Reddit r/PSLF +11.0pp vs SDN (Medical) -36.7pp
+  Biden Mass Forgiveness       general_question      : SDN (Medical) +32.8pp vs Reddit Medical -14.5pp
+  Trump PSLF EO                policy_uncertainty    : Reddit Finance +11.1pp vs SDN (Medical) -27.3pp
+  Trump PSLF EO                career_impact         : SDN (Medical) +18.1pp vs Other -16.2pp
+  Final Trump PSLF Rule        financial_planning    : Reddit Finance +22.5pp vs Reddit r/PSLF -11.7pp
+  Final Trump PSLF Rule        general_question      : Reddit r/PSLF +10.8pp vs Reddit Finance -21.4pp
+  Trump PSLF EO                financial_planning    : SDN (Medical) +16.4pp vs Reddit Finance -14.3pp
+  Trump PSLF EO                general_question      : Reddit r/StudentLoans +15.6pp vs Reddit r/PSLF -11.2pp
+  Limited PSLF Waiver          financial_planning    : SDN (Medical) +14.5pp vs Reddit Finance -9.6pp
+  SAVE Admin Forbearance       servicer_issues       : Reddit r/StudentLoans +9.9pp vs Reddit r/PSLF -13.9pp
+  Biden v. Nebraska SCOTUS     success_story         : SDN (Medical) +9.0pp vs Reddit r/PSLF -14.2pp
+  Payments Restart             general_question      : Reddit Finance +6.2pp vs Reddit r/PSLF -14.5pp
+  Biden Mass Forgiveness       policy_uncertainty    : Other +9.1pp vs Reddit r/StudentLoans -9.3pp
+  Biden Mass Forgiveness       financial_planning    : SDN (Medical) +7.7pp vs Reddit Finance -10.3pp
+  Biden v. Nebraska SCOTUS     servicer_issues       : Reddit Medical +7.3pp vs Reddit r/PSLF -9.3pp
+  Limited PSLF Waiver          career_impact         : SDN (Medical) +6.5pp vs Reddit r/StudentLoans -8.2pp
+  IDR Account Adjustment       career_impact         : Reddit Medical +5.0pp vs Reddit Finance -6.2pp
+
+================================================================================
+END OF ARTIFACT
+================================================================================

@@ -1,0 +1,106 @@
+================================================================================
+PSLF Sensitivity Analysis - SDN-Medical-Excluded Recomputation
+Generated: 2026-05-09T12:40:05
+Source: scripts/sensitivity_excl_sdn_medical.py
+================================================================================
+
+PURPOSE
+--------------------------------------------------------------------------------
+SDN (Medical) accounts for ~40% of the sentiment-eligible corpus and dominates
+many per-event x per-profession cells. This artifact re-runs main findings with
+SDN-Medical excluded to bound the 'SDN-driven artifact' critique.
+
+VERDICT KEY
+  SURVIVES    - same direction; magnitude ratio (excl/full) >= 0.7
+  WEAKENED    - same direction; magnitude ratio 0.3-0.7
+  COLLAPSED   - effect drops below threshold or sample inadequate
+  REVERSED    - sign flips between full and excluded
+  UNDERPOWERED - excluded subsample has n_pre or n_post < 10 (g) or < 20 (V)
+
+SAMPLE SIZES
+--------------------------------------------------------------------------------
+  Full corpus (3-scorer):       n=9,242
+  SDN-Medical-excluded:         n=6,111 (66.1%)
+  SDN-Medical excluded count:   3,133 rows
+
+[A] KRIPPENDORFF'S ALPHA - INSTRUMENT DISAGREEMENT
+--------------------------------------------------------------------------------
+  Canonical (fixed thresholds):      full=-0.0178  excl=-0.0091  delta=+0.0087
+  Charitable (percentile-matched):   full=+0.1961  excl=+0.2221  delta=+0.0261
+  Interpretation: if alpha barely moves, the construct-mismatch finding is
+  not SDN-driven; if it jumps toward 0.667, SDN-Medical was the disagreement
+  source.
+
+[B] PER-EVENT HEDGES' g (3 scorers, 8 events)
+--------------------------------------------------------------------------------
+Event                        metric        full    excl     full_n     excl_n verdict     
+Limited PSLF Waiver          g_textblob  +0.169  -0.231    398/589    111/235 REVERSED    
+Limited PSLF Waiver          g_vader     +0.019  -0.214    398/589    111/235 REVERSED    
+Limited PSLF Waiver          g_claude    -0.623  +0.035    398/589    111/235 COLLAPSED   
+IDR Account Adjustment       g_textblob  -0.092  +0.174    381/497    190/242 REVERSED    
+IDR Account Adjustment       g_vader     +0.348  +0.022    381/497    190/242 COLLAPSED   
+IDR Account Adjustment       g_claude    -0.153  +0.091    381/497    190/242 COLLAPSED   
+Biden Mass Forgiveness       g_textblob  -0.107  +0.021    345/313    239/248 COLLAPSED   
+Biden Mass Forgiveness       g_vader     -0.221  -0.030    345/313    239/248 COLLAPSED   
+Biden Mass Forgiveness       g_claude    -0.293  -0.286    345/313    239/248 SURVIVES    
+Biden v. Nebraska SCOTUS     g_textblob  -0.295  -0.106    339/673    151/495 WEAKENED    
+Biden v. Nebraska SCOTUS     g_vader     -0.136  +0.071    339/673    151/495 COLLAPSED   
+Biden v. Nebraska SCOTUS     g_claude    -0.151  -0.135    339/673    151/495 SURVIVES    
+Payments Restart             g_textblob  +0.093  -0.043    653/265    480/202 COLLAPSED   
+Payments Restart             g_vader     +0.092  -0.082    653/265    480/202 COLLAPSED   
+Payments Restart             g_claude    -0.167  -0.270    653/265    480/202 SURVIVES    
+SAVE Admin Forbearance       g_textblob  +0.167  -0.026    391/256    295/233 COLLAPSED   
+SAVE Admin Forbearance       g_vader     -0.065  -0.117    391/256    295/233 SURVIVES    
+SAVE Admin Forbearance       g_claude    -0.225  -0.008    391/256    295/233 COLLAPSED   
+Trump PSLF EO                g_textblob  -0.325  -0.065    771/559    277/243 COLLAPSED   
+Trump PSLF EO                g_vader     +0.161  -0.056    771/559    277/243 COLLAPSED   
+Trump PSLF EO                g_claude    +0.335  -0.091    771/559    277/243 COLLAPSED   
+Final Trump PSLF Rule        g_textblob  +0.298  -0.029    380/399    303/202 COLLAPSED   
+Final Trump PSLF Rule        g_vader     -0.068  -0.019    380/399    303/202 COLLAPSED   
+Final Trump PSLF Rule        g_claude    +0.301  +0.171    380/399    303/202 WEAKENED    
+
+[C] PER-EVENT STANCE-REJECTING-RATE SHIFT (pp)
+--------------------------------------------------------------------------------
+Event                          full_pp   excl_pp     full_n     excl_n verdict     
+Limited PSLF Waiver              +3.55     -0.65    289/416     74/180 COLLAPSED   
+IDR Account Adjustment           +6.14     -0.09    275/402    144/207 COLLAPSED   
+Biden Mass Forgiveness           -8.74     -3.36    278/207    203/194 WEAKENED    
+Biden v. Nebraska SCOTUS         +0.94     +5.07    232/419    125/341 SURVIVES    
+Payments Restart                 -1.09     -1.45    414/187    337/154 COLLAPSED   
+SAVE Admin Forbearance           -9.85     -3.49    254/204    211/182 WEAKENED    
+Trump PSLF EO                    +3.33     +2.47    454/432    220/183 SURVIVES    
+Final Trump PSLF Rule           -10.57     -4.01    285/293    244/169 WEAKENED    
+
+[D] PER-EVENT TOPIC SHIFTS - CRAMER'S V (composition-immune)
+--------------------------------------------------------------------------------
+Event                         full_V  excl_V     full_n     excl_n verdict     
+Limited PSLF Waiver            0.351   0.157    399/592    112/238 WEAKENED    
+IDR Account Adjustment         0.345   0.084    382/499    191/244 COLLAPSED   
+Biden Mass Forgiveness         0.320   0.177    347/314    241/249 WEAKENED    
+Biden v. Nebraska SCOTUS       0.288   0.201    340/676    151/498 WEAKENED    
+Payments Restart               0.248   0.224    656/265    483/202 SURVIVES    
+SAVE Admin Forbearance         0.222   0.105    391/256    295/233 WEAKENED    
+Trump PSLF EO                  0.236   0.101    771/563    277/246 WEAKENED    
+Final Trump PSLF Rule          0.244   0.155    382/399    305/202 WEAKENED    
+
+================================================================================
+SUMMARY VERDICTS
+--------------------------------------------------------------------------------
+  COLLAPSED        19 of 40 comparisons
+  WEAKENED         11 of 40 comparisons
+  SURVIVES          7 of 40 comparisons
+  REVERSED          3 of 40 comparisons
+
+Key questions for paper Discussion:
+  1. Did Krippendorff's alpha shift materially toward 0.667 in [A]? If no, the
+     construct-mismatch finding is not SDN-driven.
+  2. Which events in [B], [C], [D] survive vs collapse? Survivors are
+     defensible without SDN-Medical; collapses must be reframed as
+     SDN-Medical-specific.
+  3. Topic-shift survivals [D] are the strongest signal because Cramer's V
+     is composition-immune. If [D] survives broadly, the substantive paper's
+     topic-restructuring claim is robust.
+
+================================================================================
+END OF ARTIFACT
+================================================================================

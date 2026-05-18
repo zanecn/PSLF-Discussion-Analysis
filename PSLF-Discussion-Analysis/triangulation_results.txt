@@ -1,0 +1,129 @@
+================================================================================
+PSLF Sentiment Triangulation — TextBlob × VADER × Claude Sonnet 4
+Generated: 2026-05-10T12:19:04
+Source: scripts/sentiment_triangulation.py
+================================================================================
+
+INTER-RATER RELIABILITY (Krippendorff's alpha)
+--------------------------------------------------------------------------------
+Sample: union of 8 zero-shot subsamples (pa_np_expansion, reddit_arctic_shift_fill, reddit_cross, reddit_eventfull, reddit_eventstrat, reddit_fullcorpus, sdn_cross, sdn_eventfull)
+  n_units (total rows after dedup):          9,263
+  n_complete (all 3 scorers non-missing):    9,242
+Encoding: TextBlob & VADER discretized to 5-level ordinal {-2,-1,0,1,2};
+          Claude pslf_sentiment mapped to same scale.
+  TextBlob thresholds: < -0.4 / -0.1 / +0.1 / +0.4
+  VADER thresholds:    < -0.5 / -0.05 / +0.05 / +0.5 (Hutto & Gilbert 2014)
+
+Three-rater alpha (TextBlob, VADER, Claude):
+  Ordinal:  alpha = -0.0178  95% CI [-0.0309, -0.0044]  (bootstrap B=2000)
+  Nominal:  alpha = -0.0956
+  Interval: alpha = +0.0200
+
+Pairwise alpha (ordinal, fixed thresholds):
+   TextBlob x VADER    : alpha = -0.1082
+   TextBlob x Claude   : alpha = +0.0289
+      VADER x Claude   : alpha = -0.1977
+
+Upper-bound sensitivity: alpha with percentile-matched marginals
+  (Round 7 caveat: this is a CHARITABLE upper bound, not the canonical
+  number. Forcing equal-frequency quintiles aligns marginals between
+  TextBlob and VADER but NOT with Claude's true asymmetric distribution
+  (5%/18%/48%/25%/4%), which mechanically inflates alpha. Report the
+  fixed-threshold alpha as canonical and this as an upper bound.)
+  3-rater ordinal alpha (percentile, upper bound): +0.1961  95% CI [+0.1838, +0.2080]
+   TextBlob x VADER    : alpha = +0.3240
+   TextBlob x Claude   : alpha = +0.0911
+      VADER x Claude   : alpha = +0.1234
+
+Continuous Pearson r (supplementary, on raw scores):
+   TextBlob x VADER    : r = +0.2931, p = 1.733e-182
+   TextBlob x Claude   : r = +0.0889, p = 1.067e-17
+      VADER x Claude   : r = +0.1544, p = 2.158e-50
+
+Spearman rank correlation (scale-free):
+   TextBlob x VADER    : rho = +0.3243, p = 2.381e-225
+   TextBlob x Claude   : rho = +0.1009, p = 2.496e-22
+      VADER x Claude   : rho = +0.1418, p = 9.985e-43
+
+Marginal class distributions (5-level ordinal):
+     claude: -2:  323 (3.5%), -1: 1762 (19.1%), 0: 4605 (49.8%), 1: 2195 (23.8%), 2:  357 (3.9%)
+   textblob: -2:   17 (0.2%), -1:  412 (4.4%), 0: 4742 (51.2%), 1: 3959 (42.7%), 2:  133 (1.4%)
+      vader: -2:  886 (9.6%), -1:  693 (7.5%), 0:  230 (2.5%), 1: 1073 (11.6%), 2: 6381 (68.9%)
+
+Krippendorff (1980) interpretation thresholds:
+  alpha >= 0.800  reliable conclusions
+  alpha >= 0.667  tentative conclusions only
+  alpha <  0.667  too unreliable for substantive claims
+
+================================================================================
+PER-EVENT PRE/POST TESTS (well-powered after Path C event-window fill)
+--------------------------------------------------------------------------------
+Sample: all posts in event windows from any zeroshot subsample (n_pre range 339–771, n_post range 256–673)
+p_boot is block-permutation (Bickel et al. 1989, B=2000); preserves within-window autocorrelation.
+p_param is Welch's t (parametric, ignores autocorrelation; shown for comparison only).
+
+Event                         win n_pre n_post    g_TB  pBootTB    g_VA  pBootVA    g_CL  pBootCL
+----------------------------------------------------------------------------------------------------
+Limited PSLF Waiver            90   398    589  +0.169   0.1674  +0.019   0.9035  -0.623   0.0010
+IDR Account Adjustment         90   381    497  -0.092   0.5307  +0.348   0.0020  -0.153   0.2599
+Biden Mass Forgiveness         90   345    313  -0.107   0.3348  -0.221   0.0165  -0.293   0.0095
+Biden v. Nebraska SCOTUS       90   339    673  -0.295   0.0020  -0.136   0.1774  -0.151   0.1564
+Payments Restart               90   653    265  +0.093   0.3118  +0.092   0.3308  -0.167   0.1354
+SAVE Admin Forbearance         90   391    256  +0.167   0.1939  -0.065   0.5427  -0.225   0.0685
+Trump PSLF EO                  60   771    559  -0.325   0.0055  +0.161   0.1889  +0.335   0.0060
+Final Trump PSLF Rule          60   380    399  +0.298   0.0325  -0.068   0.6107  +0.301   0.0080
+
+(parametric p shown in CSV; not in this table since it is known-inflated by autocorrelation)
+
+Direction concordance (sign of Hedges' g):
+  Limited PSLF Waiver               TB:+ VA:+ CL:-
+  IDR Account Adjustment            TB:- VA:+ CL:-
+  Biden Mass Forgiveness            TB:- VA:- CL:- [CONCORDANT]
+  Biden v. Nebraska SCOTUS          TB:- VA:- CL:- [CONCORDANT]
+  Payments Restart                  TB:+ VA:+ CL:-
+  SAVE Admin Forbearance            TB:+ VA:- CL:-
+  Trump PSLF EO                     TB:- VA:+ CL:+
+  Final Trump PSLF Rule             TB:+ VA:- CL:+
+
+================================================================================
+CLAUDE TEST-RETEST RELIABILITY (temperature=1 vs temperature=0)
+Round-7 critical fix #5: ceiling reliability of stochastic single-pass
+Claude scoring. The default API call uses temperature=1.0 (sampled).
+A re-score at temperature=0 (deterministic) gives the upper bound
+on the alpha that any single-pass Claude scoring can achieve. If the
+test-retest alpha is well below 0.667, no amount of improved prompting
+or re-scoring can rescue the cross-instrument alpha; the LLM ceiling
+itself is the limit.
+--------------------------------------------------------------------------------
+
+Source: zeroshot_sdn_temp0_retest.csv
+  n (overlap):              605
+  alpha (ordinal):          +0.9582  95% CI [+0.9377, +0.9753]
+  alpha (nominal):          +0.9263
+  exact-match rate:         0.952
+  Confusion matrix:
+    temp=0 (retest)   -2  -1    0    1   2
+    temp=1 (default)                      
+    -2                22   5    0    0   0
+    -1                 1  76    6    1   0
+     0                 0   0  292    9   0
+     1                 0   0    7  160   0
+     2                 0   0    0    0  26
+
+Source: zeroshot_reddit_temp1_retest.csv
+  n (overlap):              680
+  alpha (ordinal):          +0.9341  95% CI [+0.9098, +0.9562]
+  alpha (nominal):          +0.9018
+  exact-match rate:         0.946
+  Confusion matrix:
+    temp=0 (retest)   -2  -1    0    1   2
+    temp=1 (default)                      
+    -2                11   2    0    0   0
+    -1                 1  78    4    0   0
+     0                 0   8  405   15   1
+     1                 0   0    6  133   0
+     2                 0   0    0    0  16
+
+================================================================================
+END OF ARTIFACT
+================================================================================

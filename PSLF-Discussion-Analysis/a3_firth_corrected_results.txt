@@ -1,0 +1,29 @@
+================================================================================
+A3 FIRTH-CORRECTED ODDS RATIOS
+================================================================================
+
+PURPOSE
+--------------------------------------------------------------------------------
+Original A3 SDN attending OR=0.016 was driven by d=1 cell.
+Firth penalized regression (Firth 1993) and Haldane-Anscombe
+(adding 0.5 to each cell) provide bias-corrected estimates that
+DO NOT diverge to 0/inf when cells are tiny.
+
+cohort                 cs                  naive         HA      Firth           Firth 95% CI
+SDN (Medical)          ALL                 0.272      0.272      0.000                    n/a
+SDN (Medical)          resident            0.943      0.913      0.000                    n/a
+SDN (Medical)          attending           0.016      0.024      0.000                    n/a
+SDN (Medical)          fellow              0.085      0.118      0.000                    n/a
+Reddit r/PSLF          ALL                 7.329      7.100      0.000                    n/a
+Reddit Finance         ALL                 0.182      0.182      0.000                    n/a
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+SDN attending: naive OR=0.016, HA OR=0.024, Firth OR=nan
+  -> Sparse-cell bias is modest. Naive OR is approximately valid.
+  -> Cell counts: a(neg+pur)=12 b(neg+not_pur)=12 c(not_neg+pur)=63 d(not_neg+not_pur)=1
+  -> The d=1 cell drives the naive estimate.
+
+Canonical reporting recommendation: report Firth OR + 95% CI as
+primary; naive OR as sensitivity. Magnitude claim 'extreme decoupling'
+must be tempered to actual Firth estimate.

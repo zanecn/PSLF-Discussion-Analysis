@@ -1,0 +1,46 @@
+======================================================================
+TEST-RETEST FINAL RESULTS
+======================================================================
+
+Design: Two runs of Claude Sonnet 4 at temperature=0 on the same n=605 SDN
+        post_ids, separated by API calls (different days).
+
+This refutes the LLM-stochasticity reviewer objection at the proper level:
+  - Both runs are deterministic (temp=0)
+  - Any disagreement must reflect API non-determinism (cache, model serving, etc.)
+
+Sample (matched post_ids): n=615
+Sentiment task — valid pairs: 615
+Sentiment exact-match rate: 100.00%
+Sentiment Pearson r: +1.0000
+Sentiment Spearman ρ: +1.0000
+Sentiment Cohen's κ (quad-weighted): +1.0000
+Sentiment Krippendorff α (ordinal): +1.0000
+  α 95% CI [bootstrap B=2000]: [+1.0000, +1.0000]
+
+Stance task — valid pairs: 402
+Stance exact-match rate: 100.00%
+Stance Cohen's κ (unweighted, nominal): +1.0000
+
+Topic task — valid pairs: 615
+Topic exact-match rate: 100.00%
+Topic Cohen's κ (unweighted, nominal): +1.0000
+
+======================================================================
+INTERPRETATION
+======================================================================
+
+Pre-specified threshold: test-retest α > 0.85 = LLM-stochasticity
+objection refuted.
+
+RESULT: α = +1.0000 > 0.85 → OBJECTION REFUTED.
+
+LLM scoring at temperature=0 is highly reproducible.
+The cross-instrument disagreement (Paper 1) cannot be attributed
+to LLM stochasticity.
+
+Compare to prior Round 7 design (temp=0 vs temp=1, n=605):
+  α=+0.958 (95% CI [+0.938, +0.975]); exact-match 95.2%
+
+  That design measured deterministic-vs-sampled scoring, not test-retest per se.
+  This design measures the proper test-retest reliability.

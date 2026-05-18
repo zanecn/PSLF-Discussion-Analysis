@@ -1,0 +1,467 @@
+================================================================================
+PSLF Bottom-Up Topic Modeling (BERTOPIC)
+Generated: 2026-05-09T11:06:05
+Source: scripts/topic_model_bertopic.py
+================================================================================
+
+PURPOSE
+--------------------------------------------------------------------------------
+Tests whether Claude's 7 prompt-defined `primary_topic` categories provide
+an adequate summarization of the latent topic structure in the PSLF corpus.
+Bottom-up topic discovery surfaces:
+  - Validation: prompt topics that cleanly map to discovered topics
+  - Composites: prompt topics that fragment into multiple discovered ones
+  - Gaps: discovered topics with no clear prompt-topic home (potentially
+    missed categories - the strongest reviewer-defense finding)
+
+SAMPLE
+--------------------------------------------------------------------------------
+  Total docs:                  78,143
+  Docs with Claude label:      6,858
+  Backend:                     bertopic
+  Topics fit:                  364
+
+DISCOVERED TOPICS (by sample size)
+--------------------------------------------------------------------------------
+tid  n_docs dominant_claude_topic            %  top_words
+  0   23533 financial_planning            40.0  my, to, the, loans, for, in, loan, and
+  1     568 servicer_issues              100.0  nelnet, save, application, plan, email, interest, due, was
+  2     318 servicer_issues               50.0  employer, signature, form, hr, sign, ein, employment, employers
+  3     232 general_question              48.4  nonprofit, hospital, 501c3, profit, kaiser, organization, physicians, qualify
+  4     224 servicer_issues              100.0  call, hold, phone, human, minutes, speak, mohela, hours
+  5     206 career_impact                 66.7  hours, 30, fulltime, week, parttime, full, part, time
+  6     197 servicer_issues              100.0  password, login, log, account, mohela, username, access, tried
+  7     173 career_impact                 70.1  offer, pto, primary, care, cme, clinic, fm, patients
+  8     167 servicer_issues              100.0  aidvantage, edfinancial, save, due, payment, plan, autopay, called
+  9     159 policy_uncertainty            85.7  court, borrowers, save, plan, injunction, circuit, supreme, blocked
+ 10     152 no_claude_label                0.0  trophies, ecf, fedloan, trophy, timeline, 2022, qualifying, submitted
+ 11     139 no_claude_label                0.0  trophies, transfer, transferred, fedloan, mohela, 915, transferring, fedloans
+ 12     119 no_claude_label                0.0  uk, tax, hmrc, company, self, paye, umbrella, ltd
+ 13     107 general_question             100.0  employed, employer, forgiveness, qualifying, employment, time, 120, job
+ 14     103 general_question              83.7  nhsc, scholarship, pa, corps, health, program, national, underserved
+ 15      83 financial_planning           100.0  roth, ira, separately, filing, backdoor, contributions, married, traditional
+ 16      83 no_claude_label                0.0  fsa, updated, mohela, 90, moheila, update, 120, days
+ 17      79 general_question             100.0  tracker, where, disappeared, site, see, mohela, pslf, counts
+ 18      79 financial_planning            85.7  403b, roth, traditional, ira, agi, contribute, contributions, retirement
+ 19      74 no_claude_label                0.0  abroad, foreign, us, uk, overseas, exclusion, living, feie
+ 20      74 financial_planning           100.0  state, tax, taxable, taxes, wisconsin, nc, bomb, carolina
+ 22      73 no_claude_label                0.0  subsidy, interest, repaye, 99973, 50, government, accrued, subsidies
+ 21      73 success_story                 55.6  green, banners, banner, fsa, golden, forbearance, request, ecf
+ 23      64 success_story                100.0  report, credit, score, forgiven, reports, long, reflected, scores
+ 24      57 career_impact                 94.7  remote, jobs, teletherapy, work, job, profit, non, slp
+ 25      55 general_question              50.0  1098e, 1098, tax, paid, deduction, form, interest, taxes
+ 26      52 financial_planning            80.0  alliant, location, curriculum, touro, pros, cons, einstein, strong
+ 27      49 general_question              60.0  loaneligibleindicator, eligiblepaymentcount, qualifyingpaymentcount, borrowereligibleindicator, forgivenessrequiredpayments, forgivenessremainingpayments, null, type
+ 28      49 financial_planning            60.9  dental, youre, 300400k, dentistry, 1020, yourself, youll, principal
+ 29      44 no_claude_label                0.0  deleted, video, pslf, folks, owns, soul, excel, convinced
+ 30      43 general_question              94.9  nurse, corps, scholarship, leftenantcolon, hrsa, nursing, license, program
+ 31      41 no_claude_label                0.0  driven, repaye, new, proposed, proposal, plans, effect, draft
+ 32      41 general_question             100.0  scam, scammed, company, companies, legit, prep, student, he
+ 34      38 career_impact                 81.5  feel, patients, work, practice, dbt, job, clinical, pa
+ 33      38 no_claude_label                0.0  pm, d2d, chat, list, discharge, allison, keri, thomas
+ 35      37 no_claude_label                0.0  capitalize, capitalization, ibr, interest, switching, capitalized, rap, switch
+ 36      36 no_claude_label                0.0  upload, uploading, documents, document, wet, error, pdf, tried
+ 37      36 no_claude_label                0.0  tool, page, download, form, help, tried, click, 404
+ 38      36 financial_planning           100.0  rap, 2028, paye, ibr, bill, borrowers, old, switch
+ 39      35 general_question             100.0  americorps, award, segal, lump, sum, awards, tfa, education
+ 40      34 financial_planning           100.0  refinance, rate, radiologist, refinancing, enter, rads, private, era
+ 41      33 policy_uncertainty            40.0  doctors, financial, medical, students, investment, retirement, caps, accelerated
+ 42      32 career_impact                 80.0  forensic, statebased, evals, competency, options, work, plenty, opportunities
+ 43      32 policy_uncertainty            45.5  army, ado, civilian, rotc, hpsp, residency, commissioning, scholarship
+ 45      31 career_impact                 51.6  fish, vet, pp, academia, vets, aquarium, internships, medicine
+ 44      31 policy_uncertainty           100.0  neutered, surviving, discretion, existed, stands, optimistic, secretary, chances
+ 46      30 general_question             100.0  versed, admit, strike, somewhere, reddit, find, either, point
+ 48      30 financial_planning            64.3  dental, dentists, ivies, schools, research, might, sdn, solid
+ 49      30 general_question             100.0  date, dates, employment, computation, form, dashes, start, mmddyyyy
+ 50      30 policy_uncertainty            95.7  professional, students, programs, cap, lifetime, professions, limits, committee
+ 47      30 career_impact                 87.5  podiatry, va, fqhc, lifethat, organizational, hunt, shortages, ihs
+ 51      29 financial_planning            52.4  ibr, forprofit, write, places, qualifies, clarification, pick, conflicting
+ 52      29 servicer_issues              100.0  studentaidgov, update, updated, updates, studentaid, aid, long, studentaidorg
+ 53      29 general_question              66.7  bad, residency, competitiveness, guarantees, section, deal, consider, really
+ 54      28 no_claude_label                0.0  edfinancial, paye, application, long, edfinacial, applications, 1225, submitted
+ 55      28 policy_uncertainty           100.0  court, relief, docket, oct, cases, injunction, plaintiffs, appeal
+ 58      27 no_claude_label                0.0  duplicate, form, canceled, processed, cancelled, status, marked, forms
+ 56      27 no_claude_label                0.0  data, released, httpsstudentaidgovdatacenterstudentloanforgivenesspslfdatahttpsstudentaidgovdatacenterstudentloanforgivenesspslfdata, dashboard, refreshed, october, 28th, listjust
+ 57      27 policy_uncertainty            84.6  nonprofitgovernment, biased, sympathetic, highincome, especially, cautious, placing, climate
+ 59      26 no_claude_label                0.0  disability, tpd, discharge, ssdi, disabled, edmohela, fers, permanent
+ 60      26 general_question              80.0  taxed, taxable, payerepayesave, podcasts, inherent, non, profit, coat
+ 61      26 no_claude_label                0.0  principle, interest, pay, off, 230, targeted, specific, target
+ 62      26 policy_uncertainty           100.0  cut, workers, healthcare, republicans, gop, residents, skyhigh, panacea
+ 63      26 general_question              78.6  preceptor, sites, programs, offers, demsn, postmasters, mortar, mills
+ 70      25 financial_planning            84.6  vet, rap, co, 200k, 2030, school, borrow, specializes
+ 69      25 general_question             100.0  second, forprofit, job, profit, nonprofit, affect, jobs, fulltime
+ 68      25 no_claude_label                0.0  chat, feature, function, scroll, mohela, find, bottom, where
+ 67      25 no_claude_label                0.0  smiley, face, d2d, zeros, standing, screen, emoji, today
+ 66      25 no_claude_label                0.0  auto, autopay, debit, discount, autodebit, reduction, 025, rate
+ 64      25 financial_planning            50.0  continuation, contract, funds, lrp, commitment, 50k, nhsc, reapplying
+ 65      25 financial_planning            60.0  pays, forgive, 15kmo, 360k, 350000, podiatry, guy, paid
+ 71      24 financial_planning            80.0  refinance, private, refinanced, refinancing, rate, splashfinancial, heartland, commercial
+ 72      24 career_impact                 80.0  facilities, practiceshospitals, aftersay, partneri, grasping, forthcoming, nonprofitpublic, altered
+ 73      24 no_claude_label                0.0  borrowers, cfpb, consumer, consumers, cfpbs, navient, servicers, bureau
+ 74      24 career_impact                 58.3  academia, competitive, positions, clinical, mentalnationwide, httpsjamanetworkcomjournalsjaer, privatized, psych
+ 75      24 general_question              85.7  taxable, itsilly, dispersals, whenduration, clarify, clarifies, monies, considered
+ 76      24 financial_planning            87.5  rap, bomb, ibr, old, tax, vs, agi, balance
+ 77      24 financial_planning           100.0  431, tax, taxable, topic, canceled, wwwirsgov, turbotaxintuitcom, lifesaver
+ 82      23 career_impact                 83.3  joining, gmo, military, reasons, choice, navy, bad, country
+ 84      23 financial_planning            80.0  math, translates, roi, students, growing, yrs, debttosalary, beholder
+ 83      23 general_question              50.0  leave, fmla, maternity, absence, lwop, std, unpaid, loa
+ 78      23 financial_planning            68.8  va, edrp, op, hpsp, residency, vas, deals, relocation
+ 81      23 career_impact                100.0  fqhcs, orgs, patients, staff, population, tend, work, necessarily
+ 80      23 career_impact                 52.4  unmatched, usda, core, telework, mds, jobs, importexport, pm
+ 79      23 policy_uncertainty           100.0  aft, lawsuit, desist, rights, studentloan, cease, borrowers, union
+ 90      22 no_claude_label                0.0  updated, counts, update, count, processed, 148120, waiting, updates
+ 93      22 financial_planning           100.0  dentists, experiences, nonas, professionalfinancial, disproportionate, objectives, aspirations, homeownership
+ 92      22 financial_planning            90.0  hard, lifestyle, 3000month, bmw, saturdays, living, work, 1000month
+ 91      22 career_impact                 81.8  vet, aquatics, animals, animal, medicine, vets, exotics, human
+ 94      22 policy_uncertainty            47.6  statute, secretary, doed, subchapter, 7681, givetheyre, tested, discretion
+ 89      22 policy_uncertainty            47.6  edrp, va, frequently, americans, mou, behest, phrased, ses
+ 87      22 financial_planning            71.4  city, mstp, washu, weather, md, clinical, museum, louis
+ 86      22 financial_planning            47.6  postbacc, medical, you, competitive, specialty, successful, medicine, brand
+ 85      22 financial_planning            50.0  cosign, cosigning, spouse, her, wife, registration, vehicle, name
+ 88      22 career_impact                 45.5  duke, care, primary, sinai, coa, va, solo, residency
+103      21 general_question             100.0  districts, summer, teaching, substitute, district, contract, worked, teachers
+109      21 career_impact                 47.6  academic, academics, grouppp, penn, pp, ivory, tower, local
+108      21 financial_planning            50.0  book, guide, coat, military, white, you, anticipated, doctor
+107      21 policy_uncertainty            55.6  presentation, aacom, dupe, slick, unbelievable, popped, garbage, assists
+106      21 financial_planning            95.2  highly, slp, planner, focuses, insightful, meet, ours, accepted
+105      21 general_question              83.3  edrp, reimbursed, va, triplecheck, followthrough, upped, represents, ahead
+104      21 policy_uncertainty            90.9  ptsd, sc, veterans, perception, referrals, veteran, trauma, operations
+101      21 career_impact                 70.0  realization, progressive, academia, itself, easy, mentioned, talked, reduce
+102      21 career_impact                 77.8  rank, ir, fellowship, mallinckrodt, stratify, obl, ohsu, irmsk
+100      21 no_claude_label                0.0  calculator, accurate, calculators, calc, studentloanhero, 240, accuracy, simulator
+ 99      21 no_claude_label                0.0  cancer, deferment, treatment, diagnosed, diagnosis, surgery, pointtimeline, post
+ 98      21 no_claude_label                0.0  grad, plus, save, direct, graduate, unsubsidized, ownedserviced, loans
+ 97      21 success_story                 71.4  2550, easy, 250300k, depending, occurs, win, break, youve
+ 96      21 general_question              78.6  shills, listen, ramsey, dave, fm, taxfree, theoretically, 150k
+ 95      21 general_question             100.0  nhsc, scholarship, obligations, nonfederal, scholars, priorities, awards, obligation
+114      20 no_claude_label                0.0  applied, whyyyyyy, approved, save, processing, application, long, processed
+115      20 general_question              60.0  pension, tsp, 3540kyear, 401kstyle, underperformed, refreshingly, flipside, sneeze
+113      20 financial_planning           100.0  juno, sdn, budgeting, outputs, link, broadly, alongside, tools
+110      20 policy_uncertainty            50.0  forensic, requires, forensicneuropsychology, neuropsychology, examinations, postdoctoral, neuropsych, inclination
+111      20 financial_planning            83.3  suck, staff, md, verification, sign, calldo, caseson, privilegesstaff
+112      20 financial_planning            62.5  harvard, link, footprint, scholarshipsstipends, slouch, nycs, einsteins, overrated
+116      19 general_question             100.0  hospital, strings, compare, attached, itself, nonprofit, positions, agree
+117      19 financial_planning            90.9  demographics, certain, private, solutionits, debtespecially, attaining, pslfand, lightly
+118      19 career_impact                 85.7  psychiatrists, work1099s, jobs, restrictive, rocky, healthcare, contract, involving
+119      19 career_impact                 93.8  mri, overplaying, hospitalemployed, incentivized, overcharging, findings, treating, pi
+120      19 financial_planning           100.0  income, return, taxes, turbotax, tax, irs, driven, filed
+124      18 career_impact                 90.0  blah, ego, hop, practice, dentists, pretttty, associateships, jose
+127      18 general_question              92.3  hattiesburg, com, culture, faculty, phd, research, style, class
+126      18 financial_planning            50.0  somewhat, forsolidarity, ibrloan, pauper, corners, trim, sizeable, deal
+125      18 no_claude_label                0.0  refunds, megathread, weekly, topics, waivers, points, timeeffort, sparked
+122      18 no_claude_label                0.0  hold, call, hyphen, calling, minutes, fedloan, called, callback
+121      18 no_claude_label                0.0  ecf, form, page, employers, submit, employer, forms, ecfs
+123      18 servicer_issues              100.0  fsa, says, glitch, grants, balance, fsa0, detailsinfo, site
+128      17 financial_planning            85.7  pharmacy, 2322, household, living, size, 200300k, cost, clients
+129      17 no_claude_label                0.0  gains, capital, sale, calculated, ibr, agi, selling, fasfa
+130      17 no_claude_label                0.0  10yr12k, forgiveness, batched, morning, timeline, checking, mohela, anybody
+131      17 no_claude_label                0.0  calculator, il, scd, bomb, rif, tool, creditable, determine
+132      17 policy_uncertainty            84.6  sympathetic, gi, people, helplessness, tuition, teenagers, handouts, chose
+140      16 no_claude_label                0.0  d2d, list, 119, 1109, 923, contemporaries, zeroed, chat
+137      16 career_impact                 75.0  nursing, pa, np, healthcare, rd, job, 200k, work
+141      16 policy_uncertainty           100.0  rule, comment, draft, comments, topics, rules, changes, nprm
+138      16 general_question              66.7  substitute, teaching, teacher, district, districts, staffing, source4teachers, subsitute
+139      16 policy_uncertainty            90.0  borrowers, lifetime, effects, borrowed, reduction, dollar, hispanic, proposed
+136      16 policy_uncertainty           100.0  borrowers, rule, proposed, secretary, regulations, percent, authority, incomedriven
+134      16 policy_uncertainty            83.3  students, 200k, cap, limit, ie, plus, borrowing, grad
+133      16 no_claude_label                0.0  cfpb, complaint, protection, consumer, bureau, complaints, submitted, fire
+135      16 no_claude_label                0.0  tpd, discharge, nelnet, 2024, december, disability, ssdi, approval
+149      15 no_claude_label                0.0  webinar, cfpb, event, link, register, pm, webex, demystified
+156      15 financial_planning           100.0  endorsing, wwwstudentloanplannercom, hoss, residency, op, physicians, planner, advisor
+155      15 no_claude_label                0.0  complaints, complaint, bbb, bureau, inaccurate, 665, customers, mary
+154      15 career_impact                 80.0  locum, hospital, shifts, hospitalist, leasingpurchasing, pcp, downfalls, youve
+153      15 policy_uncertainty            50.0  hard, larger, struggle, work, problem, person, multitaskingraising, problembelieve
+151      15 career_impact                 66.7  400k, wfellowship, md, owes, theyd, owe, uscnyu, 120160k
+150      15 financial_planning           100.0  residency, fiance, ubsubsub, 312102, apprecaited, jointly, repaye, file
+152      15 financial_planning            91.7  medicine, usually, physicians, 200k1million, residencyfellow, academicva, 50200k, postresidencyfellowship
+148      15 policy_uncertainty           100.0  military, members, proposedreleased, inception, utilized, sections, clarifying, impacts
+147      15 policy_uncertainty           100.0  thentheyre, reacting, perk, twenty, prep, nonpslf, tax, affects
+146      15 success_story                100.0  zeroes, balance, zero, today, finallycredit, fsa, zeros, zeroed
+145      15 policy_uncertainty           100.0  solicits, wwwfederalregistergov, pslfleave, 92421, department, comments, suggestions, comment
+144      15 policy_uncertainty           100.0  rates, disbursal, 908, differing, decisionmaking, 808, medical, acceptances
+143      15 general_question             100.0  shelters, animal, places, hospitals, potentially, teaching, isnt, government
+142      15 servicer_issues              100.0  warn, canned, team, customer, apparently, luck, folks, entire
+166      14 no_claude_label                0.0  forbearance, ending, aidvantage, ends, 0317, administrative, extend, save
+174      14 policy_uncertainty            81.8  webinar, webinars, advising, evening, pays, repayments, news, group
+173      14 financial_planning           100.0  calculator, aggressive, npv, discount, nominal, your, value, rate
+172      14 financial_planning           100.0  planner, advisors, advisorcompany, advisor, scammy, gradfin, specializing, financial
+171      14 servicer_issues               50.0  cornerstone, dynamics, lining, atm, servicing, fedloan, vet, behind
+170      14 no_claude_label                0.0  teach, grants, grant, converted, converting, teacher, cares, her
+169      14 policy_uncertainty           100.0  missouri, sue, against, damages, missouris, court, irreparable, standing
+168      14 financial_planning            66.7  residency, 1960, he, traditionally, calculated, decreases, his, practicing
+167      14 policy_uncertainty            90.9  decision, legitimate, bet, fellowship, 95, eliminate, agree, worst
+163      14 no_claude_label                0.0  vet, students, rap, borrowing, cap, 200k, 2026, rising
+165      14 policy_uncertainty           100.0  production, considerably, expenses, average, area, freeze, lotwith, overinflated
+162      14 no_claude_label                0.0  paye, consolidate, tricky, 2011, double, disbursed, eligiblity, consolidation
+161      14 policy_uncertainty            90.9  him, shift, husband, 660month, absoalutely, sahdhouse, 138260month, loss
+160      14 general_question             100.0  protest, rstudentloans, rpslf, reddit, thirdparty, reddits, users, community
+159      14 no_claude_label                0.0  cap, standard, 10year, paye, 10yr, amount, calculate, find
+158      14 no_claude_label                0.0  w2s, w2, paystubs, worked, employer, unsigned, lieu, closed
+157      14 no_claude_label                0.0  perkins, default, defaulted, collector, collections, collection, williams, university
+164      14 no_claude_label                0.0  tier, tiers, amt, explain, 36888, amount, 92624, table
+195      13 general_question             100.0  routinely, diligence, disqualify, appropriate, thousands, interesting, mistakes, complicated
+191      13 general_question             100.0  endorse, youll, plus, cosigning, complicated, son, youre, fees
+192      13 financial_planning            90.0  ops, backup, he, op, attendance, academic, repay, otherwise
+193      13 no_claude_label                0.0  simulator, 20year, accuracy, purposely, simulators, 64month, plan, accurate
+194      13 career_impact                 80.0  podiatry, 3kmo, mds, yep, rare, miss, training, 2k
+189      13 financial_planning            90.0  anybodys, wci, radiology, someones, gathered, bet, sites, thing
+199      13 general_question             100.0  grandfathered, cornfed101, reply, service, public, thank, need, think
+196      13 general_question              81.8  med, 500k, sucks, yeah, nhsc, youll, ok, finished
+197      13 financial_planning           100.0  miserable, buy, humanely, slightly, house, expensive, buyers, attending
+198      13 financial_planning           100.0  your, you, assistance, student, reduce, repayment, lower, financial
+200      13 policy_uncertainty           100.0  wwwtallahasseecom, faces, uncertain, service, public, heres, benefit, changes
+201      13 policy_uncertainty           100.0  contracting, fewer, shift, positions, imagine, luck, available, government
+190      13 financial_planning           100.0  housing, prices, crashcrisis, retraction, market, leaner, paymentwise, expensive
+182      13 general_question              76.9  deals, laurel, runs, fqhc, road, exist, physician, anymore
+188      13 policy_uncertainty           100.0  heading, permanently, worried, air, survive, everything, sounds, most
+180      13 policy_uncertainty           100.0  terms, promissory, challenged, contract, void, gop, notes, null
+187      13 no_claude_label                0.0  spouses, divorce, spouse, husbands, exwifes, acquired, married, deleted
+175      13 policy_uncertainty           100.0  scorched, repubs, doctors, thecollegeinvestorcom, mills, hill, spectrum, targets
+177      13 general_question              50.0  oos, osu, borrowing, saddled, 257k, instate, 105k, col
+178      13 policy_uncertainty           100.0  jayna, knows, aspect, prepared, political, follow, passed, include
+179      13 success_story                 63.6  beard, miscounting, getgo, rejected, 320000, nonprofitpublic, spite, pushback
+176      13 policy_uncertainty            90.0  master, promissory, worriesuncertainty, congressionally, legally, note, spirit, binding
+181      13 financial_planning           100.0  5kmo, expenses, living, mo, lcol, 1000mo, dual, housing
+183      13 financial_planning            55.6  pan, bit, clarify, disposable, specific, details, vs, expenses
+184      13 success_story                 50.0  1099c, taxable, tax, taxes, forms, transcript, forgiven, event
+185      13 financial_planning           100.0  halves, lifesaver, recommend, highly, vs, balances, large, repaye
+186      13 general_question              90.9  edrp, smaller, significantly, contract, assume, 100, heard, thats
+234      12 policy_uncertainty           100.0  trimmed, likelihood, unveiled, 78, longevity, longterm, discontinued, years
+225      12 general_question             100.0  misconduct, defense, mua, caribbean, schools, borrower, usdoe, students
+226      12 no_claude_label                0.0  month, jobs, employed, date, days, count, 14th, changing
+227      12 general_question              90.0  iirc, disqualify, falls, researching, mistakes, articles, common, recommend
+228      12 financial_planning           100.0  pretax, package, determine, fellowship, compensation, value, repaye, halved
+229      12 career_impact                100.0  halfdays, elaborate, inpatient, gig, 250k, appear, smaller, require
+231      12 success_story                 90.9  interaction, diligent, environment, notes, remainder, extremely, hospital, name
+232      12 policy_uncertainty           100.0  he, discontinued, grandfathered, print, bankruptcy, qualify, difficult, fine
+233      12 career_impact                100.0  va, amazed, seeming, psychologists, medium, practice, w2, psychologist
+241      12 career_impact                 90.9  billets, stationed, military, cutting, training, army, specialty, atrophy
+235      12 financial_planning            60.0  periodand, handcuffed, patientsday, transferable, pcps, oklahoma, scholars, uncommon
+236      12 financial_planning           100.0  psyd, 300000, successfully, tuition, strategies, limits, eppp, living
+237      12 general_question             100.0  hca, hospital, affiliated, youre, harder, forprofit, physicians, typically
+238      12 no_claude_label                0.0  mondays, update, thanksgiving, overnight, day, operation, 452023, dayday
+239      12 no_claude_label                0.0  tax, anyone, form, drt, info, else, forms, mohela
+240      12 policy_uncertainty            90.9  world, crop, shelters, zoo, workplaces, venture, mddo, wake
+223      12 policy_uncertainty           100.0  injunction, aug, court, 2025, accruing, comply, interest, your
+242      12 policy_uncertainty           100.0  applyhence, actual, 501c, hospital, system, woman, state, doubt
+243      12 no_claude_label                0.0  depends, organizations, places, nonprofit, losing, unless, sector, run
+224      12 financial_planning           100.0  intern, institutions, repaye, taxes, exempt, accumulation, saves, residency
+230      12 no_claude_label                0.0  expired, recertification, form, electronic, website, idr, 93024, using
+222      12 financial_planning           100.0  sixfigure, remind, exempt, sentence, death, sell, words, private
+211      12 career_impact                100.0  teaching, pe, burnt, programmer, teacher, classroom, grade, teach
+221      12 financial_planning           100.0  15002500month, works, itll, attending, depending, spouse, together, residency
+202      12 no_claude_label                0.0  paye, increase, income, significant, report, salary, sudden, 45401
+203      12 financial_planning            75.0  refinance, residency, every, yr, personally, assuming, growing, fees
+204      12 financial_planning           100.0  120140k, residency, mildly, iirc, whichever, blanket, pathway, institutional
+205      12 financial_planning            83.3  medical, hpsp, attending, threshold, ihelp, you, living, your
+207      12 policy_uncertainty           100.0  oral, health, dental, education, professionals, adea, americans, improve
+208      12 financial_planning           100.0  wwwvincomstudentdebtcenter, capitalized, smarter, deferments, cheaper, cases, ibrpaye, base
+209      12 financial_planning            90.9  bankruptcy, tenet, allornothing, curveballs, dischargeable, cumulatively, undue, outofpocket
+210      12 financial_planning           100.0  tool, gumroad, tutorial, cure, diagnose, simulate, side, product
+206      12 career_impact                 90.9  choosers, beggars, manager, lab, youve, comment, coders, paternalistic
+212      12 career_impact                 90.9  academia, research, diffuse, instrument, translating, visavis, nonsensical, descriptions
+214      12 career_impact                 90.0  nonlobster, nondischargeable, specialities, literacy, population, underserved, incentive, med
+215      12 financial_planning           100.0  loads, leftleaning, doctors, stark, snowballs, youre, comparatively, pursue
+216      12 career_impact                 72.7  pp, pain, washu, practice, sportspine, mskpain, shoulder, fellowship
+217      12 policy_uncertainty            90.0  incomebased, psychologists, youd, governmentprovided, notinsubstantial, psydr, meaning, perpetuity
+218      12 general_question             100.0  hpsp, scholarship, nhsc, ways, lots, deal, programs, state
+219      12 career_impact                 90.9  otherwise, strings, scholarship, accept, hpsp, compensation, attached, md
+213      12 policy_uncertainty           100.0  devastating, physicians, proposed, lowerpaid, weighed, underserved, specialties, areas
+220      12 policy_uncertainty           100.0  wanna, anymore, 200k, personal, rest, tell, understanding, theres
+324      11 financial_planning           100.0  377k, offload, calc, recommendations, tackle, resident, 68, consolidate
+319      11 general_question              90.9  boring, discussion, malt, ladoc, kendrick, aiquantumnuclear, usher, teetered
+320      11 financial_planning           100.0  jobif, companies, flux, give, shop, economy, 100month, lower
+321      11 career_impact                 90.9  residents, labor, fields, subsizdizing, govunderserved, medicaremedicaid, cms, underinsured
+322      11 policy_uncertainty            90.9  aidinrepayment, collegesuniversities, k12, assume, avoided, psychology, 1020, argue
+323      11 general_question             100.0  employeereisdent, shmuck, slaying, 750k, coveted, gme, 200300, networking
+327      11 success_story                100.0  rescindment, unfunded, insolvency, unmatched, afterward, unlikely, thread, doctors
+325      11 no_claude_label                0.0  vet, defunded, feel, zoonosis, parasitology, nontrad, hating, path
+326      11 policy_uncertainty           100.0  federation, trump, budget, nffe, nffeorg, decimates, condemns, employees
+328      11 success_story                100.0  rdy, ridic, devil, recounted, pushback, trail, shoes, incompetence
+317      11 financial_planning            54.5  calculator, affordability, houses, zillow, paycheck, insurance, random, bankrates
+329      11 policy_uncertainty           100.0  workforce, code, entice, companies, rid, thered, abolish, battles
+318      11 policy_uncertainty           100.0  aamc, strengthen, lawmakers, advocate, protect, workforce, members, action
+307      11 policy_uncertainty            90.0  astounded, climate, banking, political, happening, forward, actually, people
+316      11 financial_planning           100.0  manymost, interns, resumes, accruing, percentage, front, intend, soon
+315      11 career_impact                 90.9  thatd, justify, academics, decreased, compensation, sucks, exists, love
+314      11 career_impact                 90.9  qiqc, fte, academics, therapy, institution, bmtcell, computational, clinicalresearch
+313      11 career_impact                100.0  inday, admirable, fqhc, 10yrs, committing, population, underserved, commitment
+312      11 career_impact                100.0  admit, pitfalls, coverage, btw, weight, md, congrats, common
+311      11 financial_planning           100.0  cnucom, kcucom, pros, cons, taker, usmle, comlex, accreditation
+310      11 general_question             100.0  nhsc, service, stuck, public, fed, where, apply, forgiveness
+309      11 career_impact                 50.0  hybrids, hybrid, formative, cu, utah, weighed, unfamiliar, pts
+308      11 general_question              81.8  medicine, prerequisite, classes, mechanical, volunteering, admission, distance, experiences
+306      11 financial_planning           100.0  deferred, repayepaye, discussion, strategies, 31st, advised, strategy, subtotal
+305      11 policy_uncertainty            90.0  stony, hijacking, aid, underwhelming, needbased, lowkey, namely, nonexistent
+304      11 success_story                100.0  mixup, prolonged, extends, 14k, congrats, 8k, 250k, lack
+331      11 policy_uncertainty           100.0  hellbent, exist, 25kyear, schemes, youre, strings, specific, assumes
+330      11 general_question             100.0  emma, crawford, discusses, cfp, video, pslfqualifying, legislation, 21
+358      11 general_question             100.0  his, bankruptcy, bajillion, demolished, dumbest, cards, freezing, proceedings
+332      11 financial_planning           100.0  incomes, mixing, subsidy, repaye, capped, high, cap, hand
+347      11 policy_uncertainty            70.0  fin, he, cosign, son, program, his, till, wants
+359      11 financial_planning           100.0  wages, nepo, 6080hr, gluck, 5yr, dpms, swallow, ego
+302      11 career_impact                100.0  aquatics, write, sharing, thank, gave, general, program, experience
+357      11 policy_uncertainty           100.0  mpn, ironclad, spell, fwiw, lawyers, wording, lines, changes
+356      11 general_question             100.0  googlable, nonprofitetc, 1900s, miss, tedious, workplaces, nonconsecutive, hr
+355      11 general_question             100.0  sep30, w4, awards, transcript, final, award, enrollment, overall
+354      11 general_question              90.0  jfog, uninstall, tapatalk, reinstall, cache, browser, quote, edited
+353      11 general_question              70.0  contract, ihs, autodeduct, withheld, 25000, completing, 1st, increases
+352      11 policy_uncertainty            90.0  gender, precluding, enemy, cleveland, minors, ideology, related, affirming
+351      11 policy_uncertainty           100.0  heritage, ban, yup, named, foundation, participating, nonprofits, employees
+350      11 policy_uncertainty           100.0  wwwgooglecom, paints, breakup, bleak, stake, failing, report, millions
+349      11 general_question             100.0  excuses, buyback, resolution, ways, anybody, specific, coming, months
+348      11 career_impact                 90.0  academics, communitylevel, hunt, purely, boston, cities, understood, youre
+346      11 general_question             100.0  inefficiency, pour, incurred, missed, blame, manner, applicant, fail
+333      11 general_question              70.0  phased, familiar, grandfathered, exactly, graduating, certain, ones, programs
+345      11 financial_planning           100.0  crystal, finish, pleasant, trash, climate, ball, wedding, til
+344      11 no_claude_label                0.0  click, buttons, incomedriven, unclickable, button, submit, application, device
+343      11 financial_planning            60.0  5060hrs, vagov, comp1, pp1099s, prefered, 431031, probability, probably
+342      11 success_story                100.0  readily, values, depends, capital, flexibility, dealt, opinion, minimal
+341      11 financial_planning            55.6  354x, tapped, across, production, ramsey, born, vets, 1000month
+340      11 career_impact                 90.0  definitely, ringer, boarded, deter, pursing, mentally, 34k, anxiety
+339      11 career_impact                 90.0  effectsspecialty, ppomedicaidhmoffs, inflationary, endo, omfs, pediatrics, suffering, leverage
+338      11 financial_planning           100.0  speculative, nobrainer, origination, front, fee, possibility, easy, choice
+337      11 general_question             100.0  cosignature, nonprofit, key, son, party, clarify, realize, needs
+336      11 success_story                100.0  route, nickel, differentials, fancy, dime, bump, weigh, jobs
+335      11 general_question             100.0  floats, xyz, spell, hours, yes, 5050, asks, staff
+334      11 financial_planning           100.0  orthointerested, drivetake, rfu, vermont, emphasize, coursework, esp, chicago
+303      11 career_impact                100.0  academic, endocrinology, facetoface, candidacy, classes, prereq, physiology, funding
+276      11 success_story                100.0  topic, sociopolitical, offtopic, dude, dragging, residents, nightmare, doctors
+301      11 success_story                100.0  affects, responsible, biden, taxes, expect, bill, tax, forgiven
+257      11 no_claude_label                0.0  life, choices, dev, pcps, doctors, chunk, upper, software
+269      11 career_impact                100.0  lutheran, rank, residents, notforprofit, overconsult, consultover, chicagoan, subis
+268      11 no_claude_label                0.0  scramble, postcovid, forbid, protected, permanently, disabled, frozen, protections
+267      11 policy_uncertainty           100.0  equating, protections, consistent, repayments, leaving, important, quite, confusing
+266      11 financial_planning           100.0  outgoing, freezes, replace, followup, principal, 450k, amortization, repaye
+265      11 career_impact                100.0  cheaper, psyds, midlevels, collapse, cancellations, unfunded, impending, flawed
+264      11 financial_planning           100.0  yojr, caps, enough, principle, pays, subsidy, interest, calculated
+263      11 financial_planning           100.0  proposed, exclusion, poverty, msbefore, changes, repaye, briefly, amortization
+262      11 success_story                100.0  era, responsible, trump, burden, military, changed, longer, thought
+261      11 policy_uncertainty            90.0  wayne, preclinical, tech, texas, acceptances, weather, research, congrats
+260      11 financial_planning           100.0  nuanced, importantly, decline, refinance, affected, highly, build, deferred
+259      11 policy_uncertainty           100.0  hypothetical, fair, play, exist, knowing, exactly, programs, continue
+258      11 financial_planning           100.0  ohio, daunting, 450k, struggle, mental, 45, tuition, residency
+256      11 financial_planning           100.0  ended, compounding, origination, 16k, bigger, fee, subsidized, 400k
+271      11 policy_uncertainty           100.0  ones, agree, worst, rae, prevets, costhigh, things, battie
+255      11 general_question             100.0  1900s, poorly, existed, earliest, 2007, run, 2017, program
+254      11 career_impact                100.0  neonatologists, jobemployment, kp2az, mednax, nicu, weighing, profession, 350k
+253      11 policy_uncertainty           100.0  aphis, vmo, usda, veterinary, animal, officer, yeah, head
+252      11 financial_planning           100.0  restraint, heshe, sam, uncle, op, 5558, free, supporters
+251      11 financial_planning           100.0  hackensack, uva, speciality, aspects, hospital, choses, hackensacks, happiest
+250      11 no_claude_label                0.0  median, price, 400k, yeeesh, 630k, 50hrs, paycheck, luxury
+249      11 policy_uncertainty           100.0  carrots, shortening, yep, discharging, reserves, fields, length, providers
+248      11 financial_planning           100.0  loansbeyond, pavements, betteror, rateis, halve, addendum, effective, superior
+247      11 general_question              90.0  lightening, emotionally, decreases, heavy, load, wow, carry, heart
+246      11 financial_planning           100.0  ivf, howwhere, kids, comfortable, expensive, invest, needs, already
+245      11 no_claude_label                0.0  neglect, monkey, stumped, paychecks, struggling, gone, lowered, owe
+244      11 career_impact                 90.0  ip, arbitrary, fte, cme, built, funds, pretty, clinical
+300      11 career_impact                100.0  ifs, satisfaction, waste, responses, decided, whats, appreciate, everyone
+270      11 policy_uncertainty           100.0  dislike, china, bull, messenger, shop, acting, man, admin
+272      11 financial_planning           100.0  gross, accountant, shouldnt, water, deduction, dollars, taxed, fair
+287      11 success_story                100.0  insolvency, unmatched, liabilities, mds, exceed, thecollegeinvestorcom, koeut, seth
+299      11 no_claude_label                0.0  delay, correspondence, processing, request, 90, days, 22225, correspondance
+298      11 career_impact                100.0  gd, 900k, omfs, cents, reasonable, route, financially, transition
+297      11 career_impact                 66.7  oriented, incentivize, achieving, fqhc, rural, jobs, doctors, pp
+296      11 general_question              80.0  ease, slp, brought, agree, recommend, near, met, definitely
+295      11 financial_planning           100.0  considering, opconsult, enjoyable, 10kyr, carolinas, psychiatrists, spectrum, chump
+294      11 success_story                 81.8  northern, kaiser, tpmg, care, regional, ancillary, theres, team
+293      11 servicer_issues              100.0  sherrod, massachusetts, pennsylvania, brown, senate, servicers, bureau, cfpb
+292      11 policy_uncertainty           100.0  law, misconception, bimodal, hinge, futures, weirder, vulnerable, people
+291      11 policy_uncertainty           100.0  mrsmile12, cbs, news, replies, suspended, forum, 2025, thread
+290      11 no_claude_label                0.0  shaved, msg, ya, luckily, percentage, high, certain, far
+289      11 financial_planning            66.7  terms, washu, chillier, avoidable, pgy3, private, tradeoff, difference
+273      11 financial_planning           100.0  coa, deadset, ms1, max, subspecialty, incoming, opinions, little
+288      11 financial_planning           100.0  credentialsbillable, fsps, pyramidal, outask, organizational, supervision, abilities, pathways
+286      11 policy_uncertainty            90.0  product, mpn, availability, borrowers, described, policy, enshrine, preposterous
+285      11 financial_planning           100.0  cd, bar, bonuses, signing, safe, them, sit, spent
+284      11 financial_planning           100.0  cat, repeat, er, dog, really, policyparty, tosu, columbus
+283      11 policy_uncertainty           100.0  city, favor, dream, extern, externships, repeals, nonibr, negotiable
+282      11 frustration_venting          100.0  vegas, black, smarter, six, literally, success, personal, figure
+281      11 career_impact                 90.9  research, faculty, phd, anatomics, collaborative, ap, reluctantly, expectation
+280      11 career_impact                 90.9  40ish, talent, 7080, perceived, bouncing, attract, colleagues, glad
+279      11 policy_uncertainty           100.0  academia, 1myear, hospitalyou, moneyyou, communitypp, loansdont, onc, exodus
+278      11 career_impact                100.0  7am7pm, bacilus, 75pm, benefitspension, compressed, interrupted, mf, worklife
+277      11 policy_uncertainty           100.0  credibly, accused, serves, presidents, intact, trusting, memory, fulfill
+275      11 financial_planning           100.0  um, avoided, optimal, exclusion, listening, vast, expires, outcome
+274      11 success_story                100.0  faculty, 8months, professionally, 40hrs, caseloads, varied, rewarding, satisfying
+360      10 no_claude_label                0.0  senate, byrd, reconciliation, borrowers, repeal, bill, budgetary, provision
+361      10 no_claude_label                0.0  transferees, 09072022, transferred, transfer, noooooooo, 830, 98, account
+362      10 no_claude_label                0.0  aidvantage, aidvantagefedloand, servicer, aidvantagemohela, communication, fedloan, serviced, vs
+363      10 policy_uncertainty           100.0  mackinac, lawsuit, cato, court, challenging, arguments, statute, case
+
+PROMPT-vs-DISCOVERED CROSSTAB (rows=prompt topic, cols=discovered topic id)
+--------------------------------------------------------------------------------
+Read each row: of the docs with Claude prompt-topic X, which discovered
+topics absorb them?
+
+discovered_topic      -1    0  1  2   3  4  5  6   7  8  9  13  14  15  17  18  20  21  23  24  25  26  27  28  30  32  34  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52  53  55  57  60  62  63  64  65  69  70  71  72  74  75  76  77  78  79  80  81  82  83  84  85  86  87  88  89  91  92  93  94  95  96  97  101  102  103  104  105  106  107  108  109  110  111  112  113  115  116  117  118  119  120  123  124  126  127  128  132  134  136  137  138  139  141  142  143  144  145  146  147  148  150  151  152  153  154  156  160  161  165  167  168  169  171  172  173  174  175  176  177  178  179  180  181  182  183  184  185  186  188  189  190  191  192  194  195  196  197  198  199  200  201  203  204  205  206  207  208  209  210  211  212  213  214  215  216  217  218  219  220  221  222  223  224  225  227  228  229  231  232  233  234  235  236  237  240  241  242  244  246  247  248  249  251  252  253  254  255  256  258  259  260  261  262  263  264  265  266  267  269  270  271  272  273  274  275  276  277  278  279  280  281  282  283  284  285  286  287  288  289  291  292  293  294  295  296  297  298  300  301  302  303  304  305  306  307  308  309  310  311  312  313  314  315  316  317  318  319  320  321  322  323  324  326  327  328  329  330  331  332  333  334  335  336  337  338  339  340  341  342  343  345  346  347  348  349  350  351  352  353  354  355  356  357  358  359  363
+primary_topic                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+api_error              2    0  0  0   0  0  0  0   0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0    0    1    0    0    0    0    0    0    1    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+career_impact        197  110  0  0   5  0  4  0  68  0  0   0   4   0   0   0   0   0   0  18   0   4   0   3   0   0  22   0   0   0   8  24   4   0  16   0  21   2   0   0   0   0   0   0   2   1   0   2   0   0   0   0   0  12  14   0   0   0   5   0  11   8   5   0   2   0   2   1  10   8   9   0   0   0   0   0   0   14    7    0    1    0    0    1    4   10    0    2    0    0    2    0    1   12   15    0    0    9    0    0    1    0    0    0    6    0    0    0    0    0    0    0    0    0    0    0    8    1    0    4    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    1    0    0    0    0    0    4    0    0    0    0    0    0    0    0    0    1   10    0    0    0    0    5   10    0    9    0    8    0    0   10    0    0    0    0    0    0    0    0   10    0    0   11    0    2    0    0    0   10    0    9    0    0    0    0    0    0    0   10    0    0    0    0    0    0    0    0    0    1    0    0    2    0    0    0    0    0    0    0    0   10    0   10   10    0    0    0    0    0    0    0    0    0    0    0    2    0    0    2    6   10    0   10   10    0    0    0    0    1    2    0    0    1    2   10   10    0    0    0    0    0   10    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    9    9    0    0    4    0    0    0    9    0    0    0    0    0    0    0    0    0    0    0    0
+financial_planning   857  636  0  0   0  0  0  0   6  0  0   0  10  17   0   6  11   0   0   0   0  20   1  14   2   0   1   1   0  30   8   1   8   0   0   0   1   9   0   0  11   0   0   0   0   0   0   1  11   3   0  11   8   3   0   1   7  10  11   0   0   0   0   1  12   1  10   5   9   3   1   9  12   9   0   3   4    0    0    0    0    2   20    0   10    0    9   10    5    8    6    0   10    0    1    3    0    1    1    0   12    0    0    0    2    0    1    0    0    0    0    0    0    0    0    1    4   11    1    0    5    0    0    0    0    2    0    0    1    3    1    0    0    4    0    1    0    5    1    5    0    1    0    0    9    3    0    9    0    0    2   10   10    0    0    0    3   11   10    0    0   10   10   10    0    0    0    0   10    1    0    0    1    0    5    5    0   10    0    0   10    0    0    0    0    0    3   10    0    0    1    0    0   10    1   10    0   10   10    0    0    0   10   11    0   10    0    0    2   10    0    2    0    0    0    0    1   10    0   10    0    0    0    0    0    0    0    0    1    1    0    0   10    2    0    0    0    0   10    2    0    0    0    0    0    0    0    0   10    0    0    2    0    1    0    0    0    0   11    6    0    0   11    0    0    0    2    0    0    0    0    0    0   10    3    3    0    0    0   10    0    1    5    0    6   11    0    2    1    0    0    0    0    3    0    0    0    0    0    1    0
+frustration_venting    4    4  0  0   0  0  0  0   0  0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   10    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    4    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+general_question     370  390  0  3  15  0  1  0   4  0  0   2  77   0   1   1   0   2   0   1   1   0   3   1  37   2   0   0   1   0   1   0   0   0   0   2   2   1   2   1   9   0   2   0   0   4   0  11  11   0   1   0   2   0   0   6   0   0   0   0   0   0   1   1   0   1   9   0   1   0   0   1   0   2   6  11   0    6    1    2    0   10    0    7    0    0    0    0    0    0   12   11    0    0    0    0    0    0    0   12    1    2    0    0    0    2    0    0    0   10    0    0    0    0    0    0    0    0    0    1    0    3    0    0    0    0    0    5    0    0    1    0    0    6    0    3    0    0   10    4    1    0   10    0    0    0   10    1    0   10    9    0    0   10    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    8    0    0    0    0    0    0    3    9    0    0    1    0    0    0    0    0   10    0    0    0    0    0    9    0    0    0    0    0    0   10    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    8    0    0    0    0    0    0    0    0    0    0    9    0   11    0    0    0    1    0    0    0    0   10    0    0    0    4    0    0    0    0    0   10    0    0    7    0    1    0   10    0    0    0    0    0    0    0   10    1    0    3    0    0    0    7    9   10   10    0   10    0    0
+parse_error           74   43  0  0   0  0  0  0   7  0  1   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   3   0   0   0   1   0   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   2   0   0   1   0   1   0   0   0   0   0   0   0   0   0   0   0   2   0   1   0   0   0   0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    1    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    2    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    1    0    1    0    0    0    0    0    0
+policy_uncertainty   282  205  0  0  10  0  0  0   1  0  6   0   1   0   0   0   0   0   0   0   0   1   0   4   0   0   0   0   0   0  12   4  10  30  15   0   0   1   0  22   1   0   1   8  11   0  10   0   0   2   0   0   0   0   9   0   0   0   0   1   0   0   0   0   0   0   0   1   0  10   0   0   0  10   0   0   0    0    0    0   10    0    1   10    6    0   10    0    3    0    0    0    0    2    0    0    0    0    1    0    0   11    5    2    0    1    9    7    0    0   10   10    0    9   10    0    0    0    1    0    0    0   10    2   10    1    3    0    0    0    9    2    9    1    9    0    2    0    0    0    0    0    0   10    0    0    0    0    1    0    0    0    0    0    1    1    0    0    1    0   10    0    0    0    0    0    1    1    0    0    9    0    0   10    0    0    1    0    0    0    0    0    0   10    0    1    0    0    0   10    0   10    0    0    0    0   10    0    0   11    0    0    0    0   10    0    9    0    0    0    0    0   10    0   10   10    0    0    0    0    0   10    0   10    1    0    0   10    0    0    9    0    0    0   10   10    0    0    0    0    1    0    0    0    0    0    0    9    0    9    0    0    0    0    0    0    0    0    0    4    2    1    0    0   10    0    0   10    0    0   10    0   10    0    0    0    0    0    0    0    0    0    0    0    0    0    0    7    0    0   10   10    9    0    0    0    0   10    0    0    1
+servicer_issues      358  106  2  3   1  1  1  1   0  1  0   0   0   0   0   0   0   2   0   0   1   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0   10    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    5    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    9    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+success_story        115   97  0  0   0  0  0  0  11  0  0   0   0   0   0   0   0   5   1   0   0   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  10   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  10    0    0    0    0    0    0    0    0   10    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    2    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    7    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   10    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   10    0    0    0    0    0    0    0    0    0    0   10    0   10    0    0    0    0    0    0    0    0    0    0   10    0    0    0    0    0    9    0    0    0    0    0   10    0    0    2    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   10    1    0    0    0    0    0    0    0   10    0    0    0    0    0   10    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+
+(Full crosstab in topic_model_crosstab.csv)
+
+POTENTIAL MISSED CATEGORIES (dominant Claude-topic share < 35%, n>=30)
+--------------------------------------------------------------------------------
+12 discovered topic(s) flagged. Inspect top_words to see
+if the topic is a coherent missed category (write up as a finding) or
+noise/multi-prompt-category mixture (write up as a limitation):
+
+  tid=10, n=152, dominant_claude=no_claude_label (0.0%)
+    top_words: trophies, ecf, fedloan, trophy, timeline, 2022, qualifying, submitted
+    sources:   reddit_arctic_shift_post:100%
+
+  tid=11, n=139, dominant_claude=no_claude_label (0.0%)
+    top_words: trophies, transfer, transferred, fedloan, mohela, 915, transferring, fedloans
+    sources:   reddit_arctic_shift_post:100%
+
+  tid=12, n=119, dominant_claude=no_claude_label (0.0%)
+    top_words: uk, tax, hmrc, company, self, paye, umbrella, ltd
+    sources:   reddit_arctic_shift_post:100%
+
+  tid=16, n=83, dominant_claude=no_claude_label (0.0%)
+    top_words: fsa, updated, mohela, 90, moheila, update, 120, days
+    sources:   reddit_arctic_shift_post:100%
+
+  tid=19, n=74, dominant_claude=no_claude_label (0.0%)
+    top_words: abroad, foreign, us, uk, overseas, exclusion, living, feie
+    sources:   reddit_arctic_shift_post:100%
+
+  tid=22, n=73, dominant_claude=no_claude_label (0.0%)
+    top_words: subsidy, interest, repaye, 99973, 50, government, accrued, subsidies
+    sources:   reddit_arctic_shift_post:100%
+
+  tid=29, n=44, dominant_claude=no_claude_label (0.0%)
+    top_words: deleted, video, pslf, folks, owns, soul, excel, convinced
+    sources:   reddit_arctic_shift_post:100%
+
+  tid=31, n=41, dominant_claude=no_claude_label (0.0%)
+    top_words: driven, repaye, new, proposed, proposal, plans, effect, draft
+    sources:   reddit_arctic_shift_post:100%
+
+  tid=33, n=38, dominant_claude=no_claude_label (0.0%)
+    top_words: pm, d2d, chat, list, discharge, allison, keri, thomas
+    sources:   reddit_arctic_shift_post:100%
+
+  tid=35, n=37, dominant_claude=no_claude_label (0.0%)
+    top_words: capitalize, capitalization, ibr, interest, switching, capitalized, rap, switch
+    sources:   reddit_arctic_shift_post:100%
+
+  tid=36, n=36, dominant_claude=no_claude_label (0.0%)
+    top_words: upload, uploading, documents, document, wet, error, pdf, tried
+    sources:   reddit_arctic_shift_post:100%
+
+  tid=37, n=36, dominant_claude=no_claude_label (0.0%)
+    top_words: tool, page, download, form, help, tried, click, 404
+    sources:   reddit_arctic_shift_post:100%
+
+================================================================================
+END OF ARTIFACT
+================================================================================

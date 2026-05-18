@@ -1,0 +1,48 @@
+L5 COHORT HETEROGENEITY ROBUSTNESS
+================================================================================
+
+cohort                 spec                                         n       OR                   CI   dir
+Reddit r/PSLF          Claude-neg x Claude-pur (original)        1469    7.329         [4.20,12.78]  OR>1
+Reddit r/PSLF          TB-neg x Claude-pur                       1469    1.655          [0.97,2.83]  OR>1
+Reddit r/PSLF          VADER-neg x Claude-pur                    1469    2.526          [1.53,4.18]  OR>1
+Reddit r/PSLF          Claude-neg x Claude-pur-only              1469    5.207          [3.54,7.65]  OR>1
+Reddit r/PSLF          Claude-neg x Claude-pur-or-completed      1469    0.194          [0.04,1.01]  OR<1
+SDN (Medical)          Claude-neg x Claude-pur (original)        1960    0.272          [0.22,0.34]  OR<1
+SDN (Medical)          TB-neg x Claude-pur                       1960    0.147          [0.10,0.22]  OR<1
+SDN (Medical)          VADER-neg x Claude-pur                    1960    0.334          [0.26,0.43]  OR<1
+SDN (Medical)          Claude-neg x Claude-pur-only              1960    0.361          [0.29,0.46]  OR<1
+SDN (Medical)          Claude-neg x Claude-pur-or-completed      1960    0.056          [0.04,0.08]  OR<1
+Reddit Finance         Claude-neg x Claude-pur (original)         999    0.182          [0.11,0.30]  OR<1
+Reddit Finance         TB-neg x Claude-pur                        999    1.103          [0.33,3.66]  OR>1
+Reddit Finance         VADER-neg x Claude-pur                     999    1.423          [0.72,2.82]  OR>1
+Reddit Finance         Claude-neg x Claude-pur-only               999    0.369          [0.25,0.54]  OR<1
+Reddit Finance         Claude-neg x Claude-pur-or-completed       999    0.104          [0.06,0.18]  OR<1
+Reddit r/StudentLoans  Claude-neg x Claude-pur (original)         969    1.411          [0.85,2.34]  OR>1
+Reddit r/StudentLoans  TB-neg x Claude-pur                        969    2.495          [0.99,6.28]  OR>1
+Reddit r/StudentLoans  VADER-neg x Claude-pur                     969    0.990          [0.56,1.74]  OR<1
+Reddit r/StudentLoans  Claude-neg x Claude-pur-only               969    2.044          [1.48,2.81]  OR>1
+Reddit r/StudentLoans  Claude-neg x Claude-pur-or-completed       969    0.916          [0.53,1.59]  OR<1
+Reddit Medical         Claude-neg x Claude-pur (original)         398    0.726          [0.33,1.61]  OR<1
+Reddit Medical         TB-neg x Claude-pur                        398    1.191          [0.40,3.54]  OR>1
+Reddit Medical         VADER-neg x Claude-pur                     398    0.841          [0.35,2.03]  OR<1
+Reddit Medical         Claude-neg x Claude-pur-only               398    1.464          [0.94,2.29]  OR>1
+Reddit Medical         Claude-neg x Claude-pur-or-completed       398    0.726          [0.33,1.61]  OR<1
+
+DIRECTION CONCORDANCE PER COHORT
+--------------------------------------------------------------------------------
+  Reddit r/PSLF          4 OR>1 / 1 OR<1 -> DISCORDANT
+  SDN (Medical)          0 OR>1 / 5 OR<1 -> CONCORDANT
+  Reddit Finance         2 OR>1 / 3 OR<1 -> DISCORDANT
+  Reddit r/StudentLoans  3 OR>1 / 2 OR<1 -> DISCORDANT
+  Reddit Medical         2 OR>1 / 3 OR<1 -> DISCORDANT
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+
+Cohorts with CONCORDANT direction across all instrument choices: 1/5
+  - SDN (Medical)
+
+The cohort heterogeneity finding holds robustly when all instrument
+choices agree on direction. For cohorts where direction is sensitive
+to instrument choice, the magnitude finding should be reported with
+explicit acknowledgment of which specs flip.

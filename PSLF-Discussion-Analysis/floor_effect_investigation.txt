@@ -1,0 +1,179 @@
+================================================================================
+FLOOR-EFFECT INVESTIGATION: Final Trump PSLF Rule (2025-10-30) +
+AUTHOR-OVERLAP AUDIT across all 8 PSLF events
+Generated: 2026-05-08 (post-Round-7 audit)
+================================================================================
+
+MOTIVATION
+----------
+The Round-7 policy-implications audit flagged the "Final Trump Rule = -13.5 pp
+rejecting-rate change" as a potential floor-effect artifact, noting that two
+cells (SDN-Medical and Finance) hit exactly 0.0% rejecting post-rule. This
+investigation tests whether the apparent rejecting-rate collapse is:
+  (a) a genuine within-person stance change (relief),
+  (b) a topic-mix shift mechanically diluting rejecting (post-rule discourse
+      shifted heavily to policy_uncertainty, which has 58% unknown stance),
+  (c) a composition shift (different authors posting before vs after), or
+  (d) a Claude-prompt artifact (stance classifier behaving differently on
+      post-rule vocabulary).
+
+================================================================================
+PART 1: TOPIC-MIX CONFOUND CHECK (within-topic stance comparison)
+================================================================================
+
+SDN (Medical) Final Trump Rule, 60d window:
+  Pre:  n=77   stance: rejecting=18, unknown=36, considering=13, pursuing=10
+  Post: n=197  stance: considering=77, unknown=73, pursuing=47, rejecting=0
+
+Within-topic stance breakdowns (post − pre):
+
+career_impact:       pre n=35 (rej 47%)  →  post n=64 (rej 0%)
+financial_planning:  pre n=27 (rej 33%)  →  post n=60 (rej 0%)
+general_question:    pre n=15 (all unknown)  →  post n=18 (rej 0%)
+policy_uncertainty:  pre n=0   →  post n=55 (rej 0%)
+
+Verdict: WITHIN the same topics, rejecting-rate still went from 47%/33% pre to
+0%/0% post. The topic-mix confound (post-rule policy_uncertainty surge with
+high unknown rate) explains some dilution but NOT the within-topic collapse.
+Rejecting genuinely vanished from the discussion, even within stance-tractable
+topics.
+
+CORRECTED rejecting-rate (excludes unknown stance, SDN-Medical):
+  Pre:  18/41 known-stance = 43.9%
+  Post: 0/124 known-stance = 0.0%
+  Δ: -43.9 pp
+
+================================================================================
+PART 2: AUTHOR-OVERLAP CHECK (within-person vs between-person change)
+================================================================================
+
+Final Trump Rule, SDN-Medical (60d window):
+  Pre-period unique authors: 8
+  Post-period unique authors: 14
+  Authors posting in BOTH windows: 0 (0.0% overlap)
+
+  Of the 18 pre-period rejecting POSTS:
+    2 unique authors expressed rejecting stance
+    0 of these authors returned in post-window
+    Both pre-rejecting authors went silent
+
+This is a CRITICAL finding. The -43.9 pp rejecting drop is ENTIRELY a
+composition shift. The rejecting authors literally disappeared from the
+discussion; entirely new authors populated the post-window discourse.
+
+================================================================================
+PART 3: AUTHOR-OVERLAP AUDIT ACROSS ALL 8 EVENTS (full SDN corpus)
+================================================================================
+
+Event                          win  n_pre_auth  n_post_auth  overlap  % smaller
+-------------------------------------------------------------------------------
+Limited PSLF Waiver            90    192         161         29       18.0%
+IDR Account Adjustment         90    246         261         88       35.8%
+Biden Mass Forgiveness         90    287         249         80       32.1%
+Biden v. Nebraska SCOTUS       90    147         253         48       32.7%
+Payments Restart               90    241         224         71       31.7%
+SAVE Admin Forbearance         90    399         308        105       34.1%
+Trump PSLF EO                  60    453         335        140       41.8%
+Final Trump PSLF Rule          60    237         170         67       39.4%
+
+PATTERN: Author overlap ranges from 18% (Limited Waiver) to 42% (Trump EO).
+The majority of authors in any given event window did NOT post in the other
+window. Stance/intention shifts are PREDOMINANTLY between-person composition
+shifts, not within-person stance changes.
+
+================================================================================
+INTERPRETATION & POLICY IMPLICATIONS
+================================================================================
+
+The pre/post stance/intention shifts in this corpus reflect TWO distinct
+phenomena that the analysis cannot separately identify:
+
+  1. WITHIN-PERSON CHANGE: Same poster updates their stance after the event.
+  2. COMPOSITION CHANGE: Different posters show up to discuss the event
+     (selection by topic relevance, by mood-driven engagement, by departure).
+
+Both are POLICY-RELEVANT but mean very different things:
+
+  - "Borrowers changed their minds about pursuing PSLF" requires within-person
+    evidence. We cannot establish this without per-author longitudinal panels.
+  - "The discussant pool pivoted around the event" is what most of the +/-
+    pp shifts in this analysis actually capture.
+
+For the Final Trump Rule -13.5 pp aggregate (and -43.9 pp SDN-Medical) finding,
+the COMPOSITION-only interpretation is the safer claim:
+  "After the Final Trump PSLF Rule, the SDN-Medical discussion was populated
+  by entirely different posters with substantially different stance
+  distributions. We cannot distinguish whether existing posters with
+  rejecting intent stopped posting (cohort exit) or new posters with
+  considering/pursuing intent arrived (cohort entry)."
+
+For the Trump PSLF EO +2.5 pp NS finding (highest overlap at 41.8%), the
+within-person component is largest, but still <50% — composition turnover
+remains substantial.
+
+REPHRASED HEADLINE FINDINGS (incorporating audit + composition concerns):
+
+  - Final Trump Rule "rejecting drop": composition-shift artifact.
+    The 18 pre-rule rejecting authors did not return; 14 new authors
+    populated post-window discourse with different priors.
+  - SAVE Forbearance "rejecting drop": 34% within-person, 66% composition.
+  - Trump PSLF EO "no shift": 42% within-person continuity supports the
+    "no detectable change" reading; the modest +2.5 pp may even reflect
+    composition turnover toward less-committed posters.
+  - IDR Account Adjustment "+10 pp rejecting": 36% within-person; the
+    within-topic + topic-mix corroboration (financial_planning +49 pp)
+    makes this the most defensible behavioral finding even after
+    composition concerns.
+  - Limited PSLF Waiver "+6 pp rejecting": 18% within-person — the LOWEST.
+    Almost entirely composition turnover. The "good-news anxiety"
+    mechanism is even less defensible than the audit suggested.
+
+================================================================================
+WHAT THIS MEANS FOR THE PAPER
+================================================================================
+
+  1. ALL pre/post stance shifts must be reframed as "discussant-pool stance
+     composition shifts" rather than "borrower stance changes."
+
+  2. Per-author longitudinal analysis is REQUIRED for any claim about
+     within-person stance dynamics. With ~30-40% overlap across most events,
+     this is partially feasible on the existing corpus.
+
+  3. The IDR Account Adjustment finding is the most robust behavioral signal
+     because the topic-shift corroboration (+49 pp financial_planning) holds
+     even with composition turnover — people newly arriving to discuss IDR
+     adjustment are more likely to be doing detailed planning than to be
+     stating rejecting.
+
+  4. The Final Trump PSLF Rule finding should be substantively REVISED in
+     CLAUDE.md from "relief from less-catastrophic rule" to "composition
+     turnover with rejecting-stance posters absent from post-rule discourse."
+
+  5. The substantive paper's "stance dynamics" angle is weakened by this
+     finding. The strongest remaining substantive claims are:
+     (a) topic-mix shifts around events (composition-immune; topic of post
+         depends on event, not on poster identity)
+     (b) sentiment-stance decoupling (cross-sectional, not longitudinal)
+     (c) construct-mismatch finding (methodological)
+
+================================================================================
+RECOMMENDATIONS
+================================================================================
+
+1. Add per-author longitudinal panel analysis (within ~30-40% overlap subset)
+   to test whether returning authors changed stance vs not.
+
+2. Add a "composition vs change" decomposition to gen_legislative_timeline.py
+   reporting: for each event, compute (a) within-author stance change among
+   returning authors and (b) between-author stance distribution change.
+
+3. Update CLAUDE.md headline observations 7, 9, 10 to reflect the
+   composition-shift interpretation.
+
+4. Do NOT cite Final Trump Rule "rejecting drop" as a borrower-decision
+   finding. The data does not support that.
+
+5. The IDR Account Adjustment finding can stand with the topic-corroboration
+   defense ("the +49 pp financial_planning shift holds even with
+   composition turnover").
+================================================================================

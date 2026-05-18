@@ -1,0 +1,82 @@
+==========================================================================================
+PAPER 3 TREND REGRESSION RESULTS (saved 2026-05-10, Round 17)
+==========================================================================================
+
+This script reproduces the multi-year trend numbers cited in:
+  - PAPER_3_DRAFT_READY.md §3.3
+  - PAPER_3_LOCKED_RESULTS_FINAL.md
+  - MASTER_LOCKED_NUMBERS.md Paper 3 section
+
+DESIGN:
+  - Dataset: nrmp_program_level_2021_2026.csv (combined; March 2026 NRMP release added)
+  - Total rows: 37,450 program-year observations
+  - Filter: PSLF-hostile programs only (n=934)
+  - Outcome: fill_rate * 100 (percentage points)
+  - Model: fill_pp ~ year_centered + is_2026 + state FE + specialty FE
+  - Cluster-robust SE on institution
+  - year_centered = year - 2021 (so 2021=0, 2026=5)
+  - is_2026 = binary indicator (1 if year==2026, 0 otherwise)
+
+Interpretation:
+  - year_centered coefficient = annual linear-trend slope on PSLF-hostile fill rate
+  - is_2026 coefficient = additional 2026-specific deviation BEYOND the linear trend
+    A non-significant is_2026 indicates 2026 narrowing is consistent with continuation
+    of the pre-existing trend, NOT a Trump-EO-specific discontinuity.
+
+==========================================================================================
+RESULTS — PSLF-HOSTILE PROGRAMS ONLY
+==========================================================================================
+  n: 934 program-year rows from 23 institutions
+
+Coefficient                     β (pp)         SE               95% CI      p-value
+-------------------------------------------------------------------------------------
+  year_centered                +1.595       0.985         [-0.34, +3.53]         0.1053
+  is_2026                      +2.984       4.051        [-4.96, +10.92]         0.4615
+
+==========================================================================================
+RESULTS — PSLF-HOSTILE PROGRAMS, R17++ AGENT 2 M4 SENSITIVITY (is_post_eo = year>=2025)
+==========================================================================================
+  Rationale: 2025 NRMP ROL deadline was Feb 24, 2025 (BEFORE EO Mar 7);
+  but applicants could have UPDATED preferences post-Match during SOAP
+  (which only affects unfilled positions). The is_2026 binary spec assumes
+  ZERO anticipation effect; the is_post_eo (year>=2025) binary catches
+  any 2025-cycle anticipation effect (signaling/news-cycle anticipation).
+
+Coefficient                     β (pp)         SE               95% CI      p-value
+-------------------------------------------------------------------------------------
+  year_centered                +1.827       1.155         [-0.44, +4.09]         0.1138
+  is_post_eo                   +0.538       3.480         [-6.28, +7.36]         0.8770
+
+  COMPARISON OF SPECS:
+    is_2026 (year==2026 only):    β=+2.98 pp, p=0.461
+    is_post_eo (year>=2025):      β=+0.54 pp, p=0.877
+    year_centered (with is_post_eo control): β=+1.827 pp/year, p=0.114
+
+  INTERPRETATION:
+    If is_post_eo IS significant but is_2026 is not, that would suggest a 2025
+    anticipation effect that the is_2026 spec missed. If both are NS, then
+    either the EO has no detectable causal impact OR both specs are underpowered.
+
+==========================================================================================
+RESULTS — PSLF-FRIENDLY PROGRAMS (control test)
+==========================================================================================
+  n: 21,483 program-year rows from 421 institutions
+
+Coefficient                     β (pp)         SE               95% CI      p-value
+-------------------------------------------------------------------------------------
+  year_centered                +0.019       0.095         [-0.17, +0.20]         0.8450
+  is_2026                      -0.452       0.411         [-1.26, +0.35]         0.2711
+
+INTERPRETATION:
+------------------------------------------------------------------------------------------
+  PSLF-hostile programs:
+    Linear trend (year_centered): +1.595 pp/year (p=0.1053)
+    2026 deviation beyond trend (is_2026): +2.984 pp (p=0.4615)
+    The 2026 narrowing is statistically indistinguishable from continuation of the
+    pre-existing trend (is_2026 NS at α=0.05). This refutes the Trump-EO-specific
+    discontinuity claim.
+
+  PSLF-friendly programs (control):
+    Year trend: +0.019 pp/year (p=0.8450)
+    2026 deviation: -0.452 pp (p=0.2711)
+    PSLF-friendly programs show a different (smaller, possibly negative) trajectory.

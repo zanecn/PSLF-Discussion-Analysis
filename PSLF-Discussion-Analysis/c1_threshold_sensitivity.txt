@@ -1,0 +1,20 @@
+C1 TIME-TO-RECOVERY THRESHOLD SENSITIVITY
+================================================================================
+
+Original C1 used threshold ±0.02 of pre-event mean.
+Sensitivity analysis: ±0.005, 0.01, 0.02, 0.05, 0.10.
+
+cohort                        pre     post30   rec.005   rec.01   rec.02   rec.05   rec.10
+Reddit r/PSLF             +0.0645    +0.0537        9d       3d       2d       2d       2d
+Reddit r/StudentLoans     +0.0636    +0.0544        5d       2d       2d       2d       2d
+Reddit Finance            +0.1367    +0.1144     >90d     >90d     >90d       33d      33d
+Reddit Medical            +0.0682    +0.0362       53d      52d       2d       2d       2d
+Reddit PA                 +0.1574    +0.1056     >90d     >90d     >90d       74d      26d
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+  Reddit r/PSLF         : Recovers at ALL thresholds (immediate revert)
+  Reddit r/StudentLoans : Recovers at ALL thresholds (immediate revert)
+  Reddit Finance        : Threshold-sensitive — partial recovery in 2 of 5 thresholds
+  Reddit Medical        : Recovers at ALL thresholds (immediate revert)
+  Reddit PA             : Threshold-sensitive — partial recovery in 2 of 5 thresholds

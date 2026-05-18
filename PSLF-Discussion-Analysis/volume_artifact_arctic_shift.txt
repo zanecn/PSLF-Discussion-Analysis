@@ -1,0 +1,62 @@
+================================================================================
+PSLF Volume Artifact Diagnostic - Arctic Shift Baseline Comparison
+Generated: 2026-05-09T10:42:00
+Source: scripts/gen_volume_artifact_arctic_shift.py
+================================================================================
+
+PURPOSE
+--------------------------------------------------------------------------------
+Quantifies the magnitude of the Reddit JSON-API 1000-result-per-listing
+cap as a volume-growth artifact, using Arctic Shift (Pushshift successor;
+uncapped historical access) as the actual longitudinal Reddit baseline.
+Compared to the previous diagnostic which only had CFPB as ground truth
+(and used the artifact-affected series as the 'Reddit' input).
+
+TOTALS (PSLF-strict-filtered)
+--------------------------------------------------------------------------------
+  CFPB Complaints:                  12,552
+  Reddit JSON-API (capped):          3,806
+  Reddit Arctic Shift (uncapped):   72,262  (19.0x JSON-API)
+
+YEAR-LEVEL TABLE
+--------------------------------------------------------------------------------
+year   CFPB  JSON-API   Arctic   RC_JA   RC_AS    bias   AS/JA
+2014      0        35      410     n/a     n/a     n/a    11.7
+2015      0        51      709     n/a     n/a     n/a    13.9
+2016    341        75     1052    0.22    3.09    0.07    14.0
+2017   1391       102     1227    0.07    0.88    0.08    12.0
+2018   1053       121     1501    0.11    1.43    0.08    12.4
+2019   1007        92     1881    0.09    1.87    0.05    20.4
+2020    511       133     2353    0.26    4.60    0.06    17.7
+2021    519       134     3513    0.26    6.77    0.04    26.2
+2022   1278       221    12581    0.17    9.84    0.02    56.9
+2023   1885       258    19165    0.14   10.17    0.01    74.3
+2024   2116       423    13694    0.20    6.47    0.03    32.4
+2025   2223       699    14065    0.31    6.33    0.05    20.1
+
+KEY METHODS-PAPER CLAIMS
+--------------------------------------------------------------------------------
+  YEARS WHERE JSON-API UNDER-COUNTS BY 2x OR MORE:
+    2016: bias=0.07 (Arctic Shift sees 14x more posts than JSON-API)
+    2017: bias=0.08 (Arctic Shift sees 12x more posts than JSON-API)
+    2018: bias=0.08 (Arctic Shift sees 12x more posts than JSON-API)
+    2019: bias=0.05 (Arctic Shift sees 20x more posts than JSON-API)
+    2020: bias=0.06 (Arctic Shift sees 18x more posts than JSON-API)
+    2021: bias=0.04 (Arctic Shift sees 26x more posts than JSON-API)
+    2022: bias=0.02 (Arctic Shift sees 57x more posts than JSON-API)
+    2023: bias=0.01 (Arctic Shift sees 74x more posts than JSON-API)
+    2024: bias=0.03 (Arctic Shift sees 32x more posts than JSON-API)
+    2025: bias=0.05 (Arctic Shift sees 20x more posts than JSON-API)
+
+  PEAK RECENCY-BIAS MULTIPLIER:
+    Min bias: 0.013 in 2023
+    Max bias: 0.083 in 2017
+    Multiplier (max/min): ~6x recency bias in JSON-API
+
+  This is the canonical methods-paper claim, made rigorous:
+  the Reddit JSON-API 1000-cap creates ~6x recency bias
+  when measured against an uncapped longitudinal baseline.
+
+================================================================================
+END OF ARTIFACT
+================================================================================

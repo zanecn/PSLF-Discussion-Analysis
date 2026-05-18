@@ -1,0 +1,454 @@
+institution,state,pslf_class,pre_fill,pre_quota,pre_n_program_years,post_fill,post_quota,post_n_program_years,delta_fill,delta_pp
+AU-UGA Medical Partnership,GA,ambiguous,1.0000,26,4,0.9659,48,8,-0.0341,-3.4091
+Abbott Northwestern Hosp,MN,pslf_friendly,1.0000,16,4,1.0000,44,4,0.0000,0.0000
+Adena Health System,OH,pslf_friendly,0.8104,40,8,0.7929,60,12,-0.0176,-1.7560
+Adventist Health Glendale,CA,ambiguous,1.0000,16,2,0.8125,32,4,-0.1875,-18.7500
+Adventist Health Hanford,CA,ambiguous,1.0000,36,4,0.8929,80,14,-0.1071,-10.7143
+Adventist Health Ukiah Valley,CA,ambiguous,0.8810,49,7,0.7798,25,4,-0.1012,-10.1190
+Adventist Health White Memorial,CA,pslf_friendly,1.0000,43,10,0.8594,92,16,-0.1406,-14.0625
+Advocate Health Care,IL,ambiguous,0.9726,284,40,0.9834,689,78,0.0108,1.0787
+Alameda Health Sys-Highland Hosp,CA,ambiguous,1.0000,158,16,0.9943,169,16,-0.0057,-0.5682
+Albert Einstein Med Ctr,PA,pslf_friendly,0.8000,46,5,1.0000,5,3,0.2000,20.0000
+Allegheny Gen Hosp,PA,ambiguous,0.9524,179,28,0.9155,420,71,-0.0369,-3.6888
+Allina Health,MN,ambiguous,1.0000,43,4,1.0000,28,4,0.0000,0.0000
+Altru Health System,ND,pslf_friendly,0.9639,302,60,0.9224,255,58,-0.0415,-4.1475
+AnMed Health,SC,ambiguous,1.0000,51,11,0.8636,59,5,-0.1364,-13.6364
+Anne Arundel Med Ctr,MD,pslf_friendly,1.0000,21,3,0.9231,90,13,-0.0769,-7.6923
+Arnot Ogden Med Ctr,NY,pslf_friendly,1.0000,19,3,0.8771,148,24,-0.1229,-12.2917
+Arrowhead Reg Med Ctr,CA,pslf_friendly,0.9524,177,21,0.9298,429,65,-0.0226,-2.2602
+Ascension Providence/MSUCHM,MI,ambiguous,0.9375,69,16,0.8333,10,2,-0.1042,-10.4167
+Atlanta Med Ctr,GA,pslf_friendly,1.0000,32,5,0.9500,50,10,-0.0500,-5.0000
+Aultman Hospital/NEOMED,OH,ambiguous,1.0000,38,7,0.9248,94,19,-0.0752,-7.5188
+Aurora Health Care/ASMC,WI,ambiguous,0.8534,151,29,0.8929,86,14,0.0394,3.9409
+Aurora St Lukes Medical Ctr,WI,pslf_friendly,0.8855,153,29,0.9635,104,16,0.0781,7.8074
+Authority Health GME,MI,ambiguous,0.9697,144,11,0.8772,412,63,-0.0924,-9.2448
+Aventura Hospital,FL,ambiguous,0.6593,50,9,1.0000,8,2,0.3407,34.0741
+B I Deaconess Med Ctr,MA,pslf_friendly,0.9540,413,58,1.0000,669,88,0.0460,4.5977
+Baptist Health,AR,ambiguous,0.1000,10,1,0.9187,172,16,0.8187,81.8750
+Barnes-Jewish Hosp,MO,ambiguous,0.9318,217,22,0.9808,895,123,0.0489,4.8941
+Baton Rouge Gen Med Ctr,LA,pslf_friendly,0.9720,102,17,0.9375,80,8,-0.0345,-3.4489
+Bayfront Med Ctr,FL,pslf_friendly,0.9018,91,14,1.0000,48,8,0.0982,9.8214
+Baylor Coll Med-Houston,TX,pslf_friendly,0.9712,576,73,0.9544,1244,186,-0.0169,-1.6879
+Baylor Univ Med Ctr-Dallas,TX,pslf_friendly,1.0000,18,2,0.9699,275,54,-0.0301,-3.0093
+Berkshire Med Ctr,MA,pslf_friendly,1.0000,161,21,0.9750,106,20,-0.0250,-2.5000
+Bethesda Hospital,OH,pslf_friendly,0.8571,44,7,1.0000,28,4,0.1429,14.2857
+Billings Clinic,MT,ambiguous,0.8732,62,14,0.8125,132,22,-0.0607,-6.0732
+Bon Secours Health System,VA,pslf_friendly,0.9768,293,49,0.9279,383,65,-0.0489,-4.8860
+Borinquen Health Care Ctr,FL,ambiguous,0.8333,8,3,1.0000,16,4,0.1667,16.6667
+Boston Univ Med Ctr,MA,pslf_friendly,1.0000,25,4,0.9293,598,91,-0.0707,-7.0696
+Bridgeport Hospital,CT,ambiguous,0.8750,65,12,0.9444,123,18,0.0694,6.9444
+Brigham & Womens Hosp,MA,pslf_friendly,1.0000,152,16,1.0000,100,11,0.0000,0.0000
+Broadlawns Med Ctr,IA,pslf_friendly,0.9635,166,24,0.8780,211,42,-0.0856,-8.5565
+BronxCare Health System,NY,pslf_friendly,0.8333,35,7,0.9533,123,15,0.1200,12.0000
+Brooklyn Hosp Ctr,NY,ambiguous,0.9556,100,15,0.9139,265,27,-0.0416,-4.1632
+Broward Health Med Ctr,FL,pslf_friendly,0.7832,108,16,0.9488,399,46,0.1655,16.5542
+Bryn Mawr Hospital,PA,ambiguous,0.8167,36,10,0.8333,25,6,0.0167,1.6667
+Burke Rehabilitation Hosp,NY,ambiguous,0.8438,32,4,1.0000,30,5,0.1562,15.6250
+CHRISTUS Health,TX,ambiguous,1.0000,4,1,0.8982,195,16,-0.1018,-10.1786
+CMSRU/Cooper University Hospital,NJ,pslf_friendly,0.9474,88,19,0.9536,409,84,0.0062,0.6203
+Cambridge Health Alliance,MA,ambiguous,1.0000,69,14,1.0000,124,16,0.0000,0.0000
+Campbell University,NC,pslf_friendly,0.9118,201,43,0.6893,551,66,-0.2225,-22.2519
+Canton Med Ed Fdn/NEOMED,OH,ambiguous,1.0000,138,19,1.0000,52,4,0.0000,0.0000
+Carle Foundation Hosp,IL,ambiguous,0.9583,94,10,0.8761,135,37,-0.0822,-8.2207
+Carolinas Med Ctr,NC,pslf_friendly,0.8796,130,27,0.9570,369,62,0.0774,7.7360
+Case Western/Univ Hosps Cleveland Med Ctr,OH,pslf_friendly,0.9775,443,73,0.9740,798,141,-0.0035,-0.3539
+Cayuga Med Ctr,NY,pslf_friendly,1.0000,27,6,1.0000,40,5,0.0000,0.0000
+Cedars-Sinai Med Ctr,CA,pslf_friendly,0.9261,90,11,0.9792,381,72,0.0530,5.3030
+Center for Family Medicine,SD,ambiguous,0.9254,401,63,0.8333,44,8,-0.0921,-9.2114
+Centerstone,FL,ambiguous,0.7250,32,6,1.0000,19,4,0.2750,27.5000
+Childrens Hosp-Philadelphia,PA,pslf_friendly,1.0000,3,1,0.9444,225,24,-0.0556,-5.5556
+Childrens Hospital-Boston,MA,pslf_friendly,0.9534,651,102,1.0000,235,33,0.0466,4.6569
+Childrens Hospital-LA,CA,pslf_friendly,1.0000,14,3,0.9917,155,10,-0.0083,-0.8333
+Childrens Mercy Hospital,MO,pslf_friendly,0.8468,183,31,0.8681,125,12,0.0213,2.1281
+Childrens National Med Ctr,DC,pslf_friendly,0.9286,123,14,1.0000,165,24,0.0714,7.1429
+Christ Hospital,OH,ambiguous,0.9444,25,4,0.9545,108,12,0.0101,1.0101
+Christiana Care,DE,ambiguous,0.9091,76,11,0.9778,278,45,0.0687,6.8687
+Cincinnati Childrens Hosp Med Ctr,OH,pslf_friendly,0.7500,55,4,0.8824,212,17,0.1324,13.2353
+Citrus Health Network,FL,ambiguous,1.0000,58,11,0.9843,174,41,-0.0157,-1.5679
+City Of Hope,CA,ambiguous,0.9915,60,13,1.0000,6,4,0.0085,0.8547
+Clarkson Family Med Res,NE,ambiguous,0.8351,277,44,0.7083,23,4,-0.1268,-12.6763
+Cleveland Clinic Fdn,OH,pslf_friendly,0.9315,71,14,0.9784,895,131,0.0469,4.6873
+College Med Ctr,CA,pslf_friendly,0.6667,17,3,0.3333,15,3,-0.3333,-33.3333
+Concord Hospital,NH,ambiguous,0.6667,10,3,1.0000,32,4,0.3333,33.3333
+Cone Health,NC,ambiguous,0.8281,37,8,0.9684,92,19,0.1402,14.0233
+Conemaugh Memorial Med Ctr,PA,pslf_friendly,0.8553,158,36,0.9653,120,24,0.1100,10.9954
+Conroe Reg Med Ctr,TX,pslf_friendly,0.9800,32,5,0.9375,48,4,-0.0425,-4.2500
+Contra Costa Reg Med Ctr,CA,pslf_friendly,1.0000,25,3,1.0000,52,4,0.0000,0.0000
+Conway Reg Health Sys,AR,ambiguous,1.0000,4,1,0.9545,43,11,-0.0455,-4.5455
+Cook County Health and Hosps Sys,IL,pslf_friendly,1.0000,6,1,0.9690,396,35,-0.0310,-3.0952
+Creedmoor Psych Ctr,NY,ambiguous,0.9391,318,39,1.0000,16,4,0.0609,6.0897
+Crozer-Chester Med Ctr,PA,pslf_friendly,0.9699,221,41,0.9040,189,25,-0.0660,-6.5952
+Damas Hospital,PR,ambiguous,0.9444,62,9,1.0000,76,8,0.0556,5.5556
+Danbury Hospital,CT,ambiguous,0.9412,79,17,0.7899,133,23,-0.1513,-15.1321
+Dartmouth-Hitchcock Med Ctr,NH,pslf_friendly,1.0000,73,17,0.9525,386,93,-0.0475,-4.7491
+Deaconess Hospital,IN,ambiguous,1.0000,38,5,0.7812,32,4,-0.2188,-21.8750
+Denver Health Med Ctr,CO,pslf_friendly,0.8852,372,50,1.0000,67,4,0.1148,11.4848
+Desert Regional Med Ctr,CA,pslf_friendly,0.9844,48,8,0.9410,107,13,-0.0433,-4.3349
+Detroit Med Ctr/WSU,MI,pslf_friendly,0.9417,196,30,0.8890,848,98,-0.0527,-5.2656
+Dignity Methodist Hosp-Sacramento,CA,ambiguous,1.0000,30,5,0.9643,38,7,-0.0357,-3.5714
+Driscoll Childrens Hosp,TX,pslf_friendly,1.0000,97,10,1.0000,68,4,0.0000,0.0000
+Duke Univ Med Ctr,NC,pslf_friendly,0.9783,435,71,0.9583,834,144,-0.0200,-1.9992
+East Jefferson Gen Hosp,LA,ambiguous,0.9818,88,16,0.5833,24,4,-0.3984,-39.8438
+East Liverpool City Hosp,OH,ambiguous,0.9755,101,17,0.9125,37,8,-0.0630,-6.2990
+Eisenhower Med Ctr,CA,pslf_friendly,1.0000,92,11,0.9653,164,12,-0.0347,-3.4722
+Emanate Health,CA,ambiguous,1.0000,11,2,0.9688,32,4,-0.0312,-3.1250
+Emory Univ SOM,GA,pslf_friendly,0.9535,764,107,0.9852,1098,152,0.0317,3.1703
+Englewood Hosp,NJ,ambiguous,0.9583,29,6,0.9667,64,10,0.0083,0.8333
+Excela Health Latrobe Hosp,PA,ambiguous,0.9760,114,26,0.8438,32,4,-0.1322,-13.2212
+FAU-Schmidt COM,FL,ambiguous,0.9042,139,20,0.8771,578,79,-0.0271,-2.7057
+Fairfield Med Ctr,OH,pslf_friendly,1.0000,20,3,0.5563,33,8,-0.4437,-44.3750
+Family Health Ctrs of San Diego,CA,ambiguous,0.9167,69,8,1.0000,36,6,0.0833,8.3333
+Floyd Med Ctr,GA,pslf_friendly,0.9306,113,18,0.8667,35,5,-0.0639,-6.3889
+Flushing Hospital Med Ctr,NY,pslf_friendly,1.0000,136,17,0.9565,167,24,-0.0435,-4.3519
+Forbes Family Medicine,PA,ambiguous,1.0000,7,2,1.0000,32,4,0.0000,0.0000
+Forrest General Hospital,MS,ambiguous,1.0000,17,4,0.8438,28,4,-0.1562,-15.6250
+Franciscan Health Olympia Fields,IL,ambiguous,1.0000,48,3,0.9500,138,20,-0.0500,-5.0000
+Ft Wayne Med Ed Prog,IN,ambiguous,0.9800,143,20,0.9438,1322,184,-0.0362,-3.6155
+Garden City Hospital,MI,ambiguous,0.9103,51,13,0.8678,94,22,-0.0424,-4.2419
+Gateway Behavioral Hlth Comm Svc,GA,ambiguous,1.0000,24,3,1.0000,29,4,0.0000,0.0000
+Geisinger Health System,PA,pslf_friendly,0.9027,248,37,0.9431,554,107,0.0404,4.0373
+Genesis Quad Cities,IA,ambiguous,1.0000,15,4,1.0000,24,4,0.0000,0.0000
+George Washington Univ,DC,ambiguous,0.8750,25,6,0.9981,418,87,0.1231,12.3084
+Good Samaritan Hosp-Cinn,OH,ambiguous,0.8300,124,25,0.9000,97,20,0.0700,7.0000
+Grand Strand Reg Med Ctr,SC,pslf_friendly,0.9042,54,8,0.8790,208,24,-0.0252,-2.5160
+Greater Baltimore Med Ctr,MD,pslf_friendly,1.0000,34,6,0.9688,65,8,-0.0312,-3.1250
+Greenwich Hospital,CT,ambiguous,0.9509,337,46,1.0000,52,8,0.0491,4.9094
+Griffin Hospital,CT,ambiguous,0.9357,74,14,1.0000,67,17,0.0643,6.4286
+Griffin Memorial Hospital,OK,pslf_friendly,1.0000,51,8,1.0000,12,2,0.0000,0.0000
+Gundersen Lutheran Med Fdn,WI,ambiguous,0.8889,48,9,0.9844,120,16,0.0955,9.5486
+Guthrie/Robert Packer Hosp,PA,ambiguous,0.9167,78,18,0.9023,152,29,-0.0144,-1.4368
+HCA Healthcare Kansas City,MO,pslf_hostile,1.0000,17,3,0.9456,1065,192,-0.0544,-5.4398
+HCA Healthcare/USF Morsani GME-Largo,FL,pslf_hostile,1.0000,4,1,0.9529,142,24,-0.0471,-4.7108
+HCA Healthcare/USF Morsani GME-Oak Hill,FL,pslf_hostile,0.6864,78,11,0.5260,224,25,-0.1603,-16.0349
+HCA Healthcare/USF Morsani GME-St Pete,FL,pslf_hostile,1.0000,9,1,0.7648,46,6,-0.2352,-23.5185
+HCA Healthcare/USF Morsani GME-Trinity,FL,pslf_hostile,0.8592,59,13,0.6902,140,15,-0.1690,-16.8986
+HCA Houston Healthcare/U Houston,TX,pslf_hostile,0.7680,108,14,0.8603,313,24,0.0924,9.2375
+Hackensack U Med Ctr,NJ,pslf_friendly,0.9714,104,15,0.9606,208,58,-0.0108,-1.0837
+Halifax Med Ctr,FL,pslf_friendly,0.9500,71,10,0.8438,32,4,-0.1062,-10.6250
+Hamilton Med Ctr,GA,pslf_friendly,1.0000,22,2,1.0000,76,8,0.0000,0.0000
+Harbor-UCLA Med Ctr,CA,pslf_friendly,0.9398,465,53,0.9497,513,71,0.0099,0.9886
+Harlem Hospital Ctr,NY,ambiguous,0.9135,105,19,0.9345,212,24,0.0210,2.0990
+Harrison Med Ctr,WA,pslf_friendly,0.9222,37,9,1.0000,8,1,0.0778,7.7778
+Harvard South Shore,MA,pslf_friendly,1.0000,12,1,1.0000,32,4,0.0000,0.0000
+Harvard Spaulding Rehab Hosp,MA,pslf_friendly,1.0000,49,9,1.0000,16,2,0.0000,0.0000
+HealthONE,CO,ambiguous,0.9348,155,23,0.9599,288,50,0.0251,2.5106
+HealthPartners Institute,MN,pslf_friendly,0.9840,166,25,0.8854,66,16,-0.0986,-9.8583
+Hennepin Co Med Ctr,MN,pslf_friendly,0.8750,324,64,0.9545,251,33,0.0795,7.9545
+Henry Ford Hospital,MI,ambiguous,0.9286,371,56,0.9665,604,77,0.0379,3.7879
+Henry Ford Macomb Hospital,MI,ambiguous,0.9615,30,6,0.9241,140,28,-0.0374,-3.7431
+Henry Ford Wyandotte Hospital,MI,ambiguous,0.8222,60,15,0.9062,59,12,0.0840,8.4028
+Hilo Medical Center,HI,pslf_friendly,1.0000,61,11,0.9167,44,8,-0.0833,-8.3333
+Hinsdale Hospital,IL,ambiguous,0.9322,292,43,1.0000,36,4,0.0678,6.7829
+HonorHealth,AZ,ambiguous,0.9268,386,69,0.9630,111,27,0.0362,3.6151
+Hosp Episcopal San Lucas,PR,ambiguous,0.9434,139,28,0.9224,173,28,-0.0210,-2.0984
+Hosp For Special Surgery,NY,ambiguous,1.0000,74,13,1.0000,36,4,0.0000,0.0000
+Hospital de la Concepcion,PR,ambiguous,0.8810,28,7,1.0000,28,4,0.1190,11.9048
+Houston Healthcare,GA,pslf_friendly,0.9500,33,4,0.9239,505,102,-0.0261,-2.6137
+Howard Univ Hosp,DC,pslf_friendly,0.9444,223,36,0.9707,281,42,0.0262,2.6212
+Huntington Memorial Hosp,CA,pslf_friendly,1.0000,31,10,0.9792,67,12,-0.0208,-2.0833
+Hurley Medical Ctr,MI,pslf_friendly,0.9697,57,11,0.8912,133,19,-0.0785,-7.8469
+In His Image Family Med,OK,ambiguous,0.9194,199,31,0.9250,40,4,0.0056,0.5645
+Inova Fairfax Hospital,VA,pslf_friendly,1.0000,62,12,0.9968,191,24,-0.0032,-0.3205
+Institute for Family Health,NY,pslf_friendly,1.0000,41,5,0.8889,70,9,-0.1111,-11.1111
+Integris Health,OK,ambiguous,0.8929,56,14,0.9872,68,13,0.0943,9.4322
+Intermountain Med Ctr,UT,pslf_friendly,1.0000,8,2,1.0000,34,5,0.0000,0.0000
+JFK Med Ctr,NJ,pslf_friendly,1.0000,33,5,0.9709,252,37,-0.0291,-2.9106
+Jacobi Med Ctr/Einstein,NY,pslf_friendly,0.9415,390,39,1.0000,289,29,0.0585,5.8536
+Jamaica Hosp Med Ctr,NY,pslf_friendly,0.9380,60,11,0.8235,119,17,-0.1145,-11.4487
+Jersey Shore Univ Med Ctr,NJ,pslf_friendly,0.9571,528,78,0.9779,226,60,0.0209,2.0892
+Jewish Hospital,OH,ambiguous,0.8551,168,20,0.8330,96,13,-0.0221,-2.2134
+John Muir Health,CA,ambiguous,1.0000,6,1,1.0000,32,4,0.0000,0.0000
+John Peter Smith Hosp,TX,ambiguous,0.9652,1033,161,0.9965,276,24,0.0313,3.1343
+Johns Hopkins Hosp,MD,pslf_friendly,0.8611,36,6,0.9374,946,170,0.0763,7.6256
+Johns Hopkins/Bayview,MD,pslf_friendly,0.9333,80,15,1.0000,89,15,0.0667,6.6667
+KCU-GME Consortium,MO,ambiguous,0.8889,23,9,0.8922,171,45,0.0033,0.3280
+Kadlec Regional Med Ctr,WA,pslf_friendly,0.9167,19,4,0.9792,56,12,0.0625,6.2500
+Kaiser Permanente Mid-Atlantic,MD,ambiguous,0.8842,166,32,1.0000,24,4,0.1158,11.5774
+Kaiser Permanente-Fontana,CA,ambiguous,1.0000,40,8,1.0000,103,16,0.0000,0.0000
+Kaiser Permanente-Los Angeles,CA,ambiguous,0.9123,119,19,0.9513,234,52,0.0390,3.9001
+Kaiser Permanente-Napa/Solano,CA,ambiguous,0.8333,17,3,1.0000,24,4,0.1667,16.6667
+Kaiser Permanente-Oakland,CA,ambiguous,0.9231,78,13,0.9747,176,35,0.0516,5.1617
+Kaiser Permanente-Orange Co,CA,ambiguous,0.9557,134,23,1.0000,32,4,0.0443,4.4325
+Kaiser Permanente-Riverside,CA,ambiguous,0.7917,66,9,1.0000,24,4,0.2083,20.8333
+Kaiser Permanente-SF,CA,ambiguous,0.9465,268,50,0.9818,93,15,0.0353,3.5325
+Kaiser Permanente-San Diego,CA,ambiguous,0.9375,78,16,1.0000,48,8,0.0625,6.2500
+Kaiser Permanente-San Jose,CA,ambiguous,0.9444,70,15,1.0000,48,8,0.0556,5.5556
+Kaiser Permanente-Santa Clara,CA,ambiguous,0.9800,89,20,0.9531,104,16,-0.0269,-2.6875
+Kaiser Permanente-Santa Rosa,CA,ambiguous,1.0000,27,4,1.0000,25,4,0.0000,0.0000
+Kaiser Permanente-Woodland Hills,CA,ambiguous,1.0000,16,3,1.0000,24,4,0.0000,0.0000
+Kaweah Delta Health Care District,CA,ambiguous,1.0000,127,20,0.8528,196,29,-0.1472,-14.7215
+Kent Hospital,RI,ambiguous,0.8333,26,5,0.9062,32,4,0.0729,7.2917
+Kern Med Ctr,CA,pslf_friendly,1.0000,30,6,0.9500,121,20,-0.0500,-5.0000
+Kettering Health Network,OH,ambiguous,0.9778,72,15,0.9598,293,68,-0.0180,-1.7963
+Kootenai Health,ID,ambiguous,1.0000,4,1,0.9286,28,4,-0.0714,-7.1429
+LECOM Health,PA,ambiguous,0.7801,94,16,0.7389,68,15,-0.0412,-4.1245
+LSU SOM-Baton Rouge,LA,pslf_friendly,1.0000,78,13,0.9875,149,20,-0.0125,-1.2500
+LSU SOM-New Orleans,LA,pslf_friendly,0.9464,455,83,0.9548,633,106,0.0085,0.8483
+LSUHSC-Shreveport,LA,ambiguous,0.8915,275,49,0.9498,511,92,0.0583,5.8322
+La Grange Mem Hosp,IL,ambiguous,0.9631,146,26,0.9643,28,4,0.0011,0.1145
+Lahey Clinic,MA,ambiguous,0.9667,64,12,0.9808,157,26,0.0141,1.4103
+Lancaster Gen Hosp,PA,ambiguous,0.9667,97,20,1.0000,52,4,0.0333,3.3333
+Lankenau Med Ctr,PA,pslf_friendly,0.9323,226,32,0.9250,168,20,-0.0073,-0.7292
+Larkin Community Hospital,FL,ambiguous,1.0000,31,4,0.9509,248,42,-0.0491,-4.9107
+Legacy Emanuel/Good Samaritan,OR,ambiguous,0.9604,153,24,0.9583,889,128,-0.0021,-0.2113
+Lehigh Valley Hosp,PA,ambiguous,0.9643,151,28,0.9291,399,69,-0.0352,-3.5197
+Leonard J Chabert Med Ctr,LA,pslf_friendly,0.7778,43,9,0.8750,8,1,0.0972,9.7222
+LewisGale Med Ctr,VA,pslf_friendly,0.6702,64,7,0.4585,221,20,-0.2118,-21.1766
+Lifelong Medical Care,CA,ambiguous,1.0000,14,3,0.9167,24,4,-0.0833,-8.3333
+Lincoln Med Ctr,NY,pslf_friendly,0.8701,114,12,0.9915,406,35,0.1214,12.1404
+Lincoln Med Ed Partnership,NE,ambiguous,0.8788,125,21,0.9693,607,122,0.0904,9.0447
+Loma Linda University,CA,pslf_friendly,0.9500,181,20,0.9816,817,142,0.0316,3.1574
+Long Beach Mem Med Ctr,CA,pslf_friendly,0.9697,56,11,1.0000,32,4,0.0303,3.0303
+Lower Bucks Hosp,PA,ambiguous,1.0000,14,3,1.0000,44,8,0.0000,0.0000
+Loyola Univ Med Ctr,IL,pslf_friendly,0.9641,275,38,0.9561,533,81,-0.0080,-0.8024
+Lynchburg Fam Med Res,VA,ambiguous,0.9615,100,13,0.8889,36,4,-0.0726,-7.2650
+MSUCOM Statewide Campus Sys,MI,ambiguous,0.7308,46,13,0.9375,16,4,0.2067,20.6731
+MacNeal Hospital,IL,ambiguous,0.9727,170,19,0.9205,160,16,-0.0523,-5.2290
+Magnolia Regional Health Ctr,MS,ambiguous,0.9694,234,40,0.8542,54,8,-0.1152,-11.5208
+Maimonides Med Ctr,NY,pslf_friendly,0.9643,461,61,0.9637,474,56,-0.0006,-0.0634
+Marian Regional Med Ctr,CA,pslf_friendly,0.7778,12,3,1.0000,36,8,0.2222,22.2222
+Marianjoy Rehab Hosp,IL,ambiguous,0.6667,9,3,1.0000,24,4,0.3333,33.3333
+Marshall University SOM,WV,pslf_friendly,0.9156,309,52,0.8884,268,44,-0.0272,-2.7205
+Marshfield Clinic,WI,ambiguous,0.9523,678,123,0.9635,980,158,0.0112,1.1199
+Mayo Clinic School of Grad Med Educ,FL,pslf_friendly,0.8893,142,21,0.9590,242,61,0.0697,6.9731
+Mayo Clinic School of Grad Med Educ,MN,pslf_friendly,0.9167,182,39,0.9730,1790,285,0.0563,5.6287
+McKay-Dee Hospital Ctr,UT,ambiguous,0.9669,305,63,0.9725,1165,243,0.0056,0.5556
+McLeod Reg Med Ctr,SC,pslf_friendly,0.9559,408,57,0.9134,1606,274,-0.0426,-4.2577
+MedStar Franklin Square Med Ctr,MD,pslf_friendly,1.0000,93,15,0.9500,58,15,-0.0500,-5.0000
+MedStar Georgetown Univ Hosp,DC,pslf_friendly,0.9157,134,19,0.9103,466,70,-0.0054,-0.5398
+MedStar National Rehab Hosp,DC,ambiguous,1.0000,39,4,1.0000,24,4,0.0000,0.0000
+MedStar Union Memorial Hosp,MD,pslf_friendly,0.9187,133,12,0.9710,255,23,0.0524,5.2364
+Memorial Health System,OH,pslf_friendly,0.8596,115,19,0.8056,52,9,-0.0541,-5.4094
+Memorial Healthcare System,FL,pslf_friendly,1.0000,59,11,1.0000,283,44,0.0000,0.0000
+Memorial Hermann Hosp,TX,pslf_friendly,0.7255,33,3,1.0000,56,4,0.2745,27.4510
+Memorial Hospital,IN,pslf_friendly,1.0000,28,4,1.0000,39,4,0.0000,0.0000
+Memorial Sloan-Kettering,NY,pslf_friendly,1.0000,115,16,1.0000,120,8,0.0000,0.0000
+Mercy Catholic Med Ctr,PA,pslf_friendly,0.8764,130,23,0.8375,171,24,-0.0389,-3.8898
+Mercy Health System,WI,pslf_friendly,0.9471,200,39,0.8367,34,7,-0.1104,-11.0381
+Mercy Hospital St Louis,MO,ambiguous,1.0000,80,13,0.9688,115,16,-0.0312,-3.1250
+Mercy Med Ctr-Des Moines,IA,pslf_friendly,0.9583,296,50,0.8461,189,36,-0.1123,-11.2269
+Mercy Med Ctr-Merced,CA,pslf_friendly,1.0000,27,6,0.9375,32,4,-0.0625,-6.2500
+Mercy Med Ctr-Redding,CA,pslf_friendly,0.9524,100,14,0.5000,24,4,-0.4524,-45.2381
+Mercyhealth GME Consortium,IL,ambiguous,1.0000,62,6,0.9500,92,8,-0.0500,-5.0000
+Merit Health Wesley,MS,ambiguous,0.9402,57,11,0.7735,207,22,-0.1667,-16.6701
+Methodist Health System Dallas,TX,pslf_friendly,1.0000,100,18,0.9667,112,20,-0.0333,-3.3333
+Methodist Hospital-Houston,TX,ambiguous,0.9474,334,63,0.9929,300,53,0.0456,4.5570
+MetroWest Med Ctr-Framingham,MA,pslf_friendly,1.0000,65,8,0.9062,80,8,-0.0938,-9.3750
+Middlesex Hospital,CT,ambiguous,1.0000,49,6,0.9643,28,4,-0.0357,-3.5714
+Midwestern University OPTI,AZ,pslf_friendly,0.8709,97,17,0.8448,153,32,-0.0261,-2.6123
+Montefiore Med Ctr/Einstein,NY,pslf_friendly,0.8526,165,18,0.9416,1096,133,0.0890,8.8960
+Montefiore-New Rochelle/Einstein,NY,ambiguous,0.9000,52,10,1.0000,83,8,0.1000,10.0000
+Morehouse Sch of Med,GA,ambiguous,0.8111,130,20,0.9095,558,67,0.0983,9.8344
+Mount Carmel Health System,OH,pslf_friendly,0.9176,152,25,0.7074,101,22,-0.2102,-21.0188
+MountainView Reg Med Ctr,NM,pslf_friendly,1.0000,13,3,0.9017,62,13,-0.0983,-9.8291
+Mt Auburn Hospital,MA,ambiguous,1.0000,72,8,0.9732,100,14,-0.0268,-2.6786
+Mt Sinai Hosp Med Ctr,IL,pslf_friendly,1.0000,26,3,0.8750,28,8,-0.1250,-12.5000
+Mt Sinai Med Ctr-Miami,FL,pslf_friendly,0.8848,380,56,0.9490,212,39,0.0642,6.4202
+Munson Med Ctr,MI,pslf_friendly,0.9062,72,8,0.9167,24,4,0.0104,1.0417
+NCH Healthcare Sys,FL,pslf_friendly,1.0000,18,3,0.9792,87,8,-0.0208,-2.0833
+NYMC-Metropolitan Hosp Ctr,NY,ambiguous,1.0000,33,3,0.9754,287,42,-0.0246,-2.4638
+NYMC-St Josephs Med Ctr,NY,pslf_friendly,0.9882,141,17,1.0000,52,7,0.0118,1.1765
+NYP Brooklyn Methodist Hosp,NY,ambiguous,0.9439,199,24,0.8814,318,35,-0.0625,-6.2492
+NYP Hosp-Columbia & Cornell,NY,pslf_friendly,0.9895,317,38,1.0000,123,12,0.0105,1.0526
+NYP Hosp-Columbia Univ Med Ctr,NY,pslf_friendly,0.9691,468,55,0.9597,716,94,-0.0095,-0.9457
+NYP Hosp-Weill Cornell Med Ctr,NY,pslf_friendly,0.9452,221,33,0.9819,607,80,0.0367,3.6673
+Nassau Univ Med Ctr,NY,pslf_friendly,0.8929,61,6,0.8213,579,88,-0.0715,-7.1533
+Nationwide Childrens Hosp,OH,pslf_friendly,0.9634,227,41,0.9532,1458,219,-0.0102,-1.0231
+Natividad Med Ctr,CA,pslf_friendly,0.6667,15,3,0.7500,40,4,0.0833,8.3333
+Natl Insts of Health,MD,ambiguous,0.8933,308,50,1.0000,16,8,0.1067,10.6667
+Nazareth Hospital,PA,ambiguous,1.0000,43,6,0.7685,106,18,-0.2315,-23.1481
+Nemours Childrens Hosp,FL,pslf_friendly,0.9815,47,9,1.0000,56,4,0.0185,1.8519
+New Bridge Med Ctr,NJ,pslf_friendly,0.9762,47,7,1.0000,27,3,0.0238,2.3810
+New Hanover Reg Med Ctr,NC,pslf_friendly,0.9455,154,33,0.8310,114,35,-0.1146,-11.4574
+Newton-Wellesley Hosp,MA,ambiguous,1.0000,9,2,1.0000,20,2,0.0000,0.0000
+Niagara Falls Mem Med Ctr,NY,pslf_friendly,1.0000,8,3,1.0000,16,4,0.0000,0.0000
+Nicklaus Childrens Hospital-Miami,FL,pslf_friendly,0.9500,41,5,0.9907,113,8,0.0407,4.0741
+North Shore Med Ctr/Salem Hosp,MA,pslf_friendly,0.9410,348,60,1.0000,23,5,0.0590,5.9000
+Northwestern McGaw/Lurie Childrens,IL,pslf_friendly,1.0000,100,14,1.0000,152,10,0.0000,0.0000
+Northwestern McGaw/NMH/VA,IL,pslf_friendly,0.9288,369,50,0.9820,780,116,0.0532,5.3213
+Norwalk Hospital,CT,ambiguous,0.9756,316,41,1.0000,52,6,0.0244,2.4390
+Nova Southeastern University KPCOM,FL,pslf_friendly,0.9269,291,37,0.9091,50,11,-0.0178,-1.7848
+Novant Health,NC,ambiguous,1.0000,5,3,1.0000,24,4,0.0000,0.0000
+OMECO,OK,ambiguous,0.8812,73,16,0.7562,527,99,-0.1251,-12.5052
+Ochsner Clinic Foundation,LA,ambiguous,0.9556,443,92,0.9592,307,50,0.0036,0.3551
+Olive View-UCLA Med Ctr,CA,pslf_friendly,1.0000,53,5,1.0000,174,21,0.0000,0.0000
+Orlando Health,FL,ambiguous,1.0000,77,11,0.8772,292,38,-0.1228,-12.2807
+Our Lady Of Lourdes,NY,ambiguous,0.8818,163,29,1.0000,58,7,0.1182,11.8227
+Our Lady of the Lake Reg Med Ctr,LA,pslf_friendly,1.0000,67,12,0.9375,48,4,-0.0625,-6.2500
+PIH Health Hosp Downey,CA,ambiguous,0.9524,38,3,0.9286,27,4,-0.0238,-2.3810
+Palmetto General Hosp,FL,ambiguous,0.8933,88,12,0.9251,99,10,0.0318,3.1780
+Parkview Med Ctr,CO,pslf_friendly,0.7500,18,4,1.0000,40,4,0.2500,25.0000
+Penn Highlands Healthcare,PA,pslf_friendly,0.8333,22,4,0.7500,40,8,-0.0833,-8.3333
+Penn State Hershey Med Ctr,PA,pslf_friendly,0.9442,290,49,0.9226,789,128,-0.0216,-2.1617
+Penrose Hospital,CO,ambiguous,1.0000,57,7,1.0000,2,1,0.0000,0.0000
+Philadelphia Coll of Osteo Med,PA,ambiguous,0.8000,7,2,0.7987,115,31,-0.0013,-0.1344
+Phoebe Putney Mem Hosp,GA,ambiguous,1.0000,55,9,0.5625,32,4,-0.4375,-43.7500
+Phoenix Childrens Hospital,AZ,pslf_friendly,0.7333,12,3,0.7273,163,11,-0.0061,-0.6061
+Piedmont Athens Regional,GA,ambiguous,0.8733,93,10,0.7750,123,8,-0.0983,-9.8333
+Piedmont Columbus Regional,GA,ambiguous,1.0000,43,7,1.0000,46,4,0.0000,0.0000
+Pine Rest Christian Mental Hlth Svcs,MI,ambiguous,0.9706,80,17,0.9444,48,9,-0.0261,-2.6144
+Pomona Valley Hosp,CA,ambiguous,1.0000,70,7,0.8438,29,4,-0.1562,-15.6250
+Ponce Health Sciences Univ SOM,PR,pslf_friendly,1.0000,27,2,1.0000,24,4,0.0000,0.0000
+Portsmouth Regional Hosp,NH,ambiguous,1.0000,19,4,0.8417,96,12,-0.1583,-15.8333
+Poudre Valley Hospital,CO,ambiguous,0.9032,185,24,1.0000,32,4,0.0968,9.6759
+Presby Intercommunity Hosp,CA,ambiguous,0.7778,18,9,0.9400,24,10,0.1622,16.2222
+Presbyterian Hosp-Dallas,TX,ambiguous,0.9444,2097,323,1.0000,24,4,0.0556,5.5600
+Promedica Monroe Reg Hosp,MI,ambiguous,0.9238,269,35,0.7500,44,6,-0.1738,-17.3810
+Providence Health,OR,ambiguous,0.8971,172,32,0.9502,136,24,0.0531,5.3096
+Providence Hospital,AK,ambiguous,0.8571,44,7,0.7917,48,4,-0.0655,-6.5476
+Providence Sacred Heart Med Ctr,WA,pslf_friendly,0.9500,222,31,0.9700,149,20,0.0200,2.0041
+Providence St Peter Hospital,WA,ambiguous,0.8933,101,25,0.8274,49,12,-0.0660,-6.5952
+Quincy Fam Prac Ctr,IL,ambiguous,0.9597,132,28,0.7917,24,4,-0.1680,-16.8040
+RFUMS/Chicago Medical School,IL,pslf_friendly,0.9459,251,37,1.0000,111,11,0.0541,5.4054
+Rapides Reg Med Ctr,LA,pslf_friendly,1.0000,46,8,0.9583,24,4,-0.0417,-4.1667
+Richmond Univ Med Ctr,NY,pslf_friendly,0.8652,229,45,0.8626,176,24,-0.0026,-0.2647
+Riverside Community Hospital,CA,ambiguous,1.0000,67,10,0.8893,334,42,-0.1107,-11.0714
+Riverside Reg Med Ctr,VA,pslf_friendly,0.9297,430,76,0.9749,165,18,0.0452,4.5194
+Rochester Gen Hosp,NY,ambiguous,0.8993,217,36,0.9440,183,25,0.0447,4.4694
+Roger Williams Med Ctr,RI,pslf_friendly,0.9164,169,30,0.9583,74,12,0.0419,4.1923
+Roseburg Family Medicine,OR,ambiguous,1.0000,22,3,0.8125,32,4,-0.1875,-18.7500
+Rush University Med Ctr,IL,pslf_friendly,1.0000,2,1,0.9555,659,91,-0.0445,-4.4497
+Rush-Copley Mem Hosp,IL,ambiguous,1.0000,50,8,0.6250,16,4,-0.3750,-37.5000
+Rutgers-R W Johnson Medical School,NJ,pslf_friendly,0.9877,165,27,0.9328,473,80,-0.0549,-5.4877
+SIU Carbondale,IL,ambiguous,0.8611,41,9,1.0000,24,4,0.1389,13.8889
+SIU Decatur,IL,ambiguous,0.9559,312,51,0.5000,20,4,-0.4559,-45.5882
+SIU SOM & Affil Hosps,IL,pslf_friendly,0.9486,380,73,0.9936,343,72,0.0450,4.5004
+SSM St Marys Hospital-St Louis,MO,ambiguous,0.9667,157,20,1.0000,40,5,0.0333,3.3333
+SUNY HSC Brooklyn,NY,ambiguous,0.8863,257,32,0.9413,1590,180,0.0550,5.4982
+San Joaquin Gen Hosp,CA,ambiguous,0.9524,52,9,0.9608,99,17,0.0084,0.8403
+San Juan VA Med Ctr,PR,pslf_friendly,0.9556,194,31,1.0000,118,12,0.0444,4.4444
+Santa Clara Valley Med Ctr,CA,pslf_friendly,0.9667,397,70,0.9965,189,24,0.0299,2.9861
+Schwab Rehab Hosp,IL,ambiguous,1.0000,10,2,1.0000,21,5,0.0000,0.0000
+Scripps Clinic/Green Hospital,CA,ambiguous,1.0000,36,3,1.0000,60,4,0.0000,0.0000
+Scripps Mercy Hosp-Chula Vista,CA,ambiguous,1.0000,134,19,1.0000,36,4,0.0000,0.0000
+Scripps Mercy Hosp-San Diego,CA,ambiguous,1.0000,69,9,1.0000,128,14,0.0000,0.0000
+Sea Mar Community Health Ctrs,WA,ambiguous,1.0000,42,5,0.9667,34,3,-0.0333,-3.3333
+Self Regional Healthcare,SC,pslf_friendly,0.5000,2,2,0.9750,40,4,0.4750,47.5000
+Shasta Community Health Ctr,CA,ambiguous,0.8333,70,9,0.8750,16,4,0.0417,4.1667
+Sinai Hospital of Baltimore,MD,ambiguous,0.9853,82,17,0.9706,184,34,-0.0147,-1.4706
+Siouxland Med Ed Fdn,IA,ambiguous,0.9524,58,7,0.9632,653,119,0.0109,1.0854
+South Baldwin Reg Med Ctr,AL,pslf_friendly,0.8611,44,6,1.0000,11,1,0.1389,13.8889
+Southeast Health,AL,ambiguous,1.0000,22,4,0.8854,112,8,-0.1146,-11.4583
+Southern Regional AHEC,NC,ambiguous,0.9829,265,39,0.9521,854,147,-0.0308,-3.0768
+Sovah Health-Danville,VA,ambiguous,0.9377,327,58,0.9381,710,125,0.0004,0.0361
+St Agnes Hospital,MD,ambiguous,0.9197,520,94,0.9587,1125,188,0.0390,3.8973
+St Agnes Med Ctr,CA,pslf_friendly,0.9536,147,30,0.9291,182,16,-0.0245,-2.4485
+St Anthony Hospital,OK,ambiguous,0.9031,637,111,0.9626,805,128,0.0595,5.9468
+St Anthony Hospital North,CO,ambiguous,0.9231,31,4,1.0000,10,2,0.0769,7.6923
+St Barnabas Hosp,NY,ambiguous,0.9833,94,15,0.8017,119,20,-0.1817,-18.1667
+St Elizabeth Health Ctr-Boardman,OH,ambiguous,0.9274,70,13,0.9444,62,12,0.0171,1.7094
+St Elizabeth Med Ctr,KY,pslf_friendly,0.9385,345,66,0.9069,838,138,-0.0316,-3.1615
+St Elizabeth Med Ctr,NY,pslf_friendly,0.9381,66,10,1.0000,30,3,0.0619,6.1905
+St Elizabeth Youngstown Hosp,OH,ambiguous,0.5000,2,1,0.9750,104,20,0.4750,47.5000
+St Elizabeths Hospital/DBH,DC,ambiguous,0.9200,31,5,0.9833,481,65,0.0633,6.3333
+St Elizabeths Med Ctr,MA,pslf_friendly,0.9390,333,59,0.8205,193,33,-0.1186,-11.8576
+St Francis Hospital,DE,ambiguous,1.0000,23,6,0.9583,24,4,-0.0417,-4.1667
+St Johns Riverside Hospital,NY,ambiguous,0.9210,282,43,0.8741,89,12,-0.0469,-4.6947
+St Joseph Hospital SCL Health,CO,ambiguous,0.9514,111,18,0.9311,177,26,-0.0203,-2.0299
+St Josephs Health,NY,ambiguous,0.9821,32,4,0.9792,78,8,-0.0030,-0.2976
+St Josephs Med Ctr,CA,pslf_friendly,1.0000,4,1,0.9806,277,30,-0.0194,-1.9444
+St Josephs Reg Med Ctr,IN,pslf_friendly,0.9375,36,4,0.9722,36,4,0.0347,3.4722
+St Josephs Univ Med Ctr,NJ,pslf_friendly,0.8646,205,32,0.8977,251,44,0.0331,3.3144
+St Louis Childrens Hosp,MO,pslf_friendly,1.0000,32,4,0.9796,160,19,-0.0204,-2.0374
+St Louis Univ SOM,MO,pslf_friendly,0.9402,632,112,1.0000,1,1,0.0598,5.9848
+St Lukes Hosp-Bethlehem,PA,ambiguous,0.9189,131,19,0.9550,226,37,0.0361,3.6095
+St Lukes Hospital-St Louis,MO,ambiguous,0.8571,48,7,1.0000,64,8,0.1429,14.2857
+St Lukes Warren Hospital,NJ,ambiguous,1.0000,99,15,1.0000,24,4,0.0000,0.0000
+St Mary Med Ctr-Long Beach,CA,pslf_friendly,1.0000,13,3,0.7454,61,9,-0.2546,-25.4630
+St Mary-Corwin Med Ctr,CO,pslf_friendly,0.9286,58,14,1.0000,8,2,0.0714,7.1429
+St Marys Hospital,CT,ambiguous,0.9425,305,58,1.0000,71,16,0.0575,5.7471
+St Peters University Hosp,NJ,pslf_friendly,0.9931,138,24,0.9231,119,13,-0.0700,-6.9979
+St Vincent Charity Med Ctr,OH,pslf_friendly,0.9154,187,33,1.0000,12,1,0.0846,8.4596
+St Vincent Hosp-Worcester,MA,ambiguous,1.0000,51,5,0.9792,124,12,-0.0208,-2.0833
+St Vincents East,AL,ambiguous,0.9137,122,28,1.0000,32,4,0.0863,8.6310
+St Vincents Med Ctr,CT,pslf_friendly,0.9688,410,80,1.0000,73,13,0.0312,3.1250
+St Vincents Med Ctr,FL,pslf_friendly,1.0000,116,14,1.0000,44,4,0.0000,0.0000
+Stamford Hospital/Columbia,CT,pslf_friendly,0.9200,170,25,0.9583,807,103,0.0383,3.8333
+Steward Carney Hospital,MA,pslf_hostile,0.9667,83,18,0.9127,47,9,-0.0540,-5.3968
+Still OPTI-Northeast Reg Med Ctr,MO,pslf_friendly,0.7917,105,20,0.8862,448,71,0.0945,9.4484
+Still OPTI-Peak Vista FMRP,CO,ambiguous,0.7500,23,6,0.9250,959,162,0.1750,17.5049
+Stony Brook Teach Hosps,NY,ambiguous,0.9359,350,61,0.9513,688,137,0.0154,1.5428
+Summa Health/NEOMED,OH,ambiguous,0.9316,146,28,0.9286,303,44,-0.0030,-0.3020
+Sunrise Health GME Consortium,NV,ambiguous,0.9211,180,26,0.8270,591,72,-0.0940,-9.4024
+Sutter Health,CA,ambiguous,1.0000,29,8,0.8697,279,36,-0.1303,-13.0291
+Sutter Med Ctr of Santa Rosa,CA,pslf_friendly,0.9701,546,67,0.9878,801,91,0.0177,1.7696
+Swedish Med Ctr,WA,pslf_friendly,0.9333,95,27,0.9500,168,48,0.0167,1.6667
+Tallahassee Mem Healthcare,FL,pslf_friendly,1.0000,39,7,0.9291,2204,304,-0.0709,-7.0902
+Temple Univ Hosp,PA,pslf_friendly,0.9167,128,18,0.9149,613,93,-0.0018,-0.1779
+Temple Univ/Fox Chase Cancer Ctr,PA,ambiguous,1.0000,41,7,0.8333,9,4,-0.1667,-16.6667
+Thomas Jefferson Univ,PA,ambiguous,0.9545,173,22,0.9304,670,91,-0.0241,-2.4143
+Tidelands Health,SC,ambiguous,0.9500,142,22,0.9000,38,5,-0.0500,-5.0000
+Tower Health/Chestnut Hill Hosp,PA,ambiguous,1.0000,42,8,1.0000,6,1,0.0000,0.0000
+Tower Health/Reading Hospital,PA,ambiguous,0.9848,107,22,0.9808,257,43,-0.0040,-0.4035
+Trident Medical Center,SC,pslf_friendly,0.9261,325,49,0.6966,117,17,-0.2295,-22.9529
+Trios Health,WA,ambiguous,0.9439,109,22,0.9438,1141,180,-0.0001,-0.0136
+Tripler Army Med Ctr,HI,pslf_friendly,0.8316,96,19,0.9606,279,55,0.1290,12.9027
+Tucson Hospitals Med Ed,AZ,pslf_friendly,0.9256,287,42,0.9657,1203,170,0.0401,4.0109
+Tufts Medical Center,MA,pslf_friendly,0.8389,88,12,0.9259,369,63,0.0870,8.7037
+Tulane Univ SOM,LA,pslf_friendly,1.0000,26,6,0.9563,462,84,-0.0437,-4.3651
+U Cincinnati Med Ctr,OH,pslf_friendly,1.0000,70,9,0.9673,562,107,-0.0327,-3.2710
+U Louisville SOM,KY,pslf_friendly,0.9478,413,68,0.9323,699,104,-0.0155,-1.5495
+U Miami MSOM/Holy Cross,FL,pslf_friendly,0.6250,8,1,0.9875,151,16,0.3625,36.2500
+U Rochester/Strong Memorial,NY,pslf_friendly,0.9605,254,46,0.9578,727,133,-0.0028,-0.2756
+UAB Selma Fam Med Res,AL,ambiguous,1.0000,18,3,1.0000,21,4,0.0000,0.0000
+UAMS Regional Centers,AR,ambiguous,0.9943,129,22,0.7405,234,32,-0.2539,-25.3867
+UC Davis Med Ctr,CA,pslf_friendly,0.9608,414,80,0.9832,669,125,0.0224,2.2367
+UC Irvine Med Ctr,CA,pslf_friendly,0.9500,40,10,0.9629,746,107,0.0129,1.2855
+UC Riverside SOM,CA,pslf_friendly,0.9844,61,8,0.8750,134,12,-0.1094,-10.9375
+UC San Diego Med Ctr,CA,pslf_friendly,0.9645,378,44,0.9891,686,122,0.0245,2.4538
+UC San Francisco,CA,ambiguous,0.9444,408,54,0.9736,1094,143,0.0292,2.9183
+UC San Francisco-East Bay,CA,ambiguous,0.7619,23,3,0.7083,64,8,-0.0536,-5.3571
+UC San Francisco-Fresno,CA,ambiguous,0.9231,119,13,0.9580,294,32,0.0349,3.4884
+UHS-Wilson Med Ctr,NY,pslf_friendly,0.8857,37,7,0.9524,118,14,0.0667,6.6667
+UIC/Mt Sinai Hosp Med Ctr,IL,pslf_friendly,0.7500,9,4,0.5625,22,8,-0.1875,-18.7500
+UP Health System-Marquette,MI,pslf_friendly,0.9500,52,5,0.6667,24,4,-0.2833,-28.3333
+UPMC Altoona Hospital,PA,ambiguous,0.8800,21,5,1.0000,48,8,0.1200,12.0000
+UPMC Hamot Med Ctr,PA,pslf_friendly,0.9375,101,24,0.8958,50,16,-0.0417,-4.1667
+UPMC McKeesport,PA,ambiguous,1.0000,148,13,1.0000,66,7,0.0000,0.0000
+UPMC Medical Education,PA,ambiguous,0.9751,539,64,0.9869,1048,191,0.0118,1.1769
+UPMC Mercy Hospital,PA,ambiguous,0.9600,44,5,0.8167,120,12,-0.1433,-14.3333
+UPMC Presbyterian Shadyside,PA,ambiguous,0.9667,28,5,1.0000,43,8,0.0333,3.3333
+UPMC St Margaret,PA,ambiguous,0.9286,64,7,1.0000,52,4,0.0714,7.1429
+UVM Health Network CVPH,NY,ambiguous,0.8333,14,3,0.7083,24,4,-0.1250,-12.5000
+Union Hospital,IN,ambiguous,1.0000,110,11,0.8571,28,4,-0.1429,-14.2857
+United Hospital Ctr,WV,ambiguous,0.7917,23,3,0.9298,540,118,0.1381,13.8136
+UnityPoint Broadlawns,IA,ambiguous,1.0000,1,1,1.0000,17,4,0.0000,0.0000
+Univ Central del Caribe SOM,PR,pslf_friendly,1.0000,55,8,0.9001,487,89,-0.0999,-9.9889
+Univ of Chicago Med Ctr,IL,pslf_friendly,0.9637,655,89,0.9836,886,132,0.0198,1.9847
+University Hosps-Columbia,MO,pslf_friendly,0.9232,397,80,0.9135,544,98,-0.0097,-0.9685
+University Hosps-Jackson,MS,pslf_friendly,0.9316,230,39,0.9007,637,120,-0.0309,-3.0929
+University at Buffalo SOM,NY,pslf_friendly,0.9792,100,12,0.9690,735,123,-0.0102,-1.0163
+University of Toledo,OH,pslf_friendly,0.8556,102,18,0.9146,357,68,0.0590,5.9028
+VA Greater LA Hlth Sys,CA,pslf_friendly,0.8333,30,4,1.0000,52,7,0.1667,16.6667
+VCU-Shenandoah Valley,VA,ambiguous,0.8750,19,2,0.9496,737,128,0.0746,7.4642
+Valley Childrens Healthcare,CA,pslf_friendly,0.9744,37,3,0.9464,55,4,-0.0279,-2.7930
+Valley Consortium,CA,ambiguous,0.9000,22,2,0.9375,52,8,0.0375,3.7500
+Valley Health System,NV,pslf_friendly,0.7778,42,6,0.7554,194,21,-0.0224,-2.2375
+Valley Health Team,CA,ambiguous,1.0000,30,6,0.9375,16,4,-0.0625,-6.2500
+Valley Med Ctr,WA,pslf_friendly,0.9490,258,40,0.9375,32,4,-0.0115,-1.1508
+Ventura County Med Ctr,CA,pslf_friendly,1.0000,59,4,1.0000,60,4,0.0000,0.0000
+Wake Forest Baptist Med Ctr,NC,pslf_friendly,1.0000,26,5,0.9271,642,90,-0.0729,-7.2862
+Waterbury Hospital,CT,ambiguous,0.8750,7,4,0.9375,16,8,0.0625,6.2500
+Wayne State University SOM,MI,pslf_friendly,0.9769,697,114,0.8404,473,97,-0.1365,-13.6498
+Weiss Memorial Hospital,IL,pslf_friendly,1.0000,18,2,0.9688,32,4,-0.0312,-3.1250
+West Kendall Baptist Hospital,FL,ambiguous,0.9333,65,15,1.0000,4,1,0.0667,6.6667
+West Suburban Med Ctr,IL,pslf_friendly,1.0000,82,15,0.4333,30,3,-0.5667,-56.6667
+Westchester Medical Ctr,NY,pslf_friendly,1.0000,18,8,0.9558,405,77,-0.0442,-4.4156
+Western Reserve Health Ed/NEOMED,OH,ambiguous,0.8378,253,37,0.8854,78,16,0.0476,4.7579
+Wheeling Hospital,WV,ambiguous,0.9519,127,26,0.8583,27,4,-0.0936,-9.3590
+White River Health System,AR,pslf_friendly,1.0000,20,2,1.0000,30,3,0.0000,0.0000
+William Beaumont Army Med Ctr,TX,pslf_friendly,0.9333,140,20,0.6458,21,8,-0.2875,-28.7500
+Woodhull Med Ctr,NY,pslf_friendly,1.0000,56,7,0.8000,92,5,-0.2000,-20.0000
+Wright Center for GME,PA,ambiguous,0.9583,97,14,0.8333,258,24,-0.1250,-12.5000
+Wright State Univ Boonshoft SOM,OH,pslf_friendly,0.9164,332,61,0.9473,262,55,0.0309,3.0908
+Wyckoff Heights Med Ctr,NY,pslf_friendly,0.9093,265,45,0.9762,152,21,0.0669,6.6931
+Yakima Valley Farm Workers Clinic,WA,ambiguous,0.9086,166,29,0.1875,16,4,-0.7211,-72.1121
+Yale-New Haven Hosp,CT,pslf_friendly,0.8750,25,4,0.9955,1105,154,0.1205,12.0491
+Yuma Regional Med Ctr,AZ,pslf_friendly,0.9744,350,54,0.9044,140,15,-0.0700,-6.9982
+Zucker SOM-Northwell Forest Hills Hosp,NY,pslf_friendly,1.0000,77,11,0.9271,56,8,-0.0729,-7.2917
+Zucker SOM-Northwell Lenox Hill Hosp,NY,pslf_friendly,1.0000,55,5,0.9556,252,45,-0.0444,-4.4444
+Zucker SOM-Northwell Mather Hosp,NY,pslf_friendly,1.0000,52,8,1.0000,160,30,0.0000,0.0000
+Zucker SOM-Northwell NS/LIJ,NY,pslf_friendly,0.9455,124,11,0.9316,684,95,-0.0139,-1.3876
+Zucker SOM-Northwell Plainview Hosp,NY,pslf_friendly,1.0000,82,13,1.0000,80,8,0.0000,0.0000
+Zucker SOM-Northwell Staten Island Univ,NY,pslf_friendly,0.8571,79,7,0.9859,428,59,0.1287,12.8733
+Zucker SOM-Northwell Zucker Hillside,NY,pslf_friendly,0.9167,34,4,1.0000,52,8,0.0833,8.3333

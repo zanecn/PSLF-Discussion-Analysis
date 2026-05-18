@@ -1,0 +1,627 @@
+================================================================================
+PSLF Intention Analysis (Claude pslf_stance)
+Generated: 2026-05-09T12:41:51
+Source: scripts/pslf_intention_analysis.py
+================================================================================
+
+This script analyses INTENTION (Claude pslf_stance: pursuing,
+considering, rejecting, completed) as a separate construct from
+SENTIMENT (Claude pslf_sentiment) and AFFECT (TextBlob).
+Substantive research question: how does stated intention to
+pursue PSLF vary by profession and shift around policy events?
+
+Sample: n=9,263 unique posts with valid Claude scoring
+  with non-unknown stance: 6,946
+  with non-unknown stance AND date:  6,946
+
+--------------------------------------------------------------------------------
+OVERALL STANCE DISTRIBUTION
+--------------------------------------------------------------------------------
+  pursuing         3,779  (40.8%)
+  unknown          2,317  (25.0%)
+  considering      2,238  (24.2%)
+  rejecting          496  (5.4%)
+  completed          432  (4.7%)
+  completing           1  (0.0%)
+  TOTAL            9,263
+
+--------------------------------------------------------------------------------
+STANCE BY PROFESSION (% of non-unknown stance posts; n>=20)
+--------------------------------------------------------------------------------
+
+  Federal  (n=96)
+    pursuing         70.8%
+    considering      22.9%
+    rejecting         0.0%
+    completed         6.2%
+
+  Finance  (n=999)
+    pursuing         61.8%
+    considering      29.6%
+    rejecting         6.4%
+    completed         2.2%
+
+  Law  (n=59)
+    pursuing         27.1%
+    considering      62.7%
+    rejecting         8.5%
+    completed         1.7%
+
+  Medical  (n=566)
+    pursuing         52.5%
+    considering      38.7%
+    rejecting         7.6%
+    completed         1.2%
+
+  Nursing  (n=68)
+    pursuing         35.3%
+    considering      60.3%
+    rejecting         1.5%
+    completed         2.9%
+
+  OT  (n=66)
+    pursuing         33.3%
+    considering      59.1%
+    rejecting         6.1%
+    completed         1.5%
+
+  PA  (n=197)
+    pursuing         28.9%
+    considering      62.4%
+    rejecting         8.1%
+    completed         0.5%
+
+  Pharmacy  (n=55)
+    pursuing         41.8%
+    considering      54.5%
+    rejecting         3.6%
+    completed         0.0%
+
+  SDN (Medical)  (n=1,960)
+    pursuing         31.9%
+    considering      47.0%
+    rejecting        13.6%
+    completed         7.6%
+
+  SLP  (n=111)
+    pursuing         46.8%
+    considering      46.8%
+    rejecting         4.5%
+    completed         1.8%
+
+  Social Work  (n=61)
+    pursuing         49.2%
+    considering      37.7%
+    rejecting         8.2%
+    completed         4.9%
+
+  Teaching  (n=270)
+    pursuing         56.3%
+    considering      30.4%
+    rejecting         4.8%
+    completed         8.5%
+
+  r/PSLF  (n=1,469)
+    pursuing         79.7%
+    considering       7.3%
+    rejecting         0.4%
+    completed        12.5%
+
+  r/StudentLoans  (n=969)
+    pursuing         64.5%
+    considering      25.4%
+    rejecting         6.8%
+    completed         3.3%
+
+--------------------------------------------------------------------------------
+PRE/POST INTENTION SHIFTS BY EVENT
+Δ Rejecting Rate (pp) and 2-prop z-test; chi-sq for full distribution.
+--------------------------------------------------------------------------------
+Event                         win  n_pre  n_post  rej_pre%  rej_post%    Δ pp    p_rej   p_chi2
+Limited PSLF Waiver            90    289     416       7.3       10.8   +3.55   0.1114   0.0000
+IDR Account Adjustment         90    275     402       6.5       12.7   +6.14   0.0095   0.0000
+Biden Mass Forgiveness         90    278     207      11.2        2.4   -8.74   0.0003   0.0001
+Biden v. Nebraska SCOTUS       90    232     419       4.3        5.3   +0.94   0.5951   0.4435
+Payments Restart               90    414     187       4.8        3.7   -1.09   0.5512   0.3665
+SAVE Admin Forbearance         90    254     204      11.8        2.0   -9.85   0.0001   0.0003
+Trump PSLF EO                  60    454     432      10.8       14.1   +3.33   0.1333   0.0071
+Final Trump PSLF Rule          60    285     293      12.3        1.7  -10.57   0.0000   0.0000
+
+--------------------------------------------------------------------------------
+SENTIMENT × STANCE DECOUPLING
+If sentiment and intention were tightly coupled, negative-sentiment
+posts would be mostly rejecting. They aren't.
+--------------------------------------------------------------------------------
+pslf_stance     completed  completing  considering  pursuing  rejecting  n_total  pct_pursuing  pct_rejecting
+pslf_sentiment                                                                                               
+very_negative           1           0           13       137        119      270          50.7           44.1
+negative               12           0          459       869        201     1541          56.4           13.0
+neutral                22           0         1278      1299        176     2775          46.8            6.3
+positive               93           1          487      1425          0     2006          71.0            0.0
+very_positive         304           0            1        49          0      354          13.8            0.0
+
+Headline: of 1541 'negative'-sentiment posts, 869 (56.4%) are still pursuing PSLF.
+Sentiment and intention are partially decoupled — affect doesn't determine commitment.
+
+--------------------------------------------------------------------------------
+TOPIC × STANCE (which topics drive which intention?)
+--------------------------------------------------------------------------------
+pslf_stance          completed  completing  considering  pursuing  rejecting  n_total  pct_rejecting  pct_pursuing
+primary_topic                                                                                                     
+financial_planning           7           0          951      1416        260     2634            9.9          53.8
+general_question             9           0          463       626         26     1124            2.3          55.7
+career_impact                3           0          496       432         72     1003            7.2          43.1
+policy_uncertainty           3           0          296       451        108      858           12.6          52.6
+servicer_issues             33           1           14       775         14      837            1.7          92.6
+success_story              377           0           18        69          1      465            0.2          14.8
+frustration_venting          0           0            0        10         15       25           60.0          40.0
+
+--------------------------------------------------------------------------------
+PRE/POST INTENTION SHIFTS BY EVENT × PROFESSION
+Δ Rejecting Rate (pp) per cell with n_pre, n_post >= 10
+NOTE: most non-SDN professions have n<10 in pre or post for most
+events, so per-event × per-profession coverage is dominated by
+SDN (Medical) — the largest medical-PSLF community in the corpus.
+For other professions, see the OVERALL stance × profession table
+above (which uses n>=20 cumulative, not per-event).
+--------------------------------------------------------------------------------
+Event                        Profession          n_pre  n_post  rej_pre%  rej_post%    Δ pp      p_z
+Biden Mass Forgiveness       SDN (Medical)          75      13      26.7        7.7  -18.97   0.1384
+Biden Mass Forgiveness       r/StudentLoans         21      50       9.5        2.0   -7.52   0.1504
+Biden Mass Forgiveness       Medical                26      17       7.7        5.9   -1.81   0.8198
+Biden Mass Forgiveness       Finance                51      44       3.9        2.3   -1.65   0.6468
+Biden Mass Forgiveness       r/PSLF                 64      51       0.0        0.0   +0.00      nan
+Biden v. Nebraska SCOTUS     SDN (Medical)         107      78       8.4        2.6   -5.85   0.0968
+Biden v. Nebraska SCOTUS     Teaching               10      13       0.0        0.0   +0.00      nan
+Biden v. Nebraska SCOTUS     r/PSLF                 46      98       0.0        0.0   +0.00      nan
+Biden v. Nebraska SCOTUS     Medical                22      29       4.5       10.3   +5.80   0.4455
+Biden v. Nebraska SCOTUS     Finance                21      84       0.0       10.7  +10.71   0.1167
+Final Trump PSLF Rule        SDN (Medical)          41     124      43.9        0.0  -43.90   0.0000
+Final Trump PSLF Rule        Finance                23      37      21.7        8.1  -13.63   0.1310
+Final Trump PSLF Rule        r/PSLF                 31      62       3.2        0.0   -3.23   0.1551
+Final Trump PSLF Rule        r/StudentLoans         28      43       0.0        0.0   +0.00      nan
+Final Trump PSLF Rule        PA                     20      12       5.0        8.3   +3.33   0.7061
+IDR Account Adjustment       Finance                45      43       6.7        0.0   -6.67   0.0849
+IDR Account Adjustment       Medical                19      30      10.5        6.7   -3.86   0.6307
+IDR Account Adjustment       r/PSLF                 37      73       0.0        0.0   +0.00      nan
+IDR Account Adjustment       r/StudentLoans         22      32       0.0        6.2   +6.25   0.2321
+IDR Account Adjustment       SDN (Medical)         131     195       9.9       22.6  +12.64   0.0032
+Limited PSLF Waiver          Finance                23      39      13.0       10.3   -2.79   0.7376
+Limited PSLF Waiver          r/PSLF                 17      70       0.0        0.0   +0.00      nan
+Limited PSLF Waiver          r/StudentLoans         17      34       5.9       11.8   +5.88   0.5054
+Limited PSLF Waiver          SDN (Medical)         215     236       7.4       14.4   +6.96   0.0186
+Payments Restart             PA                     16      10       6.2        0.0   -6.25   0.4201
+Payments Restart             r/StudentLoans         67      21       6.0        0.0   -5.97   0.2518
+Payments Restart             Medical                30      19      10.0        5.3   -4.74   0.5552
+Payments Restart             Finance                81      30       9.9        6.7   -3.21   0.5999
+Payments Restart             SDN (Medical)          77      33       2.6        3.0   +0.43   0.8984
+Payments Restart             r/PSLF                 99      36       0.0        2.8   +2.78   0.0960
+SAVE Admin Forbearance       SDN (Medical)          43      22      41.9        0.0  -41.86   0.0004
+SAVE Admin Forbearance       Medical                20      20      15.0        0.0  -15.00   0.0717
+SAVE Admin Forbearance       r/StudentLoans         35      22       8.6        0.0   -8.57   0.1583
+SAVE Admin Forbearance       Finance                50      45       6.0        0.0   -6.00   0.0950
+SAVE Admin Forbearance       r/PSLF                 40      46       0.0        0.0   +0.00      nan
+Trump PSLF EO                Medical                28      27       7.1        0.0   -7.14   0.1572
+Trump PSLF EO                r/StudentLoans         29      25       6.9        4.0   -2.90   0.6431
+Trump PSLF EO                Federal                15      12       0.0        0.0   +0.00      nan
+Trump PSLF EO                r/PSLF                 60      29       0.0        0.0   +0.00      nan
+Trump PSLF EO                SDN (Medical)         234     249      17.1       19.7   +2.58   0.4640
+Trump PSLF EO                Finance                39      34      10.3       14.7   +4.45   0.5641
+Trump PSLF EO                PA                     14      10       0.0       20.0  +20.00   0.0805
+
+Largest absolute shifts (top 10 cells):
+  ↓ Final Trump PSLF Rule        × SDN (Medical)      Δ  -43.9 pp  (n_pre=41, n_post=124, p=0.000**)
+  ↓ SAVE Admin Forbearance       × SDN (Medical)      Δ  -41.9 pp  (n_pre=43, n_post=22, p=0.000**)
+  ↑ Trump PSLF EO                × PA                 Δ  +20.0 pp  (n_pre=14, n_post=10, p=0.081)
+  ↓ Biden Mass Forgiveness       × SDN (Medical)      Δ  -19.0 pp  (n_pre=75, n_post=13, p=0.138)
+  ↓ SAVE Admin Forbearance       × Medical            Δ  -15.0 pp  (n_pre=20, n_post=20, p=0.072)
+  ↓ Final Trump PSLF Rule        × Finance            Δ  -13.6 pp  (n_pre=23, n_post=37, p=0.131)
+  ↑ IDR Account Adjustment       × SDN (Medical)      Δ  +12.6 pp  (n_pre=131, n_post=195, p=0.003**)
+  ↑ Biden v. Nebraska SCOTUS     × Finance            Δ  +10.7 pp  (n_pre=21, n_post=84, p=0.117)
+  ↓ SAVE Admin Forbearance       × r/StudentLoans     Δ   -8.6 pp  (n_pre=35, n_post=22, p=0.158)
+  ↓ Biden Mass Forgiveness       × r/StudentLoans     Δ   -7.5 pp  (n_pre=21, n_post=50, p=0.150)
+
+--------------------------------------------------------------------------------
+PRE/POST TOPIC DISTRIBUTION SHIFTS BY EVENT
+Round-7 reframe: lead with EFFECT SIZES (per-topic delta_pp),
+not chi-sq p-values. At n>200 per side, chi-sq p<10⁻⁴ is
+essentially uninformative — the magnitudes are what matter.
+Cramér's V provided as a magnitude-of-association measure.
+--------------------------------------------------------------------------------
+
+Limited PSLF Waiver (2021-10-06, win=90d, n_pre=399, n_post=592):
+  Cramer's V = 0.351  (small=0.10, medium=0.30, large=0.50; Cohen 1988)
+    success_story              30.1% →   5.2% (Δ -24.8 pp)
+    financial_planning         30.3% →  39.2% (Δ  +8.9 pp)
+    policy_uncertainty          8.0% →  14.9% (Δ  +6.8 pp)
+    servicer_issues             2.0% →   6.2% (Δ  +4.2 pp)
+    general_question           16.8% →  19.9% (Δ  +3.1 pp)
+    career_impact              12.5% →  14.4% (Δ  +1.8 pp)
+
+IDR Account Adjustment (2022-04-19, win=90d, n_pre=382, n_post=499):
+  Cramer's V = 0.345  (small=0.10, medium=0.30, large=0.50; Cohen 1988)
+    financial_planning         26.2% →  56.3% (Δ +30.1 pp)
+    general_question           33.8% →  16.0% (Δ -17.7 pp)
+    success_story              12.3% →   3.4% (Δ  -8.9 pp)
+    servicer_issues             8.9% →   6.4% (Δ  -2.5 pp)
+    career_impact               8.1% →   5.8% (Δ  -2.3 pp)
+    policy_uncertainty          9.4% →  11.4% (Δ  +2.0 pp)
+
+Biden Mass Forgiveness (2022-08-24, win=90d, n_pre=347, n_post=314):
+  Cramer's V = 0.320  (small=0.10, medium=0.30, large=0.50; Cohen 1988)
+    career_impact              22.5% →   5.4% (Δ -17.1 pp)
+    servicer_issues             7.8% →  21.0% (Δ +13.2 pp)
+    general_question           25.1% →  34.7% (Δ  +9.6 pp)
+    success_story               6.9% →   2.5% (Δ  -4.4 pp)
+    financial_planning         31.7% →  29.0% (Δ  -2.7 pp)
+    policy_uncertainty          5.5% →   7.0% (Δ  +1.5 pp)
+
+Biden v. Nebraska SCOTUS (2023-06-30, win=90d, n_pre=340, n_post=676):
+  Cramer's V = 0.288  (small=0.10, medium=0.30, large=0.50; Cohen 1988)
+    career_impact              24.1% →   6.2% (Δ -17.9 pp)
+    general_question           15.9% →  26.2% (Δ +10.3 pp)
+    policy_uncertainty          6.2% →  13.3% (Δ  +7.1 pp)
+    financial_planning         42.9% →  39.6% (Δ  -3.3 pp)
+    servicer_issues             5.9% →   9.2% (Δ  +3.3 pp)
+
+Payments Restart (2023-10-01, win=90d, n_pre=656, n_post=265):
+  Cramer's V = 0.248  (small=0.10, medium=0.30, large=0.50; Cohen 1988)
+    career_impact               6.2% →  17.0% (Δ +10.7 pp)
+    policy_uncertainty         12.2% →   3.8% (Δ  -8.4 pp)
+    servicer_issues             9.5% →  17.4% (Δ  +7.9 pp)
+    financial_planning         39.8% →  35.1% (Δ  -4.7 pp)
+    success_story               5.5% →   1.1% (Δ  -4.4 pp)
+    general_question           26.8% →  25.7% (Δ  -1.2 pp)
+
+SAVE Admin Forbearance (2024-08-09, win=90d, n_pre=391, n_post=256):
+  Cramer's V = 0.222  (small=0.10, medium=0.30, large=0.50; Cohen 1988)
+    financial_planning         41.7% →  27.7% (Δ -14.0 pp)
+    career_impact              10.2% →  21.1% (Δ +10.9 pp)
+    general_question           26.6% →  20.3% (Δ  -6.3 pp)
+    policy_uncertainty          7.7% →  13.7% (Δ  +6.0 pp)
+    success_story               1.3% →   3.1% (Δ  +1.8 pp)
+    servicer_issues            12.3% →  13.7% (Δ  +1.4 pp)
+
+Trump PSLF EO (2025-03-07, win=60d, n_pre=771, n_post=563):
+  Cramer's V = 0.236  (small=0.10, medium=0.30, large=0.50; Cohen 1988)
+    policy_uncertainty         48.9% →  30.7% (Δ -18.2 pp)
+    financial_planning         16.0% →  25.8% (Δ  +9.8 pp)
+    career_impact               9.7% →  18.7% (Δ  +8.9 pp)
+    servicer_issues             6.2% →   9.6% (Δ  +3.4 pp)
+    general_question           16.7% →  14.4% (Δ  -2.3 pp)
+    frustration_venting         1.3% →   0.0% (Δ  -1.3 pp)
+
+Final Trump PSLF Rule (2025-10-30, win=60d, n_pre=382, n_post=399):
+  Cramer's V = 0.244  (small=0.10, medium=0.30, large=0.50; Cohen 1988)
+    policy_uncertainty          6.0% →  19.5% (Δ +13.5 pp)
+    general_question           19.1% →  11.0% (Δ  -8.1 pp)
+    servicer_issues            14.7% →   8.3% (Δ  -6.4 pp)
+    financial_planning         40.6% →  37.3% (Δ  -3.2 pp)
+    career_impact              16.8% →  19.5% (Δ  +2.8 pp)
+    success_story               2.4% →   4.0% (Δ  +1.7 pp)
+
+================================================================================
+PER-AUTHOR LONGITUDINAL ANALYSIS
+================================================================================
+Round-7 floor-effect investigation follow-up.
+
+DESIGN-CONSTRAINT FINDING: 7 of 8 events have <10 returning authors
+with stance-classifiable posts in BOTH pre and post windows. The
+PSLF discussant pool is dominated by single-window posters; within-
+person stance dynamics are NOT IDENTIFIABLE FROM THIS CORPUS for most
+events. Pooled pre/post stance shifts must therefore be interpreted as
+DISCUSSANT-POOL COMPOSITION SHIFTS, not as borrower stance changes.
+This is a fundamental limitation of forum-based discourse data, not
+a fixable analysis choice.
+
+Method: returning author = posted ≥1 stance-classifiable post in BOTH
+windows. MODAL stance per window per author (deterministic tie-break:
+rejecting > considering > pursuing > completed). McNemar's exact test
+on matched-pairs rejecting transitions (paired data, not independent
+samples). 95% CI via paired-bootstrap (B=2000). Authors filtered to
+exclude [deleted], [removed], AutoModerator, bot accounts.
+--------------------------------------------------------------------------------
+Event                         win pre_a post_a  ret overlap%  stab% Δrej WITHIN           95% CI  McNemar p
+Limited PSLF Waiver            90    95    201    3 (below 10-returning threshold; within-person inference infeasible)
+IDR Account Adjustment         90   159    218    4 (below 10-returning threshold; within-person inference infeasible)
+Biden Mass Forgiveness         90   209    196    3 (below 10-returning threshold; within-person inference infeasible)
+Biden v. Nebraska SCOTUS       90   126    349    4 (below 10-returning threshold; within-person inference infeasible)
+Payments Restart               90   345    158    8 (below 10-returning threshold; within-person inference infeasible)
+SAVE Admin Forbearance         90   216    179    4 (below 10-returning threshold; within-person inference infeasible)
+Trump PSLF EO                  60   240    200   13     6.5%  53.8%      +15.38   [-15.4, +46.2]     0.6250
+Final Trump PSLF Rule          60   233    173    4 (below 10-returning threshold; within-person inference infeasible)
+
+TRANSITIONS DETAIL (returning authors with sufficient n):
+  Trump PSLF EO: 13 returning, 7 stable, 3 shifted TO rejecting, 1 shifted FROM rejecting, 2 other shifts
+
+INTERPRETATION (Round-7 audit-revised):
+  - The within-person Δ rejecting-rate is computed on a SELECTED
+    subset (returning authors), who are by construction the most
+    engaged posters. Engagement correlates with both committed-pursuing
+    and frustrated-rejecting stances; the within-person estimate may
+    not generalize to the full discussant pool.
+  - For events meeting the n>=10 threshold, the 95% CI on the within-
+    person Δ is wide enough at these sample sizes that the within-
+    person estimate is statistically indistinguishable from both 0
+    and from the pooled Δ. Treat as descriptive note only.
+  - McNemar p tests H0: equal probability of rejecting↑ vs rejecting↓
+    transitions among returning authors.
+  - For 7 of 8 events, the data design itself does not support within-
+    person inference. Composition-vs-change decomposition is
+    NOT IDENTIFIED from this corpus alone.
+  - See intention_within_vs_between_decomposition.png for the visual
+    side-by-side comparison.
+
+--------------------------------------------------------------------------------
+STANCE BY CAREER STAGE (keyword-extracted from post text)
+Coverage: ~10% of all posts have explicit career-stage markers
+(MS1-4, PGY-X, 'as a resident', 'attending', etc.). High precision
+on the matched subset; missing posts are 'unknown'.
+Round-7 expansion: full-corpus Claude with career_stage in the
+prompt would push coverage to ~90%+.
+--------------------------------------------------------------------------------
+
+  attending  (n=137)
+    pursuing         24.1%
+    considering      59.9%
+    rejecting        15.3%
+    completed         0.7%
+
+  fellow  (n=292)
+    pursuing         38.4%
+    considering      54.1%
+    rejecting         4.8%
+    completed         2.7%
+
+  medical_student  (n=68)
+    pursuing         35.3%
+    considering      57.4%
+    rejecting         7.4%
+    completed         0.0%
+
+  pa_student  (n=57)
+    pursuing         22.8%
+    considering      66.7%
+    rejecting        10.5%
+    completed         0.0%
+
+  resident  (n=209)
+    pursuing         48.8%
+    considering      36.4%
+    rejecting        12.4%
+    completed         2.4%
+
+--------------------------------------------------------------------------------
+PRE/POST INTENTION SHIFTS BY EVENT × CAREER STAGE
+Per-cell n>=10 in both pre and post; career_stage n>=30 overall.
+--------------------------------------------------------------------------------
+Event                        Career Stage        n_pre  n_post  rej_pre%  rej_post%    Δ pp      p_z
+Limited PSLF Waiver          resident               11      16      18.2        6.2  -11.93   0.3324
+Trump PSLF EO                attending              11      21       0.0        0.0   +0.00      nan
+Trump PSLF EO                fellow                 16      31       0.0        0.0   +0.00      nan
+
+--------------------------------------------------------------------------------
+PRE/POST TOPIC SHIFTS BY EVENT × PROFESSION
+Per cell: chi-sq on profession-specific topic distribution.
+Per-cell n>=20 in both pre and post; profession n>=40 overall.
+--------------------------------------------------------------------------------
+
+Limited PSLF Waiver:
+  Finance            (n_pre=32, n_post=53): chi-sq p=0.3467 ns
+    financial_planning         81.2% →  71.7% (Δ  -9.6 pp)
+    policy_uncertainty          0.0% →   7.5% (Δ  +7.5 pp)
+    success_story               0.0% →   3.8% (Δ  +3.8 pp)
+  SDN (Medical)      (n_pre=287, n_post=354): chi-sq p=0.0000 ***
+    success_story              41.1% →   5.6% (Δ -35.5 pp)
+    financial_planning         25.1% →  39.5% (Δ +14.5 pp)
+    policy_uncertainty          8.4% →  20.6% (Δ +12.3 pp)
+  r/StudentLoans     (n_pre=30, n_post=57): chi-sq p=0.2462 ns
+    servicer_issues             6.7% →  17.5% (Δ +10.9 pp)
+    career_impact              10.0% →   1.8% (Δ  -8.2 pp)
+    policy_uncertainty         10.0% →   5.3% (Δ  -4.7 pp)
+
+IDR Account Adjustment:
+  Finance            (n_pre=60, n_post=53): chi-sq p=0.3359 ns
+    financial_planning         61.7% →  75.5% (Δ +13.8 pp)
+    general_question           25.0% →  15.1% (Δ  -9.9 pp)
+    career_impact              10.0% →   3.8% (Δ  -6.2 pp)
+  Medical            (n_pre=23, n_post=32): chi-sq p=0.2473 ns
+    policy_uncertainty          0.0% →  12.5% (Δ +12.5 pp)
+    servicer_issues            13.0% →   3.1% (Δ  -9.9 pp)
+    financial_planning         56.5% →  46.9% (Δ  -9.6 pp)
+  SDN (Medical)      (n_pre=191, n_post=255): chi-sq p=0.0000 ***
+    financial_planning         17.3% →  78.8% (Δ +61.5 pp)
+    general_question           35.6% →   0.4% (Δ -35.2 pp)
+    success_story              17.8% →   0.0% (Δ -17.8 pp)
+  r/PSLF             (n_pre=37, n_post=75): chi-sq p=0.6678 ns
+    success_story              24.3% →  17.3% (Δ  -7.0 pp)
+    general_question           37.8% →  42.7% (Δ  +4.8 pp)
+    frustration_venting         2.7% →   0.0% (Δ  -2.7 pp)
+  r/StudentLoans     (n_pre=38, n_post=46): chi-sq p=0.9071 ns
+    financial_planning         31.6% →  37.0% (Δ  +5.4 pp)
+    servicer_issues            15.8% →  13.0% (Δ  -2.7 pp)
+    career_impact               2.6% →   0.0% (Δ  -2.6 pp)
+
+Biden Mass Forgiveness:
+  Finance            (n_pre=62, n_post=54): chi-sq p=0.5475 ns
+    financial_planning         80.6% →  70.4% (Δ -10.3 pp)
+    general_question           11.3% →  18.5% (Δ  +7.2 pp)
+    career_impact               1.6% →   5.6% (Δ  +3.9 pp)
+  Medical            (n_pre=29, n_post=20): chi-sq p=0.3945 ns
+    general_question           34.5% →  20.0% (Δ -14.5 pp)
+    servicer_issues             0.0% →  10.0% (Δ +10.0 pp)
+    policy_uncertainty         13.8% →  20.0% (Δ  +6.2 pp)
+  SDN (Medical)      (n_pre=106, n_post=65): chi-sq p=0.0000 ***
+    career_impact              54.7% →   1.5% (Δ -53.2 pp)
+    general_question            5.7% →  38.5% (Δ +32.8 pp)
+    servicer_issues             0.0% →  13.8% (Δ +13.8 pp)
+  r/PSLF             (n_pre=66, n_post=56): chi-sq p=0.2728 ns
+    servicer_issues            33.3% →  50.0% (Δ +16.7 pp)
+    general_question           43.9% →  32.1% (Δ -11.8 pp)
+    policy_uncertainty          6.1% →   1.8% (Δ  -4.3 pp)
+  r/StudentLoans     (n_pre=37, n_post=73): chi-sq p=0.1276 ns
+    servicer_issues            13.5% →  32.9% (Δ +19.4 pp)
+    policy_uncertainty         18.9% →   9.6% (Δ  -9.3 pp)
+    financial_planning         24.3% →  17.8% (Δ  -6.5 pp)
+
+Biden v. Nebraska SCOTUS:
+  Finance            (n_pre=26, n_post=126): chi-sq p=0.6678 ns
+    financial_planning         73.1% →  79.4% (Δ  +6.3 pp)
+    career_impact               3.8% →   0.8% (Δ  -3.1 pp)
+    success_story               3.8% →   1.6% (Δ  -2.3 pp)
+  Medical            (n_pre=26, n_post=45): chi-sq p=0.4807 ns
+    financial_planning         61.5% →  51.1% (Δ -10.4 pp)
+    general_question           11.5% →  20.0% (Δ  +8.5 pp)
+    servicer_issues             3.8% →  11.1% (Δ  +7.3 pp)
+  SDN (Medical)      (n_pre=189, n_post=178): chi-sq p=0.0000 ***
+    financial_planning         52.4% →  15.7% (Δ -36.7 pp)
+    policy_uncertainty          9.5% →  42.7% (Δ +33.2 pp)
+    career_impact              31.2% →   3.4% (Δ -27.8 pp)
+  r/PSLF             (n_pre=46, n_post=103): chi-sq p=0.0398 *
+    success_story              23.9% →   9.7% (Δ -14.2 pp)
+    general_question           23.9% →  35.0% (Δ +11.0 pp)
+    financial_planning         15.2% →  26.2% (Δ +11.0 pp)
+
+Payments Restart:
+  Finance            (n_pre=121, n_post=41): chi-sq p=0.0038 **
+    financial_planning         79.3% →  56.1% (Δ -23.2 pp)
+    career_impact               0.8% →   9.8% (Δ  +8.9 pp)
+    general_question           15.7% →  22.0% (Δ  +6.2 pp)
+  Medical            (n_pre=44, n_post=24): chi-sq p=0.1598 ns
+    servicer_issues            11.4% →  33.3% (Δ +22.0 pp)
+    financial_planning         47.7% →  33.3% (Δ -14.4 pp)
+    general_question           25.0% →  16.7% (Δ  -8.3 pp)
+  SDN (Medical)      (n_pre=173, n_post=63): chi-sq p=0.0000 ***
+    policy_uncertainty         41.6% →   6.3% (Δ -35.3 pp)
+    financial_planning         16.2% →  46.0% (Δ +29.8 pp)
+    career_impact               3.5% →  19.0% (Δ +15.6 pp)
+  r/PSLF             (n_pre=104, n_post=38): chi-sq p=0.0001 ***
+    servicer_issues            23.1% →  55.3% (Δ +32.2 pp)
+    financial_planning         26.0% →   7.9% (Δ -18.1 pp)
+    general_question           35.6% →  21.1% (Δ -14.5 pp)
+  r/StudentLoans     (n_pre=131, n_post=36): chi-sq p=0.5632 ns
+    financial_planning         52.7% →  36.1% (Δ -16.6 pp)
+    servicer_issues            22.1% →  33.3% (Δ +11.2 pp)
+    general_question           19.8% →  25.0% (Δ  +5.2 pp)
+
+SAVE Admin Forbearance:
+  Finance            (n_pre=72, n_post=60): chi-sq p=0.6070 ns
+    career_impact               5.6% →   1.7% (Δ  -3.9 pp)
+    financial_planning         69.4% →  73.3% (Δ  +3.9 pp)
+    servicer_issues             2.8% →   0.0% (Δ  -2.8 pp)
+  Medical            (n_pre=27, n_post=23): chi-sq p=0.7521 ns
+    policy_uncertainty         18.5% →  30.4% (Δ +11.9 pp)
+    servicer_issues            22.2% →  13.0% (Δ  -9.2 pp)
+    career_impact               7.4% →  13.0% (Δ  +5.6 pp)
+  SDN (Medical)      (n_pre=96, n_post=23): chi-sq p=0.0000 ***
+    career_impact               3.1% → 100.0% (Δ +96.9 pp)
+    financial_planning         67.7% →   0.0% (Δ -67.7 pp)
+    general_question           28.1% →   0.0% (Δ -28.1 pp)
+  r/PSLF             (n_pre=42, n_post=51): chi-sq p=0.2958 ns
+    servicer_issues            45.2% →  31.4% (Δ -13.9 pp)
+    success_story               2.4% →  13.7% (Δ +11.3 pp)
+    career_impact               0.0% →   3.9% (Δ  +3.9 pp)
+  r/StudentLoans     (n_pre=61, n_post=36): chi-sq p=0.2560 ns
+    policy_uncertainty         11.5% →  25.0% (Δ +13.5 pp)
+    general_question           29.5% →  16.7% (Δ -12.8 pp)
+    servicer_issues            26.2% →  36.1% (Δ  +9.9 pp)
+
+Trump PSLF EO:
+  Finance            (n_pre=53, n_post=54): chi-sq p=0.0311 *
+    financial_planning         73.6% →  59.3% (Δ -14.3 pp)
+    policy_uncertainty          0.0% →  11.1% (Δ +11.1 pp)
+    general_question           15.1% →  22.2% (Δ  +7.1 pp)
+  Medical            (n_pre=32, n_post=31): chi-sq p=0.7338 ns
+    policy_uncertainty         53.1% →  38.7% (Δ -14.4 pp)
+    general_question            3.1% →   9.7% (Δ  +6.6 pp)
+    financial_planning         28.1% →  32.3% (Δ  +4.1 pp)
+  SDN (Medical)      (n_pre=494, n_post=317): chi-sq p=0.0000 ***
+    policy_uncertainty         63.6% →  36.3% (Δ -27.3 pp)
+    career_impact               7.5% →  25.6% (Δ +18.1 pp)
+    financial_planning          9.1% →  25.6% (Δ +16.4 pp)
+  r/PSLF             (n_pre=68, n_post=31): chi-sq p=0.6053 ns
+    general_question           17.6% →   6.5% (Δ -11.2 pp)
+    policy_uncertainty         29.4% →  38.7% (Δ  +9.3 pp)
+    servicer_issues            27.9% →  35.5% (Δ  +7.5 pp)
+  r/StudentLoans     (n_pre=48, n_post=46): chi-sq p=0.2050 ns
+    general_question            8.3% →  23.9% (Δ +15.6 pp)
+    policy_uncertainty         25.0% →  13.0% (Δ -12.0 pp)
+    financial_planning         22.9% →  15.2% (Δ  -7.7 pp)
+
+Final Trump PSLF Rule:
+  Finance            (n_pre=38, n_post=44): chi-sq p=0.0267 *
+    financial_planning         68.4% →  90.9% (Δ +22.5 pp)
+    general_question           23.7% →   2.3% (Δ -21.4 pp)
+    career_impact               2.6% →   0.0% (Δ  -2.6 pp)
+  SDN (Medical)      (n_pre=77, n_post=197): chi-sq p=0.0000 ***
+    policy_uncertainty          0.0% →  27.9% (Δ +27.9 pp)
+    career_impact              45.5% →  32.5% (Δ -13.0 pp)
+    general_question           19.5% →   9.1% (Δ -10.3 pp)
+  r/PSLF             (n_pre=33, n_post=65): chi-sq p=0.1272 ns
+    success_story               6.1% →  21.5% (Δ +15.5 pp)
+    financial_planning         36.4% →  24.6% (Δ -11.7 pp)
+    servicer_issues            39.4% →  27.7% (Δ -11.7 pp)
+  r/StudentLoans     (n_pre=43, n_post=54): chi-sq p=0.6695 ns
+    general_question           25.6% →  18.5% (Δ  -7.1 pp)
+    servicer_issues            20.9% →  25.9% (Δ  +5.0 pp)
+    policy_uncertainty         14.0% →  18.5% (Δ  +4.6 pp)
+
+--------------------------------------------------------------------------------
+PRE/POST CLAUDE SENTIMENT SHIFTS BY EVENT × PROFESSION
+Hedges' g per cell on Claude pslf_sentiment numeric (-2..+2)
+--------------------------------------------------------------------------------
+Event                        Profession          n_pre  n_post     g_CL        p
+Biden Mass Forgiveness       Teaching               14      12   -0.968   0.0155
+Biden Mass Forgiveness       Medical                29      20   -0.582   0.0597
+Biden Mass Forgiveness       r/StudentLoans         37      73   -0.458   0.0278
+Biden Mass Forgiveness       SDN (Medical)         106      65   -0.351   0.0172
+Biden Mass Forgiveness       r/PSLF                 66      56   -0.307   0.0967
+Biden Mass Forgiveness       Finance                60      53   +0.132   0.4768
+Biden v. Nebraska SCOTUS     Teaching               12      20   -0.583   0.1343
+Biden v. Nebraska SCOTUS     Finance                26     124   -0.406   0.0703
+Biden v. Nebraska SCOTUS     SDN (Medical)         188     178   -0.141   0.1786
+Biden v. Nebraska SCOTUS     r/PSLF                 46     103   -0.140   0.4730
+Biden v. Nebraska SCOTUS     Medical                26      45   +0.009   0.9670
+Biden v. Nebraska SCOTUS     r/StudentLoans         10     135   +0.379   0.1459
+Final Trump PSLF Rule        PA                     29      13   -0.295   0.3938
+Final Trump PSLF Rule        r/StudentLoans         43      54   +0.136   0.5023
+Final Trump PSLF Rule        Finance                37      44   +0.146   0.5018
+Final Trump PSLF Rule        r/PSLF                 33      65   +0.441   0.0372
+Final Trump PSLF Rule        SDN (Medical)          77     197   +0.523   0.0001
+IDR Account Adjustment       SDN (Medical)         191     255   -0.357   0.0004
+IDR Account Adjustment       Teaching               14      13   -0.247   0.5085
+IDR Account Adjustment       r/StudentLoans         38      46   -0.021   0.9241
+IDR Account Adjustment       r/PSLF                 37      75   +0.022   0.9186
+IDR Account Adjustment       Finance                59      51   +0.169   0.3811
+IDR Account Adjustment       Medical                23      32   +0.426   0.1129
+Limited PSLF Waiver          SDN (Medical)         287     354   -0.831   0.0000
+Limited PSLF Waiver          Medical                11      19   -0.632   0.1095
+Limited PSLF Waiver          r/PSLF                 18      72   -0.249   0.3728
+Limited PSLF Waiver          r/StudentLoans         30      55   -0.036   0.8833
+Limited PSLF Waiver          Finance                31      52   +0.590   0.0073
+Payments Restart             Teaching               17      11   -0.484   0.1829
+Payments Restart             Medical                44      24   -0.421   0.1303
+Payments Restart             r/PSLF                104      38   -0.354   0.0774
+Payments Restart             Finance               119      41   -0.346   0.0774
+Payments Restart             r/StudentLoans        131      36   -0.195   0.3420
+Payments Restart             PA                     21      16   -0.123   0.6992
+Payments Restart             SDN (Medical)         173      63   +0.173   0.1887
+SAVE Admin Forbearance       SDN (Medical)          96      23   -2.328   0.0000
+SAVE Admin Forbearance       r/StudentLoans         61      36   -0.623   0.0060
+SAVE Admin Forbearance       Teaching               20      12   -0.303   0.4096
+SAVE Admin Forbearance       Finance                72      60   +0.090   0.6114
+SAVE Admin Forbearance       Medical                27      23   +0.129   0.6472
+SAVE Admin Forbearance       r/PSLF                 42      51   +0.290   0.1502
+SAVE Admin Forbearance       PA                     29      12   +0.394   0.2099
+Trump PSLF EO                SLP                    10      12   -1.258   0.0124
+Trump PSLF EO                PA                     18      15   -0.391   0.2485
+Trump PSLF EO                Finance                53      51   -0.336   0.0875
+Trump PSLF EO                r/PSLF                 68      31   -0.138   0.5358
+Trump PSLF EO                r/StudentLoans         48      46   +0.084   0.6840
+Trump PSLF EO                Medical                32      31   +0.117   0.6376
+Trump PSLF EO                Federal                18      15   +0.537   0.1313
+Trump PSLF EO                SDN (Medical)         494     316   +0.568   0.0000
+
+================================================================================
+END OF ARTIFACT
+================================================================================

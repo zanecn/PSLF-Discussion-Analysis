@@ -1,0 +1,36 @@
+================================================================================
+PAPER 3 MODEL 5: PSLF FILL-RATE WITH AUDIT-REQUIRED CONFOUNDERS
+================================================================================
+
+Sample: n=30,763 program-year rows; 789 institutions
+Years: [2021, 2022, 2023, 2024, 2025]
+Specialties: 28
+NIH funding included: True
+R²: 0.1174
+Adjusted R²: 0.1149
+
+KEY COEFFICIENTS (HC3 robust SEs)
+--------------------------------------------------------------------------------
+  PSLF[pslf_friendly]                                     β=  -0.46 pp [SE=0.31, 95% CI (  -1.07,   +0.14)], p=1.350e-01 
+  PSLF[pslf_hostile]                                      β= -18.06 pp [SE=1.64, 95% CI ( -21.27,  -14.86)], p=2.287e-28 ***
+  cms_mean_star                                           β=  +1.07 pp [SE=0.18, 95% CI (  +0.72,   +1.41)], p=1.437e-09 ***
+  cms_for_profit_share                                    β=  +0.62 pp [SE=0.66, 95% CI (  -0.67,   +1.91)], p=3.476e-01 
+  Univ.affil[True]                                        β=  -0.65 pp [SE=0.34, 95% CI (  -1.31,   +0.01)], p=5.228e-02 
+  Acad.MC[True]                                           β=  +0.67 pp [SE=0.38, 95% CI (  -0.07,   +1.41)], p=7.555e-02 
+  n_specialties                                           β=  +0.14 pp [SE=0.04, 95% CI (  +0.06,   +0.22)], p=1.003e-03 **
+  log_residents                                           β=  -0.09 pp [SE=0.32, 95% CI (  -0.72,   +0.53)], p=7.692e-01 
+  log_nih_funding                                         β=  +0.01 pp [SE=0.02, 95% CI (  -0.02,   +0.05)], p=4.216e-01 
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+  PSLF-hostile vs ambiguous: -18.06 pp
+  PSLF-friendly vs ambiguous: -0.46 pp
+  (Reference: ambiguous; positive = higher fill rate)
+
+Compare to original Model 4 (no audit confounders):
+  PSLF-hostile β = -18.56 pp (95% CI [-21.0, -16.1]; p<10⁻⁷⁵)
+  PSLF-friendly β = -0.15 pp (NS)
+
+The full Model 5 result tells us whether the headline survives the
+audit-required confounders. Substantial attenuation (e.g., to >-10 pp)
+would weaken the headline; minor attenuation (-15 to -19 pp) supports it.

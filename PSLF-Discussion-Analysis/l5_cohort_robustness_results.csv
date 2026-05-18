@@ -1,0 +1,26 @@
+cohort,spec,n,OR,ci_lo,ci_hi,direction
+Reddit r/PSLF,Claude-neg x Claude-pur (original),1469,7.3294,4.2038,12.7791,OR>1
+Reddit r/PSLF,TB-neg x Claude-pur,1469,1.6554,0.9676,2.8322,OR>1
+Reddit r/PSLF,VADER-neg x Claude-pur,1469,2.5262,1.5264,4.1811,OR>1
+Reddit r/PSLF,Claude-neg x Claude-pur-only,1469,5.2069,3.5425,7.6533,OR>1
+Reddit r/PSLF,Claude-neg x Claude-pur-or-completed,1469,0.1943,0.0376,1.0052,OR<1
+SDN (Medical),Claude-neg x Claude-pur (original),1960,0.2718,0.2169,0.3407,OR<1
+SDN (Medical),TB-neg x Claude-pur,1960,0.1469,0.0968,0.2230,OR<1
+SDN (Medical),VADER-neg x Claude-pur,1960,0.3339,0.2583,0.4315,OR<1
+SDN (Medical),Claude-neg x Claude-pur-only,1960,0.3614,0.2852,0.4581,OR<1
+SDN (Medical),Claude-neg x Claude-pur-or-completed,1960,0.0563,0.0401,0.0792,OR<1
+Reddit Finance,Claude-neg x Claude-pur (original),999,0.1822,0.1122,0.2957,OR<1
+Reddit Finance,TB-neg x Claude-pur,999,1.1029,0.3321,3.6632,OR>1
+Reddit Finance,VADER-neg x Claude-pur,999,1.4231,0.7189,2.8173,OR>1
+Reddit Finance,Claude-neg x Claude-pur-only,999,0.3688,0.2518,0.5404,OR<1
+Reddit Finance,Claude-neg x Claude-pur-or-completed,999,0.1038,0.0608,0.1772,OR<1
+Reddit r/StudentLoans,Claude-neg x Claude-pur (original),969,1.4107,0.8516,2.3370,OR>1
+Reddit r/StudentLoans,TB-neg x Claude-pur,969,2.4945,0.9911,6.2783,OR>1
+Reddit r/StudentLoans,VADER-neg x Claude-pur,969,0.9899,0.5625,1.7420,OR<1
+Reddit r/StudentLoans,Claude-neg x Claude-pur-only,969,2.0437,1.4848,2.8130,OR>1
+Reddit r/StudentLoans,Claude-neg x Claude-pur-or-completed,969,0.9159,0.5270,1.5918,OR<1
+Reddit Medical,Claude-neg x Claude-pur (original),398,0.7259,0.3283,1.6051,OR<1
+Reddit Medical,TB-neg x Claude-pur,398,1.1913,0.4006,3.5430,OR>1
+Reddit Medical,VADER-neg x Claude-pur,398,0.8411,0.3477,2.0343,OR<1
+Reddit Medical,Claude-neg x Claude-pur-only,398,1.4642,0.9377,2.2862,OR>1
+Reddit Medical,Claude-neg x Claude-pur-or-completed,398,0.7259,0.3283,1.6051,OR<1

@@ -1,0 +1,77 @@
+event,event_date,window_days,profession,profession_label,scorer,n_pre,n_post,mean_pre,mean_post,g,p_boot
+Limited PSLF Waiver,2021-10-06,90,general_finance,Reddit Finance,polarity,45,81,0.0918,0.0983,0.0806,0.5015
+Limited PSLF Waiver,2021-10-06,90,general_pslf,Reddit r/PSLF,polarity,402,1170,0.0811,0.0712,-0.0829,0.1459
+Limited PSLF Waiver,2021-10-06,90,general_student_loans,Reddit r/StudentLoans,polarity,107,197,0.1037,0.0697,-0.2858,0.0669
+Limited PSLF Waiver,2021-10-06,90,sdn_medical,SDN (Medical),polarity,289,356,0.0750,0.1238,0.4227,0.0220
+IDR Account Adjustment,2022-04-19,90,general_finance,Reddit Finance,polarity,77,56,0.0724,0.0931,0.2739,0.0709
+IDR Account Adjustment,2022-04-19,90,general_pslf,Reddit r/PSLF,polarity,1329,1894,0.0745,0.0689,-0.0426,0.2438
+IDR Account Adjustment,2022-04-19,90,general_student_loans,Reddit r/StudentLoans,polarity,185,185,0.0717,0.0870,0.1257,0.3047
+IDR Account Adjustment,2022-04-19,90,medical,Reddit Medical,polarity,23,35,0.0474,0.0491,0.0080,0.9810
+IDR Account Adjustment,2022-04-19,90,sdn_medical,SDN (Medical),polarity,192,268,0.1755,0.1244,-0.4204,0.0829
+Biden Mass Forgiveness,2022-08-24,90,general_finance,Reddit Finance,polarity,56,50,0.0971,0.1074,0.1207,0.5115
+Biden Mass Forgiveness,2022-08-24,90,general_pslf,Reddit r/PSLF,polarity,2424,4140,0.0706,0.0723,0.0127,0.6324
+Biden Mass Forgiveness,2022-08-24,90,general_student_loans,Reddit r/StudentLoans,polarity,240,781,0.0662,0.0759,0.0711,0.4236
+Biden Mass Forgiveness,2022-08-24,90,medical,Reddit Medical,polarity,30,20,0.0346,0.1026,0.3048,0.0639
+Biden Mass Forgiveness,2022-08-24,90,sdn_medical,SDN (Medical),polarity,107,68,0.1521,0.1118,-0.3557,0.1848
+Biden v. Nebraska SCOTUS,2023-06-30,90,general_finance,Reddit Finance,polarity,70,228,0.0792,0.0923,0.1622,0.3167
+Biden v. Nebraska SCOTUS,2023-06-30,90,general_pslf,Reddit r/PSLF,polarity,2078,3065,0.0704,0.0723,0.0139,0.5994
+Biden v. Nebraska SCOTUS,2023-06-30,90,general_student_loans,Reddit r/StudentLoans,polarity,396,3936,0.0740,0.0736,-0.0023,0.9640
+Biden v. Nebraska SCOTUS,2023-06-30,90,medical,Reddit Medical,polarity,26,45,0.0610,0.0567,-0.0364,0.8492
+Biden v. Nebraska SCOTUS,2023-06-30,90,sdn_medical,SDN (Medical),polarity,189,179,0.1354,0.0902,-0.4603,0.0440
+Payments Restart,2023-10-01,90,general_finance,Reddit Finance,polarity,218,129,0.0937,0.1100,0.1893,0.1389
+Payments Restart,2023-10-01,90,general_pslf,Reddit r/PSLF,polarity,3084,2359,0.0719,0.0554,-0.1236,0.0010
+Payments Restart,2023-10-01,90,general_student_loans,Reddit r/StudentLoans,polarity,4037,2551,0.0728,0.0503,-0.1687,0.0010
+Payments Restart,2023-10-01,90,medical,Reddit Medical,polarity,44,27,0.0564,0.0693,0.1001,0.7483
+Payments Restart,2023-10-01,90,sdn_medical,SDN (Medical),polarity,174,64,0.0913,0.1559,0.5861,0.0310
+SAVE Admin Forbearance,2024-08-09,90,general_finance,Reddit Finance,polarity,58,53,0.0731,0.0654,-0.0852,0.6234
+SAVE Admin Forbearance,2024-08-09,90,general_pslf,Reddit r/PSLF,polarity,836,995,0.0468,0.0479,0.0089,0.8511
+SAVE Admin Forbearance,2024-08-09,90,general_student_loans,Reddit r/StudentLoans,polarity,2180,1701,0.0533,0.0416,-0.0887,0.0150
+SAVE Admin Forbearance,2024-08-09,90,medical,Reddit Medical,polarity,26,24,0.0490,0.0338,-0.0968,0.7223
+SAVE Admin Forbearance,2024-08-09,90,sdn_medical,SDN (Medical),polarity,97,23,0.0420,0.2643,1.6897,0.0010
+Trump PSLF EO,2025-03-07,60,general_finance,Reddit Finance,polarity,37,45,0.0649,0.0745,0.1300,0.5075
+Trump PSLF EO,2025-03-07,60,general_pslf,Reddit r/PSLF,polarity,1659,1007,0.0617,0.0438,-0.1391,0.0020
+Trump PSLF EO,2025-03-07,60,general_student_loans,Reddit r/StudentLoans,polarity,1703,1424,0.0499,0.0433,-0.0487,0.1718
+Trump PSLF EO,2025-03-07,60,medical,Reddit Medical,polarity,26,25,0.0448,0.0183,-0.2086,0.3497
+Trump PSLF EO,2025-03-07,60,sdn_medical,SDN (Medical),polarity,497,331,0.1380,0.0752,-0.4535,0.0030
+Final Trump PSLF Rule,2025-10-30,60,general_finance,Reddit Finance,polarity,39,45,0.0835,0.0955,0.1628,0.4525
+Final Trump PSLF Rule,2025-10-30,60,general_pslf,Reddit r/PSLF,polarity,509,627,0.0538,0.0693,0.1408,0.0280
+Final Trump PSLF Rule,2025-10-30,60,general_student_loans,Reddit r/StudentLoans,polarity,821,746,0.0555,0.0611,0.0415,0.4276
+Final Trump PSLF Rule,2025-10-30,60,sdn_medical,SDN (Medical),polarity,81,202,0.0683,0.1397,0.6555,0.0370
+Limited PSLF Waiver,2021-10-06,90,general_finance,Reddit Finance,vader_compound,45,81,0.6831,0.5839,-0.1686,0.1429
+Limited PSLF Waiver,2021-10-06,90,general_pslf,Reddit r/PSLF,vader_compound,402,1170,0.5065,0.4539,-0.0944,0.1279
+Limited PSLF Waiver,2021-10-06,90,general_student_loans,Reddit r/StudentLoans,vader_compound,107,197,0.4491,0.4224,-0.0438,0.7213
+Limited PSLF Waiver,2021-10-06,90,sdn_medical,SDN (Medical),vader_compound,289,356,0.4814,0.5534,0.1352,0.5075
+IDR Account Adjustment,2022-04-19,90,general_finance,Reddit Finance,vader_compound,77,56,0.5995,0.5012,-0.1519,0.3986
+IDR Account Adjustment,2022-04-19,90,general_pslf,Reddit r/PSLF,vader_compound,1329,1894,0.4653,0.4537,-0.0204,0.6094
+IDR Account Adjustment,2022-04-19,90,general_student_loans,Reddit r/StudentLoans,vader_compound,185,185,0.4287,0.5730,0.2494,0.0140
+IDR Account Adjustment,2022-04-19,90,medical,Reddit Medical,vader_compound,23,35,0.3149,0.2833,-0.0522,0.8541
+IDR Account Adjustment,2022-04-19,90,sdn_medical,SDN (Medical),vader_compound,192,268,0.4658,0.8135,0.9355,0.0010
+Biden Mass Forgiveness,2022-08-24,90,general_finance,Reddit Finance,vader_compound,56,50,0.7333,0.5617,-0.3125,0.0669
+Biden Mass Forgiveness,2022-08-24,90,general_pslf,Reddit r/PSLF,vader_compound,2424,4140,0.4306,0.3710,-0.1018,0.0010
+Biden Mass Forgiveness,2022-08-24,90,general_student_loans,Reddit r/StudentLoans,vader_compound,240,781,0.5180,0.4780,-0.0724,0.3756
+Biden Mass Forgiveness,2022-08-24,90,medical,Reddit Medical,vader_compound,30,20,0.3442,0.4977,0.2531,0.2158
+Biden Mass Forgiveness,2022-08-24,90,sdn_medical,SDN (Medical),vader_compound,107,68,0.7660,0.4019,-0.8777,0.0260
+Biden v. Nebraska SCOTUS,2023-06-30,90,general_finance,Reddit Finance,vader_compound,70,228,0.5681,0.7196,0.2901,0.0819
+Biden v. Nebraska SCOTUS,2023-06-30,90,general_pslf,Reddit r/PSLF,vader_compound,2078,3065,0.4254,0.4949,0.1234,0.0020
+Biden v. Nebraska SCOTUS,2023-06-30,90,general_student_loans,Reddit r/StudentLoans,vader_compound,396,3936,0.4598,0.6366,0.3444,0.0010
+Biden v. Nebraska SCOTUS,2023-06-30,90,medical,Reddit Medical,vader_compound,26,45,0.3941,0.5595,0.2712,0.3017
+Biden v. Nebraska SCOTUS,2023-06-30,90,sdn_medical,SDN (Medical),vader_compound,189,179,0.7171,0.4981,-0.4307,0.0979
+Payments Restart,2023-10-01,90,general_finance,Reddit Finance,vader_compound,218,129,0.7211,0.7493,0.0600,0.5984
+Payments Restart,2023-10-01,90,general_pslf,Reddit r/PSLF,vader_compound,3084,2359,0.4923,0.4705,-0.0385,0.1988
+Payments Restart,2023-10-01,90,general_student_loans,Reddit r/StudentLoans,vader_compound,4037,2551,0.6353,0.5299,-0.1964,0.0010
+Payments Restart,2023-10-01,90,medical,Reddit Medical,vader_compound,44,27,0.5187,0.6335,0.2010,0.4695
+Payments Restart,2023-10-01,90,sdn_medical,SDN (Medical),vader_compound,174,64,0.5319,0.8625,0.7076,0.0090
+SAVE Admin Forbearance,2024-08-09,90,general_finance,Reddit Finance,vader_compound,58,53,0.5631,0.4769,-0.1314,0.5844
+SAVE Admin Forbearance,2024-08-09,90,general_pslf,Reddit r/PSLF,vader_compound,836,995,0.5357,0.5349,-0.0013,0.9800
+SAVE Admin Forbearance,2024-08-09,90,general_student_loans,Reddit r/StudentLoans,vader_compound,2180,1701,0.5272,0.4776,-0.0846,0.0160
+SAVE Admin Forbearance,2024-08-09,90,medical,Reddit Medical,vader_compound,26,24,0.5922,0.4979,-0.1712,0.3576
+SAVE Admin Forbearance,2024-08-09,90,sdn_medical,SDN (Medical),vader_compound,97,23,0.4910,0.6192,0.2451,0.4885
+Trump PSLF EO,2025-03-07,60,general_finance,Reddit Finance,vader_compound,37,45,0.4828,0.3478,-0.1768,0.4785
+Trump PSLF EO,2025-03-07,60,general_pslf,Reddit r/PSLF,vader_compound,1659,1007,0.6129,0.5141,-0.1806,0.0010
+Trump PSLF EO,2025-03-07,60,general_student_loans,Reddit r/StudentLoans,vader_compound,1703,1424,0.4669,0.4071,-0.0976,0.0210
+Trump PSLF EO,2025-03-07,60,medical,Reddit Medical,vader_compound,26,25,0.4074,0.3391,-0.0957,0.8192
+Trump PSLF EO,2025-03-07,60,sdn_medical,SDN (Medical),vader_compound,497,331,0.2888,0.4718,0.3152,0.0989
+Final Trump PSLF Rule,2025-10-30,60,general_finance,Reddit Finance,vader_compound,39,45,0.8518,0.7547,-0.2559,0.3167
+Final Trump PSLF Rule,2025-10-30,60,general_pslf,Reddit r/PSLF,vader_compound,509,627,0.6042,0.6377,0.0633,0.2927
+Final Trump PSLF Rule,2025-10-30,60,general_student_loans,Reddit r/StudentLoans,vader_compound,821,746,0.5533,0.5227,-0.0527,0.2837
+Final Trump PSLF Rule,2025-10-30,60,sdn_medical,SDN (Medical),vader_compound,81,202,0.3531,0.4456,0.1599,0.5874

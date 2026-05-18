@@ -1,0 +1,208 @@
+================================================================================
+Per-event x Per-profession Sentiment Hedges' g
+Generated: 2026-05-09T12:42:55
+Source: scripts/analyze_per_profession_per_event.py
+================================================================================
+
+SCOPE
+--------------------------------------------------------------------------------
+Profession-stratified per-event sentiment shift, full post-Arctic-Shift
+corpus. Reports cells with n_pre AND n_post >= 20 only. p_boot is
+block-permutation (B=1000, autocorrelation-aware).
+
+CORPUS COMPOSITION (PSLF-filtered, wc>=20)
+--------------------------------------------------------------------------------
+  Reddit r/PSLF                n= 35,614  (2016-10-27 -> 2026-03-31)
+  Reddit r/StudentLoans        n= 29,173  (2013-01-30 -> 2026-03-31)
+  Reddit Finance               n=  4,708  (2011-07-06 -> 2026-03-31)
+  SDN (Medical)                n=  4,054  (2009-03-04 -> 2026-03-28)
+  Reddit Medical               n=    676  (2013-04-23 -> 2026-03-31)
+  Reddit PA                    n=    376  (2015-02-16 -> 2026-03-30)
+  Reddit Teaching              n=    334  (2013-07-17 -> 2026-01-05)
+  Reddit r/personalfinance     n=    320  (2013-05-04 -> 2026-03-21)
+  Reddit Nursing               n=    157  (2014-06-03 -> 2026-03-21)
+  Reddit SLP                   n=    152  (2014-01-02 -> 2026-03-24)
+  Reddit Federal               n=    132  (2018-06-25 -> 2026-02-06)
+  Reddit Law                   n=    103  (2011-06-10 -> 2026-01-26)
+  Reddit SocialWork            n=     96  (2013-10-18 -> 2026-03-08)
+  Reddit OT                    n=     90  (2016-09-26 -> 2026-03-30)
+  Reddit Pharmacy              n=     89  (2015-03-27 -> 2026-02-23)
+  TOTAL                        n= 76,074
+
+================================================================================
+TEXTBLOB - per-event x per-profession Hedges' g
+================================================================================
+
+Limited PSLF Waiver:
+  profession                     n_pre  n_post       g   p_boot  sig?
+  Reddit r/StudentLoans            107     197  -0.286   0.0669      
+  Reddit r/PSLF                    402    1170  -0.083   0.1459      
+  Reddit Finance                    45      81  +0.081   0.5015      
+  SDN (Medical)                    289     356  +0.423   0.0220     *
+
+IDR Account Adjustment:
+  profession                     n_pre  n_post       g   p_boot  sig?
+  SDN (Medical)                    192     268  -0.420   0.0829      
+  Reddit r/PSLF                   1329    1894  -0.043   0.2438      
+  Reddit Medical                    23      35  +0.008   0.9810      
+  Reddit r/StudentLoans            185     185  +0.126   0.3047      
+  Reddit Finance                    77      56  +0.274   0.0709      
+
+Biden Mass Forgiveness:
+  profession                     n_pre  n_post       g   p_boot  sig?
+  SDN (Medical)                    107      68  -0.356   0.1848      
+  Reddit r/PSLF                   2424    4140  +0.013   0.6324      
+  Reddit r/StudentLoans            240     781  +0.071   0.4236      
+  Reddit Finance                    56      50  +0.121   0.5115      
+  Reddit Medical                    30      20  +0.305   0.0639      
+
+Biden v. Nebraska SCOTUS:
+  profession                     n_pre  n_post       g   p_boot  sig?
+  SDN (Medical)                    189     179  -0.460   0.0440     *
+  Reddit Medical                    26      45  -0.036   0.8492      
+  Reddit r/StudentLoans            396    3936  -0.002   0.9640      
+  Reddit r/PSLF                   2078    3065  +0.014   0.5994      
+  Reddit Finance                    70     228  +0.162   0.3167      
+
+Payments Restart:
+  profession                     n_pre  n_post       g   p_boot  sig?
+  Reddit r/StudentLoans           4037    2551  -0.169   0.0010   ***
+  Reddit r/PSLF                   3084    2359  -0.124   0.0010   ***
+  Reddit Medical                    44      27  +0.100   0.7483      
+  Reddit Finance                   218     129  +0.189   0.1389      
+  SDN (Medical)                    174      64  +0.586   0.0310     *
+
+SAVE Admin Forbearance:
+  profession                     n_pre  n_post       g   p_boot  sig?
+  Reddit Medical                    26      24  -0.097   0.7223      
+  Reddit r/StudentLoans           2180    1701  -0.089   0.0150     *
+  Reddit Finance                    58      53  -0.085   0.6234      
+  Reddit r/PSLF                    836     995  +0.009   0.8511      
+  SDN (Medical)                     97      23  +1.690   0.0010   ***
+
+Trump PSLF EO:
+  profession                     n_pre  n_post       g   p_boot  sig?
+  SDN (Medical)                    497     331  -0.454   0.0030    **
+  Reddit Medical                    26      25  -0.209   0.3497      
+  Reddit r/PSLF                   1659    1007  -0.139   0.0020    **
+  Reddit r/StudentLoans           1703    1424  -0.049   0.1718      
+  Reddit Finance                    37      45  +0.130   0.5075      
+
+Final Trump PSLF Rule:
+  profession                     n_pre  n_post       g   p_boot  sig?
+  Reddit r/StudentLoans            821     746  +0.041   0.4276      
+  Reddit r/PSLF                    509     627  +0.141   0.0280     *
+  Reddit Finance                    39      45  +0.163   0.4525      
+  SDN (Medical)                     81     202  +0.655   0.0370     *
+
+================================================================================
+VADER - per-event x per-profession Hedges' g
+================================================================================
+
+Limited PSLF Waiver:
+  profession                     n_pre  n_post       g   p_boot  sig?
+  Reddit Finance                    45      81  -0.169   0.1429      
+  Reddit r/PSLF                    402    1170  -0.094   0.1279      
+  Reddit r/StudentLoans            107     197  -0.044   0.7213      
+  SDN (Medical)                    289     356  +0.135   0.5075      
+
+IDR Account Adjustment:
+  profession                     n_pre  n_post       g   p_boot  sig?
+  Reddit Finance                    77      56  -0.152   0.3986      
+  Reddit Medical                    23      35  -0.052   0.8541      
+  Reddit r/PSLF                   1329    1894  -0.020   0.6094      
+  Reddit r/StudentLoans            185     185  +0.249   0.0140     *
+  SDN (Medical)                    192     268  +0.936   0.0010   ***
+
+Biden Mass Forgiveness:
+  profession                     n_pre  n_post       g   p_boot  sig?
+  SDN (Medical)                    107      68  -0.878   0.0260     *
+  Reddit Finance                    56      50  -0.313   0.0669      
+  Reddit r/PSLF                   2424    4140  -0.102   0.0010   ***
+  Reddit r/StudentLoans            240     781  -0.072   0.3756      
+  Reddit Medical                    30      20  +0.253   0.2158      
+
+Biden v. Nebraska SCOTUS:
+  profession                     n_pre  n_post       g   p_boot  sig?
+  SDN (Medical)                    189     179  -0.431   0.0979      
+  Reddit r/PSLF                   2078    3065  +0.123   0.0020    **
+  Reddit Medical                    26      45  +0.271   0.3017      
+  Reddit Finance                    70     228  +0.290   0.0819      
+  Reddit r/StudentLoans            396    3936  +0.344   0.0010   ***
+
+Payments Restart:
+  profession                     n_pre  n_post       g   p_boot  sig?
+  Reddit r/StudentLoans           4037    2551  -0.196   0.0010   ***
+  Reddit r/PSLF                   3084    2359  -0.038   0.1988      
+  Reddit Finance                   218     129  +0.060   0.5984      
+  Reddit Medical                    44      27  +0.201   0.4695      
+  SDN (Medical)                    174      64  +0.708   0.0090    **
+
+SAVE Admin Forbearance:
+  profession                     n_pre  n_post       g   p_boot  sig?
+  Reddit Medical                    26      24  -0.171   0.3576      
+  Reddit Finance                    58      53  -0.131   0.5844      
+  Reddit r/StudentLoans           2180    1701  -0.085   0.0160     *
+  Reddit r/PSLF                    836     995  -0.001   0.9800      
+  SDN (Medical)                     97      23  +0.245   0.4885      
+
+Trump PSLF EO:
+  profession                     n_pre  n_post       g   p_boot  sig?
+  Reddit r/PSLF                   1659    1007  -0.181   0.0010   ***
+  Reddit Finance                    37      45  -0.177   0.4785      
+  Reddit r/StudentLoans           1703    1424  -0.098   0.0210     *
+  Reddit Medical                    26      25  -0.096   0.8192      
+  SDN (Medical)                    497     331  +0.315   0.0989      
+
+Final Trump PSLF Rule:
+  profession                     n_pre  n_post       g   p_boot  sig?
+  Reddit Finance                    39      45  -0.256   0.3167      
+  Reddit r/StudentLoans            821     746  -0.053   0.2837      
+  Reddit r/PSLF                    509     627  +0.063   0.2927      
+  SDN (Medical)                     81     202  +0.160   0.5874      
+
+================================================================================
+CROSS-PROFESSION CONCORDANCE PER EVENT (TextBlob)
+--------------------------------------------------------------------------------
+For each event, lists professions sorted by g; flags whether the
+profession effects are mostly same-sign (concordant) or split.
+
+  Limited PSLF Waiver             : SPLIT (2 negative, 2 positive, 0 null cells)
+  IDR Account Adjustment          : NULL/MIXED (1 neg, 2 pos, 2 null)
+  Biden Mass Forgiveness          : NULL/MIXED (1 neg, 3 pos, 1 null)
+  Biden v. Nebraska SCOTUS        : NULL/MIXED (1 neg, 1 pos, 3 null)
+  Payments Restart                : SPLIT (2 negative, 3 positive, 0 null cells)
+  SAVE Admin Forbearance          : NULL/MIXED (3 neg, 1 pos, 1 null)
+  Trump PSLF EO                   : NULL/MIXED (3 neg, 1 pos, 1 null)
+  Final Trump PSLF Rule           : POSITIVE-DOMINANT (3/4 cells g>+0.05)
+
+================================================================================
+HEADLINE CELLS (Bonferroni-corrected within each event family)
+--------------------------------------------------------------------------------
+Cells where p_boot survives Bonferroni correction at the per-event level
+(alpha = 0.05 / n_cells_per_event_per_scorer).
+
+  TextBlob x Payments Restart (alpha/8 cells = 0.0100):
+    Reddit r/PSLF                g=-0.124 p_boot=0.0010  n=3084/2359
+    Reddit r/StudentLoans        g=-0.169 p_boot=0.0010  n=4037/2551
+  TextBlob x SAVE Admin Forbearance (alpha/8 cells = 0.0100):
+    SDN (Medical)                g=+1.690 p_boot=0.0010  n=97/23
+  TextBlob x Trump PSLF EO (alpha/8 cells = 0.0100):
+    Reddit r/PSLF                g=-0.139 p_boot=0.0020  n=1659/1007
+    SDN (Medical)                g=-0.454 p_boot=0.0030  n=497/331
+  VADER x IDR Account Adjustment (alpha/8 cells = 0.0100):
+    SDN (Medical)                g=+0.936 p_boot=0.0010  n=192/268
+  VADER x Biden Mass Forgiveness (alpha/8 cells = 0.0100):
+    Reddit r/PSLF                g=-0.102 p_boot=0.0010  n=2424/4140
+  VADER x Biden v. Nebraska SCOTUS (alpha/8 cells = 0.0100):
+    Reddit r/StudentLoans        g=+0.344 p_boot=0.0010  n=396/3936
+    Reddit r/PSLF                g=+0.123 p_boot=0.0020  n=2078/3065
+  VADER x Payments Restart (alpha/8 cells = 0.0100):
+    Reddit r/StudentLoans        g=-0.196 p_boot=0.0010  n=4037/2551
+    SDN (Medical)                g=+0.708 p_boot=0.0090  n=174/64
+  VADER x Trump PSLF EO (alpha/8 cells = 0.0100):
+    Reddit r/PSLF                g=-0.181 p_boot=0.0010  n=1659/1007
+
+================================================================================
+END OF ARTIFACT
+================================================================================

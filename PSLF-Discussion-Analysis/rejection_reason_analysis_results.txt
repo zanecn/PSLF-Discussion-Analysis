@@ -1,0 +1,96 @@
+================================================================================
+Rejection-reason analysis
+Generated: 2026-05-10T11:51:10
+================================================================================
+
+Total rejecting posts with reason: 497
+
+MARGINAL REJECTION REASON DISTRIBUTION
+--------------------------------------------------------------------------------
+  servicer_distrust           123 (24.7%)
+  no_reason_given             110 (22.1%)
+  employer_mismatch           110 (22.1%)
+  alternative_strategy         66 (13.3%)
+  timeline_too_long            41 (8.2%)
+  job_change                   22 (4.4%)
+  cost_complexity              13 (2.6%)
+  forbearance_fatigue           7 (1.4%)
+  other                         5 (1.0%)
+
+[1] COHORT × REJECTION REASON (% within cohort row)
+--------------------------------------------------------------------------------
+rejection_reason       alternative_strategy  cost_complexity  employer_mismatch  forbearance_fatigue  job_change  no_reason_given  other  servicer_distrust  timeline_too_long
+cohort                                                                                                                                                                        
+Other                                   6.5              0.0               35.5                  0.0         6.5             22.6    3.2               16.1                9.7
+Reddit Finance                          7.8              0.0               14.1                  4.7        10.9             34.4    1.6                7.8               18.8
+Reddit Medical                         11.6              0.0               37.2                  2.3         4.7             34.9    0.0                2.3                7.0
+Reddit Nursing                          0.0              0.0                0.0                  0.0         0.0              0.0    0.0              100.0                0.0
+Reddit PA                               6.2              6.2               50.0                  0.0        18.8             18.8    0.0                0.0                0.0
+Reddit Teaching                         0.0              0.0               25.0                  0.0         0.0             50.0    0.0                0.0               25.0
+Reddit r/PSLF                          16.7             16.7               16.7                 16.7        16.7              0.0    0.0               16.7                0.0
+Reddit r/StudentLoans                   7.6              0.0               27.3                  1.5         9.1             42.4    1.5                6.1                4.5
+SDN (Medical)                          17.7              4.1               17.3                  0.4         0.4             12.4    0.8               39.8                7.1
+
+N counts:
+rejection_reason       alternative_strategy  cost_complexity  employer_mismatch  forbearance_fatigue  job_change  no_reason_given  other  servicer_distrust  timeline_too_long
+cohort                                                                                                                                                                        
+Other                                     2                0                 11                    0           2                7      1                  5                  3
+Reddit Finance                            5                0                  9                    3           7               22      1                  5                 12
+Reddit Medical                            5                0                 16                    1           2               15      0                  1                  3
+Reddit Nursing                            0                0                  0                    0           0                0      0                  1                  0
+Reddit PA                                 1                1                  8                    0           3                3      0                  0                  0
+Reddit Teaching                           0                0                  1                    0           0                2      0                  0                  1
+Reddit r/PSLF                             1                1                  1                    1           1                0      0                  1                  0
+Reddit r/StudentLoans                     5                0                 18                    1           6               28      1                  4                  3
+SDN (Medical)                            47               11                 46                    1           1               33      2                106                 19
+
+[2] EVENT × REJECTION REASON (% within event row)
+--------------------------------------------------------------------------------
+rejection_reason          alternative_strategy  cost_complexity  employer_mismatch  forbearance_fatigue  job_change  no_reason_given  other  servicer_distrust  timeline_too_long
+event                                                                                                                                                                            
+Biden Mass Forgiveness                    36.1              0.0               19.4                  0.0         5.6             19.4    0.0                8.3               11.1
+Biden v. Nebraska SCOTUS                   9.1              0.0               18.2                  3.0         0.0             51.5    0.0                3.0               15.2
+Final Trump PSLF Rule                      2.5              0.0               20.0                  2.5         5.0             37.5    0.0               27.5                5.0
+IDR Account Adjustment                    23.2              1.4               27.5                  0.0         4.3              5.8    1.4               34.8                1.4
+Limited PSLF Waiver                       22.7              0.0                7.6                  0.0         1.5             12.1    0.0               39.4               16.7
+Payments Restart                          10.7              0.0               32.1                  0.0         0.0             35.7    0.0                3.6               17.9
+SAVE Admin Forbearance                    20.6              2.9               23.5                  2.9         2.9             44.1    0.0                0.0                2.9
+Trump PSLF EO                              3.6              9.1               26.4                  0.9         3.6              8.2    1.8               42.7                3.6
+
+N counts:
+rejection_reason          alternative_strategy  cost_complexity  employer_mismatch  forbearance_fatigue  job_change  no_reason_given  other  servicer_distrust  timeline_too_long
+event                                                                                                                                                                            
+Biden Mass Forgiveness                      13                0                  7                    0           2                7      0                  3                  4
+Biden v. Nebraska SCOTUS                     3                0                  6                    1           0               17      0                  1                  5
+Final Trump PSLF Rule                        1                0                  8                    1           2               15      0                 11                  2
+IDR Account Adjustment                      16                1                 19                    0           3                4      1                 24                  1
+Limited PSLF Waiver                         15                0                  5                    0           1                8      0                 26                 11
+Payments Restart                             3                0                  9                    0           0               10      0                  1                  5
+SAVE Admin Forbearance                       7                1                  8                    1           1               15      0                  0                  1
+Trump PSLF EO                                4               10                 29                    1           4                9      2                 47                  4
+
+[3] SENTIMENT × REJECTION REASON (% within sentiment row)
+--------------------------------------------------------------------------------
+rejection_reason  alternative_strategy  cost_complexity  employer_mismatch  forbearance_fatigue  job_change  no_reason_given  other  servicer_distrust  timeline_too_long
+pslf_sentiment                                                                                                                                                           
+negative                          20.9              1.0               17.9                  3.0         7.0             12.9    1.5               22.4               13.4
+neutral                            8.5              0.0               33.9                  0.0         4.5             45.8    0.0                1.1                6.2
+very_negative                      7.6              9.2               11.8                  0.8         0.0              2.5    1.7               63.9                2.5
+
+N counts:
+rejection_reason  alternative_strategy  cost_complexity  employer_mismatch  forbearance_fatigue  job_change  no_reason_given  other  servicer_distrust  timeline_too_long
+pslf_sentiment                                                                                                                                                           
+negative                            42                2                 36                    6          14               26      3                 45                 27
+neutral                             15                0                 60                    0           8               81      0                  2                 11
+very_negative                        9               11                 14                    1           0                3      2                 76                  3
+
+INTERPRETATION HOOKS
+--------------------------------------------------------------------------------
+Look for:
+  - Cohort distinctiveness: which reasons are over/under-represented in SDN?
+  - Event triggers: does Trump EO trigger forbearance_fatigue spike?
+  - Sentiment-reason mapping: is servicer_distrust concentrated in very_negative?
+
+================================================================================
+END OF ARTIFACT
+================================================================================

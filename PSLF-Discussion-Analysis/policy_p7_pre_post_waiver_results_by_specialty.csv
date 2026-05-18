@@ -1,0 +1,15 @@
+specialty,era,n_friendly,n_hostile,mean_friendly,mean_hostile,gap_pp
+Family Medicine,pre_waiver,1113,8,0.9379,0.6208,31.7033
+Family Medicine,post_waiver,1377,60,0.8739,0.7393,13.4646
+Internal Medicine,pre_waiver,2037,23,0.9544,0.7060,24.8417
+Internal Medicine,post_waiver,2399,152,0.9442,0.6701,27.4097
+Pediatrics,pre_waiver,577,0,,,
+Pediatrics,post_waiver,715,8,0.9369,0.5958,34.1068
+Dermatology,pre_waiver,343,2,,,
+Dermatology,post_waiver,406,26,0.9916,0.9808,1.0815
+Emergency Medicine,pre_waiver,462,2,,,
+Emergency Medicine,post_waiver,610,43,0.9195,0.7526,16.6845
+Psychiatry,pre_waiver,570,1,,,
+Psychiatry,post_waiver,882,28,0.9894,1.0000,-1.0565
+Surgery-General,pre_waiver,1212,7,0.8202,0.9235,-10.3304
+Surgery-General,post_waiver,1380,73,0.8194,0.8135,0.5893

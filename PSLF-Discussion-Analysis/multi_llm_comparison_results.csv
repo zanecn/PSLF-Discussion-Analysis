@@ -1,0 +1,11 @@
+comparison,n,pearson_r,exact_match,cohens_kappa,p
+Claude vs Llama,701,0.7035,0.7361,0.5719,0.0000
+Claude vs Third Llm,701,0.7227,0.7860,0.5919,0.0000
+Llama vs Third Llm,701,0.7611,0.7418,0.5714,0.0000
+Claude vs TextBlob,701,0.0658,0.2011,0.0017,0.0816
+Claude vs VADER,701,0.1342,0.2183,0.0231,0.0004
+Llama vs TextBlob,701,0.1388,0.2168,0.0213,0.0002
+Llama vs VADER,701,0.2449,0.2225,0.0285,0.0000
+Third Llm vs TextBlob,701,0.0596,0.2040,0.0053,0.1152
+Third Llm vs VADER,701,0.1799,0.2240,0.0302,0.0000
+TextBlob vs VADER,701,0.3077,0.2696,0.0870,0.0000

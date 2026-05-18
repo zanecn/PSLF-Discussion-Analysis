@@ -1,0 +1,112 @@
+================================================================================
+Comment-Level Cohort Heterogeneity Replication Test
+Generated: 2026-05-09T17:09:23
+================================================================================
+
+PURPOSE
+--------------------------------------------------------------------------------
+Tests whether the post-level cohort-heterogeneity finding (SDN-Medical
+and Reddit-general respond opposite-sign on multiple PSLF events)
+replicates at the COMMENT level.
+
+Sample: 122,017 comments+SDN-equivalents with cohort labels.
+Cell threshold: n_pre AND n_post >= 30.
+
+TEXTBLOB CELL COMPARISON: post-level g vs comment-level g
+--------------------------------------------------------------------------------
+Event                        Cohort                      g_post   g_cmt       Δ   n_cmt_pre/post  sig?  Verdict
+Limited PSLF Waiver          SDN (Medical)               +0.420  +0.581  +0.161          351/376    **  REPLICATES
+Limited PSLF Waiver          Reddit r/StudentLoans       -0.290     n/a     n/a     underpowered     -  COMMENT-CELL UNDERPOWERED
+Limited PSLF Waiver          Reddit r/PSLF               -0.080  -0.054  +0.026        2248/7579     *  REPLICATES
+Payments Restart             SDN (Medical)               +0.590  +0.449  -0.141           196/64        REPLICATES
+Payments Restart             Reddit r/PSLF               -0.120  +0.003  +0.123          759/746        NULL on comments
+Payments Restart             Reddit r/StudentLoans       -0.170     n/a     n/a     underpowered     -  COMMENT-CELL UNDERPOWERED
+SAVE Admin Forbearance       SDN (Medical)               +1.690     n/a     n/a     underpowered     -  COMMENT-CELL UNDERPOWERED
+SAVE Admin Forbearance       Reddit r/PSLF               +0.010  +0.082  +0.072        1597/1551     *  REPLICATES
+SAVE Admin Forbearance       Reddit r/StudentLoans       -0.090  +0.023  +0.113         1393/540        NULL on comments
+Trump PSLF EO                SDN (Medical)               -0.450  -0.277  +0.173          657/381        REPLICATES
+Trump PSLF EO                Reddit r/PSLF               -0.140  -0.035  +0.105        3737/2234        WEAKER same-sign
+Trump PSLF EO                Reddit r/StudentLoans       -0.050  -0.160  -0.110         1335/847   ***  REPLICATES
+Final Trump PSLF Rule        SDN (Medical)               +0.660  +0.686  +0.026           81/212     *  REPLICATES
+Final Trump PSLF Rule        Reddit r/PSLF               +0.140  +0.092  -0.048         648/1550        REPLICATES
+
+
+ALL COMMENT-LEVEL CELLS (TextBlob)
+--------------------------------------------------------------------------------
+Limited PSLF Waiver:
+  Reddit Medical             g=-0.132 p_boot=0.1638      n=248/127
+  Reddit r/PSLF              g=-0.054 p_boot=0.0450   *  n=2248/7579
+  SDN (Medical)              g=+0.581 p_boot=0.0040  **  n=351/376
+
+IDR Account Adjustment:
+  SDN (Medical)              g=-0.340 p_boot=0.1389      n=223/268
+  Reddit Finance             g=-0.289 p_boot=0.2767      n=51/41
+  Reddit Medical             g=-0.060 p_boot=0.3866      n=203/548
+  Reddit r/PSLF              g=+0.100 p_boot=0.1548      n=853/382
+  Reddit r/StudentLoans      g=+0.378 p_boot=0.0190   *  n=52/336
+
+Biden Mass Forgiveness:
+  SDN (Medical)              g=-0.541 p_boot=0.0519      n=117/79
+  Reddit r/PSLF              g=-0.122 p_boot=0.0899      n=435/1273
+  Reddit Finance             g=-0.047 p_boot=0.8152      n=36/709
+  Reddit r/StudentLoans      g=+0.003 p_boot=0.9491      n=985/1511
+  Reddit Medical             g=+0.021 p_boot=0.7962      n=390/269
+
+Biden v. Nebraska SCOTUS:
+  SDN (Medical)              g=-0.337 p_boot=0.1289      n=189/202
+  Reddit r/PSLF              g=-0.117 p_boot=0.2657      n=120/525
+  Reddit r/StudentLoans      g=-0.109 p_boot=0.0060  **  n=1097/2116
+  Reddit Medical             g=-0.054 p_boot=0.3806      n=481/538
+
+Payments Restart:
+  Reddit Medical             g=-0.016 p_boot=0.8711      n=339/185
+  Reddit r/PSLF              g=+0.003 p_boot=0.9680      n=759/746
+  Reddit Finance             g=+0.050 p_boot=0.7363      n=403/59
+  SDN (Medical)              g=+0.449 p_boot=0.0909      n=196/64
+
+SAVE Admin Forbearance:
+  Reddit Medical             g=-0.138 p_boot=0.3287      n=106/326
+  Reddit Finance             g=-0.045 p_boot=0.7223      n=401/114
+  Reddit r/StudentLoans      g=+0.023 p_boot=0.6623      n=1393/540
+  Reddit r/PSLF              g=+0.082 p_boot=0.0290   *  n=1597/1551
+
+Trump PSLF EO:
+  Reddit Finance             g=-0.342 p_boot=0.0210   *  n=210/131
+  SDN (Medical)              g=-0.277 p_boot=0.0639      n=657/381
+  Reddit r/StudentLoans      g=-0.160 p_boot=0.0010 ***  n=1335/847
+  Reddit Medical             g=-0.046 p_boot=0.3806      n=907/701
+  Reddit r/PSLF              g=-0.035 p_boot=0.2907      n=3737/2234
+
+Final Trump PSLF Rule:
+  Reddit Finance             g=+0.044 p_boot=0.6623      n=166/203
+  Reddit r/PSLF              g=+0.092 p_boot=0.0689      n=648/1550
+  Reddit Medical             g=+0.144 p_boot=0.0500   *  n=1715/354
+  Reddit r/StudentLoans      g=+0.207 p_boot=0.0030  **  n=389/348
+  SDN (Medical)              g=+0.686 p_boot=0.0130   *  n=81/212
+
+
+REPLICATION SUMMARY
+--------------------------------------------------------------------------------
+  REPLICATES (same sign, magnitude >= 50% of post-level): 8
+    Limited PSLF Waiver            x SDN (Medical)               g_post=+0.420  g_cmt=+0.581
+    Limited PSLF Waiver            x Reddit r/PSLF               g_post=-0.080  g_cmt=-0.054
+    Payments Restart               x SDN (Medical)               g_post=+0.590  g_cmt=+0.449
+    SAVE Admin Forbearance         x Reddit r/PSLF               g_post=+0.010  g_cmt=+0.082
+    Trump PSLF EO                  x SDN (Medical)               g_post=-0.450  g_cmt=-0.277
+    Trump PSLF EO                  x Reddit r/StudentLoans       g_post=-0.050  g_cmt=-0.160
+    Final Trump PSLF Rule          x SDN (Medical)               g_post=+0.660  g_cmt=+0.686
+    Final Trump PSLF Rule          x Reddit r/PSLF               g_post=+0.140  g_cmt=+0.092
+  WEAKER same-sign:                                       1
+    Trump PSLF EO                  x Reddit r/PSLF               g_post=-0.140  g_cmt=-0.035
+  NULL on comments (post effect dies):                    2
+    Payments Restart               x Reddit r/PSLF               g_post=-0.120  g_cmt=+0.003
+    SAVE Admin Forbearance         x Reddit r/StudentLoans       g_post=-0.090  g_cmt=+0.023
+  REVERSED:                                               0
+  UNDERPOWERED (no comment cell, n<30):                       3
+    Limited PSLF Waiver            x Reddit r/StudentLoans     
+    Payments Restart               x Reddit r/StudentLoans     
+    SAVE Admin Forbearance         x SDN (Medical)             
+
+================================================================================
+END OF ARTIFACT
+================================================================================

@@ -1,0 +1,55 @@
+==========================================================================================
+PAPER 2 §5.4 HOLM-BONFERRONI ADJUSTMENT (R17++ Agent 5 M5 fix)
+==========================================================================================
+
+This script formalizes the Holm-Bonferroni step-down adjustment for the
+Paper 2 §5.4 per-event 5-stance × 2-window chi-sq family.
+
+Per Agent 5 M5 audit finding: §5.4 reports raw chi-sq p-values without
+family-wise multiple-comparison correction. With 8 events in the family,
+Holm-Bonferroni at α=0.05 sets per-test thresholds α/(m-rank+1) = 0.00625,
+0.00714, ..., 0.05.
+
+Source: intention_results.txt:121-128 (per-event chi-sq on 5-stance dist)
+
+Event                                 raw p  rank  threshold    significant?
+--------------------------------------------------------------------------------
+  Limited PSLF Waiver               <0.0001     1   0.00625               ✓ SIG
+  IDR Account Adjustment            <0.0001     2   0.00714               ✓ SIG
+  Final Trump PSLF Rule             <0.0001     3   0.00833               ✓ SIG
+  Biden Mass Forgiveness            <0.0001     4   0.01000               ✓ SIG
+  SAVE Admin Forbearance             0.0003     5   0.01250               ✓ SIG
+  Trump PSLF EO                      0.0071     6   0.01667               ✓ SIG
+  Payments Restart                   0.3665     7   0.02500                ✗ NS
+  Biden v. Nebraska SCOTUS           0.4435     8   0.05000                ✗ NS
+
+RESULT: 6 of 8 events significant after Holm-Bonferroni at family-wise α=0.05.
+
+Events significant after Holm-Bonferroni:
+  ✓ Limited PSLF Waiver (raw p=<0.0001, threshold 0.00625)
+  ✓ IDR Account Adjustment (raw p=<0.0001, threshold 0.00714)
+  ✓ Final Trump PSLF Rule (raw p=<0.0001, threshold 0.00833)
+  ✓ Biden Mass Forgiveness (raw p=<0.0001, threshold 0.01000)
+  ✓ SAVE Admin Forbearance (raw p=0.0003, threshold 0.01250)
+  ✓ Trump PSLF EO (raw p=0.0071, threshold 0.01667)
+
+Events NOT significant after Holm-Bonferroni:
+  ✗ Payments Restart (raw p=0.3665, threshold 0.02500)
+  ✗ Biden v. Nebraska SCOTUS (raw p=0.4435, threshold 0.05000)
+
+INTERPRETATION:
+------------------------------------------------------------------------------------------
+Same conclusion as raw-p comparison: 6 of 8 events show significant pre/post
+stance-distribution shifts, 2 of 8 do not (Biden v. Nebraska SCOTUS and
+Payments Restart). The Holm-Bonferroni correction does NOT demote any event
+that was significant at raw α=0.05; all 6 raw-significant events remain
+significant after family-wise adjustment.
+
+This confirms the R17 correction to Paper 2 §5.4 (which had previously claimed
+'all 8 events p<10⁻⁴' — actually 6 of 8 significant at raw or Holm-Bonferroni
+α=0.05; Biden v. Nebraska SCOTUS and Payments Restart are NS at either level).
+
+Note: this addresses ONLY the 5-stance distribution chi-sq family (8 events).
+The per-event × per-cohort × per-topic family (intention_results.txt:404+) is
+larger and was not corrected here; that family-wise correction is recommended
+if the per-event × per-cohort topic table is presented in the main paper.

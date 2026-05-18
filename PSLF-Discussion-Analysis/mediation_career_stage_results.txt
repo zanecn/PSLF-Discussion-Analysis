@@ -1,0 +1,53 @@
+================================================================================
+Mediation Analysis: Career Stage as Mediator
+Generated: 2026-05-10T13:56:52
+================================================================================
+
+PURPOSE
+--------------------------------------------------------------------------------
+Tests whether SDN-Medical's strong decoupling (OR=0.27) is mediated by
+career stage. If SDN posters skew resident/attending (high stake), and
+residents have OR=0.27 in BOTH SDN AND r/PSLF, then career stage
+explains the cohort effect (full mediation).
+
+STEP 1: Pooled OR per cohort (baseline)
+--------------------------------------------------------------------------------
+  Reddit r/PSLF              n= 1469 OR= 7.33 CI=[4.20,12.78] p=1.512e-15
+  SDN (Medical)              n= 1960 OR= 0.27 CI=[0.22,0.34] p=2.938e-31
+  Reddit Finance             n=  999 OR= 0.18 CI=[0.11,0.30] p=1.883e-13
+  Reddit r/StudentLoans      n=  969 OR= 1.41 CI=[0.85,2.34] p=0.2219
+  Reddit Medical             n=  566 OR= 0.80 CI=[0.43,1.49] p=0.5895
+
+STEP 2: OR per (cohort x career stage) cell
+--------------------------------------------------------------------------------
+  SDN (Medical)              x resident           n=  66 OR= 0.94 CI=[0.28,3.19] p=1
+  SDN (Medical)              x attending          n=  88 OR= 0.02 CI=[0.00,0.13] p=8.055e-08
+  SDN (Medical)              x fellow             n= 152 OR= 0.09 CI=[0.01,0.73] p=0.01687
+  Reddit Medical             x resident           n=  95 OR=  NA  (zero cell)
+  Reddit Medical             x attending          n=  33 OR= 0.60 CI=[0.09,4.01] p=0.9874
+  Reddit Medical             x fellow             n=  76 OR= 1.81 CI=[0.21,15.99] p=0.9409
+
+STEP 3: OR per career stage (pooled across cohorts)
+--------------------------------------------------------------------------------
+  resident             n= 209 OR= 1.16 CI=[0.47,2.87] p=0.9236
+  attending            n= 137 OR= 0.07 CI=[0.03,0.21] p=1.354e-07
+  fellow               n= 292 OR= 0.65 CI=[0.26,1.61] p=0.489
+  medical_student      n=  68 OR= 0.10 CI=[0.01,0.67] p=0.03286
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+Mediation logic:
+  - If pure-career-stage ORs (Step 3) are similar to cohort-pooled ORs,
+    career stage is the operative factor (full mediation).
+  - If SDN × resident OR ≈ Reddit-r/PSLF × resident OR, cohort effect
+    is fully explained by career stage.
+  - If cohort × career-stage cells show DIFFERENT ORs by cohort
+    (e.g., SDN-resident OR=0.3 vs Reddit-resident OR=2.0),
+    cohort has independent effect beyond career stage (partial mediation).
+
+  KEY TEST: r/PSLF residents below n>=30 threshold; cannot compare directly.
+    SDN residents OR=0.94 (only well-powered cell)
+
+================================================================================
+END OF ARTIFACT
+================================================================================

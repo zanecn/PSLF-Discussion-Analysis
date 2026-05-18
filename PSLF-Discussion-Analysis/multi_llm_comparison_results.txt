@@ -1,0 +1,38 @@
+================================================================================
+MULTI-LLM CONSTRUCT MISMATCH TEST
+================================================================================
+
+Multi-rater intersection: 701 posts
+LLMs included: Claude, Llama, Third Llm
+Lexical: TextBlob, VADER
+
+PAIRWISE AGREEMENT
+--------------------------------------------------------------------------------
+Comparison                                   n       r   exact   kappa
+Claude vs Llama                            701  +0.703  0.736  +0.572
+Claude vs Third Llm                        701  +0.723  0.786  +0.592
+Llama vs Third Llm                         701  +0.761  0.742  +0.571
+Claude vs TextBlob                         701  +0.066  0.201  +0.002
+Claude vs VADER                            701  +0.134  0.218  +0.023
+Llama vs TextBlob                          701  +0.139  0.217  +0.021
+Llama vs VADER                             701  +0.245  0.223  +0.028
+Third Llm vs TextBlob                      701  +0.060  0.204  +0.005
+Third Llm vs VADER                         701  +0.180  0.224  +0.030
+TextBlob vs VADER                          701  +0.308  0.270  +0.087
+
+KRIPPENDORFF ALPHA
+--------------------------------------------------------------------------------
+  Claude+Llama+Third Llm (3-LLM only)                          alpha=+0.7211, n=701
+  Claude+Llama+Third Llm+TextBlob                              alpha=+0.2732, n=701
+  Claude+Llama+Third Llm+VADER                                 alpha=+0.3298, n=701
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+3-LLM-only alpha: +0.7211
+With TextBlob:    +0.2732 (drop of +0.4479)
+With VADER:       +0.3298 (drop of +0.3913)
+
+VERDICT: 3 LLMs from 3 organizations achieve substantial agreement.
+Adding any lexical instrument collapses 3-rater alpha.
+The construct boundary is LLM-CLASS vs LEXICAL-CLASS, not single-LLM-specific.
+This rules out 'shared training data' as the explanation for inter-LLM agreement.

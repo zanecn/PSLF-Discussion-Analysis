@@ -1,0 +1,22 @@
+==========================================================================================
+PAPER 1 COHORT-STRATIFIED BOOTSTRAP (R17++ Agent 1 C4 fix)
+==========================================================================================
+
+5-instrument intersection: n=760 (Reddit 701 + SDN 59)
+3-LLM point estimate (Claude + Llama + DeepSeek, ordinal K-α): 0.7116
+
+Bootstrap method                                            95% CI   Half-width
+--------------------------------------------------------------------------------
+Simple (existing implementation)                  [0.6697, 0.7504]    0.04038
+Stratified by cohort (R17++ NEW)                  [0.6688, 0.7497]    0.04044
+
+INTERPRETATION:
+------------------------------------------------------------------------------------------
+  Stratified bootstrap half-width minus simple: +0.00007
+
+  The two bootstrap methods give essentially identical CIs (Δ < 0.005). The
+  cohort composition is preserved approximately by the simple bootstrap due to
+  the large sample size; explicit stratification provides no material benefit.
+
+Whichever direction, the stratified estimate is the methodologically defensible one
+for cohort-mixed samples per Hayes & Krippendorff 2007.

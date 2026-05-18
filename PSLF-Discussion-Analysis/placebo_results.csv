@@ -1,0 +1,25 @@
+event,scorer,placebo,g_pslf,g_placebo,p_boot_pslf,p_boot_placebo,n_pslf_pre_post,n_placebo_pre_post,verdict
+Limited PSLF Waiver,textblob,topical_near,-0.1339,0.0166,0.0040,0.8791,764/1757,112/147,ADEQUATE_NULL
+Limited PSLF Waiver,textblob,askreddit,-0.1339,,0.0040,,764/1757,0/0,UNDERPOWERED
+Limited PSLF Waiver,vader,topical_near,-0.0921,-0.1393,0.0569,0.2607,764/1757,112/147,CONFOUNDED
+IDR Account Adjustment,textblob,topical_near,-0.0174,-0.0492,0.6184,0.6414,1919/2519,173/144,ADEQUATE_NULL
+IDR Account Adjustment,textblob,askreddit,-0.0174,,0.6184,,1919/2519,0/0,UNDERPOWERED
+IDR Account Adjustment,vader,topical_near,-0.0121,-0.0381,0.7293,0.7822,1919/2520,173/144,ADEQUATE_NULL
+Biden Mass Forgiveness,textblob,topical_near,0.0001,0.1068,0.9970,0.3137,3209/5660,154/151,CONFOUNDED
+Biden Mass Forgiveness,textblob,askreddit,0.0001,,0.9970,,3209/5660,0/0,UNDERPOWERED
+Biden Mass Forgiveness,vader,topical_near,-0.0848,0.0827,0.0010,0.5075,3210/5660,154/151,ADEQUATE_NULL
+Biden v. Nebraska SCOTUS,textblob,topical_near,0.0141,-0.1540,0.5614,0.1269,2997/7750,145/210,MAGNITUDE_OK
+Biden v. Nebraska SCOTUS,textblob,askreddit,0.0141,,0.5614,,2997/7750,1/0,UNDERPOWERED
+Biden v. Nebraska SCOTUS,vader,topical_near,0.2856,0.0451,0.0010,0.6434,2997/7750,145/210,ADEQUATE_NULL
+Payments Restart,textblob,topical_near,-0.1320,-0.0520,0.0010,0.6583,7827/5405,206/172,ADEQUATE_NULL
+Payments Restart,textblob,askreddit,-0.1320,,0.0010,,7827/5405,0/0,UNDERPOWERED
+Payments Restart,vader,topical_near,-0.1343,-0.2934,0.0010,0.0090,7827/5405,206/172,CONFOUNDED
+SAVE Admin Forbearance,textblob,topical_near,-0.0596,-0.1690,0.0290,0.0549,3503/3169,217/239,CONFOUNDED
+SAVE Admin Forbearance,textblob,askreddit,-0.0596,,0.0290,,3503/3169,0/0,UNDERPOWERED
+SAVE Admin Forbearance,vader,topical_near,-0.0657,-0.1664,0.0160,0.0619,3503/3169,217/239,CONFOUNDED
+Trump PSLF EO,textblob,topical_near,-0.0855,-0.0084,0.0020,0.9271,3826/2959,234/263,ADEQUATE_NULL
+Trump PSLF EO,textblob,askreddit,-0.0855,,0.0020,,3826/2959,2/0,UNDERPOWERED
+Trump PSLF EO,vader,topical_near,-0.1429,0.0296,0.0010,0.7582,3826/2959,234/263,ADEQUATE_NULL
+Final Trump PSLF Rule,textblob,topical_near,0.0709,0.0742,0.0470,0.2877,1822/1892,366/364,ADEQUATE_NULL
+Final Trump PSLF Rule,textblob,askreddit,0.0709,,0.0470,,1822/1892,3/5,UNDERPOWERED
+Final Trump PSLF Rule,vader,topical_near,0.0043,0.0656,0.9211,0.4006,1822/1892,366/364,ADEQUATE_NULL

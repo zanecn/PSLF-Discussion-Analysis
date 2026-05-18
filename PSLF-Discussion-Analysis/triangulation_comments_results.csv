@@ -1,0 +1,2 @@
+pair,n,alpha_ordinal,alpha_ci95_lo,alpha_ci95_hi,alpha_boot_B,pearson_r,pearson_p,spearman_rho,spearman_p
+TextBlob x VADER,519342,0.289211,0.286919,0.291663,2000,0.363973,0.000000,0.373232,0.000000

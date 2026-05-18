@@ -1,0 +1,15 @@
+dim,value,n_specs,pct_or_gt_1,pct_or_lt_1,median_or,median_p
+neg_def,very_negative_only,48,66.6667,33.3333,6.0033,0.0355
+neg_def,negative_only,48,66.6667,33.3333,4.5518,0.0000
+neg_def,both,48,66.6667,33.3333,5.2477,0.0000
+pur_def,pursuing_only,48,100.0000,0.0000,5.1609,0.0000
+pur_def,pursuing_or_considering,48,100.0000,0.0000,7.6728,0.0000
+pur_def,pursuing_considering_completed,48,0.0000,100.0000,0.2855,0.5282
+excl_arctic,False,72,66.6667,33.3333,5.2069,0.0007
+excl_arctic,True,72,66.6667,33.3333,5.1149,0.0223
+excl_sdn,False,72,66.6667,33.3333,5.1609,0.0047
+excl_sdn,True,72,66.6667,33.3333,5.1609,0.0047
+min_n,30,36,66.6667,33.3333,5.1609,0.0047
+min_n,50,36,66.6667,33.3333,5.1609,0.0047
+min_n,100,36,66.6667,33.3333,5.1609,0.0047
+min_n,200,36,66.6667,33.3333,5.1609,0.0047

@@ -1,0 +1,32 @@
+================================================================================
+OPEN-WEIGHT LLM vs CLAUDE — CONSTRUCT MISMATCH GENERALIZATION
+================================================================================
+
+Open-weight LLM scoring source: zeroshot_together_replication.csv
+Four-scorer intersection: 701 posts
+
+PAIRWISE SENTIMENT AGREEMENT
+--------------------------------------------------------------------------------
+Comparison                            n       r   exact   kappa
+Claude vs Open-weight LLM           701  +0.703  0.736  +0.572
+Claude vs TextBlob                  701  +0.066  0.201  +0.002
+Claude vs VADER                     701  +0.134  0.218  +0.023
+Open-weight LLM vs TextBlob         701  +0.139  0.217  +0.021
+Open-weight LLM vs VADER            701  +0.245  0.223  +0.028
+TextBlob vs VADER                   701  +0.308  0.270  +0.087
+
+THREE-RATER KRIPPENDORFF ALPHA
+--------------------------------------------------------------------------------
+  Claude+OW+TB: alpha = +0.2011, n = 701
+  Claude+OW+VADER: alpha = +0.2616, n = 701
+  Claude+OW: alpha = +0.6912, n = 701
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+Inter-LLM agreement (Claude vs OW): r=+0.703, exact=73.6%
+Claude vs TextBlob (lexical):       r=+0.066, exact=20.1%
+Claude vs VADER (arousal):          r=+0.134, exact=21.8%
+
+VERDICT: Open-weight LLM AGREES with Claude (high r), but DISAGREES with
+TextBlob/VADER (low r). The construct mismatch is THUS LLM-vs-lexical,
+NOT Claude-specific. The methods finding is generalizable.

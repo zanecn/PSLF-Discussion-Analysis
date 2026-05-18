@@ -1,0 +1,78 @@
+PSLF Confound Audit (Round-3 follow-up)
+
+Loaded Reddit n=4,880, SDN n=4,749
+
+================================================================================
+CONFOUND 1: Platform-vs-Population (SDN > Reddit polarity)
+================================================================================
+
+Naive comparison (all Reddit vs all SDN):
+  Reddit (all): n=4,593, pol=0.0817
+  SDN: n=4,195, pol=0.1130
+  Welch t=-12.109, p=0.000000
+
+Stratified (medical Reddit only vs SDN):
+  Reddit medical: n=881, pol=0.0708
+  SDN: n=4,195, pol=0.1130
+  Welch t=-8.737, p=0.000000
+  -> Naive delta=+0.0314; Stratified delta=+0.0422
+
+================================================================================
+CONFOUND 2: Year × Profession sampling
+================================================================================
+
+Median year per profession (Reddit):
+                           median  count
+profession                              
+general_finance            2020.0    335
+law                        2020.5     66
+social_work                2021.0     72
+teaching                   2022.0    216
+nursing                    2023.0    125
+personalfinance            2023.0    321
+pharmacy                   2023.0     54
+federal_employee           2024.0     81
+occupational_therapy       2024.0     63
+physician_assistant        2024.0    207
+speech_language_pathology  2024.0    110
+medical                    2025.0    996
+teacher                    2025.0    521
+general_pslf               2026.0    951
+general_student_loans      2026.0    762
+
+Range of median years: 6.0
+  [!]  CONFOUND: Some professions sampled from systematically different eras.
+     Cross-profession sentiment comparisons may reflect time, not profession.
+
+================================================================================
+CONFOUND 3: Length × Polarity
+================================================================================
+
+Reddit:
+  Pearson r(word_count, polarity) = +0.021, p=0.163183
+  Spearman rho = +0.063, p=0.000017
+
+SDN:
+  Pearson r(word_count, polarity) = -0.011, p=0.487300
+  Spearman rho = +0.040, p=0.009690
+
+================================================================================
+CONFOUND 4: Pre/post window mean word count
+================================================================================
+
+Event                                 Pre wc  Post wc   delta          p
+Limited PSLF Waiver                      183      148     -34     0.1490
+IDR Account Adjustment                   158      209     +51     0.0532
+Biden Mass Forgiveness                   222      248     +26     0.4725
+Biden v. Nebraska SCOTUS                 235      197     -38     0.1382
+Payments Restart                         187      479    +292     0.0000 [!]
+SAVE Admin Forbearance                   267      171     -96     0.0005 [!]
+Trump PSLF EO                            131      216     +86     0.0000 [!]
+Final Trump PSLF Rule                    222      292     +70     0.0031 [!]
+
+  [!]  4/8 events have significantly different pre/post word counts.
+     Polarity differences may partly reflect length, not sentiment.
+
+================================================================================
+SUMMARY: see [!] markers for detected confounds.
+================================================================================

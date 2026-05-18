@@ -1,0 +1,9 @@
+pslf_class,n_program_years,n_institutions,mean_fill,median_fill,sd_fill,pct_full,pct_under80,test,specialty,n_friendly,n_hostile,mean_friendly,mean_hostile,diff_pp,t,p,cohens_d
+pslf_friendly,17596.00000,381.00000,0.93911,1.00000,0.20125,0.89100,0.09241,H1_overall,,,,,,,,,
+ambiguous,12404.00000,385.00000,0.92986,1.00000,0.20864,0.86851,0.11117,H1_overall,,,,,,,,,
+pslf_hostile,763.00000,23.00000,0.81052,1.00000,0.31389,0.66841,0.29358,H1_overall,,,,,,,,,
+,,,,,,,,H2_by_specialty,Family Medicine,1699.00000,73.00000,0.88338,0.73231,15.10722,3.97972,0.00016,0.63736
+,,,,,,,,H2_by_specialty,Internal Medicine,2963.00000,188.00000,0.94285,0.66046,28.23937,10.59110,0.00000,1.40977
+,,,,,,,,H2_by_specialty,Dermatology,501.00000,33.00000,0.98852,0.95455,3.39775,1.00746,0.32103,0.32649
+,,,,,,,,H2_by_specialty,Emergency Medicine,757.00000,49.00000,0.93017,0.77822,15.19472,3.50308,0.00097,0.75148
+,,,,,,,,H2_by_specialty,Psychiatry,1071.00000,33.00000,0.99083,1.00000,-0.91674,-3.90409,0.00010,-0.12107

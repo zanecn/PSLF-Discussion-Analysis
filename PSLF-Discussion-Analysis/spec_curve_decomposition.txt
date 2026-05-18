@@ -1,0 +1,45 @@
+================================================================================
+A2 r/PSLF FLIP DECOMPOSITION
+================================================================================
+
+Total r/PSLF specs: 144
+% OR>1 (venting culture direction): 66.7%
+% OR<1 (decoupling direction):      33.3%
+
+Per-dimension flip rates (% with OR>1):
+
+  neg_def:
+    both: n=48, OR>1=66.7%, OR<1=33.3%, median OR=5.25
+    negative_only: n=48, OR>1=66.7%, OR<1=33.3%, median OR=4.55
+    very_negative_only: n=48, OR>1=66.7%, OR<1=33.3%, median OR=6.00
+
+  pur_def:
+    pursuing_considering_completed: n=48, OR>1=0.0%, OR<1=100.0%, median OR=0.29
+    pursuing_only: n=48, OR>1=100.0%, OR<1=0.0%, median OR=5.16
+    pursuing_or_considering: n=48, OR>1=100.0%, OR<1=0.0%, median OR=7.67
+
+  excl_arctic:
+    False: n=72, OR>1=66.7%, OR<1=33.3%, median OR=5.21
+    True: n=72, OR>1=66.7%, OR<1=33.3%, median OR=5.11
+
+  excl_sdn:
+    False: n=72, OR>1=66.7%, OR<1=33.3%, median OR=5.16
+    True: n=72, OR>1=66.7%, OR<1=33.3%, median OR=5.16
+
+  min_n:
+    30: n=36, OR>1=66.7%, OR<1=33.3%, median OR=5.16
+    50: n=36, OR>1=66.7%, OR<1=33.3%, median OR=5.16
+    100: n=36, OR>1=66.7%, OR<1=33.3%, median OR=5.16
+    200: n=36, OR>1=66.7%, OR<1=33.3%, median OR=5.16
+
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+Dimension with widest flip spread: pur_def
+  pur_def flip-rate by value:
+    pursuing_considering_completed: 0.0% OR>1
+    pursuing_only: 100.0% OR>1
+    pursuing_or_considering: 100.0% OR>1
+
+This is the choice that determines whether r/PSLF supports the
+'venting culture' (OR>1) or 'decoupling' (OR<1) framing.

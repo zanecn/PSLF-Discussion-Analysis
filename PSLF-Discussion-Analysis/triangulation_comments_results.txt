@@ -1,0 +1,49 @@
+================================================================================
+PSLF Triangulation - COMMENTS (TextBlob x VADER, optionally + Claude)
+Generated: 2026-05-10T21:39:44
+Source: scripts/triangulation_with_comments.py
+================================================================================
+
+PURPOSE
+--------------------------------------------------------------------------------
+Tests whether the post-level construct-mismatch finding (alpha=-0.027 / +0.17
+on n=6,975 posts) replicates on COMMENTS, which are:
+  * ~50x larger sample (~350K rows once collector finishes)
+  * Stylistically distinct (replies/discussion vs top-level posts)
+  * Typically shorter and more conversational
+If the cross-instrument disagreement persists at this scale and register,
+the finding is not corpus-specific. This is the SINGLE largest strengthener
+for the methods paper.
+
+PASS 1: TEXTBLOB x VADER ON ALL COMMENTS
+--------------------------------------------------------------------------------
+  N (both scorers present):  519,342
+  Krippendorff alpha (ord):  +0.2892
+    95% CI:                  [+0.2869, +0.2917]
+    Bootstrap B (valid):     2,000
+  Pearson r:                 +0.3640 (p=0)
+  Spearman rho:              +0.3732 (p=0)
+
+COMPARISON TO POST-LEVEL TRIANGULATION
+--------------------------------------------------------------------------------
+  TB x VADER alpha (canonical)        posts: +0.3400  (posts (n=6975))
+  TB x VADER Pearson r                posts: +0.3000  (posts (n=6975))
+  TB x VADER alpha (canonical)        comments: +0.2892  (comments n=519,342)
+  TB x VADER Pearson r                comments: +0.3640
+
+VERDICT: TB x VADER alpha REPLICATES on comments (within 0.10 of post-level).
+The instrument-disagreement pattern is not specific to top-level posts.
+
+PASS 3: NOT YET RUN
+--------------------------------------------------------------------------------
+To add the 3-rater test on a Claude-scored sample (~$10-15):
+  1. python triangulation_with_comments.py --score-claude
+     (writes _comments_sample_for_claude.csv)
+  2. python sentiment_zeroshot.py \
+       --input _comments_sample_for_claude.csv \
+       --output zeroshot_comments_sample.csv
+  3. Re-run this script (without --score-claude) to integrate.
+
+================================================================================
+END OF ARTIFACT
+================================================================================

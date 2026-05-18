@@ -1,0 +1,25 @@
+# PSLF Discussion Analysis — Python dependencies
+# Install: pip install -r requirements.txt
+# Playwright also needs: python -m playwright install chromium
+
+# Data analysis
+pandas>=2.0
+numpy>=1.24
+scipy>=1.10
+matplotlib>=3.7
+
+# Scraping
+requests>=2.28
+beautifulsoup4>=4.12
+lxml>=4.9
+playwright>=1.40
+tqdm>=4.65
+
+# Sentiment analysis
+textblob>=0.17
+
+# Reddit API (for comment collection)
+praw>=7.7
+
+# Figures
+wordcloud>=1.9

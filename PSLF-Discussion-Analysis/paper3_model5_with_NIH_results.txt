@@ -1,0 +1,51 @@
+===========================================================================
+PAPER 3 MODEL 5 + NIH FUNDING — state_filtered (Round 17++ disclosure note)
+===========================================================================
+n: 29,349 program-year rows (post regression dropna); 721 institutions
+R²: 0.1174
+NIH source: state_filtered
+NIH-matched institutions: 92 of 721 (12.8%)
+
+NIH MASS-POINT DISCLOSURE (Round 17++ audit, IMPORTANT):
+  Of 721 institutions in the analytical sample, only 92 (12.8%) have positive
+  NIH FY2023 awards in the state-filtered NIH RePORTER match. The other 629
+  institutions (87.2%) are coded as $0 NIH funding, and
+  `log_nih_funding = log(1+0) = 0` is used as the regressor value for all 629.
+  This produces a heavy mass-point at log_nih_funding=0 for ~87% of the
+  institution-level sample, which biases the linear log_nih_funding coefficient
+  toward 0 and makes the linear specification mis-specified. The reported
+  coefficient (β=+0.02 pp/log, NS) is therefore not a clean dose-response
+  estimate. A two-part specification (binary NIH-present + continuous-on-
+  positive-only) or inverse-hyperbolic-sine transform would handle the zeros
+  without the mass-point problem; both are recommended for the published
+  version. **The PSLF-hostile coefficient (β=−18.07 pp, the headline) is robust
+  to this NIH mis-specification** because removing log_nih_funding entirely
+  (Model 4 → Model 5 step) only shifts PSLF-hostile β by < 0.2 pp.
+
+Total NIH funding aggregated: $8.81B
+
+KEY COEFFICIENTS (HC3 robust SEs)
+---------------------------------------------------------------------------
+  PSLF[pslf_friendly]                                β=  -0.49 pp [SE= 0.31] (95% CI [  -1.11,   +0.12]) p=1.130e-01 
+  PSLF[pslf_hostile]                                 β= -18.07 pp [SE= 1.64] (95% CI [ -21.28,  -14.87]) p=2.111e-28 ***
+  cms_mean_star                                      β=  +1.06 pp [SE= 0.18] (95% CI [  +0.71,   +1.40]) p=2.582e-09 ***
+  cms_for_profit_share                               β=  +0.58 pp [SE= 0.66] (95% CI [  -0.71,   +1.87]) p=3.767e-01 
+  Univ.affil[True]                                   β=  -0.67 pp [SE= 0.34] (95% CI [  -1.33,   -0.01]) p=4.771e-02 *
+  Acad.MC[True]                                      β=  +0.67 pp [SE= 0.38] (95% CI [  -0.07,   +1.40]) p=7.703e-02 
+  n_specialties                                      β=  +0.13 pp [SE= 0.04] (95% CI [  +0.05,   +0.21]) p=1.732e-03 **
+  log_residents                                      β=  -0.07 pp [SE= 0.32] (95% CI [  -0.69,   +0.56]) p=8.343e-01 
+  log_nih_funding                                    β=  +0.02 pp [SE= 0.02] (95% CI [  -0.01,   +0.06]) p=1.784e-01 
+
+ROBUSTNESS LADDER
+---------------------------------------------------------------------------
+  Model 1 (PSLF only):                      -18.76 pp
+  Model 2 (+ city CMS quality):             -17.90 pp
+  Model 3 (+ state FE):                     -19.00 pp
+  Model 4 (+ specialty FE):                 -18.56 pp
+  Model 5 (+ 5 audit-required confounders): -18.24 pp
+  Model 5 + NIH funding:                    -18.07 pp  ← THIS RUN
+
+  Total cumulative shrinkage M1 → M5+NIH: -0.69 pp
+
+  The PSLF-hostile coefficient is robust across all model specifications.
+  Adding NIH funding does not meaningfully change the headline.

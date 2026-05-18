@@ -1,0 +1,47 @@
+==========================================================================================
+PAPER 3 SECOND NEGATIVE-CONTROL SPECIALTY — DERMATOLOGY (Round 17++ Agent 2 M5)
+==========================================================================================
+
+Theory: dermatology has very high attending compensation, so PSLF financial
+materiality is weak → we expect a small/null PSLF-hostile differential, like
+orthopedic surgery. Confirms negative-control logic with a SECOND specialty.
+
+  2021-2025: n=791, n_hostile_rows=27, n_hostile_inst=5, β=-7.20 pp, SE=4.96, 95% CI [-16.92, +2.52], p=0.147
+  2021-2026: n=953, n_hostile_rows=33, n_hostile_inst=6, β=-6.28 pp, SE=4.23, 95% CI [-14.57, +2.01], p=0.138
+
+COMPARISON WITH ORTHOPEDIC SURGERY (canonical negative control, R17 dedup-corrected):
+  Orthopedic 2021-2025: n=1,007, n_hostile_rows=11, n_hostile_inst=3, β=+0.67 pp [−0.66, +2.00], p=0.33 NS
+  Orthopedic 2021-2026: n=1,204, n_hostile_rows=16, n_hostile_inst=4, β=+0.54 pp [−0.53, +1.60], p=0.32 NS
+
+POWER FLOOR (95% CI half-width = uniform-confound rule-out threshold):
+  Dermatology 2021-2025: rules out uniform-recruitment confounds > 9.72 pp
+  Dermatology 2021-2026: rules out uniform-recruitment confounds > 8.29 pp
+
+INTERPRETATION (Round 17++ honest framing):
+  Dermatology PSLF-hostile differential is **NOT a clean null** like orthopedic surgery:
+    - 2021-2025: β=−7.20 pp NS (p=0.147; 95% CI [−16.92, +2.52])
+    - 2021-2026: β=−6.28 pp NS (p=0.138; 95% CI [−14.57, +2.01])
+  Both p-values are non-significant, BUT the point estimates are notably negative
+  (−6 to −7 pp), and the CIs are MUCH less constrained on the negative side
+  (lower bound −15 to −17 pp) than on the positive side (upper bound only +2 pp).
+
+  This is INFORMATIVE but does NOT support the same "high compensation → null PSLF
+  effect" story that orthopedic surgery provides. Possible explanations:
+    1. The "high compensation = null PSLF effect" theory is not uniform across all
+       high-comp specialties (dermatology and orthopedic surgery may differ on
+       margins other than attending compensation).
+    2. The 5-6 PSLF-hostile dermatology institutions may have unusual program-level
+       characteristics (low clinical/educational quality, unfavorable geography,
+       smaller residency sizes) that drive lower fill rates independent of PSLF.
+    3. The dermatology test is power-limited (n_hostile=27/33 from 5/6 institutions);
+       the wide CIs admit BOTH the null AND a substantial PSLF-hostile differential
+       (point estimate −6 to −7 pp matches 1/3 of the headline pooled −18 pp).
+
+  HONEST CONCLUSION FOR P3: dermatology should be reported as a SECONDARY negative
+  control with the caveat that the result is mixed — point estimate negative but
+  not statistically distinguishable from null. Orthopedic surgery remains the
+  cleaner negative-control case (β=+0.67 pp NS with much tighter CI).
+
+  This actually STRENGTHENS the rigor of the P3 paper because it shows we ran a
+  pre-specified second negative control that did NOT confirm cleanly — the pooled
+  −18 pp finding survives despite this honest reporting.

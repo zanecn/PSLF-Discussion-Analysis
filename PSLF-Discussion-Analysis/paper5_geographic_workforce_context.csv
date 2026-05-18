@@ -1,0 +1,9 @@
+institution,state,city,county_fips,county_name,ruca_code,ruca_description,hpsa_designation,medicaid_expansion,n_surgical_subspec_programs,subspecs
+HCA Chippenham & Johnston-Willis Hosps,VA,Richmond,51760,Richmond city,1,Metropolitan area core,Partial (low-income population subset),Expanded 2019,1,Surgery-General
+HCA Florida JFK Hosp-U Miami,FL,Atlantis,12099,Palm Beach County,1,Metropolitan area core,None (urban Palm Beach),Not expanded (Florida),2,"Orthopaedic Surgery, Surgery-General"
+HCA Healthcare Kansas City,MO,Kansas City,29095,Jackson County,1,Metropolitan area core,Partial (low-income population subset),Expanded 2021 (Missouri voter-approved),5,"Neurological Surgery, Plastic Surgery (Integrated), Otolaryngology, Orthopaedic Surgery, Surgery-General"
+HCA Healthcare/USF Morsani GME-Brandon,FL,Brandon,12057,Hillsborough County,1,Metropolitan area core,None (urban Hillsborough),Not expanded (Florida),1,Surgery-General
+HCA Healthcare/USF Morsani GME-Largo,FL,Largo,12103,Pinellas County,1,Metropolitan area core,None (urban Pinellas),Not expanded (Florida),1,Orthopaedic Surgery
+HCA Healthcare/USF Morsani-Bayonet Pt,FL,Hudson,12101,Pasco County,2,Metropolitan area high commuting,Partial (rural-Pasco subset),Not expanded (Florida),1,Surgery-General
+HCA Houston Healthcare/U Houston,TX,Houston,48201,Harris County,1,Metropolitan area core,Partial (low-income population subset),Not expanded (Texas),1,Surgery-General
+HCA Medical City Healthcare,TX,Dallas,48113,Dallas County,1,Metropolitan area core,Partial (low-income population subset),Not expanded (Texas),2,"Orthopaedic Surgery, Surgery-General"

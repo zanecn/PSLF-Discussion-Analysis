@@ -1,0 +1,58 @@
+======================================================================
+Paper 5 R17++ #6 Geographic + workforce-policy context summary
+======================================================================
+
+Data sources (free public):
+  - HRSA HPSA designation: https://data.hrsa.gov/topics/health-workforce/shortage-areas
+  - USDA RUCA codes: https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/
+  - KFF Medicaid Expansion tracker: https://www.kff.org/medicaid/issue-brief/status-of-state-medicaid-expansion-decisions-interactive-map/
+  - US Census Bureau county FIPS reference
+
+N = 8 unique HCA-affiliated PSLF-hostile surgical-subspecialty institutions
+
+Geographic distribution:
+  FL (n=4): HCA Florida JFK Hosp-U Miami, HCA Healthcare/USF Morsani GME-Brandon, HCA Healthcare/USF Morsani GME-Largo, HCA Healthcare/USF Morsani-Bayonet Pt
+  TX (n=2): HCA Houston Healthcare/U Houston, HCA Medical City Healthcare
+  VA (n=1): HCA Chippenham & Johnston-Willis Hosps
+  MO (n=1): HCA Healthcare Kansas City
+
+Medicaid expansion status:
+  Not expanded (Florida): 4 institutions
+  Not expanded (Texas): 2 institutions
+  Expanded 2019: 1 institutions
+  Expanded 2021 (Missouri voter-approved): 1 institutions
+
+RUCA codes:
+  Metropolitan area core: 7 institutions
+  Metropolitan area high commuting: 1 institutions
+
+HPSA designation:
+  Partial (low-income population subset): 4 institutions
+  None (urban Palm Beach): 1 institutions
+  None (urban Hillsborough): 1 institutions
+  None (urban Pinellas): 1 institutions
+  Partial (rural-Pasco subset): 1 institutions
+
+=== PATTERN OBSERVATIONS for Paper 5 §5.2 ===
+
+1. **Medicaid non-expansion concentration**: 6 of 8 (=75%) HCA-affiliated PSLF-hostile
+   surgical-subspec institutions are in non-Medicaid-expansion states (Florida, Texas).
+   Compare to baseline US distribution: 10/50 states are Medicaid non-expansion (=20%).
+   The HCA-affiliated PSLF-hostile institutional concentration is approximately 3.8× the baseline expectation.
+
+2. **Metropolitan-area concentration**: 7 of 8 (=88%) are in metropolitan-area core (RUCA=1).
+   The single Bayonet Pt institution (Pasco, FL) is RUCA=2 (high-commuting metro fringe).
+   Consistent with HCA Healthcare's broader urban-suburban geographic strategy.
+
+3. **HPSA designation**: 5 of 8 (=62%) are at institutions in counties with at least partial HPSA designation
+   (typically low-income population subset, not whole-county geographic).
+   This pattern suggests HCA-affiliated PSLF-hostile surgical training is partially serving
+   underserved population subsets within otherwise urban metropolitan areas — a workforce-policy
+   nuance: the for-profit-chain PSLF-hostile institutions are not in 'medical deserts' but rather
+   provide care to underserved populations within served metropolitan areas.
+
+4. **State-policy implication for post-Trump-EO**: The 75% concentration in non-Medicaid-expansion
+   states means that surgical residents trained at HCA-affiliated PSLF-hostile programs face
+   compound policy headwinds: (a) PSLF ineligibility for resident debt; (b) state-level reduced
+   Medicaid expansion may affect post-residency practice options for residents who want to serve
+   PSLF-qualifying employer types (community health centers, public hospitals).

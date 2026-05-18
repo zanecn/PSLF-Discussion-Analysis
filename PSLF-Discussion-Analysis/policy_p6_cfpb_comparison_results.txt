@@ -1,0 +1,62 @@
+================================================================================
+POLICY P6: CFPB FORMAL COMPLAINTS vs FORUM DISCOURSE
+================================================================================
+
+CFPB PSLF complaints: 12,552
+Discourse process mentions: 142,689
+
+PROCESS-BUCKET DISTRIBUTION COMPARISON
+--------------------------------------------------------------------------------
+process                       CFPB n   CFPB %   disc n   disc %   ratio
+PSLF_Buyback                     207     2.1%   16,458    11.5%   5.47
+PSLF_Help_Tool                    35     0.4%    1,834     1.3%   3.61
+Employment_Certification         493     5.0%   17,284    12.1%   2.41
+Loan_Consolidation             2,543    25.9%   49,919    35.0%   1.35
+Limited_Waiver                   129     1.3%    1,970     1.4%   1.05
+Payment_Count_Dispute          1,990    20.3%   21,134    14.8%   0.73
+Employer_Determination           340     3.5%    2,794     2.0%   0.57
+Form_Processing_Delay            779     7.9%    5,717     4.0%   0.50
+IDR_Recertification            2,871    29.2%   19,615    13.7%   0.47
+MOHELA_Specific_Issue            431     4.4%    2,788     2.0%   0.45
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+
+Processes OVER-represented in discourse vs CFPB (top 5):
+  PSLF_Buyback: discourse share 11.5% vs CFPB share 2.1% (ratio=5.47)
+  PSLF_Help_Tool: discourse share 1.3% vs CFPB share 0.4% (ratio=3.61)
+  Employment_Certification: discourse share 12.1% vs CFPB share 5.0% (ratio=2.41)
+
+Processes UNDER-represented in discourse vs CFPB (bottom 5):
+  Employer_Determination: discourse share 2.0% vs CFPB share 3.5% (ratio=0.57)
+  Form_Processing_Delay: discourse share 4.0% vs CFPB share 7.9% (ratio=0.50)
+  IDR_Recertification: discourse share 13.7% vs CFPB share 29.2% (ratio=0.47)
+  MOHELA_Specific_Issue: discourse share 2.0% vs CFPB share 4.4% (ratio=0.45)
+
+TOP COMPANIES IN CFPB PSLF COMPLAINTS
+--------------------------------------------------------------------------------
+  MOHELA                                             4,161 ( 33.2%)
+  AES/PHEAA                                          2,686 ( 21.4%)
+  Navient Solutions, LLC.                            2,278 ( 18.1%)
+  Nelnet, Inc.                                       1,195 (  9.5%)
+  Maximus Federal Services, Inc.                       620 (  4.9%)
+  EdFinancial Services                                 524 (  4.2%)
+  Servicer under contract with Federal Student Aid     265 (  2.1%)
+  GREAT LAKES                                           93 (  0.7%)
+  SLM CORPORATION                                       76 (  0.6%)
+  Equitable Acceptance Corp                             56 (  0.4%)
+
+MOHELA-SPECIFIC SHARE
+--------------------------------------------------------------------------------
+  CFPB: MOHELA-listed company = 4,161 / 12,552 = 33.2%
+
+POLICY USES
+--------------------------------------------------------------------------------
+- Validates 'discourse as early-warning' hypothesis: discourse-OVER-represented
+  process buckets are issues that aren't reaching formal CFPB complaints.
+  FSA/CFPB can use forum monitoring to detect issues earlier.
+- Validates 'CFPB-over-represented' as established complaint channel:
+  these are processes where formal complaints are well-utilized;
+  CFPB resolution channels work for these.
+- Servicer benchmarking: CFPB complaint volume by servicer can be
+  cross-referenced with discourse-derived servicer sentiment (P2).

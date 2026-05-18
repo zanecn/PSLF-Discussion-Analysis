@@ -1,0 +1,71 @@
+==========================================================================================
+PAPER 3 MODEL 5 FINAL — Round 15 Audit Fixes Applied
+==========================================================================================
+
+Fixes applied:
+  - Fix 1: Deduplicated institutional_confounders.csv (789 unique institutions)
+  - Fix 2: Cluster-robust SE clustered on institution
+  - Fix 3: HCA-academic-partnership sensitivity (3 specifications)
+
+Hostile institutions classification:
+  Total NRMP-hostile institutions: 23
+  HCA-academic partnerships: 14 (USF Morsani x10, UMiami x2, U Houston x1, VCOM x1)
+  Unambiguous HCA/for-profit standalones: 9
+
+==========================================================================================
+SPEC TABLE: PSLF-hostile coefficient under three classifications
+==========================================================================================
+
+Specification                                       n_total n_hostile_rows n_hostile_inst
+------------------------------------------------------------------------------------------
+  S1: Status quo (all 23 hostile)                    29,349            763             23
+  S2: HCA-academic reclassified as ambiguous         29,349            358              9
+  S3: Drop HCA-academic partnerships entirely        28,957            358              9
+
+Specification                                       PSLF-hostile β                 95% CI      p-value
+------------------------------------------------------------------------------------------
+  S1: Status quo (all 23 hostile)                    -18.07 pp           [-24.80, -11.35]    1.391e-07
+  S2: HCA-academic reclassified as ambiguous         -16.25 pp           [-21.66, -10.83]    4.010e-09
+  S3: Drop HCA-academic partnerships entirely        -17.14 pp           [-22.48, -11.80]    3.115e-10
+
+INTERPRETATION (Round 15 honest framing):
+------------------------------------------------------------------------------------------
+  S1 (status quo): assumes all HCA-academic-partnership residents are PSLF-INELIGIBLE
+    (i.e., resident W-2 is from HCA, not from the academic partner). This is the
+    UPPER BOUND on the true PSLF-hostile differential.
+  S2 (reclassified): assumes HCA-academic-partnership residents are PSLF-ELIGIBLE
+    (resident W-2 from academic partner). This is the LOWER BOUND on the differential.
+  S3 (drop partnerships): cleanest estimate restricted to unambiguous classifications.
+
+  The truth depends on the actual W-2 employer-of-record at each program — NOT
+  determined by this design. The range (S1, S2, S3) brackets the plausible PSLF-hostile
+  effect on residency competition.
+
+  Cluster-robust SE: SE column reflects clustering on institution.
+  With 23 hostile clusters in S1 (or 9 in S2/S3), Cameron-Miller (2015) recommend
+  treating these p-values cautiously; consider wild-cluster bootstrap as confirmation.
+
+  ROBUSTNESS LADDER REFRAMING (Round 15 Fix 5):
+  Earlier 'M1 → M5+NIH shrinkage of 0.55 pp' framing was misleading. Low shrinkage
+  with audit-required confounders does NOT mean the headline is robust to omitted
+  variables. It means the measured confounders do NOT vary substantially across
+  the PSLF-class contrast. Unobserved institutional factors that vary at the same
+  level as PSLF classification could still explain the differential.
+
+==========================================================================================
+NEGATIVE CONTROL: Orthopedic Surgery (status quo classification)
+==========================================================================================
+  n_total: 1,065
+  n_hostile_rows: 21, n_hostile_institutions: 4
+  PSLF-hostile β: +0.76 pp
+  95% CI (cluster-robust): [-0.53, +2.05]
+  p-value: 2.467e-01
+
+HONEST POWER FLOOR FRAMING (Round 15 Fix 8):
+  With n=21 hostile rows from 4 clusters and SE=0.66,
+  the orthopedic surgery negative-control test only rules out uniform-recruitment
+  confounds of magnitude > 1.3 pp. It does NOT rule out smaller
+  uniform confounds (e.g., 1-3 pp).
+  Furthermore, 4 of these hostile-ortho clusters may be HCA-academic
+  partnerships (per Fix 3), defeating the negative-control logic if their residents
+  are actually PSLF-eligible at the W-2 level.

@@ -1,0 +1,55 @@
+======================================================================
+PARAPHRASE ROBUSTNESS RESULTS (R16 Strengthener 2; R17 Fix C2; R17++ #3 n=400 replication 2026-05-17)
+======================================================================
+
+Design: re-score n=399 SDN posts with Claude Sonnet 4 at temperature=0
+        using THREE different system prompts (semantically identical, 
+        worded differently). Tests robustness to LEXICAL-FORMAT paraphrase
+        (NOT semantic-restructuring or task-redefinition; see Paper 1 L0b).
+
+Sample: n=399 posts (3-way merge across baseline + 2 paraphrases)
+Pool: 615 SDN posts in zeroshot_sdn_temp0_retest.csv; deterministic sample with random_state=42
+
+INTERPRETATION:
+  - If α > 0.85: Claude classifications are robust to lexical-format prompt phrasing.
+  - If α < 0.85: Classifications depend on prompt phrasing.
+
+RESULTS — SENTIMENT TASK (5-level ordinal):
+  3-prompt Krippendorff α: +0.9011
+  Bootstrap 95% CI [B=2000]: [+0.8680, +0.9300]
+
+  Pairwise sentiment exact-match:
+    Baseline vs Paraphrase 1            exact_match=0.8922  Pearson r=+0.9246  κ_quad=+0.9165
+    Baseline vs Paraphrase 2            exact_match=0.8546  Pearson r=+0.8956  κ_quad=+0.8862
+    Paraphrase 1 vs 2                   exact_match=0.9424  Pearson r=+0.9482  κ_quad=+0.9468
+
+RESULTS — STANCE TASK (5-class nominal):
+  Baseline vs Paraphrase 1            exact_match=0.9351  κ=+0.8981
+  Baseline vs Paraphrase 2            exact_match=0.9610  κ=+0.9401
+  Paraphrase 1 vs 2                   exact_match=0.9307  κ=+0.8923
+  Stance pairwise exact-match range: 0.9307 – 0.9610
+  Valid pairs (both stances classifiable): n=231
+
+RESULTS — TOPIC TASK (7-class nominal):
+  Baseline vs Paraphrase 1            exact_match=0.9323  κ=+0.9068
+  Baseline vs Paraphrase 2            exact_match=0.9223  κ=+0.8943
+  Paraphrase 1 vs 2                   exact_match=0.9424  κ=+0.9208
+  Topic pairwise exact-match range: 0.9223 – 0.9424
+  Valid pairs (both topics classifiable): n=399
+
+======================================================================
+REPLICATION COMPARISON — n=200 historical vs current run
+======================================================================
+  n=200 (R16, locked):  α=+0.9011  CI [+0.8571, +0.9380]  half-width=0.0404
+  n=399 (current):       α=+0.9011  CI [+0.8680, +0.9300]  half-width=0.0310
+  Δα (current − historical):     -0.0000
+  Δ lower-CI bound:              +0.0109  (positive = more headroom above 0.85 threshold)
+  CI half-width ratio (cur/n200): 0.766  (expect ~0.71 if Bessel scaling at 2× sample)
+  Lower-CI headroom above 0.85: n=200 = +0.0071  ·  n=399 = +0.0180
+
+VERDICT:
+  Paraphrase-robustness CONFIRMED for sentiment task (α=+0.9011 > 0.85 threshold).
+  Paper 1 L0b updated: 'test-retest reliability under LEXICAL-FORMAT prompt variation = α=+0.9011'.
+  Lower CI bound also above 0.85 (+0.8680 > 0.85): strong replication.
+  CAVEAT: this tests robustness to lexical/format rewording, NOT to semantic restructuring,
+  task redefinition, or category reordering. Stronger prompt-design robustness remains untested.

@@ -1,0 +1,52 @@
+================================================================================
+OP vs Reply Sentiment Analysis
+Generated: 2026-05-10T21:28:06
+================================================================================
+
+SAMPLE
+--------------------------------------------------------------------------------
+  Posts (OPs) with comments analyzed: 21,453
+  Total comments aggregated:           506,639
+  Mean comments per post:              23.6
+
+H1: REPLY SKEW (do replies diverge from OP?)
+--------------------------------------------------------------------------------
+  Mean OP polarity:                    +0.0751
+  Mean reply polarity:                 +0.0897
+  Mean (OP - reply) polarity:          -0.0146
+    1-sample t vs 0:                   t=-15.10, p=2.832e-51
+  Mean OP VADER:                       +0.5206
+  Mean reply VADER:                    +0.2820
+  Mean (OP - reply) VADER:             +0.2387
+    1-sample t vs 0:                   t=60.40, p=0
+
+  Verdict polarity: OPs are 1.46 pp more negative than replies on average
+  Verdict VADER:    OPs are 0.2387 more positive than replies on average
+
+H2: DEPTH ESCALATION (top-level vs reply-to-reply)
+--------------------------------------------------------------------------------
+  Posts with both top-level and deep replies: 19,416
+  Mean (top-level - deep) polarity:    -0.0105
+    1-sample t vs 0:                   t=-9.73, p=2.517e-22
+  Verdict: top-level replies are 0.0105 more negative than deeper replies on average
+
+H3: PER-COHORT OP-vs-REPLY GAP
+--------------------------------------------------------------------------------
+cohort                      n_posts   OP_pol  cmt_pol   op-cmt    OP_VA   cmt_VA   op-cmt  avg_cmts
+Reddit r/PSLF                 10645  +0.0723  +0.0844  -0.0121  +0.4827  +0.2613  +0.2214      21.2
+Reddit r/StudentLoans          6965  +0.0716  +0.0860  -0.0144  +0.5386  +0.2887  +0.2499      29.2
+Reddit Finance                 1968  +0.0896  +0.1143  -0.0247  +0.6285  +0.3264  +0.3021      22.2
+Reddit Medical                  668  +0.0731  +0.0986  -0.0255  +0.5239  +0.3178  +0.2061      19.6
+Other                           608  +0.0953  +0.1101  -0.0148  +0.5383  +0.3344  +0.2040      18.4
+Reddit PA                       268  +0.1025  +0.1266  -0.0241  +0.6890  +0.3720  +0.3170      16.9
+Reddit Teaching                 211  +0.0990  +0.1057  -0.0067  +0.5340  +0.2956  +0.2384      16.2
+Reddit Nursing                  120  +0.1038  +0.1118  -0.0081  +0.5627  +0.3046  +0.2581      14.0
+
+Cohort patterns to look for:
+  - Negative op-cmt = replies MORE positive than OP (sympathy/encouragement)
+  - Positive op-cmt = replies MORE negative than OP (criticism/skepticism)
+  - Cohorts with notably different op-cmt gaps suggest different reply norms
+
+================================================================================
+END OF ARTIFACT
+================================================================================

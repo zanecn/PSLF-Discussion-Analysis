@@ -1,0 +1,35 @@
+L4: SDN ATTENDING PATTERN AT COMMENTS SCALE (intensity-only)
+================================================================================
+
+Reddit comments analyzed: 413,756
+Medical-subreddit comments: 8,778
+
+SENTIMENT INTENSITY BY CAREER STAGE
+--------------------------------------------------------------------------------
+  [medical_subs_only] resident           n=   389 mean=+0.1053 sd=0.178 %neg=  9.3%
+  [medical_subs_only] attending          n=   158 mean=+0.0913 sd=0.149 %neg= 11.4%
+  [medical_subs_only] fellow             n=   179 mean=+0.1236 sd=0.158 %neg=  7.8%
+  [medical_subs_only] medical_student    n=   159 mean=+0.0828 sd=0.161 %neg= 12.6%
+  [all_reddit] resident           n=   814 mean=+0.1036 sd=0.177 %neg=  9.2%
+  [all_reddit] attending          n=   334 mean=+0.1112 sd=0.147 %neg=  9.0%
+  [all_reddit] fellow             n=   935 mean=+0.1256 sd=0.197 %neg=  9.8%
+  [all_reddit] medical_student    n=   302 mean=+0.0884 sd=0.147 %neg= 11.6%
+
+ATTENDING vs RESIDENT PAIRWISE
+--------------------------------------------------------------------------------
+  [medical_subs_only] n_att=158 n_res=389  diff=-0.0140  d=-0.082  p=0.3496
+  [all_reddit] n_att=334 n_res=814  diff=+0.0077  d=+0.045  p=0.4508
+
+INTERPRETATION
+--------------------------------------------------------------------------------
+Comments are TextBlob-only — cannot replicate A3's stance-decoupling
+OR analysis directly. This script tests whether the underlying
+INTENSITY pattern (attendings post more negatively than residents)
+holds at comments scale.
+
+  [medical_subs_only] No significant attending-resident polarity diff
+  [all_reddit] No significant attending-resident polarity diff
+
+Note: Reddit comments do not include SDN. This is a partial proxy.
+A direct test of the A3 finding requires Claude scoring on comments
+(estimated cost ~$2,300 for 460K comments at current pricing).

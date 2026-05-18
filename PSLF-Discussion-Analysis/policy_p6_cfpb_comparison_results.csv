@@ -1,0 +1,11 @@
+process,cfpb_n,cfpb_share_pct,discourse_n,discourse_share_pct,discourse_to_cfpb_ratio
+PSLF_Buyback,207,2.11,16458,11.53,5.47
+PSLF_Help_Tool,35,0.36,1834,1.29,3.61
+Employment_Certification,493,5.02,17284,12.11,2.41
+Loan_Consolidation,2543,25.90,49919,34.98,1.35
+Limited_Waiver,129,1.31,1970,1.38,1.05
+Payment_Count_Dispute,1990,20.27,21134,14.81,0.73
+Employer_Determination,340,3.46,2794,1.96,0.57
+Form_Processing_Delay,779,7.93,5717,4.01,0.50
+IDR_Recertification,2871,29.24,19615,13.75,0.47
+MOHELA_Specific_Issue,431,4.39,2788,1.95,0.45

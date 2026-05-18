@@ -1,0 +1,41 @@
+event,cohort,n_pre,n_post,cramers_v,chi2_p,top_shift_1,top_shift_2,top_shift_3,delta_career_impact,delta_financial_planning,delta_general_question,delta_policy_uncertainty,delta_servicer_issues,delta_success_story,delta_unknown,delta_frustration_venting
+Limited PSLF Waiver,Reddit Finance,32,53,0.2568,0.3467,financial_planning: -9.6pp,policy_uncertainty: +7.5pp,success_story: +3.8pp,-0.5896,-9.5519,1.9458,7.5472,-3.1250,3.7736,,
+Limited PSLF Waiver,Reddit r/StudentLoans,30,57,0.2498,0.2462,servicer_issues: +10.9pp,career_impact: -8.2pp,policy_uncertainty: -4.7pp,-8.2456,-2.6316,4.7368,-4.7368,10.8772,,,
+Limited PSLF Waiver,SDN (Medical),287,354,0.4380,0.0000,success_story: -35.5pp,financial_planning: +14.5pp,policy_uncertainty: +12.3pp,6.5336,14.4609,2.2117,12.2591,,-35.4653,,
+IDR Account Adjustment,Reddit Finance,60,53,0.2460,0.3359,financial_planning: +13.8pp,general_question: -9.9pp,career_impact: -6.2pp,-6.2264,13.8050,-9.9057,1.8868,-1.6667,0.2201,1.8868,
+IDR Account Adjustment,Reddit Medical,23,32,0.3138,0.2473,policy_uncertainty: +12.5pp,servicer_issues: -9.9pp,financial_planning: -9.6pp,5.0272,-9.6467,2.0380,12.5000,-9.9185,,,
+IDR Account Adjustment,Reddit r/PSLF,37,75,0.1693,0.6678,success_story: -7.0pp,general_question: +4.8pp,frustration_venting: -2.7pp,,2.6306,4.8288,-0.0360,2.2703,-6.9910,,-2.7027
+IDR Account Adjustment,Reddit r/StudentLoans,38,46,0.1359,0.9071,financial_planning: +5.4pp,servicer_issues: -2.7pp,career_impact: -2.6pp,-2.6316,5.3776,1.4874,-0.5721,-2.7460,-0.9153,,
+IDR Account Adjustment,SDN (Medical),191,255,0.7224,0.0000,financial_planning: +61.5pp,general_question: -35.2pp,success_story: -17.8pp,-2.1004,61.5460,-35.2099,1.4187,-5.7592,-17.8010,,-2.0942
+Biden Mass Forgiveness,Other,24,23,0.2543,0.6939,policy_uncertainty: +9.1pp,career_impact: -7.1pp,financial_planning: +4.9pp,-7.0652,4.8913,1.4493,9.0580,,-4.1667,,-4.1667
+Biden Mass Forgiveness,Reddit Finance,62,54,0.2070,0.5475,financial_planning: -10.3pp,general_question: +7.2pp,career_impact: +3.9pp,3.9427,-10.2748,7.2282,-1.6129,1.8519,-1.3740,0.2389,
+Biden Mass Forgiveness,Reddit Medical,29,20,0.2888,0.3945,general_question: -14.5pp,servicer_issues: +10.0pp,policy_uncertainty: +6.2pp,-2.2414,0.5172,-14.4828,6.2069,10.0000,,,
+Biden Mass Forgiveness,Reddit r/PSLF,66,56,0.2053,0.2728,servicer_issues: +16.7pp,general_question: -11.8pp,policy_uncertainty: -4.3pp,,2.5974,-11.7965,-4.2749,16.6667,-3.1926,,
+Biden Mass Forgiveness,Reddit r/StudentLoans,37,73,0.2551,0.1276,servicer_issues: +19.4pp,policy_uncertainty: -9.3pp,financial_planning: -6.5pp,,-6.5161,0.5183,-9.3299,19.3632,-4.0355,,
+Biden Mass Forgiveness,SDN (Medical),106,65,0.6903,0.0000,career_impact: -53.2pp,general_question: +32.8pp,servicer_issues: +13.8pp,-53.1785,7.6778,32.8012,6.7489,13.8462,-7.8955,,
+Biden v. Nebraska SCOTUS,Reddit Finance,26,126,0.1249,0.6678,financial_planning: +6.3pp,career_impact: -3.1pp,success_story: -2.3pp,-3.0525,6.2882,0.4884,,-1.4652,-2.2589,,
+Biden v. Nebraska SCOTUS,Reddit Medical,26,45,0.2516,0.4807,financial_planning: -10.4pp,general_question: +8.5pp,servicer_issues: +7.3pp,-3.6752,-10.4274,8.4615,2.2222,7.2650,-3.8462,,
+Biden v. Nebraska SCOTUS,Reddit r/PSLF,46,103,0.2797,0.0398,success_story: -14.2pp,general_question: +11.0pp,financial_planning: +11.0pp,-2.1739,10.9962,11.0384,3.6513,-9.3077,-14.2043,,
+Biden v. Nebraska SCOTUS,SDN (Medical),189,178,0.6559,0.0000,financial_planning: -36.7pp,policy_uncertainty: +33.2pp,career_impact: -27.8pp,-27.8461,-36.6506,22.3352,33.1728,,8.9888,,
+Payments Restart,Other,38,34,0.2795,0.3446,career_impact: +13.2pp,financial_planning: -11.0pp,success_story: -5.3pp,13.1579,-10.9907,-2.7864,2.9412,2.9412,-5.2632,,
+Payments Restart,Reddit Finance,121,41,0.3280,0.0038,financial_planning: -23.2pp,career_impact: +8.9pp,general_question: +6.2pp,8.9297,-23.2413,6.2487,4.8780,2.3987,0.7861,,
+Payments Restart,Reddit Medical,44,24,0.2757,0.1598,servicer_issues: +22.0pp,financial_planning: -14.4pp,general_question: -8.3pp,0.7576,-14.3939,-8.3333,,21.9697,,,
+Payments Restart,Reddit r/PSLF,104,38,0.4215,0.0001,servicer_issues: +32.2pp,financial_planning: -18.1pp,general_question: -14.5pp,7.8947,-18.0668,-14.5243,-0.5061,32.1862,-6.9838,,
+Payments Restart,Reddit r/StudentLoans,131,36,0.1529,0.5632,financial_planning: -16.6pp,servicer_issues: +11.2pp,general_question: +5.2pp,-0.7634,-16.5606,5.1527,1.2511,11.1959,-0.2757,,
+Payments Restart,SDN (Medical),173,63,0.4830,0.0000,policy_uncertainty: -35.3pp,financial_planning: +29.8pp,career_impact: +15.6pp,15.5794,29.8468,-1.4864,-35.2693,,-8.6705,,
+SAVE Admin Forbearance,Other,36,31,0.0546,0.9953,general_question: -4.3pp,financial_planning: +2.7pp,policy_uncertainty: +0.9pp,0.2688,2.6882,-4.3011,0.8961,0.4480,,,
+SAVE Admin Forbearance,Reddit Finance,72,60,0.1654,0.6070,career_impact: -3.9pp,financial_planning: +3.9pp,servicer_issues: -2.8pp,-3.8889,3.8889,0.5556,1.9444,-2.7778,0.2778,,
+SAVE Admin Forbearance,Reddit Medical,27,23,0.1955,0.7521,policy_uncertainty: +11.9pp,servicer_issues: -9.2pp,career_impact: +5.6pp,5.6361,-3.5427,-4.8309,11.9163,-9.1787,,,
+SAVE Admin Forbearance,Reddit r/PSLF,42,51,0.2798,0.2958,servicer_issues: -13.9pp,success_story: +11.3pp,career_impact: +3.9pp,3.9216,0.7003,-3.7815,-0.2801,-13.8655,11.3445,,1.9608
+SAVE Admin Forbearance,Reddit r/StudentLoans,61,36,0.2829,0.2560,policy_uncertainty: +13.5pp,general_question: -12.8pp,servicer_issues: +9.9pp,-3.2787,-2.3679,-12.8415,13.5246,9.8816,-3.2787,,-1.6393
+SAVE Admin Forbearance,SDN (Medical),96,23,0.9257,0.0000,career_impact: +96.9pp,financial_planning: -67.7pp,general_question: -28.1pp,96.8750,-67.7083,-28.1250,-1.0417,,,,
+Trump PSLF EO,Other,45,50,0.2441,0.3405,career_impact: -16.2pp,policy_uncertainty: +9.8pp,financial_planning: +9.6pp,-16.2222,9.5556,2.2222,9.7778,-2.6667,-2.6667,,
+Trump PSLF EO,Reddit Finance,53,54,0.3151,0.0311,financial_planning: -14.3pp,policy_uncertainty: +11.1pp,general_question: +7.1pp,-5.6604,-14.3256,7.1279,11.1111,1.7470,,,
+Trump PSLF EO,Reddit Medical,32,31,0.1786,0.7338,policy_uncertainty: -14.4pp,general_question: +6.6pp,financial_planning: +4.1pp,0.1008,4.1331,6.5524,-14.4153,3.6290,,,
+Trump PSLF EO,Reddit r/PSLF,68,31,0.1912,0.6053,general_question: -11.2pp,policy_uncertainty: +9.3pp,servicer_issues: +7.5pp,-1.4706,-4.7438,-11.1954,9.2979,7.5427,0.5693,,
+Trump PSLF EO,Reddit r/StudentLoans,48,46,0.2771,0.2050,general_question: +15.6pp,policy_uncertainty: -12.0pp,financial_planning: -7.7pp,0.0906,-7.6993,15.5797,-11.9565,6.0688,-2.0833,,
+Trump PSLF EO,SDN (Medical),494,317,0.4085,0.0000,policy_uncertainty: -27.3pp,career_impact: +18.1pp,financial_planning: +16.4pp,18.0622,16.4427,-8.3500,-27.2852,3.1546,,,-2.0243
+Final Trump PSLF Rule,Reddit Finance,38,44,0.3661,0.0267,financial_planning: +22.5pp,general_question: -21.4pp,career_impact: -2.6pp,-2.6316,22.4880,-21.4115,,2.2727,-0.7177,,
+Final Trump PSLF Rule,Reddit r/PSLF,33,65,0.2958,0.1272,success_story: +15.5pp,financial_planning: -11.7pp,servicer_issues: -11.7pp,1.5385,-11.7483,10.8159,-4.3823,-11.7016,15.4779,,
+Final Trump PSLF Rule,Reddit r/StudentLoans,43,54,0.1560,0.6695,general_question: -7.1pp,servicer_issues: +5.0pp,policy_uncertainty: +4.6pp,,-0.1723,-7.0629,4.5650,4.9957,,,-2.3256
+Final Trump PSLF Rule,SDN (Medical),77,197,0.3274,0.0000,policy_uncertainty: +27.9pp,career_impact: -13.0pp,general_question: -10.3pp,-12.9672,-4.6081,-10.3435,27.9188,,,,

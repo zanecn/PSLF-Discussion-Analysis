@@ -1,0 +1,365 @@
+discovered_topic_id,n_docs,top_words,dominant_prompt_topic,dominant_prompt_topic_pct,source_mix
+0,23533,"my, to, the, loans, for, in, loan, and",financial_planning,40.0,"reddit_arctic_shift_post:93%, reddit_post:5%, sdn_post:2%"
+1,568,"nelnet, save, application, plan, email, interest, due, was",servicer_issues,100.0,"reddit_arctic_shift_post:100%, reddit_post:0%"
+2,318,"employer, signature, form, hr, sign, ein, employment, employers",servicer_issues,50.0,"reddit_arctic_shift_post:98%, reddit_post:2%"
+3,232,"nonprofit, hospital, 501c3, profit, kaiser, organization, physicians, qualify",general_question,48.4,"reddit_arctic_shift_post:83%, reddit_post:7%, sdn_post:10%"
+4,224,"call, hold, phone, human, minutes, speak, mohela, hours",servicer_issues,100.0,"reddit_arctic_shift_post:100%, reddit_post:0%"
+5,206,"hours, 30, fulltime, week, parttime, full, part, time",career_impact,66.7,"reddit_arctic_shift_post:97%, reddit_post:3%"
+6,197,"password, login, log, account, mohela, username, access, tried",servicer_issues,100.0,"reddit_arctic_shift_post:99%, reddit_post:1%"
+7,173,"offer, pto, primary, care, cme, clinic, fm, patients",career_impact,70.1,"reddit_arctic_shift_post:21%, reddit_post:40%, sdn_post:39%"
+8,167,"aidvantage, edfinancial, save, due, payment, plan, autopay, called",servicer_issues,100.0,"reddit_arctic_shift_post:99%, reddit_post:1%"
+9,159,"court, borrowers, save, plan, injunction, circuit, supreme, blocked",policy_uncertainty,85.7,"reddit_arctic_shift_post:96%, reddit_post:4%"
+10,152,"trophies, ecf, fedloan, trophy, timeline, 2022, qualifying, submitted",no_claude_label,0.0,reddit_arctic_shift_post:100%
+11,139,"trophies, transfer, transferred, fedloan, mohela, 915, transferring, fedloans",no_claude_label,0.0,reddit_arctic_shift_post:100%
+12,119,"uk, tax, hmrc, company, self, paye, umbrella, ltd",no_claude_label,0.0,reddit_arctic_shift_post:100%
+13,107,"employed, employer, forgiveness, qualifying, employment, time, 120, job",general_question,100.0,"reddit_arctic_shift_post:98%, reddit_post:2%"
+14,103,"nhsc, scholarship, pa, corps, health, program, national, underserved",general_question,83.7,"reddit_arctic_shift_post:6%, reddit_post:88%, sdn_post:6%"
+15,83,"roth, ira, separately, filing, backdoor, contributions, married, traditional",financial_planning,100.0,"reddit_arctic_shift_post:80%, reddit_post:20%"
+16,83,"fsa, updated, mohela, 90, moheila, update, 120, days",no_claude_label,0.0,reddit_arctic_shift_post:100%
+17,79,"tracker, where, disappeared, site, see, mohela, pslf, counts",general_question,100.0,"reddit_arctic_shift_post:99%, reddit_post:1%"
+18,79,"403b, roth, traditional, ira, agi, contribute, contributions, retirement",financial_planning,85.7,"reddit_arctic_shift_post:91%, reddit_post:9%"
+19,74,"abroad, foreign, us, uk, overseas, exclusion, living, feie",no_claude_label,0.0,reddit_arctic_shift_post:100%
+20,74,"state, tax, taxable, taxes, wisconsin, nc, bomb, carolina",financial_planning,100.0,"reddit_arctic_shift_post:85%, reddit_post:1%, sdn_post:14%"
+21,73,"green, banners, banner, fsa, golden, forbearance, request, ecf",success_story,55.6,"reddit_arctic_shift_post:88%, reddit_post:12%"
+22,73,"subsidy, interest, repaye, 99973, 50, government, accrued, subsidies",no_claude_label,0.0,reddit_arctic_shift_post:100%
+23,64,"report, credit, score, forgiven, reports, long, reflected, scores",success_story,100.0,"reddit_arctic_shift_post:98%, reddit_post:2%"
+24,57,"remote, jobs, teletherapy, work, job, profit, non, slp",career_impact,94.7,"reddit_arctic_shift_post:67%, reddit_post:33%"
+25,55,"1098e, 1098, tax, paid, deduction, form, interest, taxes",general_question,50.0,"reddit_arctic_shift_post:96%, reddit_post:4%"
+26,52,"alliant, location, curriculum, touro, pros, cons, einstein, strong",financial_planning,80.0,"reddit_post:4%, sdn_post:96%"
+27,49,"loaneligibleindicator, eligiblepaymentcount, qualifyingpaymentcount, borrowereligibleindicator, forgivenessrequiredpayments, forgivenessremainingpayments, null, type",general_question,60.0,"reddit_arctic_shift_post:90%, reddit_post:10%"
+28,49,"dental, youre, 300400k, dentistry, 1020, yourself, youll, principal",financial_planning,60.9,"reddit_arctic_shift_post:20%, sdn_post:80%"
+29,44,"deleted, video, pslf, folks, owns, soul, excel, convinced",no_claude_label,0.0,reddit_arctic_shift_post:100%
+30,43,"nurse, corps, scholarship, leftenantcolon, hrsa, nursing, license, program",general_question,94.9,"reddit_arctic_shift_post:9%, reddit_post:91%"
+31,41,"driven, repaye, new, proposed, proposal, plans, effect, draft",no_claude_label,0.0,reddit_arctic_shift_post:100%
+32,41,"scam, scammed, company, companies, legit, prep, student, he",general_question,100.0,"reddit_arctic_shift_post:95%, reddit_post:5%"
+33,38,"pm, d2d, chat, list, discharge, allison, keri, thomas",no_claude_label,0.0,reddit_arctic_shift_post:100%
+34,38,"feel, patients, work, practice, dbt, job, clinical, pa",career_impact,81.5,"reddit_arctic_shift_post:29%, reddit_post:71%"
+35,37,"capitalize, capitalization, ibr, interest, switching, capitalized, rap, switch",no_claude_label,0.0,reddit_arctic_shift_post:100%
+36,36,"upload, uploading, documents, document, wet, error, pdf, tried",no_claude_label,0.0,reddit_arctic_shift_post:100%
+37,36,"tool, page, download, form, help, tried, click, 404",no_claude_label,0.0,reddit_arctic_shift_post:100%
+38,36,"rap, 2028, paye, ibr, bill, borrowers, old, switch",financial_planning,100.0,"reddit_arctic_shift_post:97%, reddit_post:3%"
+39,35,"americorps, award, segal, lump, sum, awards, tfa, education",general_question,100.0,"reddit_arctic_shift_post:97%, reddit_post:3%"
+40,34,"refinance, rate, radiologist, refinancing, enter, rads, private, era",financial_planning,100.0,"reddit_arctic_shift_post:12%, sdn_post:88%"
+41,33,"doctors, financial, medical, students, investment, retirement, caps, accelerated",policy_uncertainty,40.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+42,32,"forensic, statebased, evals, competency, options, work, plenty, opportunities",career_impact,80.0,"reddit_arctic_shift_post:6%, sdn_post:94%"
+43,32,"army, ado, civilian, rotc, hpsp, residency, commissioning, scholarship",policy_uncertainty,45.5,"reddit_arctic_shift_post:3%, sdn_post:97%"
+44,31,"neutered, surviving, discretion, existed, stands, optimistic, secretary, chances",policy_uncertainty,100.0,"reddit_arctic_shift_post:3%, sdn_post:97%"
+45,31,"fish, vet, pp, academia, vets, aquarium, internships, medicine",career_impact,51.6,"reddit_post:3%, sdn_post:97%"
+46,30,"versed, admit, strike, somewhere, reddit, find, either, point",general_question,100.0,"reddit_arctic_shift_post:67%, sdn_post:33%"
+47,30,"podiatry, va, fqhc, lifethat, organizational, hunt, shortages, ihs",career_impact,87.5,sdn_post:100%
+48,30,"dental, dentists, ivies, schools, research, might, sdn, solid",financial_planning,64.3,"reddit_arctic_shift_post:20%, reddit_post:7%, sdn_post:73%"
+49,30,"date, dates, employment, computation, form, dashes, start, mmddyyyy",general_question,100.0,"reddit_arctic_shift_post:93%, reddit_post:7%"
+50,30,"professional, students, programs, cap, lifetime, professions, limits, committee",policy_uncertainty,95.7,sdn_post:100%
+51,29,"ibr, forprofit, write, places, qualifies, clarification, pick, conflicting",financial_planning,52.4,"reddit_arctic_shift_post:28%, reddit_post:7%, sdn_post:66%"
+52,29,"studentaidgov, update, updated, updates, studentaid, aid, long, studentaidorg",servicer_issues,100.0,"reddit_arctic_shift_post:97%, reddit_post:3%"
+53,29,"bad, residency, competitiveness, guarantees, section, deal, consider, really",general_question,66.7,"reddit_arctic_shift_post:14%, reddit_post:17%, sdn_post:69%"
+54,28,"edfinancial, paye, application, long, edfinacial, applications, 1225, submitted",no_claude_label,0.0,reddit_arctic_shift_post:100%
+55,28,"court, relief, docket, oct, cases, injunction, plaintiffs, appeal",policy_uncertainty,100.0,"reddit_arctic_shift_post:71%, reddit_post:29%"
+56,27,"data, released, httpsstudentaidgovdatacenterstudentloanforgivenesspslfdatahttpsstudentaidgovdatacenterstudentloanforgivenesspslfdata, dashboard, refreshed, october, 28th, listjust",no_claude_label,0.0,reddit_arctic_shift_post:100%
+57,27,"nonprofitgovernment, biased, sympathetic, highincome, especially, cautious, placing, climate",policy_uncertainty,84.6,"reddit_arctic_shift_post:48%, reddit_post:4%, sdn_post:48%"
+58,27,"duplicate, form, canceled, processed, cancelled, status, marked, forms",no_claude_label,0.0,reddit_arctic_shift_post:100%
+59,26,"disability, tpd, discharge, ssdi, disabled, edmohela, fers, permanent",no_claude_label,0.0,reddit_arctic_shift_post:100%
+60,26,"taxed, taxable, payerepayesave, podcasts, inherent, non, profit, coat",general_question,80.0,"reddit_arctic_shift_post:15%, reddit_post:8%, sdn_post:77%"
+61,26,"principle, interest, pay, off, 230, targeted, specific, target",no_claude_label,0.0,reddit_arctic_shift_post:100%
+62,26,"cut, workers, healthcare, republicans, gop, residents, skyhigh, panacea",policy_uncertainty,100.0,"reddit_arctic_shift_post:58%, reddit_post:4%, sdn_post:38%"
+63,26,"preceptor, sites, programs, offers, demsn, postmasters, mortar, mills",general_question,78.6,"reddit_arctic_shift_post:4%, reddit_post:19%, sdn_post:77%"
+64,25,"continuation, contract, funds, lrp, commitment, 50k, nhsc, reapplying",financial_planning,50.0,"reddit_arctic_shift_post:12%, reddit_post:8%, sdn_post:80%"
+65,25,"pays, forgive, 15kmo, 360k, 350000, podiatry, guy, paid",financial_planning,60.0,"reddit_arctic_shift_post:12%, reddit_post:8%, sdn_post:80%"
+66,25,"auto, autopay, debit, discount, autodebit, reduction, 025, rate",no_claude_label,0.0,reddit_arctic_shift_post:100%
+67,25,"smiley, face, d2d, zeros, standing, screen, emoji, today",no_claude_label,0.0,reddit_arctic_shift_post:100%
+68,25,"chat, feature, function, scroll, mohela, find, bottom, where",no_claude_label,0.0,reddit_arctic_shift_post:100%
+69,25,"second, forprofit, job, profit, nonprofit, affect, jobs, fulltime",general_question,100.0,"reddit_arctic_shift_post:96%, reddit_post:4%"
+70,25,"vet, rap, co, 200k, 2030, school, borrow, specializes",financial_planning,84.6,"reddit_arctic_shift_post:16%, sdn_post:84%"
+71,24,"refinance, private, refinanced, refinancing, rate, splashfinancial, heartland, commercial",financial_planning,80.0,"reddit_arctic_shift_post:58%, reddit_post:12%, sdn_post:29%"
+72,24,"facilities, practiceshospitals, aftersay, partneri, grasping, forthcoming, nonprofitpublic, altered",career_impact,80.0,"reddit_post:12%, sdn_post:88%"
+73,24,"borrowers, cfpb, consumer, consumers, cfpbs, navient, servicers, bureau",no_claude_label,0.0,reddit_arctic_shift_post:100%
+74,24,"academia, competitive, positions, clinical, mentalnationwide, httpsjamanetworkcomjournalsjaer, privatized, psych",career_impact,58.3,sdn_post:100%
+75,24,"taxable, itsilly, dispersals, whenduration, clarify, clarifies, monies, considered",general_question,85.7,"reddit_arctic_shift_post:17%, sdn_post:83%"
+76,24,"rap, bomb, ibr, old, tax, vs, agi, balance",financial_planning,87.5,"reddit_arctic_shift_post:67%, reddit_post:33%"
+77,24,"431, tax, taxable, topic, canceled, wwwirsgov, turbotaxintuitcom, lifesaver",financial_planning,100.0,"reddit_arctic_shift_post:58%, sdn_post:42%"
+78,23,"va, edrp, op, hpsp, residency, vas, deals, relocation",financial_planning,68.8,sdn_post:100%
+79,23,"aft, lawsuit, desist, rights, studentloan, cease, borrowers, union",policy_uncertainty,100.0,"reddit_arctic_shift_post:96%, reddit_post:4%"
+80,23,"unmatched, usda, core, telework, mds, jobs, importexport, pm",career_impact,52.4,"reddit_arctic_shift_post:9%, sdn_post:91%"
+81,23,"fqhcs, orgs, patients, staff, population, tend, work, necessarily",career_impact,100.0,"reddit_arctic_shift_post:4%, reddit_post:9%, sdn_post:87%"
+82,23,"joining, gmo, military, reasons, choice, navy, bad, country",career_impact,83.3,"reddit_arctic_shift_post:9%, sdn_post:91%"
+83,23,"leave, fmla, maternity, absence, lwop, std, unpaid, loa",general_question,50.0,"reddit_arctic_shift_post:91%, reddit_post:9%"
+84,23,"math, translates, roi, students, growing, yrs, debttosalary, beholder",financial_planning,80.0,"reddit_arctic_shift_post:4%, sdn_post:96%"
+85,22,"cosign, cosigning, spouse, her, wife, registration, vehicle, name",financial_planning,50.0,"reddit_arctic_shift_post:91%, reddit_post:9%"
+86,22,"postbacc, medical, you, competitive, specialty, successful, medicine, brand",financial_planning,47.6,"reddit_arctic_shift_post:5%, reddit_post:5%, sdn_post:91%"
+87,22,"city, mstp, washu, weather, md, clinical, museum, louis",financial_planning,71.4,"reddit_arctic_shift_post:5%, reddit_post:5%, sdn_post:91%"
+88,22,"duke, care, primary, sinai, coa, va, solo, residency",career_impact,45.5,"reddit_post:9%, sdn_post:91%"
+89,22,"edrp, va, frequently, americans, mou, behest, phrased, ses",policy_uncertainty,47.6,"reddit_arctic_shift_post:5%, sdn_post:95%"
+90,22,"updated, counts, update, count, processed, 148120, waiting, updates",no_claude_label,0.0,reddit_arctic_shift_post:100%
+91,22,"vet, aquatics, animals, animal, medicine, vets, exotics, human",career_impact,81.8,"reddit_arctic_shift_post:5%, sdn_post:95%"
+92,22,"hard, lifestyle, 3000month, bmw, saturdays, living, work, 1000month",financial_planning,90.0,"reddit_arctic_shift_post:5%, sdn_post:95%"
+93,22,"dentists, experiences, nonas, professionalfinancial, disproportionate, objectives, aspirations, homeownership",financial_planning,100.0,sdn_post:100%
+94,22,"statute, secretary, doed, subchapter, 7681, givetheyre, tested, discretion",policy_uncertainty,47.6,"reddit_arctic_shift_post:5%, reddit_post:5%, sdn_post:91%"
+95,21,"nhsc, scholarship, obligations, nonfederal, scholars, priorities, awards, obligation",general_question,100.0,"reddit_post:5%, sdn_post:95%"
+96,21,"shills, listen, ramsey, dave, fm, taxfree, theoretically, 150k",general_question,78.6,"reddit_post:5%, sdn_post:95%"
+97,21,"2550, easy, 250300k, depending, occurs, win, break, youve",success_story,71.4,"reddit_arctic_shift_post:5%, sdn_post:95%"
+98,21,"grad, plus, save, direct, graduate, unsubsidized, ownedserviced, loans",no_claude_label,0.0,reddit_arctic_shift_post:100%
+99,21,"cancer, deferment, treatment, diagnosed, diagnosis, surgery, pointtimeline, post",no_claude_label,0.0,reddit_arctic_shift_post:100%
+100,21,"calculator, accurate, calculators, calc, studentloanhero, 240, accuracy, simulator",no_claude_label,0.0,reddit_arctic_shift_post:100%
+101,21,"realization, progressive, academia, itself, easy, mentioned, talked, reduce",career_impact,70.0,"reddit_arctic_shift_post:5%, sdn_post:95%"
+102,21,"rank, ir, fellowship, mallinckrodt, stratify, obl, ohsu, irmsk",career_impact,77.8,"reddit_arctic_shift_post:5%, reddit_post:5%, sdn_post:90%"
+103,21,"districts, summer, teaching, substitute, district, contract, worked, teachers",general_question,100.0,"reddit_arctic_shift_post:90%, reddit_post:10%"
+104,21,"ptsd, sc, veterans, perception, referrals, veteran, trauma, operations",policy_uncertainty,90.9,"reddit_post:5%, sdn_post:95%"
+105,21,"edrp, reimbursed, va, triplecheck, followthrough, upped, represents, ahead",general_question,83.3,"reddit_arctic_shift_post:43%, reddit_post:5%, sdn_post:52%"
+106,21,"highly, slp, planner, focuses, insightful, meet, ours, accepted",financial_planning,95.2,"reddit_post:5%, sdn_post:95%"
+107,21,"presentation, aacom, dupe, slick, unbelievable, popped, garbage, assists",policy_uncertainty,55.6,"reddit_arctic_shift_post:14%, reddit_post:5%, sdn_post:81%"
+108,21,"book, guide, coat, military, white, you, anticipated, doctor",financial_planning,50.0,"reddit_arctic_shift_post:5%, sdn_post:95%"
+109,21,"academic, academics, grouppp, penn, pp, ivory, tower, local",career_impact,47.6,"reddit_post:5%, sdn_post:95%"
+110,20,"forensic, requires, forensicneuropsychology, neuropsychology, examinations, postdoctoral, neuropsych, inclination",policy_uncertainty,50.0,sdn_post:100%
+111,20,"suck, staff, md, verification, sign, calldo, caseson, privilegesstaff",financial_planning,83.3,sdn_post:100%
+112,20,"harvard, link, footprint, scholarshipsstipends, slouch, nycs, einsteins, overrated",financial_planning,62.5,sdn_post:100%
+113,20,"juno, sdn, budgeting, outputs, link, broadly, alongside, tools",financial_planning,100.0,sdn_post:100%
+114,20,"applied, whyyyyyy, approved, save, processing, application, long, processed",no_claude_label,0.0,reddit_arctic_shift_post:100%
+115,20,"pension, tsp, 3540kyear, 401kstyle, underperformed, refreshingly, flipside, sneeze",general_question,60.0,sdn_post:100%
+116,19,"hospital, strings, compare, attached, itself, nonprofit, positions, agree",general_question,100.0,"reddit_arctic_shift_post:42%, reddit_post:5%, sdn_post:53%"
+117,19,"demographics, certain, private, solutionits, debtespecially, attaining, pslfand, lightly",financial_planning,90.9,"reddit_arctic_shift_post:42%, reddit_post:5%, sdn_post:53%"
+118,19,"psychiatrists, work1099s, jobs, restrictive, rocky, healthcare, contract, involving",career_impact,85.7,"reddit_arctic_shift_post:26%, reddit_post:21%, sdn_post:53%"
+119,19,"mri, overplaying, hospitalemployed, incentivized, overcharging, findings, treating, pi",career_impact,93.8,"reddit_arctic_shift_post:16%, reddit_post:5%, sdn_post:79%"
+120,19,"income, return, taxes, turbotax, tax, irs, driven, filed",financial_planning,100.0,"reddit_arctic_shift_post:84%, reddit_post:16%"
+121,18,"ecf, form, page, employers, submit, employer, forms, ecfs",no_claude_label,0.0,reddit_arctic_shift_post:100%
+122,18,"hold, call, hyphen, calling, minutes, fedloan, called, callback",no_claude_label,0.0,reddit_arctic_shift_post:100%
+123,18,"fsa, says, glitch, grants, balance, fsa0, detailsinfo, site",servicer_issues,100.0,"reddit_arctic_shift_post:94%, reddit_post:6%"
+124,18,"blah, ego, hop, practice, dentists, pretttty, associateships, jose",career_impact,90.0,"reddit_arctic_shift_post:44%, sdn_post:56%"
+125,18,"refunds, megathread, weekly, topics, waivers, points, timeeffort, sparked",no_claude_label,0.0,reddit_arctic_shift_post:100%
+126,18,"somewhat, forsolidarity, ibrloan, pauper, corners, trim, sizeable, deal",financial_planning,50.0,"reddit_arctic_shift_post:28%, sdn_post:72%"
+127,18,"hattiesburg, com, culture, faculty, phd, research, style, class",general_question,92.3,sdn_post:100%
+128,17,"pharmacy, 2322, household, living, size, 200300k, cost, clients",financial_planning,85.7,"reddit_arctic_shift_post:18%, reddit_post:24%, sdn_post:59%"
+129,17,"gains, capital, sale, calculated, ibr, agi, selling, fasfa",no_claude_label,0.0,reddit_arctic_shift_post:100%
+130,17,"10yr12k, forgiveness, batched, morning, timeline, checking, mohela, anybody",no_claude_label,0.0,reddit_arctic_shift_post:100%
+131,17,"calculator, il, scd, bomb, rif, tool, creditable, determine",no_claude_label,0.0,reddit_arctic_shift_post:100%
+132,17,"sympathetic, gi, people, helplessness, tuition, teenagers, handouts, chose",policy_uncertainty,84.6,"reddit_arctic_shift_post:24%, sdn_post:76%"
+133,16,"cfpb, complaint, protection, consumer, bureau, complaints, submitted, fire",no_claude_label,0.0,reddit_arctic_shift_post:100%
+134,16,"students, 200k, cap, limit, ie, plus, borrowing, grad",policy_uncertainty,83.3,"reddit_arctic_shift_post:25%, reddit_post:31%, sdn_post:44%"
+135,16,"tpd, discharge, nelnet, 2024, december, disability, ssdi, approval",no_claude_label,0.0,reddit_arctic_shift_post:100%
+136,16,"borrowers, rule, proposed, secretary, regulations, percent, authority, incomedriven",policy_uncertainty,100.0,"reddit_arctic_shift_post:88%, reddit_post:12%"
+137,16,"nursing, pa, np, healthcare, rd, job, 200k, work",career_impact,75.0,"reddit_arctic_shift_post:50%, reddit_post:50%"
+138,16,"substitute, teaching, teacher, district, districts, staffing, source4teachers, subsitute",general_question,66.7,"reddit_arctic_shift_post:81%, reddit_post:19%"
+139,16,"borrowers, lifetime, effects, borrowed, reduction, dollar, hispanic, proposed",policy_uncertainty,90.0,"reddit_arctic_shift_post:38%, sdn_post:62%"
+140,16,"d2d, list, 119, 1109, 923, contemporaries, zeroed, chat",no_claude_label,0.0,reddit_arctic_shift_post:100%
+141,16,"rule, comment, draft, comments, topics, rules, changes, nprm",policy_uncertainty,100.0,"reddit_arctic_shift_post:56%, reddit_post:44%"
+142,15,"warn, canned, team, customer, apparently, luck, folks, entire",servicer_issues,100.0,"reddit_arctic_shift_post:33%, sdn_post:67%"
+143,15,"shelters, animal, places, hospitals, potentially, teaching, isnt, government",general_question,100.0,"reddit_arctic_shift_post:33%, sdn_post:67%"
+144,15,"rates, disbursal, 908, differing, decisionmaking, 808, medical, acceptances",policy_uncertainty,100.0,"reddit_arctic_shift_post:33%, sdn_post:67%"
+145,15,"solicits, wwwfederalregistergov, pslfleave, 92421, department, comments, suggestions, comment",policy_uncertainty,100.0,"reddit_arctic_shift_post:33%, sdn_post:67%"
+146,15,"zeroes, balance, zero, today, finallycredit, fsa, zeros, zeroed",success_story,100.0,"reddit_arctic_shift_post:87%, reddit_post:13%"
+147,15,"thentheyre, reacting, perk, twenty, prep, nonpslf, tax, affects",policy_uncertainty,100.0,"reddit_arctic_shift_post:40%, sdn_post:60%"
+148,15,"military, members, proposedreleased, inception, utilized, sections, clarifying, impacts",policy_uncertainty,100.0,"reddit_arctic_shift_post:33%, sdn_post:67%"
+149,15,"webinar, cfpb, event, link, register, pm, webex, demystified",no_claude_label,0.0,reddit_arctic_shift_post:100%
+150,15,"residency, fiance, ubsubsub, 312102, apprecaited, jointly, repaye, file",financial_planning,100.0,"reddit_arctic_shift_post:33%, sdn_post:67%"
+151,15,"400k, wfellowship, md, owes, theyd, owe, uscnyu, 120160k",career_impact,66.7,"reddit_arctic_shift_post:13%, sdn_post:87%"
+152,15,"medicine, usually, physicians, 200k1million, residencyfellow, academicva, 50200k, postresidencyfellowship",financial_planning,91.7,"reddit_arctic_shift_post:13%, reddit_post:7%, sdn_post:80%"
+153,15,"hard, larger, struggle, work, problem, person, multitaskingraising, problembelieve",policy_uncertainty,50.0,"reddit_arctic_shift_post:33%, sdn_post:67%"
+154,15,"locum, hospital, shifts, hospitalist, leasingpurchasing, pcp, downfalls, youve",career_impact,80.0,"reddit_arctic_shift_post:13%, reddit_post:20%, sdn_post:67%"
+155,15,"complaints, complaint, bbb, bureau, inaccurate, 665, customers, mary",no_claude_label,0.0,reddit_arctic_shift_post:100%
+156,15,"endorsing, wwwstudentloanplannercom, hoss, residency, op, physicians, planner, advisor",financial_planning,100.0,"reddit_arctic_shift_post:27%, reddit_post:7%, sdn_post:67%"
+157,14,"perkins, default, defaulted, collector, collections, collection, williams, university",no_claude_label,0.0,reddit_arctic_shift_post:100%
+158,14,"w2s, w2, paystubs, worked, employer, unsigned, lieu, closed",no_claude_label,0.0,reddit_arctic_shift_post:100%
+159,14,"cap, standard, 10year, paye, 10yr, amount, calculate, find",no_claude_label,0.0,reddit_arctic_shift_post:100%
+160,14,"protest, rstudentloans, rpslf, reddit, thirdparty, reddits, users, community",general_question,100.0,"reddit_arctic_shift_post:79%, reddit_post:21%"
+161,14,"him, shift, husband, 660month, absoalutely, sahdhouse, 138260month, loss",policy_uncertainty,90.9,"reddit_arctic_shift_post:14%, sdn_post:86%"
+162,14,"paye, consolidate, tricky, 2011, double, disbursed, eligiblity, consolidation",no_claude_label,0.0,reddit_arctic_shift_post:100%
+163,14,"vet, students, rap, borrowing, cap, 200k, 2026, rising",no_claude_label,0.0,"reddit_arctic_shift_post:43%, sdn_post:57%"
+164,14,"tier, tiers, amt, explain, 36888, amount, 92624, table",no_claude_label,0.0,reddit_arctic_shift_post:100%
+165,14,"production, considerably, expenses, average, area, freeze, lotwith, overinflated",policy_uncertainty,100.0,"reddit_arctic_shift_post:29%, sdn_post:71%"
+166,14,"forbearance, ending, aidvantage, ends, 0317, administrative, extend, save",no_claude_label,0.0,reddit_arctic_shift_post:100%
+167,14,"decision, legitimate, bet, fellowship, 95, eliminate, agree, worst",policy_uncertainty,90.9,"reddit_arctic_shift_post:7%, reddit_post:7%, sdn_post:86%"
+168,14,"residency, 1960, he, traditionally, calculated, decreases, his, practicing",financial_planning,66.7,"reddit_arctic_shift_post:21%, reddit_post:7%, sdn_post:71%"
+169,14,"missouri, sue, against, damages, missouris, court, irreparable, standing",policy_uncertainty,100.0,"reddit_arctic_shift_post:79%, reddit_post:7%, sdn_post:14%"
+170,14,"teach, grants, grant, converted, converting, teacher, cares, her",no_claude_label,0.0,reddit_arctic_shift_post:100%
+171,14,"cornerstone, dynamics, lining, atm, servicing, fedloan, vet, behind",servicer_issues,50.0,"reddit_arctic_shift_post:29%, reddit_post:7%, sdn_post:64%"
+172,14,"planner, advisors, advisorcompany, advisor, scammy, gradfin, specializing, financial",financial_planning,100.0,"reddit_arctic_shift_post:93%, reddit_post:7%"
+173,14,"calculator, aggressive, npv, discount, nominal, your, value, rate",financial_planning,100.0,"reddit_arctic_shift_post:79%, reddit_post:14%, sdn_post:7%"
+174,14,"webinar, webinars, advising, evening, pays, repayments, news, group",policy_uncertainty,81.8,"reddit_arctic_shift_post:21%, reddit_post:7%, sdn_post:71%"
+175,13,"scorched, repubs, doctors, thecollegeinvestorcom, mills, hill, spectrum, targets",policy_uncertainty,100.0,"reddit_arctic_shift_post:8%, reddit_post:15%, sdn_post:77%"
+176,13,"master, promissory, worriesuncertainty, congressionally, legally, note, spirit, binding",policy_uncertainty,90.0,"reddit_arctic_shift_post:23%, sdn_post:77%"
+177,13,"oos, osu, borrowing, saddled, 257k, instate, 105k, col",general_question,50.0,"reddit_arctic_shift_post:8%, reddit_post:15%, sdn_post:77%"
+178,13,"jayna, knows, aspect, prepared, political, follow, passed, include",policy_uncertainty,100.0,"reddit_arctic_shift_post:31%, sdn_post:69%"
+179,13,"beard, miscounting, getgo, rejected, 320000, nonprofitpublic, spite, pushback",success_story,63.6,"reddit_arctic_shift_post:8%, reddit_post:8%, sdn_post:85%"
+180,13,"terms, promissory, challenged, contract, void, gop, notes, null",policy_uncertainty,100.0,"reddit_arctic_shift_post:15%, sdn_post:85%"
+181,13,"5kmo, expenses, living, mo, lcol, 1000mo, dual, housing",financial_planning,100.0,"reddit_arctic_shift_post:15%, reddit_post:8%, sdn_post:77%"
+182,13,"deals, laurel, runs, fqhc, road, exist, physician, anymore",general_question,76.9,"reddit_post:23%, sdn_post:77%"
+183,13,"pan, bit, clarify, disposable, specific, details, vs, expenses",financial_planning,55.6,"reddit_arctic_shift_post:31%, sdn_post:69%"
+184,13,"1099c, taxable, tax, taxes, forms, transcript, forgiven, event",success_story,50.0,"reddit_arctic_shift_post:85%, reddit_post:15%"
+185,13,"halves, lifesaver, recommend, highly, vs, balances, large, repaye",financial_planning,100.0,"reddit_arctic_shift_post:31%, sdn_post:69%"
+186,13,"edrp, smaller, significantly, contract, assume, 100, heard, thats",general_question,90.9,"reddit_arctic_shift_post:15%, sdn_post:85%"
+187,13,"spouses, divorce, spouse, husbands, exwifes, acquired, married, deleted",no_claude_label,0.0,reddit_arctic_shift_post:100%
+188,13,"heading, permanently, worried, air, survive, everything, sounds, most",policy_uncertainty,100.0,"reddit_arctic_shift_post:15%, sdn_post:85%"
+189,13,"anybodys, wci, radiology, someones, gathered, bet, sites, thing",financial_planning,90.0,"reddit_arctic_shift_post:23%, sdn_post:77%"
+190,13,"housing, prices, crashcrisis, retraction, market, leaner, paymentwise, expensive",financial_planning,100.0,"reddit_arctic_shift_post:23%, sdn_post:77%"
+191,13,"endorse, youll, plus, cosigning, complicated, son, youre, fees",general_question,100.0,"reddit_arctic_shift_post:23%, sdn_post:77%"
+192,13,"ops, backup, he, op, attendance, academic, repay, otherwise",financial_planning,90.0,"reddit_arctic_shift_post:15%, reddit_post:8%, sdn_post:77%"
+193,13,"simulator, 20year, accuracy, purposely, simulators, 64month, plan, accurate",no_claude_label,0.0,reddit_arctic_shift_post:100%
+194,13,"podiatry, 3kmo, mds, yep, rare, miss, training, 2k",career_impact,80.0,sdn_post:100%
+195,13,"routinely, diligence, disqualify, appropriate, thousands, interesting, mistakes, complicated",general_question,100.0,"reddit_arctic_shift_post:23%, sdn_post:77%"
+196,13,"med, 500k, sucks, yeah, nhsc, youll, ok, finished",general_question,81.8,"reddit_arctic_shift_post:15%, reddit_post:8%, sdn_post:77%"
+197,13,"miserable, buy, humanely, slightly, house, expensive, buyers, attending",financial_planning,100.0,"reddit_arctic_shift_post:23%, sdn_post:77%"
+198,13,"your, you, assistance, student, reduce, repayment, lower, financial",financial_planning,100.0,"reddit_arctic_shift_post:23%, sdn_post:77%"
+199,13,"grandfathered, cornfed101, reply, service, public, thank, need, think",general_question,100.0,"reddit_arctic_shift_post:23%, sdn_post:77%"
+200,13,"wwwtallahasseecom, faces, uncertain, service, public, heres, benefit, changes",policy_uncertainty,100.0,"reddit_arctic_shift_post:23%, sdn_post:77%"
+201,13,"contracting, fewer, shift, positions, imagine, luck, available, government",policy_uncertainty,100.0,"reddit_arctic_shift_post:23%, sdn_post:77%"
+202,12,"paye, increase, income, significant, report, salary, sudden, 45401",no_claude_label,0.0,reddit_arctic_shift_post:100%
+203,12,"refinance, residency, every, yr, personally, assuming, growing, fees",financial_planning,75.0,"reddit_arctic_shift_post:8%, sdn_post:92%"
+204,12,"120140k, residency, mildly, iirc, whichever, blanket, pathway, institutional",financial_planning,100.0,"reddit_arctic_shift_post:8%, reddit_post:8%, sdn_post:83%"
+205,12,"medical, hpsp, attending, threshold, ihelp, you, living, your",financial_planning,83.3,"reddit_post:8%, sdn_post:92%"
+206,12,"choosers, beggars, manager, lab, youve, comment, coders, paternalistic",career_impact,90.9,"reddit_arctic_shift_post:8%, reddit_post:8%, sdn_post:83%"
+207,12,"oral, health, dental, education, professionals, adea, americans, improve",policy_uncertainty,100.0,"reddit_arctic_shift_post:8%, sdn_post:92%"
+208,12,"wwwvincomstudentdebtcenter, capitalized, smarter, deferments, cheaper, cases, ibrpaye, base",financial_planning,100.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+209,12,"bankruptcy, tenet, allornothing, curveballs, dischargeable, cumulatively, undue, outofpocket",financial_planning,90.9,"reddit_arctic_shift_post:8%, reddit_post:8%, sdn_post:83%"
+210,12,"tool, gumroad, tutorial, cure, diagnose, simulate, side, product",financial_planning,100.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+211,12,"teaching, pe, burnt, programmer, teacher, classroom, grade, teach",career_impact,100.0,"reddit_arctic_shift_post:58%, reddit_post:42%"
+212,12,"academia, research, diffuse, instrument, translating, visavis, nonsensical, descriptions",career_impact,90.9,"reddit_arctic_shift_post:8%, reddit_post:8%, sdn_post:83%"
+213,12,"devastating, physicians, proposed, lowerpaid, weighed, underserved, specialties, areas",policy_uncertainty,100.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+214,12,"nonlobster, nondischargeable, specialities, literacy, population, underserved, incentive, med",career_impact,90.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+215,12,"loads, leftleaning, doctors, stark, snowballs, youre, comparatively, pursue",financial_planning,100.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+216,12,"pp, pain, washu, practice, sportspine, mskpain, shoulder, fellowship",career_impact,72.7,"reddit_arctic_shift_post:8%, reddit_post:8%, sdn_post:83%"
+217,12,"incomebased, psychologists, youd, governmentprovided, notinsubstantial, psydr, meaning, perpetuity",policy_uncertainty,90.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+218,12,"hpsp, scholarship, nhsc, ways, lots, deal, programs, state",general_question,100.0,"reddit_post:17%, sdn_post:83%"
+219,12,"otherwise, strings, scholarship, accept, hpsp, compensation, attached, md",career_impact,90.9,sdn_post:100%
+220,12,"wanna, anymore, 200k, personal, rest, tell, understanding, theres",policy_uncertainty,100.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+221,12,"15002500month, works, itll, attending, depending, spouse, together, residency",financial_planning,100.0,"reddit_arctic_shift_post:8%, sdn_post:92%"
+222,12,"sixfigure, remind, exempt, sentence, death, sell, words, private",financial_planning,100.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+223,12,"injunction, aug, court, 2025, accruing, comply, interest, your",policy_uncertainty,100.0,"reddit_arctic_shift_post:92%, reddit_post:8%"
+224,12,"intern, institutions, repaye, taxes, exempt, accumulation, saves, residency",financial_planning,100.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+225,12,"misconduct, defense, mua, caribbean, schools, borrower, usdoe, students",general_question,100.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+226,12,"month, jobs, employed, date, days, count, 14th, changing",no_claude_label,0.0,reddit_arctic_shift_post:100%
+227,12,"iirc, disqualify, falls, researching, mistakes, articles, common, recommend",general_question,90.0,"reddit_arctic_shift_post:17%, reddit_post:8%, sdn_post:75%"
+228,12,"pretax, package, determine, fellowship, compensation, value, repaye, halved",financial_planning,100.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+229,12,"halfdays, elaborate, inpatient, gig, 250k, appear, smaller, require",career_impact,100.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+230,12,"expired, recertification, form, electronic, website, idr, 93024, using",no_claude_label,0.0,reddit_arctic_shift_post:100%
+231,12,"interaction, diligent, environment, notes, remainder, extremely, hospital, name",success_story,90.9,"reddit_arctic_shift_post:8%, reddit_post:8%, sdn_post:83%"
+232,12,"he, discontinued, grandfathered, print, bankruptcy, qualify, difficult, fine",policy_uncertainty,100.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+233,12,"va, amazed, seeming, psychologists, medium, practice, w2, psychologist",career_impact,100.0,"reddit_arctic_shift_post:8%, sdn_post:92%"
+234,12,"trimmed, likelihood, unveiled, 78, longevity, longterm, discontinued, years",policy_uncertainty,100.0,"reddit_arctic_shift_post:92%, reddit_post:8%"
+235,12,"periodand, handcuffed, patientsday, transferable, pcps, oklahoma, scholars, uncommon",financial_planning,60.0,"reddit_post:17%, sdn_post:83%"
+236,12,"psyd, 300000, successfully, tuition, strategies, limits, eppp, living",financial_planning,100.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+237,12,"hca, hospital, affiliated, youre, harder, forprofit, physicians, typically",general_question,100.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+238,12,"mondays, update, thanksgiving, overnight, day, operation, 452023, dayday",no_claude_label,0.0,reddit_arctic_shift_post:100%
+239,12,"tax, anyone, form, drt, info, else, forms, mohela",no_claude_label,0.0,reddit_arctic_shift_post:100%
+240,12,"world, crop, shelters, zoo, workplaces, venture, mddo, wake",policy_uncertainty,90.9,"reddit_post:8%, sdn_post:92%"
+241,12,"billets, stationed, military, cutting, training, army, specialty, atrophy",career_impact,90.9,sdn_post:100%
+242,12,"applyhence, actual, 501c, hospital, system, woman, state, doubt",policy_uncertainty,100.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+243,12,"depends, organizations, places, nonprofit, losing, unless, sector, run",no_claude_label,0.0,"reddit_arctic_shift_post:17%, sdn_post:83%"
+244,11,"ip, arbitrary, fte, cme, built, funds, pretty, clinical",career_impact,90.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+245,11,"neglect, monkey, stumped, paychecks, struggling, gone, lowered, owe",no_claude_label,0.0,reddit_arctic_shift_post:100%
+246,11,"ivf, howwhere, kids, comfortable, expensive, invest, needs, already",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+247,11,"lightening, emotionally, decreases, heavy, load, wow, carry, heart",general_question,90.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+248,11,"loansbeyond, pavements, betteror, rateis, halve, addendum, effective, superior",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+249,11,"carrots, shortening, yep, discharging, reserves, fields, length, providers",policy_uncertainty,100.0,sdn_post:100%
+250,11,"median, price, 400k, yeeesh, 630k, 50hrs, paycheck, luxury",no_claude_label,0.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+251,11,"hackensack, uva, speciality, aspects, hospital, choses, hackensacks, happiest",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+252,11,"restraint, heshe, sam, uncle, op, 5558, free, supporters",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+253,11,"aphis, vmo, usda, veterinary, animal, officer, yeah, head",policy_uncertainty,100.0,sdn_post:100%
+254,11,"neonatologists, jobemployment, kp2az, mednax, nicu, weighing, profession, 350k",career_impact,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+255,11,"1900s, poorly, existed, earliest, 2007, run, 2017, program",general_question,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+256,11,"ended, compounding, origination, 16k, bigger, fee, subsidized, 400k",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+257,11,"life, choices, dev, pcps, doctors, chunk, upper, software",no_claude_label,0.0,sdn_post:100%
+258,11,"ohio, daunting, 450k, struggle, mental, 45, tuition, residency",financial_planning,100.0,sdn_post:100%
+259,11,"hypothetical, fair, play, exist, knowing, exactly, programs, continue",policy_uncertainty,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+260,11,"nuanced, importantly, decline, refinance, affected, highly, build, deferred",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+261,11,"wayne, preclinical, tech, texas, acceptances, weather, research, congrats",policy_uncertainty,90.0,sdn_post:100%
+262,11,"era, responsible, trump, burden, military, changed, longer, thought",success_story,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+263,11,"proposed, exclusion, poverty, msbefore, changes, repaye, briefly, amortization",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+264,11,"yojr, caps, enough, principle, pays, subsidy, interest, calculated",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+265,11,"cheaper, psyds, midlevels, collapse, cancellations, unfunded, impending, flawed",career_impact,100.0,sdn_post:100%
+266,11,"outgoing, freezes, replace, followup, principal, 450k, amortization, repaye",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+267,11,"equating, protections, consistent, repayments, leaving, important, quite, confusing",policy_uncertainty,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+268,11,"scramble, postcovid, forbid, protected, permanently, disabled, frozen, protections",no_claude_label,0.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+269,11,"lutheran, rank, residents, notforprofit, overconsult, consultover, chicagoan, subis",career_impact,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+270,11,"dislike, china, bull, messenger, shop, acting, man, admin",policy_uncertainty,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+271,11,"ones, agree, worst, rae, prevets, costhigh, things, battie",policy_uncertainty,100.0,sdn_post:100%
+272,11,"gross, accountant, shouldnt, water, deduction, dollars, taxed, fair",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+273,11,"coa, deadset, ms1, max, subspecialty, incoming, opinions, little",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+274,11,"faculty, 8months, professionally, 40hrs, caseloads, varied, rewarding, satisfying",success_story,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+275,11,"um, avoided, optimal, exclusion, listening, vast, expires, outcome",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+276,11,"topic, sociopolitical, offtopic, dude, dragging, residents, nightmare, doctors",success_story,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+277,11,"credibly, accused, serves, presidents, intact, trusting, memory, fulfill",policy_uncertainty,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+278,11,"7am7pm, bacilus, 75pm, benefitspension, compressed, interrupted, mf, worklife",career_impact,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+279,11,"academia, 1myear, hospitalyou, moneyyou, communitypp, loansdont, onc, exodus",policy_uncertainty,100.0,sdn_post:100%
+280,11,"40ish, talent, 7080, perceived, bouncing, attract, colleagues, glad",career_impact,90.9,sdn_post:100%
+281,11,"research, faculty, phd, anatomics, collaborative, ap, reluctantly, expectation",career_impact,90.9,sdn_post:100%
+282,11,"vegas, black, smarter, six, literally, success, personal, figure",frustration_venting,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+283,11,"city, favor, dream, extern, externships, repeals, nonibr, negotiable",policy_uncertainty,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+284,11,"cat, repeat, er, dog, really, policyparty, tosu, columbus",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+285,11,"cd, bar, bonuses, signing, safe, them, sit, spent",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+286,11,"product, mpn, availability, borrowers, described, policy, enshrine, preposterous",policy_uncertainty,90.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+287,11,"insolvency, unmatched, liabilities, mds, exceed, thecollegeinvestorcom, koeut, seth",success_story,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+288,11,"credentialsbillable, fsps, pyramidal, outask, organizational, supervision, abilities, pathways",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+289,11,"terms, washu, chillier, avoidable, pgy3, private, tradeoff, difference",financial_planning,66.7,"reddit_arctic_shift_post:9%, sdn_post:91%"
+290,11,"shaved, msg, ya, luckily, percentage, high, certain, far",no_claude_label,0.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+291,11,"mrsmile12, cbs, news, replies, suspended, forum, 2025, thread",policy_uncertainty,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+292,11,"law, misconception, bimodal, hinge, futures, weirder, vulnerable, people",policy_uncertainty,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+293,11,"sherrod, massachusetts, pennsylvania, brown, senate, servicers, bureau, cfpb",servicer_issues,100.0,"reddit_arctic_shift_post:18%, sdn_post:82%"
+294,11,"northern, kaiser, tpmg, care, regional, ancillary, theres, team",success_story,81.8,"reddit_post:9%, sdn_post:91%"
+295,11,"considering, opconsult, enjoyable, 10kyr, carolinas, psychiatrists, spectrum, chump",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+296,11,"ease, slp, brought, agree, recommend, near, met, definitely",general_question,80.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+297,11,"oriented, incentivize, achieving, fqhc, rural, jobs, doctors, pp",career_impact,66.7,"reddit_arctic_shift_post:18%, reddit_post:9%, sdn_post:73%"
+298,11,"gd, 900k, omfs, cents, reasonable, route, financially, transition",career_impact,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+299,11,"delay, correspondence, processing, request, 90, days, 22225, correspondance",no_claude_label,0.0,reddit_arctic_shift_post:100%
+300,11,"ifs, satisfaction, waste, responses, decided, whats, appreciate, everyone",career_impact,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+301,11,"affects, responsible, biden, taxes, expect, bill, tax, forgiven",success_story,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+302,11,"aquatics, write, sharing, thank, gave, general, program, experience",career_impact,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+303,11,"academic, endocrinology, facetoface, candidacy, classes, prereq, physiology, funding",career_impact,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+304,11,"mixup, prolonged, extends, 14k, congrats, 8k, 250k, lack",success_story,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+305,11,"stony, hijacking, aid, underwhelming, needbased, lowkey, namely, nonexistent",policy_uncertainty,90.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+306,11,"deferred, repayepaye, discussion, strategies, 31st, advised, strategy, subtotal",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+307,11,"astounded, climate, banking, political, happening, forward, actually, people",policy_uncertainty,90.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+308,11,"medicine, prerequisite, classes, mechanical, volunteering, admission, distance, experiences",general_question,81.8,"reddit_post:9%, sdn_post:91%"
+309,11,"hybrids, hybrid, formative, cu, utah, weighed, unfamiliar, pts",career_impact,50.0,"reddit_post:18%, sdn_post:82%"
+310,11,"nhsc, service, stuck, public, fed, where, apply, forgiveness",general_question,100.0,"reddit_post:9%, sdn_post:91%"
+311,11,"cnucom, kcucom, pros, cons, taker, usmle, comlex, accreditation",financial_planning,100.0,"reddit_post:9%, sdn_post:91%"
+312,11,"admit, pitfalls, coverage, btw, weight, md, congrats, common",career_impact,100.0,"reddit_post:9%, sdn_post:91%"
+313,11,"inday, admirable, fqhc, 10yrs, committing, population, underserved, commitment",career_impact,100.0,"reddit_post:9%, sdn_post:91%"
+314,11,"qiqc, fte, academics, therapy, institution, bmtcell, computational, clinicalresearch",career_impact,90.9,"reddit_post:9%, sdn_post:91%"
+315,11,"thatd, justify, academics, decreased, compensation, sucks, exists, love",career_impact,90.9,"reddit_post:9%, sdn_post:91%"
+316,11,"manymost, interns, resumes, accruing, percentage, front, intend, soon",financial_planning,100.0,"reddit_post:9%, sdn_post:91%"
+317,11,"calculator, affordability, houses, zillow, paycheck, insurance, random, bankrates",financial_planning,54.5,"reddit_post:9%, sdn_post:91%"
+318,11,"aamc, strengthen, lawmakers, advocate, protect, workforce, members, action",policy_uncertainty,100.0,"reddit_post:9%, sdn_post:91%"
+319,11,"boring, discussion, malt, ladoc, kendrick, aiquantumnuclear, usher, teetered",general_question,90.9,"reddit_post:9%, sdn_post:91%"
+320,11,"jobif, companies, flux, give, shop, economy, 100month, lower",financial_planning,100.0,"reddit_post:9%, sdn_post:91%"
+321,11,"residents, labor, fields, subsizdizing, govunderserved, medicaremedicaid, cms, underinsured",career_impact,90.9,"reddit_post:9%, sdn_post:91%"
+322,11,"aidinrepayment, collegesuniversities, k12, assume, avoided, psychology, 1020, argue",policy_uncertainty,90.9,"reddit_post:9%, sdn_post:91%"
+323,11,"employeereisdent, shmuck, slaying, 750k, coveted, gme, 200300, networking",general_question,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+324,11,"377k, offload, calc, recommendations, tackle, resident, 68, consolidate",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+325,11,"vet, defunded, feel, zoonosis, parasitology, nontrad, hating, path",no_claude_label,0.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+326,11,"federation, trump, budget, nffe, nffeorg, decimates, condemns, employees",policy_uncertainty,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+327,11,"rescindment, unfunded, insolvency, unmatched, afterward, unlikely, thread, doctors",success_story,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+328,11,"rdy, ridic, devil, recounted, pushback, trail, shoes, incompetence",success_story,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+329,11,"workforce, code, entice, companies, rid, thered, abolish, battles",policy_uncertainty,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+330,11,"emma, crawford, discusses, cfp, video, pslfqualifying, legislation, 21",general_question,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+331,11,"hellbent, exist, 25kyear, schemes, youre, strings, specific, assumes",policy_uncertainty,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+332,11,"incomes, mixing, subsidy, repaye, capped, high, cap, hand",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+333,11,"phased, familiar, grandfathered, exactly, graduating, certain, ones, programs",general_question,70.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+334,11,"orthointerested, drivetake, rfu, vermont, emphasize, coursework, esp, chicago",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+335,11,"floats, xyz, spell, hours, yes, 5050, asks, staff",general_question,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+336,11,"route, nickel, differentials, fancy, dime, bump, weigh, jobs",success_story,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+337,11,"cosignature, nonprofit, key, son, party, clarify, realize, needs",general_question,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+338,11,"speculative, nobrainer, origination, front, fee, possibility, easy, choice",financial_planning,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+339,11,"effectsspecialty, ppomedicaidhmoffs, inflationary, endo, omfs, pediatrics, suffering, leverage",career_impact,90.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+340,11,"definitely, ringer, boarded, deter, pursing, mentally, 34k, anxiety",career_impact,90.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+341,11,"354x, tapped, across, production, ramsey, born, vets, 1000month",financial_planning,55.6,"reddit_arctic_shift_post:18%, sdn_post:82%"
+342,11,"readily, values, depends, capital, flexibility, dealt, opinion, minimal",success_story,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+343,11,"5060hrs, vagov, comp1, pp1099s, prefered, 431031, probability, probably",financial_planning,60.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+344,11,"click, buttons, incomedriven, unclickable, button, submit, application, device",no_claude_label,0.0,reddit_arctic_shift_post:100%
+345,11,"crystal, finish, pleasant, trash, climate, ball, wedding, til",financial_planning,100.0,"reddit_post:9%, sdn_post:91%"
+346,11,"inefficiency, pour, incurred, missed, blame, manner, applicant, fail",general_question,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+347,11,"fin, he, cosign, son, program, his, till, wants",policy_uncertainty,70.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+348,11,"academics, communitylevel, hunt, purely, boston, cities, understood, youre",career_impact,90.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+349,11,"excuses, buyback, resolution, ways, anybody, specific, coming, months",general_question,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+350,11,"wwwgooglecom, paints, breakup, bleak, stake, failing, report, millions",policy_uncertainty,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+351,11,"heritage, ban, yup, named, foundation, participating, nonprofits, employees",policy_uncertainty,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+352,11,"gender, precluding, enemy, cleveland, minors, ideology, related, affirming",policy_uncertainty,90.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+353,11,"contract, ihs, autodeduct, withheld, 25000, completing, 1st, increases",general_question,70.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+354,11,"jfog, uninstall, tapatalk, reinstall, cache, browser, quote, edited",general_question,90.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+355,11,"sep30, w4, awards, transcript, final, award, enrollment, overall",general_question,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+356,11,"googlable, nonprofitetc, 1900s, miss, tedious, workplaces, nonconsecutive, hr",general_question,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+357,11,"mpn, ironclad, spell, fwiw, lawyers, wording, lines, changes",policy_uncertainty,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+358,11,"his, bankruptcy, bajillion, demolished, dumbest, cards, freezing, proceedings",general_question,100.0,"reddit_arctic_shift_post:9%, sdn_post:91%"
+359,11,"wages, nepo, 6080hr, gluck, 5yr, dpms, swallow, ego",financial_planning,100.0,sdn_post:100%
+360,10,"senate, byrd, reconciliation, borrowers, repeal, bill, budgetary, provision",no_claude_label,0.0,reddit_arctic_shift_post:100%
+361,10,"transferees, 09072022, transferred, transfer, noooooooo, 830, 98, account",no_claude_label,0.0,reddit_arctic_shift_post:100%
+362,10,"aidvantage, aidvantagefedloand, servicer, aidvantagemohela, communication, fedloan, serviced, vs",no_claude_label,0.0,reddit_arctic_shift_post:100%
+363,10,"mackinac, lawsuit, cato, court, challenging, arguments, statute, case",policy_uncertainty,100.0,"reddit_arctic_shift_post:90%, reddit_post:10%"

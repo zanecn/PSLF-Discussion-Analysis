@@ -1,0 +1,65 @@
+================================================================================
+FSA PSLF Admin Data x SDN-Medical Discourse Correlation
+Generated: 2026-05-10T13:45:50
+================================================================================
+
+PURPOSE
+--------------------------------------------------------------------------------
+Tests whether SDN-Medical PSLF discourse intensity correlates with
+Federal Student Aid administrative approval data 2017-2025.
+Strong correlation = discourse tracks the actual program scaling.
+Lagged correlation = discourse leads or follows admin events.
+
+Direct correlations (Pearson r, p-value):
+  volume_correlation                  r=-0.203, p=0.4873, n=14
+  sentiment_vs_cumulative             r=+0.003, p=0.9927, n=14
+  sentiment_vs_monthly_approval       r=+0.042, p=0.8853, n=14
+  sentiment_lag3_vs_approval          r=+0.027, p=0.9382, n=11
+
+Merged table (per-month admin + discourse):
+  month_dt  cumulative_approved  monthly_approval_increment  sdn_n_posts  sdn_mean_polarity
+2020-09-01                 4140                      2924.0           10           0.098413
+2021-08-01                 7088                      2948.0           90           0.081760
+2021-10-01                 8115                      1027.0          178           0.122314
+2022-01-01                67500                     59385.0           64           0.139907
+2022-04-01               145000                     77500.0           94           0.138059
+2022-09-01               175000                     30000.0           27           0.090397
+2022-10-01               192000                     17000.0            4           0.287379
+2023-01-01               388000                    196000.0           50           0.144946
+2023-06-01               615000                    227000.0           51           0.097760
+2023-10-01               715000                    100000.0           38           0.104560
+2024-01-01               871000                    156000.0           89           0.094708
+2024-08-01              1000000                    129000.0           20           0.273334
+2025-03-01              1130000                     30000.0          214           0.079187
+2025-09-01              1183600                     53600.0           31           0.105822
+
+KEY MILESTONES (FSA cumulative approval data):
+--------------------------------------------------------------------------------
+  2017-09:          0 cum  (+       0)  PSLF first eligible: 10-year clock starts triggering
+  2018-09:         96 cum  (+      96)  First-cohort wave; 99% denial rate widely reported
+  2019-09:      1,216 cum  (+   1,120)  TEPSLF added 1,120; reform pressure mounts
+  2020-09:      4,140 cum  (+   2,924)  Pre-pandemic baseline; TEPSLF trickle
+  2021-08:      7,088 cum  (+   2,948)  Just before Limited Waiver
+  2021-10:      8,115 cum  (+   1,027)  Limited Waiver ANNOUNCED Oct 6; processing surge starts
+  2022-01:     67,500 cum  (+  59,385)  Limited Waiver processing accelerating
+  2022-04:    145,000 cum  (+  77,500)  IDR Account Adjustment ANNOUNCED April; momentum continues
+  2022-09:    175,000 cum  (+  30,000)  Year-end Waiver push
+  2022-10:    192,000 cum  (+  17,000)  Waiver application deadline Oct 31
+  2023-01:    388,000 cum  (+ 196,000)  Post-Waiver finalization
+  2023-06:    615,000 cum  (+ 227,000)  Mid-year update
+  2023-10:    715,000 cum  (+ 100,000)  Payments restart begins
+  2024-01:    871,000 cum  (+ 156,000)  End of 2023
+  2024-08:  1,000,000 cum  (+ 129,000)  Crossed 1M just as SAVE Forbearance announced
+  2025-01:  1,100,000 cum  (+ 100,000)  End of 2024
+  2025-03:  1,130,000 cum  (+  30,000)  Trump PSLF EO Mar 7
+  2025-09:  1,183,600 cum  (+  53,600)  Latest reported
+
+INTERPRETATION HOOKS
+--------------------------------------------------------------------------------
+- Pre-Limited Waiver (Oct 2021): ~7K cumulative; trickle
+- Limited Waiver Oct 2021 - Oct 2022: ~7K → 192K (27x growth)
+- IDR Adjustment Apr 2022 onward: continued acceleration
+- 2023-2024: ~388K → 1M+ approvals
+- Trump EO Mar 2025: cumulative reached 1.13M+
+- If SDN discourse intensity correlates with monthly approval surge,
+  this is direct evidence trainees are tracking real program scaling.

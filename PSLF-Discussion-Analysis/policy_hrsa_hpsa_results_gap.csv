@@ -1,0 +1,3 @@
+hpsa_tier,n_friendly,n_hostile,mean_friendly,mean_hostile,gap_pp,t,p
+high,12301,722,0.9426,0.8175,12.5157,10.7961,0.0000
+medium,4409,41,0.9305,0.6879,24.2623,3.9811,0.0003

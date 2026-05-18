@@ -1,0 +1,798 @@
+institution,state,pslf_class,pslf_evidence
+Mobile Infirmary Med Ctr,AL,pslf_friendly,Med Ctr
+South Baldwin Reg Med Ctr,AL,pslf_friendly,Med Ctr
+Southeast Health,AL,ambiguous,
+St Vincents East,AL,ambiguous,
+Thomas Hospital,AL,ambiguous,
+UAB Selma Fam Med Res,AL,ambiguous,
+Providence Hospital,AK,ambiguous,
+U Washington Soldotna,AK,pslf_friendly,U Washington
+Abrazo Health Network,AZ,ambiguous,
+Barrow Neurological Inst at SJHMC,AZ,ambiguous,
+Creighton University,AZ,pslf_friendly,University
+Dignity East Valley,AZ,ambiguous,
+El Rio Health,AZ,ambiguous,
+HonorHealth,AZ,ambiguous,
+MHC Healthcare,AZ,pslf_friendly,Healthcare
+Mayo Clinic School of Grad Med Educ,AZ,pslf_friendly,Mayo Clinic
+Midwestern University OPTI,AZ,pslf_friendly,University
+North Country HealthCare,AZ,pslf_friendly,Healthcare
+Phoenix Childrens Hospital,AZ,pslf_friendly,Children
+Tucson Hospitals Med Ed,AZ,pslf_friendly,Hospitals
+Yuma Regional Med Ctr,AZ,pslf_friendly,Med Ctr
+Baptist Health,AR,ambiguous,
+Baptist Mem Med Education,AR,ambiguous,
+CHI St Vincent Hot Springs,AR,ambiguous,
+Conway Reg Health Sys,AR,ambiguous,
+St Bernards Med Ctr,AR,pslf_friendly,Med Ctr
+UAMS Regional Centers,AR,ambiguous,
+Unity Health,AR,ambiguous,
+White River Health System,AR,pslf_friendly,Health System
+Adventist Health Glendale,CA,ambiguous,
+Adventist Health Hanford,CA,ambiguous,
+Adventist Health Ukiah Valley,CA,ambiguous,
+Adventist Health White Memorial,CA,pslf_friendly,Memorial
+Alameda Health Sys-Highland Hosp,CA,ambiguous,
+AltaMed Health Services,CA,pslf_friendly,Health Service
+Arrowhead Reg Med Ctr,CA,pslf_friendly,Med Ctr
+Casa Colina Hosp,CA,ambiguous,
+Cedars-Sinai Med Ctr,CA,pslf_friendly,Med Ctr
+Charles R Drew University,CA,pslf_friendly,University
+Childrens Hospital-LA,CA,pslf_friendly,Children
+Childrens Hospital-Oakland,CA,pslf_friendly,Children
+City Of Hope,CA,ambiguous,
+Clinica Sierra Vista,CA,ambiguous,
+College Med Ctr,CA,pslf_friendly,Med Ctr
+Community Mem Health Sys,CA,ambiguous,
+Contra Costa Reg Med Ctr,CA,pslf_friendly,Med Ctr
+Desert Regional Med Ctr,CA,pslf_friendly,Med Ctr
+Dignity Methodist Hosp-Sacramento,CA,ambiguous,
+Dignity Northridge Hosp Med Ctr,CA,pslf_friendly,Med Ctr
+Eisenhower Med Ctr,CA,pslf_friendly,Med Ctr
+Emanate Health,CA,ambiguous,
+Family Health Ctrs of San Diego,CA,ambiguous,
+Gracelight Community Health,CA,ambiguous,
+Harbor-UCLA Med Ctr,CA,pslf_friendly,UCLA
+Huntington Memorial Hosp,CA,pslf_friendly,Memorial
+John Muir Health,CA,ambiguous,
+KPC Health Hemet Valley Med Ctr,CA,pslf_friendly,Med Ctr
+Kaiser Permanente-Central Valley,CA,ambiguous,
+Kaiser Permanente-Fontana,CA,ambiguous,
+Kaiser Permanente-Los Angeles,CA,ambiguous,
+Kaiser Permanente-Napa/Solano,CA,ambiguous,
+Kaiser Permanente-Oakland,CA,ambiguous,
+Kaiser Permanente-Orange Co,CA,ambiguous,
+Kaiser Permanente-Riverside,CA,ambiguous,
+Kaiser Permanente-SF,CA,ambiguous,
+Kaiser Permanente-Sacramento Valley,CA,ambiguous,
+Kaiser Permanente-San Diego,CA,ambiguous,
+Kaiser Permanente-San Jose,CA,ambiguous,
+Kaiser Permanente-Santa Clara,CA,ambiguous,
+Kaiser Permanente-Santa Rosa,CA,ambiguous,
+Kaiser Permanente-Woodland Hills,CA,ambiguous,
+Kaweah Delta Health Care District,CA,ambiguous,
+Keck School of Medicine of USC,CA,pslf_friendly,School of Medicine
+Kern Med Ctr,CA,pslf_friendly,Med Ctr
+La Maestra Family Clinic Inc,CA,ambiguous,
+Lifelong Medical Care,CA,ambiguous,
+Loma Linda Univ Med Ctr-Murrieta,CA,pslf_friendly,Univ
+Loma Linda University,CA,pslf_friendly,University
+Long Beach Mem Med Ctr,CA,pslf_friendly,Med Ctr
+Los Robles Health System,CA,pslf_friendly,Health System
+Marian Regional Med Ctr,CA,pslf_friendly,Med Ctr
+Mercy Med Ctr-Merced,CA,pslf_friendly,Med Ctr
+Mercy Med Ctr-Redding,CA,pslf_friendly,Med Ctr
+Mission Community Hosp,CA,ambiguous,
+Natividad Med Ctr,CA,pslf_friendly,Med Ctr
+North East Medical Services,CA,ambiguous,
+Olive View-UCLA Med Ctr,CA,pslf_friendly,UCLA
+PIH Health Hosp Downey,CA,ambiguous,
+Pomona Valley Hosp,CA,ambiguous,
+Presby Intercommunity Hosp,CA,ambiguous,
+Prime West Consortium,CA,ambiguous,
+Prime West/West Anaheim Med Ctr,CA,pslf_friendly,Med Ctr
+Riverside Community Hospital,CA,ambiguous,
+Riverside University Health Sys,CA,pslf_friendly,University
+SW Healthcare Med Ed Consortium,CA,pslf_friendly,Healthcare
+San Antonio Regional Hosp,CA,ambiguous,
+San Joaquin Gen Hosp,CA,ambiguous,
+San Mateo Behavioral Hlth & Recovery Svcs,CA,ambiguous,
+San Ysidro Health,CA,ambiguous,
+Santa Barbara Cottage Hosp,CA,ambiguous,
+Santa Clara Valley Med Ctr,CA,pslf_friendly,Med Ctr
+Scripps Clinic/Green Hospital,CA,ambiguous,
+Scripps Mercy Hosp-Chula Vista,CA,ambiguous,
+Scripps Mercy Hosp-San Diego,CA,ambiguous,
+Shasta Community Health Ctr,CA,ambiguous,
+Sierra View Med Ctr,CA,pslf_friendly,Med Ctr
+St Agnes Med Ctr,CA,pslf_friendly,Med Ctr
+St Joseph Hospital-Eureka,CA,ambiguous,
+St Josephs Med Ctr,CA,pslf_friendly,Med Ctr
+St Mary Med Ctr-Long Beach,CA,pslf_friendly,Med Ctr
+Stanford Health Care Tri-Valley,CA,pslf_friendly,Stanford
+Stanford Health Care,CA,pslf_friendly,Stanford
+Stanford Univ Progs,CA,pslf_friendly,Univ
+Sutter Health,CA,ambiguous,
+Sutter Med Ctr of Santa Rosa,CA,pslf_friendly,Med Ctr
+UC Davis Med Ctr,CA,pslf_friendly,Med Ctr
+UC Irvine Med Ctr,CA,pslf_friendly,Med Ctr
+UC Riverside SOM,CA,pslf_friendly,SOM
+UC San Diego Med Ctr,CA,pslf_friendly,Med Ctr
+UC San Francisco,CA,ambiguous,
+UC San Francisco-East Bay,CA,ambiguous,
+UC San Francisco-Fresno,CA,ambiguous,
+UCLA Med Ctr,CA,pslf_friendly,UCLA
+UCLA Semel Inst for Neuroscience,CA,pslf_friendly,UCLA
+VA Greater LA Hlth Sys,CA,pslf_friendly,VA
+Valley Childrens Healthcare,CA,pslf_friendly,Children
+Valley Consortium,CA,ambiguous,
+Valley Health Team,CA,ambiguous,
+Ventura County Med Ctr,CA,pslf_friendly,County
+Common Spirit Health Mountain Region,CO,ambiguous,
+Denver Community Hlth Svcs,CO,ambiguous,
+Denver Health Med Ctr,CO,pslf_friendly,Med Ctr
+HealthONE,CO,ambiguous,
+Parkview Med Ctr,CO,pslf_friendly,Med Ctr
+Penrose Hospital,CO,ambiguous,
+Poudre Valley Hospital,CO,ambiguous,
+St Anthony Hospital North,CO,ambiguous,
+St Joseph Hospital SCL Health,CO,ambiguous,
+St Mary-Corwin Med Ctr,CO,pslf_friendly,Med Ctr
+St Marys Med Ctr SCL Health,CO,pslf_friendly,Med Ctr
+Still OPTI-Peak Vista FMRP,CO,ambiguous,
+Bridgeport Hospital,CT,ambiguous,
+Danbury Hospital,CT,ambiguous,
+Greenwich Hospital,CT,ambiguous,
+Griffin Hospital,CT,ambiguous,
+Hartford Hospital,CT,ambiguous,
+Middlesex Hospital,CT,ambiguous,
+Norwalk Hospital,CT,ambiguous,
+Quinnipiac Univ/Netter MD SOM,CT,pslf_friendly,SOM
+St Francis Hospital,CT,ambiguous,
+St Marys Hospital,CT,ambiguous,
+St Vincents Med Ctr,CT,pslf_friendly,Med Ctr
+Stamford Hospital/Columbia,CT,pslf_friendly,Columbia
+Waterbury Hospital,CT,ambiguous,
+Yale-New Haven Hosp,CT,pslf_friendly,Yale
+Bayhealth Med Ctr,DE,pslf_friendly,Med Ctr
+Beebe Healthcare,DE,pslf_friendly,Healthcare
+Christiana Care,DE,ambiguous,
+St Francis Hospital,DE,ambiguous,
+Childrens National Med Ctr,DC,pslf_friendly,Children
+George Washington Univ,DC,ambiguous,
+Howard Univ Hosp,DC,pslf_friendly,Univ
+MedStar Georgetown Univ Hosp,DC,pslf_friendly,Univ
+MedStar National Rehab Hosp,DC,ambiguous,
+MedStar Washington Hosp Ctr,DC,ambiguous,
+St Elizabeths Hospital/DBH,DC,ambiguous,
+Aventura Hospital,FL,ambiguous,
+BayCare Health System,FL,pslf_friendly,Health System
+Bayfront Med Ctr,FL,pslf_friendly,Med Ctr
+Borinquen Health Care Ctr,FL,ambiguous,
+Broward Health Med Ctr,FL,pslf_friendly,Med Ctr
+Centerstone,FL,ambiguous,
+Citrus Health Network,FL,ambiguous,
+FAU-Schmidt COM,FL,ambiguous,
+HCA Florida JFK Hosp-U Miami,FL,pslf_hostile,HCA
+HCA Healthcare/JFK Med Center-UMiami,FL,pslf_hostile,HCA
+HCA Healthcare/USF Morsani GME-Blake,FL,pslf_hostile,HCA
+HCA Healthcare/USF Morsani GME-Brandon,FL,pslf_hostile,HCA
+HCA Healthcare/USF Morsani GME-Citrus,FL,pslf_hostile,HCA
+HCA Healthcare/USF Morsani GME-Largo,FL,pslf_hostile,HCA
+HCA Healthcare/USF Morsani GME-Oak Hill,FL,pslf_hostile,HCA
+HCA Healthcare/USF Morsani GME-Sarasota,FL,pslf_hostile,HCA
+HCA Healthcare/USF Morsani GME-St Pete,FL,pslf_hostile,HCA
+HCA Healthcare/USF Morsani GME-Trinity,FL,pslf_hostile,HCA
+HCA Healthcare/USF Morsani-Bayonet Pt,FL,pslf_hostile,HCA
+HCA Healthcare/USF Morsani-Northside,FL,pslf_hostile,HCA
+Halifax Med Ctr,FL,pslf_friendly,Med Ctr
+Jessie Trice Comm Hlth Sys,FL,ambiguous,
+Johns Hopkins All Childrens Hosp,FL,pslf_friendly,Children
+Kendall Regional Med Ctr,FL,pslf_friendly,Med Ctr
+Keralty Hospital,FL,ambiguous,
+Lakeland Regional Health,FL,ambiguous,
+Lakeside Med Ctr,FL,pslf_friendly,Med Ctr
+Larkin Comm Hosp Palm Springs Campus,FL,ambiguous,
+Larkin Community Hospital,FL,ambiguous,
+Manatee Memorial Hosp,FL,pslf_friendly,Memorial
+Mayo Clinic School of Grad Med Educ,FL,pslf_friendly,Mayo Clinic
+Memorial Healthcare System,FL,pslf_friendly,Healthcare
+Mt Sinai Med Ctr-Miami,FL,pslf_friendly,Med Ctr
+NCH Healthcare Sys,FL,pslf_friendly,Healthcare
+Nemours Childrens Hosp,FL,pslf_friendly,Children
+Nicklaus Childrens Hospital-Miami,FL,pslf_friendly,Children
+Nova Southeastern University KPCOM,FL,pslf_friendly,VA
+Orlando Health,FL,ambiguous,
+Palm Beach Consortium for GME,FL,ambiguous,
+Palmetto General Hosp,FL,ambiguous,
+Southern Winds Hospital,FL,ambiguous,
+St Vincents Med Ctr,FL,pslf_friendly,Med Ctr
+Tallahassee Mem Healthcare,FL,pslf_friendly,Healthcare
+U Miami MSOM/Holy Cross,FL,pslf_friendly,SOM
+U Miami/Jackson Health System,FL,pslf_friendly,Health System
+Wellington Reg Med Ctr,FL,pslf_friendly,Med Ctr
+West Kendall Baptist Hospital,FL,ambiguous,
+AU-UGA Medical Partnership,GA,ambiguous,
+AdventHealth Redmond,GA,ambiguous,
+Atlanta Med Ctr,GA,pslf_friendly,Med Ctr
+Atrium Health Navicent Med Ctr,GA,pslf_friendly,Med Ctr
+Colquitt Regional Med Ctr,GA,pslf_friendly,Med Ctr
+Emory Univ SOM,GA,pslf_friendly,Univ
+Floyd Med Ctr,GA,pslf_friendly,Med Ctr
+Gateway Behavioral Hlth Comm Svc,GA,ambiguous,
+Hamilton Med Ctr,GA,pslf_friendly,Med Ctr
+Houston Healthcare,GA,pslf_friendly,Healthcare
+Memorial Health Univ Med Ctr,GA,pslf_friendly,Univ
+Morehouse Sch of Med,GA,ambiguous,
+Northside Hospital Gwinnett,GA,ambiguous,
+Phoebe Putney Mem Hosp,GA,ambiguous,
+Piedmont Athens Regional,GA,ambiguous,
+Piedmont Columbus Regional,GA,ambiguous,
+Piedmont Macon Med Ctr,GA,pslf_friendly,Med Ctr
+St Francis-Emory Healthcare,GA,pslf_friendly,Emory
+WellStar Health System,GA,pslf_friendly,Health System
+Wellstar Spalding Reg Hosp,GA,ambiguous,
+Hilo Medical Center,HI,pslf_friendly,Medical Center
+Tripler Army Med Ctr,HI,pslf_friendly,Army
+Waianae Coast Comprehensive Health,HI,ambiguous,
+Full Circle Health,ID,ambiguous,
+Kootenai Health,ID,ambiguous,
+Mountain States Institute,ID,pslf_friendly,Institute
+U Washington Boise,ID,pslf_friendly,U Washington
+Advocate Health Care,IL,ambiguous,
+Amita St Francis Hosp,IL,ambiguous,
+Ascension Resurrection,IL,ambiguous,
+Ascension St Alexius,IL,ambiguous,
+Ascension St Francis,IL,ambiguous,
+Ascension St Joseph,IL,ambiguous,
+Ascension St Mary,IL,ambiguous,
+Carle Foundation Hosp,IL,ambiguous,
+Cook County Health and Hosps Sys,IL,pslf_friendly,County
+Franciscan Health Olympia Fields,IL,ambiguous,
+Hinsdale Hospital,IL,ambiguous,
+Jackson Park Hosp,IL,ambiguous,
+La Grange Mem Hosp,IL,ambiguous,
+Lawndale Christian Health Ctr,IL,ambiguous,
+Loyola Univ Med Ctr,IL,pslf_friendly,Univ
+MacNeal Hospital,IL,ambiguous,
+Marianjoy Rehab Hosp,IL,ambiguous,
+Mercyhealth GME Consortium,IL,ambiguous,
+Mt Sinai Hosp Med Ctr,IL,pslf_friendly,Med Ctr
+Northwestern McGaw/Lurie Childrens,IL,pslf_friendly,Children
+Northwestern McGaw/NMH/VA,IL,pslf_friendly,Northwestern
+Northwestern McGaw/SRAL,IL,pslf_friendly,Northwestern
+Quincy Fam Prac Ctr,IL,ambiguous,
+RFUMS/Chicago Medical School,IL,pslf_friendly,Medical School
+Riverside Medical Ctr,IL,pslf_friendly,Medical Ctr
+Rush University Med Ctr,IL,pslf_friendly,University
+Rush-Copley Mem Hosp,IL,ambiguous,
+SIU Carbondale,IL,ambiguous,
+SIU Decatur,IL,ambiguous,
+SIU SOM & Affil Hosps,IL,pslf_friendly,SOM
+Schwab Rehab Hosp,IL,ambiguous,
+Swedish Hospital,IL,ambiguous,
+UIC/Metro Group Hospitals,IL,pslf_friendly,Hospitals
+UIC/Mt Sinai Hosp Med Ctr,IL,pslf_friendly,Med Ctr
+Univ of Chicago Med Ctr,IL,pslf_friendly,Univ
+Weiss Memorial Hospital,IL,pslf_friendly,Memorial
+West Suburban Med Ctr,IL,pslf_friendly,Med Ctr
+Ascension St Vincent Hosp,IN,ambiguous,
+Community Health Network,IN,ambiguous,
+Deaconess Hospital,IN,ambiguous,
+Franciscan Health,IN,ambiguous,
+Ft Wayne Med Ed Prog,IN,ambiguous,
+Marion Health,IN,ambiguous,
+Memorial Hospital,IN,pslf_friendly,Memorial
+Parkview Health,IN,ambiguous,
+St Josephs Reg Med Ctr,IN,pslf_friendly,Med Ctr
+Union Hospital,IN,ambiguous,
+Broadlawns Med Ctr,IA,pslf_friendly,Med Ctr
+Genesis Quad Cities,IA,ambiguous,
+Mercy Med Ctr-Des Moines,IA,pslf_friendly,Med Ctr
+Siouxland Med Ed Fdn,IA,ambiguous,
+UnityPoint Broadlawns,IA,ambiguous,
+HCA Healthcare Kansas City,MO,pslf_hostile,HCA
+Appalachian OPTIC,KY,ambiguous,
+Appalachian Regional Healthcare,KY,pslf_friendly,Healthcare
+Baptist Health Deaconess,KY,ambiguous,
+Lake Cumberland Regional Hosp,KY,ambiguous,
+Lewis County Primary Care Ctr,KY,pslf_friendly,County
+St Elizabeth Med Ctr,KY,pslf_friendly,Med Ctr
+U Louisville SOM,KY,pslf_friendly,U Louisville
+Baton Rouge Gen Med Ctr,LA,pslf_friendly,Med Ctr
+DePaul Community Health Ctr,LA,ambiguous,
+East Jefferson Gen Hosp,LA,ambiguous,
+LSU SOM-Baton Rouge,LA,pslf_friendly,SOM
+LSU SOM-New Orleans,LA,pslf_friendly,SOM
+LSUHSC University Hosps & Clinics,LA,pslf_friendly,University
+LSUHSC-Lake Charles,LA,ambiguous,
+LSUHSC-Shreveport,LA,ambiguous,
+Leonard J Chabert Med Ctr,LA,pslf_friendly,Med Ctr
+North Oaks Med Ctr LLC,LA,pslf_hostile,LLC
+Ochsner Clinic Foundation,LA,ambiguous,
+Ochsner Lafayette Gen Med Ctr,LA,pslf_friendly,Med Ctr
+Our Lady of the Lake Reg Med Ctr,LA,pslf_friendly,Med Ctr
+Rapides Reg Med Ctr,LA,pslf_friendly,Med Ctr
+St Francis Med Ctr,LA,pslf_friendly,Med Ctr
+Tulane Univ SOM,LA,pslf_friendly,Univ
+Willis-Knighton Health System,LA,pslf_friendly,Health System
+Anne Arundel Med Ctr,MD,pslf_friendly,Med Ctr
+Greater Baltimore Med Ctr,MD,pslf_friendly,Med Ctr
+Johns Hopkins Bloomberg SPH,MD,pslf_friendly,Johns Hopkins
+Johns Hopkins Hosp,MD,pslf_friendly,Johns Hopkins
+Johns Hopkins/Bayview,MD,pslf_friendly,Johns Hopkins
+Kaiser Permanente Mid-Atlantic,MD,ambiguous,
+MedStar Franklin Square Med Ctr,MD,pslf_friendly,Med Ctr
+MedStar Union Memorial Hosp,MD,pslf_friendly,Memorial
+Meritus Medical Center,MD,pslf_friendly,Medical Center
+Natl Insts of Health,MD,ambiguous,
+Sinai Hospital of Baltimore,MD,ambiguous,
+St Agnes Hospital,MD,ambiguous,
+B I Deaconess Med Ctr,MA,pslf_friendly,Med Ctr
+Baystate Franklin Med Ctr,MA,pslf_friendly,Med Ctr
+Berkshire Med Ctr,MA,pslf_friendly,Med Ctr
+Boston Univ Med Ctr,MA,pslf_friendly,Univ
+Brigham & Womens Hosp,MA,pslf_friendly,Brigham
+Cambridge Health Alliance,MA,ambiguous,
+Childrens Hospital-Boston,MA,pslf_friendly,Children
+Grtr Lawrence Fam Hlth Ctr,MA,ambiguous,
+Harvard South Shore,MA,pslf_friendly,Harvard
+Harvard Spaulding Rehab Hosp,MA,pslf_friendly,Harvard
+Lahey Clinic,MA,ambiguous,
+Lemuel Shattuck Hosp,MA,ambiguous,
+MGB-Brigham & Womens Hosp,MA,pslf_friendly,Brigham
+Mass General Brigham,MA,pslf_friendly,Brigham
+MetroWest Med Ctr-Framingham,MA,pslf_friendly,Med Ctr
+Mt Auburn Hospital,MA,ambiguous,
+Newton-Wellesley Hosp,MA,ambiguous,
+North Shore Med Ctr/Salem Hosp,MA,pslf_friendly,Med Ctr
+St Elizabeths Med Ctr,MA,pslf_friendly,Med Ctr
+St Vincent Hosp-Worcester,MA,ambiguous,
+Steward Carney Hospital,MA,pslf_hostile,Steward
+Tufts Medical Center,MA,pslf_friendly,Medical Center
+UMass Chan - Baystate,MA,ambiguous,
+UMass Chan Medical School,MA,pslf_friendly,Medical School
+Ascension Providence/MSUCHM,MI,ambiguous,
+Authority Health GME,MI,ambiguous,
+Corewell Health Lakeland,MI,ambiguous,
+Corewell Health-Grand Rapids/MSU,MI,ambiguous,
+Corewell Health,MI,ambiguous,
+Detroit Med Ctr/WSU,MI,pslf_friendly,Med Ctr
+Garden City Hospital,MI,ambiguous,
+Henry Ford Genesys Hospital,MI,ambiguous,
+Henry Ford Hospital,MI,ambiguous,
+Henry Ford Jackson Hospital,MI,ambiguous,
+Henry Ford Macomb Hospital,MI,ambiguous,
+Henry Ford Providence Hosp,MI,ambiguous,
+Henry Ford St John Hosp,MI,ambiguous,
+Henry Ford Warren Hosp,MI,ambiguous,
+Henry Ford Wyandotte Hospital,MI,ambiguous,
+Hurley Medical Ctr,MI,pslf_friendly,Medical Ctr
+MSUCOM Statewide Campus Sys,MI,ambiguous,
+Mary Free Bed Hospital,MI,ambiguous,
+McLaren Health Care Corp,MI,ambiguous,
+Munson Med Ctr,MI,pslf_friendly,Med Ctr
+MyMichigan Med Ctr Midland,MI,pslf_friendly,Med Ctr
+Oakland Integrated Healthcare Network,MI,pslf_friendly,Healthcare
+Oakland Physicians Med Ctr,MI,pslf_friendly,Med Ctr
+Pine Rest Christian Mental Hlth Svcs,MI,ambiguous,
+Promedica Monroe Reg Hosp,MI,ambiguous,
+Sparrow Hospital,MI,ambiguous,
+Trinity Health Ann Arbor Hosp,MI,ambiguous,
+Trinity Health Grand Rapids,MI,ambiguous,
+Trinity Health Livingston Hosp,MI,ambiguous,
+Trinity Health Livonia Hosp,MI,ambiguous,
+Trinity Health Muskegon,MI,ambiguous,
+Trinity Health Oakland,MI,ambiguous,
+UP Health System-Marquette,MI,pslf_friendly,Health System
+Wayne State University SOM,MI,pslf_friendly,University
+Abbott Northwestern Hosp,MN,pslf_friendly,Northwestern
+Allina Health,MN,ambiguous,
+HealthPartners Institute,MN,pslf_friendly,Institute
+Hennepin Co Med Ctr,MN,pslf_friendly,Med Ctr
+Mayo Clinic School of Grad Med Educ,MN,pslf_friendly,Mayo Clinic
+Baptist Mem Hosp DeSoto,MS,ambiguous,
+Baptist Mem Hosp Golden Triangle,MS,ambiguous,
+Baptist Mem Hosp North,MS,ambiguous,
+Forrest General Hospital,MS,ambiguous,
+Magnolia Regional Health Ctr,MS,ambiguous,
+Memorial Hospital at Gulfport,MS,pslf_friendly,Memorial
+Merit Health Wesley,MS,ambiguous,
+University Hosps-Jackson,MS,pslf_friendly,University
+Barnes-Jewish Hosp,MO,ambiguous,
+Childrens Mercy Hospital,MO,pslf_friendly,Children
+CoxHealth,MO,ambiguous,
+KCU-GME Consortium,MO,ambiguous,
+Mercy Hospital St Louis,MO,ambiguous,
+SSM Health/St Louis Univ SOM,MO,pslf_friendly,Univ
+SSM St Marys Hospital-St Louis,MO,ambiguous,
+St Louis Childrens Hosp,MO,pslf_friendly,Children
+St Louis Univ SOM,MO,pslf_friendly,Univ
+St Lukes Hospital-St Louis,MO,ambiguous,
+Still OPTI-Northeast Reg Med Ctr,MO,pslf_friendly,Med Ctr
+University Hosps-Columbia,MO,pslf_friendly,University
+Benefis Hospital,MT,ambiguous,
+Billings Clinic,MT,ambiguous,
+Clarkson Family Med Res,NE,ambiguous,
+Creighton Univ Affil Hosps,AZ,pslf_friendly,Univ
+Creighton University,NE,pslf_friendly,University
+Lincoln Med Ed Partnership,NE,ambiguous,
+Dignity St Rose Dominican Hosps,NV,ambiguous,
+Kirk Kerkorian SOM at UNLV,NV,pslf_friendly,SOM
+Sunrise Health GME Consortium,NV,ambiguous,
+Valley Health System,NV,pslf_friendly,Health System
+Valley Hosp Med Ctr,NV,pslf_friendly,Med Ctr
+Cheshire Med Ctr/Dartmouth Health,NH,pslf_friendly,Med Ctr
+Concord Hospital,NH,ambiguous,
+Dartmouth-Hitchcock Med Ctr,NH,pslf_friendly,Med Ctr
+Portsmouth Regional Hosp,NH,ambiguous,
+AHS Morristown Med Ctr,NJ,pslf_friendly,Med Ctr
+AHS Overlook Hospital,NJ,ambiguous,
+AtlantiCare Reg Med Ctr,NJ,pslf_friendly,Med Ctr
+Atlantic Health System,NJ,pslf_friendly,Health System
+CMSRU/Cooper University Hospital,NJ,pslf_friendly,University
+Capital Health Reg Med Ctr,NJ,pslf_friendly,Med Ctr
+CarePoint Health,NJ,ambiguous,
+Englewood Hosp,NJ,ambiguous,
+HMH-Palisades Med Ctr,NJ,pslf_friendly,Med Ctr
+Hackensack U Med Ctr,NJ,pslf_friendly,Med Ctr
+Hunterdon Med Ctr,NJ,pslf_friendly,Med Ctr
+ISMMS Valley Health System,NJ,pslf_friendly,Health System
+Inspira Health Network,NJ,ambiguous,
+JFK Med Ctr,NJ,pslf_friendly,Med Ctr
+Jersey Shore Univ Med Ctr,NJ,pslf_friendly,Univ
+Mountainside Hosp,NJ,ambiguous,
+NYMC-St Marys and St Clares,NY,ambiguous,
+NYMC-St Michaels Med Ctr,NJ,pslf_friendly,Med Ctr
+New Bridge Med Ctr,NJ,pslf_friendly,Med Ctr
+Ocean University Med Ctr,NJ,pslf_friendly,University
+Rowan University SOM,NJ,pslf_friendly,University
+Rutgers-Community Med Ctr,NJ,pslf_friendly,Med Ctr
+Rutgers-Cooperman Barnabas Med Ctr,NJ,pslf_friendly,Med Ctr
+Rutgers-Jersey City Med Ctr,NJ,pslf_friendly,Med Ctr
+Rutgers-Monmouth Med Ctr,NJ,pslf_friendly,Med Ctr
+Rutgers-Newark Beth Israel Med Ctr,NJ,pslf_friendly,Beth Israel
+Rutgers-R W Johnson Medical School,NJ,pslf_friendly,Medical School
+Rutgers-RWJUH Somerset,NJ,pslf_friendly,SOM
+Rutgers-Trinitas Med Ctr,NJ,pslf_friendly,Med Ctr
+St Francis Med Ctr,NJ,pslf_friendly,Med Ctr
+St Josephs Univ Med Ctr,NJ,pslf_friendly,Univ
+St Lukes Warren Hospital,NJ,ambiguous,
+St Peters University Hosp,NJ,pslf_friendly,University
+Virtua Health,NJ,ambiguous,
+Hidalgo Medical Services,NM,ambiguous,
+Memorial Med Ctr,NM,pslf_friendly,Med Ctr
+MountainView Reg Med Ctr,NM,pslf_friendly,Med Ctr
+Rehoboth McKinley CHCS,NM,ambiguous,
+Albany Med Ctr,NY,pslf_friendly,Med Ctr
+Arnot Ogden Med Ctr,NY,pslf_friendly,Med Ctr
+Bassett Med Ctr,NY,pslf_friendly,Med Ctr
+BronxCare Health System,NY,pslf_friendly,Health System
+Brooklyn Hosp Ctr,NY,ambiguous,
+Burke Rehabilitation Hosp,NY,ambiguous,
+Cayuga Med Ctr,NY,pslf_friendly,Med Ctr
+Community Healthcare Network,NY,pslf_friendly,Healthcare
+Coney Island Hospital,NY,ambiguous,
+Creedmoor Psych Ctr,NY,ambiguous,
+Ellis Hospital,NY,ambiguous,
+Family Health Ctrs at NYU Langone,NY,pslf_friendly,NYU
+Flushing Hospital Med Ctr,NY,pslf_friendly,Med Ctr
+Garnet Health Med Ctr,NY,pslf_friendly,Med Ctr
+Good Samaritan Hosp Med Ctr,NY,pslf_friendly,Med Ctr
+Good Samaritan Univ Hosp,NY,pslf_friendly,Univ
+Harlem Hospital Ctr,NY,ambiguous,
+Hosp For Special Surgery,NY,ambiguous,
+ISMMS Mount Sinai Beth Israel,NY,pslf_friendly,Mount Sinai
+ISMMS Mount Sinai Hospital,NY,pslf_friendly,Mount Sinai
+ISMMS Mount Sinai Morningside-West,NY,pslf_friendly,Mount Sinai
+ISMMS Mount Sinai South Nassau,NY,pslf_friendly,Mount Sinai
+ISMMS NYC Health+Hospitals/Elmhurst,NY,pslf_friendly,Hospitals
+ISMMS NYC Health+Hospitals/Queens,NY,pslf_friendly,Hospitals
+Institute for Family Health,NY,pslf_friendly,Institute
+Jacobi Med Ctr/Einstein,NY,pslf_friendly,Med Ctr
+Jamaica Hosp Med Ctr,NY,pslf_friendly,Med Ctr
+Lincoln Med Ctr,NY,pslf_friendly,Med Ctr
+Long Island Community Hosp,NY,ambiguous,
+Maimonides Med Ctr,NY,pslf_friendly,Med Ctr
+Memorial Sloan-Kettering,NY,pslf_friendly,Memorial
+Mohawk Valley Health Sys,NY,ambiguous,
+Montefiore Med Ctr/Einstein,NY,pslf_friendly,Med Ctr
+Montefiore St Lukes Cornwall,NY,ambiguous,
+Montefiore-New Rochelle/Einstein,NY,ambiguous,
+NYCOMEC,NY,ambiguous,
+NYMC-Metropolitan Hosp Ctr,NY,ambiguous,
+NYMC-St Josephs Med Ctr,NY,pslf_friendly,Med Ctr
+NYMC-Westchester/Metropolitan,NY,ambiguous,
+NYP Brooklyn Methodist Hosp,NY,ambiguous,
+NYP Hosp-Columbia & Cornell,NY,pslf_friendly,Columbia
+NYP Hosp-Columbia Univ Med Ctr,NY,pslf_friendly,Univ
+NYP Hosp-Weill Cornell Med Ctr,NY,pslf_friendly,Cornell
+NYU Grossman Long Island SOM,NY,pslf_friendly,SOM
+NYU Grossman School Of Medicine,NY,pslf_friendly,School of Medicine
+Nassau Univ Med Ctr,NY,pslf_friendly,Univ
+Niagara Falls Mem Med Ctr,NY,pslf_friendly,Med Ctr
+Nuvance Health Consortium,NY,ambiguous,
+Nuvance Health,NY,ambiguous,
+OBH Brookdale Univ Hosp Med Ctr,NY,pslf_friendly,Univ
+OBH Interfaith Med Ctr,NY,pslf_friendly,Med Ctr
+OBH Kingsbrook Jewish Med Ctr,NY,pslf_friendly,Med Ctr
+Our Lady Of Lourdes,NY,ambiguous,
+Richmond Univ Med Ctr,NY,pslf_friendly,Univ
+Rochester Gen Hosp,NY,ambiguous,
+Rochester Regional Health/Unity Hosp,NY,ambiguous,
+SUNY HSC Brooklyn,NY,ambiguous,
+Samaritan Med Ctr,NY,pslf_friendly,Med Ctr
+South Brooklyn Health.,NY,ambiguous,
+St Barnabas Hosp,NY,ambiguous,
+St Elizabeth Med Ctr,NY,pslf_friendly,Med Ctr
+St Johns Riverside Hospital,NY,ambiguous,
+St Josephs Health,NY,ambiguous,
+Stony Brook Teach Hosps,NY,ambiguous,
+Syracuse Community Health,NY,ambiguous,
+U Rochester/Strong Memorial,NY,pslf_friendly,Memorial
+UHS-Wilson Med Ctr,NY,pslf_friendly,Med Ctr
+UVM Health Network CVPH,NY,ambiguous,
+University at Buffalo SOM,NY,pslf_friendly,University
+Westchester Medical Ctr,NY,pslf_friendly,Medical Ctr
+Woodhull Med Ctr,NY,pslf_friendly,Med Ctr
+Wyckoff Heights Med Ctr,NY,pslf_friendly,Med Ctr
+Zucker SOM Northern Westchester Med Ctr,NY,pslf_friendly,SOM
+Zucker SOM-Northwell Cohen Childrens,NY,pslf_friendly,SOM
+Zucker SOM-Northwell Forest Hills Hosp,NY,pslf_friendly,SOM
+Zucker SOM-Northwell Glen Cove Hosp,NY,pslf_friendly,SOM
+Zucker SOM-Northwell Huntington Hosp,NY,pslf_friendly,SOM
+Zucker SOM-Northwell Lenox Hill Hosp,NY,pslf_friendly,SOM
+Zucker SOM-Northwell Mather Hosp,NY,pslf_friendly,SOM
+Zucker SOM-Northwell NS/LIJ,NY,pslf_friendly,SOM
+Zucker SOM-Northwell Peconic Bay,NY,pslf_friendly,SOM
+Zucker SOM-Northwell Phelps Hosp,NY,pslf_friendly,SOM
+Zucker SOM-Northwell Plainview Hosp,NY,pslf_friendly,SOM
+Zucker SOM-Northwell South Shore,NY,pslf_friendly,SOM
+Zucker SOM-Northwell Staten Island Univ,NY,pslf_friendly,SOM
+Zucker SOM-Northwell Zucker Hillside,NY,pslf_friendly,SOM
+Atrium Health Cabarrus,NC,ambiguous,
+Campbell University,NC,pslf_friendly,University
+Cape Fear Valley Health,NC,ambiguous,
+Carolinas Med Ctr,NC,pslf_friendly,Med Ctr
+Cone Health,NC,ambiguous,
+Duke Univ Med Ctr,NC,pslf_friendly,Univ
+ECU Health Med Ctr,NC,pslf_friendly,Med Ctr
+Iredell Health System,NC,pslf_friendly,Health System
+Mountain AHEC,NC,ambiguous,
+New Hanover Reg Med Ctr,NC,pslf_friendly,Med Ctr
+Novant Health,NC,ambiguous,
+Southern Regional AHEC,NC,ambiguous,
+UNC Health Blue Ridge,NC,ambiguous,
+Wake Forest Baptist Med Ctr,NC,pslf_friendly,Med Ctr
+WakeMed Health and Hospitals,NC,pslf_friendly,Hospitals
+Womack Army Med Ctr,NC,pslf_friendly,Army
+Altru Health System,ND,pslf_friendly,Health System
+Adena Health System,OH,pslf_friendly,Health System
+Akron Children's,OH,pslf_friendly,Children
+Akron General Med Ctr,OH,pslf_friendly,Med Ctr
+Aultman Hospital/NEOMED,OH,ambiguous,
+Bethesda Hospital,OH,pslf_friendly,Bethesda
+Canton Med Ed Fdn/NEOMED,OH,ambiguous,
+Case Western/Univ Hosps Cleveland Med Ctr,OH,pslf_friendly,Univ
+Christ Hospital,OH,ambiguous,
+Cincinnati Childrens Hosp Med Ctr,OH,pslf_friendly,Children
+Cleveland Clinic Fdn,OH,pslf_friendly,Cleveland Clinic
+East Liverpool City Hosp,OH,ambiguous,
+Fairfield Med Ctr,OH,pslf_friendly,Med Ctr
+Firelands Regional Med Ctr,OH,pslf_friendly,Med Ctr
+Good Samaritan Hosp-Cinn,OH,ambiguous,
+Jewish Hospital,OH,ambiguous,
+Kettering Health Network,OH,ambiguous,
+Memorial Health System,OH,pslf_friendly,Health System
+Mercy Health-Anderson Hosp,OH,ambiguous,
+Mercy Health-St Ritas Med Ctr,OH,pslf_friendly,Med Ctr
+Mercy St Vincent Med Ctr,OH,pslf_friendly,Med Ctr
+Mount Carmel Health System,OH,pslf_friendly,Health System
+Nationwide Childrens Hosp,OH,pslf_friendly,Children
+St Elizabeth Health Ctr-Boardman,OH,ambiguous,
+St Elizabeth Youngstown Hosp,OH,ambiguous,
+St Lukes Hospital,OH,ambiguous,
+St Vincent Charity Med Ctr,OH,pslf_friendly,Med Ctr
+Summa Health/NEOMED,OH,ambiguous,
+The MetroHealth Sys/Case Western,OH,ambiguous,
+Trinity Health System,OH,pslf_friendly,Health System
+U Cincinnati Med Ctr,OH,pslf_friendly,Med Ctr
+U Cincinnati West Chester Hosp,OH,ambiguous,
+Univ Hosps Community Consortium,OH,pslf_friendly,Univ
+University of Toledo,OH,pslf_friendly,University
+Western Reserve Health Ed/NEOMED,OH,ambiguous,
+Western Reserve Hosp,OH,ambiguous,
+Wright State Univ Boonshoft SOM,OH,pslf_friendly,Univ
+Griffin Memorial Hospital,OK,pslf_friendly,Memorial
+In His Image Family Med,OK,ambiguous,
+Integris Health,OK,ambiguous,
+OMECO,OK,ambiguous,
+St Anthony Hospital,OK,ambiguous,
+Legacy Emanuel/Good Samaritan,OR,ambiguous,
+Providence Health,OR,ambiguous,
+Roseburg Family Medicine,OR,ambiguous,
+Samaritan Health Services-Corvallis,OR,pslf_friendly,Health Service
+Abington Mem Hosp,PA,ambiguous,
+Albert Einstein Healthcare Network,PA,pslf_friendly,Healthcare
+Albert Einstein Med Ctr,PA,pslf_friendly,Med Ctr
+Allegheny Gen Hosp,PA,ambiguous,
+Allegheny Health Network St Vincent HC,PA,ambiguous,
+Bryn Mawr Hospital,PA,ambiguous,
+Butler Memorial Hospital,PA,pslf_friendly,Memorial
+Childrens Hosp-Philadelphia,PA,pslf_friendly,Children
+Clarion Hospital,PA,ambiguous,
+Conemaugh Memorial Med Ctr,PA,pslf_friendly,Med Ctr
+Cornerstone Care THC,PA,ambiguous,
+Crozer-Chester Med Ctr,PA,pslf_friendly,Med Ctr
+Delaware Valley Community Health,PA,ambiguous,
+Doylestown Hospital,PA,ambiguous,
+Excela Health Latrobe Hosp,PA,ambiguous,
+Forbes Family Medicine,PA,ambiguous,
+Geisinger Health System,PA,pslf_friendly,Health System
+Guthrie/Robert Packer Hosp,PA,ambiguous,
+Heritage Valley Beaver,PA,ambiguous,
+JHME-Jefferson Einstein Montgomery,PA,ambiguous,
+JHME-Jefferson Einstein Philadelphia,PA,ambiguous,
+Jefferson Health-Northeast,PA,ambiguous,
+LECOM Health,PA,ambiguous,
+Lancaster Gen Hosp,PA,ambiguous,
+Lankenau Med Ctr,PA,pslf_friendly,Med Ctr
+Lehigh Valley Hosp,PA,ambiguous,
+Lower Bucks Hosp,PA,ambiguous,
+Meadville Med Ctr,PA,pslf_friendly,Med Ctr
+Mercy Catholic Med Ctr,PA,pslf_friendly,Med Ctr
+Nazareth Hospital,PA,ambiguous,
+Penn Highlands Healthcare,PA,pslf_friendly,Penn
+Penn State Hershey Med Ctr,PA,pslf_friendly,Penn
+Philadelphia Coll of Osteo Med,PA,ambiguous,
+St Clair Health,PA,ambiguous,
+St Lukes Hosp-Anderson,PA,ambiguous,
+St Lukes Hosp-Bethlehem,PA,ambiguous,
+St Mary Med Ctr-Langhorne,PA,pslf_friendly,Med Ctr
+Suburban Community Hosp,PA,ambiguous,
+TJU/Nemours Childrens Health,PA,pslf_friendly,Children
+Temple Univ Hosp,PA,pslf_friendly,Univ
+Temple Univ/Chestnut Hill Hosp,PA,ambiguous,
+Temple Univ/Fox Chase Cancer Ctr,PA,ambiguous,
+Thomas Jefferson Univ,PA,ambiguous,
+Tower Health/Brandywine Hosp,PA,ambiguous,
+Tower Health/Chestnut Hill Hosp,PA,ambiguous,
+Tower Health/Drexel Univ COM,PA,pslf_friendly,Univ
+Tower Health/Phoenixville Hosp,PA,ambiguous,
+Tower Health/Reading Hospital,PA,ambiguous,
+Tower Health/St Christophers Hosp,PA,ambiguous,
+UPMC Altoona Hospital,PA,ambiguous,
+UPMC Hamot Med Ctr,PA,pslf_friendly,Med Ctr
+UPMC Harrisburg,PA,ambiguous,
+UPMC Lititz,PA,ambiguous,
+UPMC McKeesport,PA,ambiguous,
+UPMC Medical Education,PA,ambiguous,
+UPMC Mercy Hospital,PA,ambiguous,
+UPMC Presbyterian Shadyside,PA,ambiguous,
+UPMC St Margaret,PA,ambiguous,
+UPMC Washington Hospital,PA,ambiguous,
+UPMC Williamsport,PA,ambiguous,
+Wellspan Health Chambersburg Hosp,PA,ambiguous,
+Wellspan Health Good Sam Hosp,PA,ambiguous,
+Wellspan Health York Hosp,PA,ambiguous,
+Wright Center for GME,PA,ambiguous,
+Centro Medico Menonita Cayey,PR,ambiguous,
+Damas Hospital,PR,ambiguous,
+Hosp Episcopal San Lucas,PR,ambiguous,
+Hospital de la Concepcion,PR,ambiguous,
+Ponce Health Sciences Univ SOM,PR,pslf_friendly,Univ
+San Juan VA Med Ctr,PR,pslf_friendly,VA
+Univ Central del Caribe SOM,PR,pslf_friendly,Univ
+Brown Univ/Butler Hospital,RI,ambiguous,
+Kent Hospital,RI,ambiguous,
+NYMC-Landmark Med Ctr,RI,pslf_friendly,Med Ctr
+Roger Williams Med Ctr,RI,pslf_friendly,Med Ctr
+Aiken Regional Med Ctrs,SC,pslf_friendly,Med Ctr
+AnMed Health,SC,ambiguous,
+Grand Strand Reg Med Ctr,SC,pslf_friendly,Med Ctr
+Lexington Med Ctr,SC,pslf_friendly,Med Ctr
+McLeod Reg Med Ctr,SC,pslf_friendly,Med Ctr
+Self Regional Healthcare,SC,pslf_friendly,Healthcare
+Spartanburg Medical Center,SC,pslf_friendly,Medical Center
+Summerville Med Ctr,SC,pslf_friendly,Med Ctr
+Tidelands Health,SC,ambiguous,
+Tri-County Commission ADA,SC,pslf_friendly,County
+Trident Medical Center,SC,pslf_friendly,Medical Center
+Center for Family Medicine,SD,ambiguous,
+Rapid City Hospital,SD,ambiguous,
+Baptist Mem Med Education,TN,ambiguous,
+HCA Healthcare/TriStar Nashville,TN,pslf_hostile,HCA
+HCA Healthcare/TriStar Southern Hills,TN,pslf_hostile,HCA
+Health Education Services,TN,ambiguous,
+Meharry Medical College,TN,ambiguous,
+Methodist Healthcare Memphis Hosps,TN,pslf_friendly,Healthcare
+Methodist Med Ctr of Oak Ridge,TN,pslf_friendly,Med Ctr
+UT Ascension St Thomas,TN,ambiguous,
+Vanderbilt Univ Med Ctr,TN,pslf_friendly,Univ
+Baylor Coll Med-Houston,TX,pslf_friendly,Baylor
+Baylor S&W All Saints Med Ctr,TX,pslf_friendly,Baylor
+Baylor S&W Med Ctr-Round Rock,TX,pslf_friendly,Baylor
+Baylor S&W-Baylor COM Temple,TX,pslf_friendly,Baylor
+Baylor Scott & White Med Ctr,TX,pslf_friendly,Baylor
+Baylor Univ Med Ctr-Dallas,TX,pslf_friendly,Univ
+CHRISTUS Health,TX,ambiguous,
+Conroe Reg Med Ctr,TX,pslf_friendly,Med Ctr
+DeTar Healthcare System,TX,pslf_friendly,Healthcare
+Doctors Hospital at Renaissance,TX,ambiguous,
+Driscoll Childrens Hosp,TX,pslf_friendly,Children
+HCA Corpus Christi Med Ctr,TX,pslf_hostile,HCA
+HCA Houston Healthcare/U Houston,TX,pslf_hostile,HCA
+HCA Las Palmas del Sol Healthcare,TX,pslf_hostile,HCA
+HCA Medical City Healthcare,TX,pslf_hostile,HCA
+John Peter Smith Hosp,TX,ambiguous,
+Lake Granbury Med Ctr,TX,pslf_friendly,Med Ctr
+Memorial Hermann Hosp,TX,pslf_friendly,Memorial
+Methodist Health System Dallas,TX,pslf_friendly,Health System
+Methodist Healthcare Sys-San Antonio,TX,pslf_friendly,Healthcare
+Methodist Hospital-Houston,TX,ambiguous,
+Presbyterian Hosp-Dallas,TX,ambiguous,
+Prime South Consortium,TX,ambiguous,
+Project Vida Health Ctr,TX,ambiguous,
+Sam Houston State Univ COM,TX,pslf_friendly,Univ
+Shannon Medical Center,TX,pslf_friendly,Medical Center
+St Davids Healthcare GME,TX,pslf_friendly,Healthcare
+TIGMER,TX,ambiguous,
+Texoma Med Ctr,TX,pslf_friendly,Med Ctr
+Valley Baptist Med Ctr,TX,pslf_friendly,Med Ctr
+Waco Family Medicine Institute,TX,pslf_friendly,Institute
+William Beaumont Army Med Ctr,TX,pslf_friendly,Army
+Intermountain Med Ctr,UT,pslf_friendly,Med Ctr
+McKay-Dee Hospital Ctr,UT,ambiguous,
+Augusta Health,VA,ambiguous,
+Bon Secours Health System,VA,pslf_friendly,Health System
+EVMS Old Dominion University,VA,pslf_friendly,University
+HCA Chippenham & Johnston-Willis Hosps,VA,pslf_hostile,HCA
+HCA Healthcare LGH-Montgomery/VCOM,VA,pslf_hostile,HCA
+Inova Fairfax Hospital,VA,pslf_friendly,VA
+Johnston Memorial Hosp,VA,pslf_friendly,Memorial
+LewisGale Med Ctr,VA,pslf_friendly,Med Ctr
+Liberty Univ COM,VA,pslf_friendly,Univ
+Lynchburg Fam Med Res,VA,ambiguous,
+Mary Washington Healthcare,VA,pslf_friendly,Healthcare
+Norton Community Hosp,VA,ambiguous,
+Riverside Reg Med Ctr,VA,pslf_friendly,Med Ctr
+Sovah Health-Danville,VA,ambiguous,
+VCU-Shenandoah Valley,VA,ambiguous,
+Wellmont Health System,VA,pslf_friendly,Health System
+Community Health Care,WA,ambiguous,
+Elson S Floyd COM WSU,WA,ambiguous,
+Harrison Med Ctr,WA,pslf_friendly,Med Ctr
+HealthPoint,WA,ambiguous,
+Kadlec Regional Med Ctr,WA,pslf_friendly,Med Ctr
+Legacy Salmon Creek Med Ctr,WA,pslf_friendly,Med Ctr
+MultiCare Health System,WA,pslf_friendly,Health System
+PeaceHealth Southwest Med Ctr,WA,pslf_friendly,Med Ctr
+Providence Sacred Heart Med Ctr,WA,pslf_friendly,Med Ctr
+Providence St Peter Hospital,WA,ambiguous,
+Puyallup Tribal Health Authority,WA,ambiguous,
+Sea Mar Community Health Ctrs,WA,ambiguous,
+Skagit Regional Health,WA,ambiguous,
+Spokane Teaching Health Ctr,WA,ambiguous,
+St Josephs Hospital,WA,ambiguous,
+Swedish Med Ctr,WA,pslf_friendly,Med Ctr
+Tacoma Family Med,WA,ambiguous,
+Trios Health,WA,ambiguous,
+Valley Med Ctr,WA,pslf_friendly,Med Ctr
+Virginia Mason Franciscan Health,WA,ambiguous,
+Yakima Valley Farm Workers Clinic,WA,ambiguous,
+AccessHealth,WV,ambiguous,
+Charleston Area Med Ctr,WV,pslf_friendly,Med Ctr
+Greenbrier Valley Med Ctr,WV,pslf_friendly,Med Ctr
+Marshall Community Health,WV,ambiguous,
+Marshall University SOM,WV,pslf_friendly,University
+Mountain State OPTI,WV,ambiguous,
+United Hospital Ctr,WV,ambiguous,
+Wheeling Hospital,WV,ambiguous,
+Aurora Health Care/ASMC,WI,ambiguous,
+Aurora St Lukes Medical Ctr,WI,pslf_friendly,Medical Ctr
+Gundersen Lutheran Med Fdn,WI,ambiguous,
+Marshfield Clinic,WI,ambiguous,
+Mercy Health System,WI,pslf_friendly,Health System
+ProHealth Waukesha Mem Hosp,WI,ambiguous,
+Still OPTI-MCW/Prevea FMRP,WI,ambiguous,
+WiNC GME Consortium,WI,ambiguous,

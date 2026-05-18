@@ -1,0 +1,269 @@
+"""
+collect_reddit_comments.py
+==========================
+Collects top-level and nested comments for all posts in the existing
+PSLF Discussion Analysis datasets. Produces a separate comments CSV
+that can be joined to posts via `post_id`.
+
+Requires: pip install praw textblob tqdm
+
+Usage:
+    python collect_reddit_comments.py \
+        --client_id YOUR_ID \
+        --client_secret YOUR_SECRET \
+        --user_agent "PSLF-Analysis/2.0"
+"""
+
+import argparse
+import csv
+import os
+import time
+from datetime import datetime, timezone
+
+import praw
+from textblob import TextBlob
+from tqdm import tqdm
+
+
+# ---------------------------------------------------------------------------
+# Config
+# ---------------------------------------------------------------------------
+POST_FILES = [
+    # Round-7 expansion (2026-05-09): comment collector now reads from ALL
+    # PSLF-relevant Reddit source CSVs, not just the two legacy comprehensive_*
+    # files. Without this fix, comments were only being pulled for ~1,126 of
+    # the 3,806 PSLF-filtered Reddit posts in the project.
+    "reddit_professions_pslf.csv",                       # 11,845 raw → 3,806 PSLF
+    "comprehensive_medical_pslf_discussions.csv",        # 605 (legacy)
+    "comprehensive_teacher_pslf_discussions.csv",        # 521 (legacy)
+    "reddit_new_subs_pslf.csv",                          # 585 raw → 52 PSLF (PA/NP)
+    "reddit_arctic_shift_pslf.csv",                      # Arctic Shift output (when present)
+]
+OUTPUT_FILE = "reddit_comments_pslf.csv"
+MAX_COMMENT_DEPTH = 5          # max nesting depth to collect
+MAX_COMMENTS_PER_POST = 200    # limit "More Comments" expansion
+RATE_LIMIT_SLEEP = 1.0         # seconds between posts (be polite)
+
+COMMENT_FIELDS = [
+    "comment_id",
+    "post_id",
+    "post_subreddit",
+    "parent_id",
+    "author",
+    "body",
+    "score",
+    "created_utc",
+    "created_datetime",
+    "depth",
+    "is_top_level",
+    "profession",        # inherited from parent post
+    "polarity",
+    "subjectivity",
+    "word_count",
+]
+
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+def load_post_ids(files: list[str]) -> list[dict]:
+    """Load post IDs and metadata from existing CSVs.
+
+    Round-7 update: applies PSLF strict filter on the broader CSVs
+    (reddit_professions_pslf.csv contains some non-PSLF posts that came
+    in via the broader search; we only want comments from PSLF-anchored
+    posts to keep the corpus consistent with the rest of the pipeline).
+    """
+    import sys, os
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    try:
+        from pslf_search_terms import filter_pslf_relevant
+        import pandas as pd
+        have_filter = True
+    except ImportError:
+        have_filter = False
+
+    posts = []
+    seen = set()
+    for fpath in files:
+        if not os.path.exists(fpath):
+            print(f"  [WARN] File not found: {fpath}, skipping.")
+            continue
+        # Use pandas for the filterable CSVs to apply the strict PSLF check
+        if have_filter:
+            try:
+                df = pd.read_csv(fpath)
+                # Find text columns
+                text_col = ("combined_text" if "combined_text" in df.columns
+                            else "selftext" if "selftext" in df.columns else None)
+                title_col = "title" if "title" in df.columns else None
+                if text_col and title_col:
+                    tm = filter_pslf_relevant(df[text_col].fillna(""))
+                    tt = filter_pslf_relevant(df[title_col].fillna(""))
+                    df = df[tm | tt].copy()
+                # Iterate filtered rows
+                pre_filter_count = 0
+                for _, row in df.iterrows():
+                    pid = str(row.get("id", "")).strip()
+                    if pid and pid not in seen:
+                        seen.add(pid)
+                        posts.append({
+                            "id": pid,
+                            "subreddit": row.get("subreddit", ""),
+                            "profession": row.get("profession", ""),
+                            "permalink": row.get("permalink", ""),
+                        })
+                        pre_filter_count += 1
+                print(f"  Loaded {pre_filter_count:,} PSLF-filtered posts from {fpath}")
+                continue
+            except Exception as e:
+                print(f"  [WARN] pandas load failed for {fpath} ({e}); falling back to csv.DictReader")
+        # Fallback: no PSLF filter, just dedup
+        with open(fpath, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            n = 0
+            for row in reader:
+                pid = row.get("id", "").strip()
+                if pid and pid not in seen:
+                    seen.add(pid)
+                    posts.append({
+                        "id": pid,
+                        "subreddit": row.get("subreddit", ""),
+                        "profession": row.get("profession", ""),
+                        "permalink": row.get("permalink", ""),
+                    })
+                    n += 1
+            print(f"  Loaded {n:,} unfiltered posts from {fpath}")
+    return posts
+
+
+def analyze_sentiment(text: str) -> tuple[float | None, float | None]:
+    """Return (polarity, subjectivity) via TextBlob.
+
+    Returns (NaN, NaN) on error or empty text (M1 fix).
+    """
+    if not text or not text.strip():
+        return float("nan"), float("nan")
+    try:
+        blob = TextBlob(text[:5000])  # M8 fix: cap length for performance
+        return round(blob.sentiment.polarity, 6), round(blob.sentiment.subjectivity, 6)
+    except Exception:
+        return float("nan"), float("nan")
+
+
+def flatten_comments(comment_forest, post_meta: dict, max_depth: int) -> list[dict]:
+    """Recursively flatten a comment forest into rows.
+
+    M6 fix: reverse initial stack so pop() processes in correct order.
+    """
+    rows = []
+    stack = [(c, 0) for c in reversed(list(comment_forest))]
+    while stack:
+        comment, depth = stack.pop()
+        if isinstance(comment, praw.models.MoreComments):
+            continue
+        if depth > max_depth:
+            continue
+
+        body = comment.body or ""
+        pol, subj = analyze_sentiment(body)
+        created = datetime.fromtimestamp(comment.created_utc, tz=timezone.utc)
+
+        rows.append({
+            "comment_id": comment.id,
+            "post_id": post_meta["id"],
+            "post_subreddit": post_meta["subreddit"],
+            "parent_id": comment.parent_id,
+            "author": str(comment.author) if comment.author else "[deleted]",
+            "body": body,
+            "score": comment.score,
+            "created_utc": comment.created_utc,
+            "created_datetime": created.strftime("%Y-%m-%d %H:%M:%S"),
+            "depth": depth,
+            "is_top_level": depth == 0,
+            "profession": post_meta["profession"],
+            "polarity": pol,
+            "subjectivity": subj,
+            "word_count": len(body.split()),
+        })
+
+        # Add replies to stack (reversed for correct ordering with LIFO pop)
+        for reply in reversed(list(comment.replies)):
+            stack.append((reply, depth + 1))
+
+    return rows
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+def main():
+    parser = argparse.ArgumentParser(description="Collect Reddit comments for PSLF posts")
+    parser.add_argument("--client_id", required=True, help="Reddit API client ID")
+    parser.add_argument("--client_secret", required=True, help="Reddit API client secret")
+    parser.add_argument("--user_agent", default="PSLF-Analysis/2.0", help="Reddit API user agent")
+    parser.add_argument("--output", default=OUTPUT_FILE, help="Output CSV path")
+    parser.add_argument("--resume", action="store_true", help="Skip posts already collected")
+    args = parser.parse_args()
+
+    # Initialize Reddit client (read-only)
+    reddit = praw.Reddit(
+        client_id=args.client_id,
+        client_secret=args.client_secret,
+        user_agent=args.user_agent,
+    )
+    print(f"Reddit client initialized (read-only: {reddit.read_only})")
+
+    # Load existing post IDs
+    posts = load_post_ids(POST_FILES)
+    print(f"Loaded {len(posts)} unique posts from {len(POST_FILES)} files")
+
+    # Resume support
+    collected_post_ids = set()
+    if args.resume and os.path.exists(args.output):
+        with open(args.output, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                collected_post_ids.add(row["post_id"])
+        print(f"Resuming: {len(collected_post_ids)} posts already collected")
+
+    # Open output file (M5 fix: use context manager to prevent file handle leak)
+    mode = "a" if args.resume and collected_post_ids else "w"
+    total_comments = 0
+    errors = 0
+
+    with open(args.output, mode, newline="", encoding="utf-8") as outfile:
+        writer = csv.DictWriter(outfile, fieldnames=COMMENT_FIELDS)
+        if mode == "w":
+            writer.writeheader()
+
+        for post_meta in tqdm(posts, desc="Collecting comments"):
+            pid = post_meta["id"]
+            if pid in collected_post_ids:
+                continue
+
+            try:
+                submission = reddit.submission(id=pid)
+                submission.comments.replace_more(limit=MAX_COMMENTS_PER_POST)
+                # C4 fix: single flatten call using comment forest (not .list())
+                rows = flatten_comments(submission.comments, post_meta, MAX_COMMENT_DEPTH)
+                for row in rows:
+                    writer.writerow(row)
+                total_comments += len(rows)
+
+            except Exception as e:
+                errors += 1
+                tqdm.write(f"  [ERROR] Post {pid}: {e}")
+
+            time.sleep(RATE_LIMIT_SLEEP)
+
+    print(f"\n{'='*60}")
+    print(f"Collection complete!")
+    print(f"  Total comments collected: {total_comments:,}")
+    print(f"  Errors: {errors}")
+    print(f"  Output: {args.output}")
+    print(f"{'='*60}")
+
+
+if __name__ == "__main__":
+    main()

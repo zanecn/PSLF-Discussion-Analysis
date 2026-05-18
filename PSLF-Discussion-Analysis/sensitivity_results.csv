@@ -1,0 +1,41 @@
+family,event,metric,full_value,excl_value,full_n,excl_n,verdict
+B_g,Limited PSLF Waiver,g_textblob,0.1688,-0.2311,398/589,111/235,REVERSED
+B_g,Limited PSLF Waiver,g_vader,0.0186,-0.2141,398/589,111/235,REVERSED
+B_g,Limited PSLF Waiver,g_claude,-0.6229,0.0351,398/589,111/235,COLLAPSED
+B_g,IDR Account Adjustment,g_textblob,-0.0918,0.1735,381/497,190/242,REVERSED
+B_g,IDR Account Adjustment,g_vader,0.3477,0.0220,381/497,190/242,COLLAPSED
+B_g,IDR Account Adjustment,g_claude,-0.1530,0.0907,381/497,190/242,COLLAPSED
+B_g,Biden Mass Forgiveness,g_textblob,-0.1069,0.0206,345/313,239/248,COLLAPSED
+B_g,Biden Mass Forgiveness,g_vader,-0.2213,-0.0299,345/313,239/248,COLLAPSED
+B_g,Biden Mass Forgiveness,g_claude,-0.2935,-0.2860,345/313,239/248,SURVIVES
+B_g,Biden v. Nebraska SCOTUS,g_textblob,-0.2947,-0.1064,339/673,151/495,WEAKENED
+B_g,Biden v. Nebraska SCOTUS,g_vader,-0.1359,0.0711,339/673,151/495,COLLAPSED
+B_g,Biden v. Nebraska SCOTUS,g_claude,-0.1510,-0.1354,339/673,151/495,SURVIVES
+B_g,Payments Restart,g_textblob,0.0932,-0.0432,653/265,480/202,COLLAPSED
+B_g,Payments Restart,g_vader,0.0915,-0.0818,653/265,480/202,COLLAPSED
+B_g,Payments Restart,g_claude,-0.1674,-0.2703,653/265,480/202,SURVIVES
+B_g,SAVE Admin Forbearance,g_textblob,0.1667,-0.0257,391/256,295/233,COLLAPSED
+B_g,SAVE Admin Forbearance,g_vader,-0.0650,-0.1167,391/256,295/233,SURVIVES
+B_g,SAVE Admin Forbearance,g_claude,-0.2250,-0.0081,391/256,295/233,COLLAPSED
+B_g,Trump PSLF EO,g_textblob,-0.3249,-0.0652,771/559,277/243,COLLAPSED
+B_g,Trump PSLF EO,g_vader,0.1605,-0.0558,771/559,277/243,COLLAPSED
+B_g,Trump PSLF EO,g_claude,0.3345,-0.0908,771/559,277/243,COLLAPSED
+B_g,Final Trump PSLF Rule,g_textblob,0.2982,-0.0290,380/399,303/202,COLLAPSED
+B_g,Final Trump PSLF Rule,g_vader,-0.0684,-0.0190,380/399,303/202,COLLAPSED
+B_g,Final Trump PSLF Rule,g_claude,0.3014,0.1712,380/399,303/202,WEAKENED
+C_stance,Limited PSLF Waiver,delta_rejecting_pp,3.5509,-0.6456,289/416,74/180,COLLAPSED
+C_stance,IDR Account Adjustment,delta_rejecting_pp,6.1411,-0.0906,275/402,144/207,COLLAPSED
+C_stance,Biden Mass Forgiveness,delta_rejecting_pp,-8.7356,-3.3569,278/207,203/194,WEAKENED
+C_stance,Biden v. Nebraska SCOTUS,delta_rejecting_pp,0.9403,5.0651,232/419,125/341,SURVIVES
+C_stance,Payments Restart,delta_rejecting_pp,-1.0876,-1.4451,414/187,337/154,COLLAPSED
+C_stance,SAVE Admin Forbearance,delta_rejecting_pp,-9.8502,-3.4894,254/204,211/182,WEAKENED
+C_stance,Trump PSLF EO,delta_rejecting_pp,3.3274,2.4665,454/432,220/183,SURVIVES
+C_stance,Final Trump PSLF Rule,delta_rejecting_pp,-10.5742,-4.0086,285/293,244/169,WEAKENED
+D_topic_v,Limited PSLF Waiver,cramers_v,0.3514,0.1570,399/592,112/238,WEAKENED
+D_topic_v,IDR Account Adjustment,cramers_v,0.3452,0.0842,382/499,191/244,COLLAPSED
+D_topic_v,Biden Mass Forgiveness,cramers_v,0.3196,0.1775,347/314,241/249,WEAKENED
+D_topic_v,Biden v. Nebraska SCOTUS,cramers_v,0.2880,0.2008,340/676,151/498,WEAKENED
+D_topic_v,Payments Restart,cramers_v,0.2481,0.2240,656/265,483/202,SURVIVES
+D_topic_v,SAVE Admin Forbearance,cramers_v,0.2221,0.1046,391/256,295/233,WEAKENED
+D_topic_v,Trump PSLF EO,cramers_v,0.2360,0.1010,771/563,277/246,WEAKENED
+D_topic_v,Final Trump PSLF Rule,cramers_v,0.2441,0.1554,382/399,305/202,WEAKENED
