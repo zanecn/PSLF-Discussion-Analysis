@@ -30,6 +30,11 @@ Multi-source sentiment analysis of Public Service Loan Forgiveness (PSLF) discus
 - `pslf_search_terms.py` — Shared search terms, filter regexes, constants
 - `final_summary.py` — Generates full statistical summary report
 
+## Pipeline Entry Points (added 2026-05-07)
+- `run_pipeline.sh` — full scrape + analyze orchestrator. Flags: `--analyze-only`, `--scrape-only`, `--with-comments`, `--with-zeroshot`. Honors `REDDIT_CLIENT_ID/SECRET` + `ANTHROPIC_API_KEY` env vars.
+- `.github/workflows/rescrape.yml` — same pipeline on GH Actions runners (full outbound network); `workflow_dispatch` + monthly cron; uploads artifacts and commits CSVs back to `playwright-sdn-scraper`.
+- Important: the Claude Code web sandbox **blocks reddit.com / forums.studentdoctor.net / consumerfinance.gov / huggingface.co** by egress allowlist. A rescrape must run from a laptop session or GH Actions, not from claude.ai/code.
+
 ## Key Findings (associational; pre/post tests are NOT interrupted time series)
 1. **Medical-professional posts are most negative** in associational comparison (22.3% neg, pol=0.070) — debt-to-income concerns
 2. **r/PSLF has highest negativity rate** (23.9%) — frustration with servicers/process
